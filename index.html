@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanner Holman - Solution Architect</title>
+    <!-- Google Fonts for Headings and Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --main-color: #330F0A; /* Black bean */
+            --accent-color-1: #394F49; /* Dark slate gray */
+            --accent-color-2: #FDF5E6; /* Old lace */
+            --accent-color-3: #65743A; /* Fern green */
+            --background-color: #FDF5E6; /* Old lace background */
+            --text-color: #333;
+            --section-spacing: 2rem;
+            --border-color: rgba(57, 79, 73, 0.15); /* Dark slate gray with transparency */
+        }
+        
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        h1, h2, h3 {
+            color: var(--main-color);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color-1);
+            padding-bottom: 1rem;
+            display: inline-block;
+            color: var(--main-color);
+        }
+        
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            color: var(--accent-color-1);
+            letter-spacing: -0.5px;
+        }
+        
+        h3 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color-3);
+            border-bottom: 2px solid var(--accent-color-3);
+            display: inline-block;
+            padding-bottom: 0.2rem;
+            letter-spacing: -0.3px;
+            margin-bottom: 0.5rem;
+        }
+        
+        a {
+            color: var(--accent-color-3);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-bottom: 1px dotted var(--accent-color-3);
+            padding-bottom: 2px;
+        }
+        
+        a:hover {
+            color: var(--accent-color-1);
+            border-bottom: 1px solid var(--accent-color-1);
+            text-decoration: none;
+        }
+        
+        /* Bio Section - Image and text */
+        .bio-section {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: var(--section-spacing);
+            align-items: flex-start;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            background-color: rgba(255, 255, 255, 0.4);
+        }
+        
+        .profile-image {
+            flex: 1;
+            max-width: 250px;
+        }
+        
+        .profile-img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border: 3px solid white;
+            transition: transform 0.3s ease;
+        }
+        
+        .profile-img:hover {
+            transform: scale(1.02);
+        }
+        
+        .bio-content {
+            flex: 2;
+        }
+        
+        .bio-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--accent-color-1);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        
+        /* Bio Bullet Points */
+        .bio-bullets {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .bio-bullets li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .bio-bullets li .emoji {
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Services Section - Offerings */
+        .services-section {
+            margin-bottom: var(--section-spacing);
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        
+        .offerings-content {
+            width: 100%;
+        }
+        
+        /* Ticker for Influences */
+        .ticker-container {
+            margin: 3rem 0;
+        }
+        
+        .ticker {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 1rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 5px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        
+        .ticker-content span {
+            margin: 0 1rem;
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .ticker-content span:hover {
+            transform: scale(1.1);
+            color: var(--accent-color-1);
+        }
+        
+        .ticker-content .emoji {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Offerings Layout */
+        .offerings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        .offerings-column {
+            flex: 1;
+            min-width: 200px;
+            background-color: rgba(255, 255, 255, 0.6);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent-color-3);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
+        }
+        
+        .offerings-column:hover {
+            transform: translateY(-5px);
+        }
+        
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .offerings-column li {
+            padding-left: 2rem;
+            position: relative;
+        }
+        
+        .offerings-column li .emoji {
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+        
+        .offerings-column li:hover {
+            transform: translateX(5px);
+        }
+        
+        .offering-title {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 3rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color-1);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--accent-color-1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bio-section {
+                flex-direction: column;
+            }
+            
+            .profile-image {
+                max-width: 100%;
+                margin-bottom: 1rem;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .services-section, .offerings-column {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tanner Holman's website</h1>
+    </header>
+    
+    <!-- Bio section with image and text side by side -->
+    <section class="bio-section">
+        <div class="profile-image">
+            <img src="tanner_photo.JPG" alt="Tanner Holman" class="profile-img" />
+        </div>
+        <div class="bio-content">
+            <p class="bio-tagline">Solution architect designing pathways to better movement and pain-free living.</p>
+            <ul class="bio-bullets">
+                <li><span class="emoji">🎭</span> Former actor (Florida State University BFA, RADA, Shakespeare & Co)</li>
+                <li><span class="emoji">🦾</span> Certified personal trainer & movement coach</li>
+                <li><span class="emoji">❤️‍🩹</span> Chronic pain educator at <a href="#" target="_blank">Debug Your Pain</a></li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- Services section with offerings -->
+    <div class="services-section">
+        <div class="offerings-content">
+            <h2>Current Offerings</h2>
+            <div class="offerings">
+                <div class="offerings-column">
+                    <h3 class="offering-title">1on1 Coaching</h3>
+                    <ul>
+                        <li><span class="emoji">➡️</span> Movement online</li>
+                        <li><span class="emoji">➡️</span> Movement in-person (Denver)</li>
+                        <li><span class="emoji">➡️</span> Chronic pain (through Debug Your Pain)</li>
+                    </ul>
+                </div>
+                
+                <div class="offerings-column">
+                    <h3 class="offering-title">Group Classes</h3>
+                    <ul>
+                        <li><span class="emoji">🦍</span> 3x Weekly: Movement+ at White Lotus Therapeutics</li>
+                        <li><span class="emoji">🐿️</span> Play in the Park (on seasonal hiatus, <a href="#">register interest here</a>)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ticker for Influences at the bottom -->
+    <div class="ticker-container">
+        <h2>Influences</h2>
+        <div class="ticker">
+            <div class="ticker-content">
+                <span><span class="emoji">🐒</span>Jozef Frucek & Linda Kapatena</span>
+                <span><span class="emoji">🦉</span>Charlie Awbery</span>
+                <span><span class="emoji">🐉</span>Jared Janes</span>
+                <span><span class="emoji">🧶</span>Olivier Goetgeluck</span>
+                <span><span class="emoji">📚</span>David Chapman</span>
+                <span><span class="emoji">🌳</span>Rafe Kelley</span>
+                <span><span class="emoji">🕸</span>Moshe Feldenkrais</span>
+                <!-- Repeat for scrolling effect -->
+                <span><span class="emoji">🐒</span>Jozef Frucek & Linda Kapatena</span>
+                <span><span class="emoji">🦉</span>Charlie Awbery</span>
+                <span><span class="emoji">🐉</span>Jared Janes</span>
+                <span><span class="emoji">🧶</span>Olivier Goetgeluck</span>
+                <span><span class="emoji">📚</span>David Chapman</span>
+                <span><span class="emoji">🌳</span>Rafe Kelley</span>
+                <span><span class="emoji">🕸</span>Moshe Feldenkrais</span>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Tanner Holman. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Pause the ticker on hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const ticker = document.querySelector('.ticker-content');
+            
+            if (ticker) {
+                ticker.parentElement.addEventListener('mouseenter', function() {
+                    ticker.style.animationPlayState = 'paused';
+                });
+                
+                ticker.parentElement.addEventListener('mouseleave', function() {
+                    ticker.style.animationPlayState = 'running';
+                });
+            }
+        });
+    </script>
+</body>
+</html>
