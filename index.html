@@ -17,7 +17,7 @@
             --accent-color-3: #65743A; /* Fern green */
             --background-color: #FDF5E6; /* Old lace background */
             --text-color: #333;
-            --section-spacing: 2rem;
+            --section-spacing: 1.5rem; /* Reduced from 2rem */
             --border-color: rgba(57, 79, 73, 0.15); /* Dark slate gray with transparency */
             --header-height: 70px; /* Increased height for the sticky header */
         }
@@ -27,9 +27,9 @@
             line-height: 1.6;
             color: var(--text-color);
             background-color: var(--background-color);
-            max-width: 1000px;
+            max-width: 900px; /* Slightly narrower for better readability */
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem; /* Reduced from 2rem */
             padding-top: calc(var(--header-height) + 1.5rem); /* Adjusted padding */
             border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
@@ -47,15 +47,15 @@
             background-color: rgba(253, 245, 230, 0.97); /* Slightly more opaque */
             padding: 0;
             box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
-            max-width: 1000px;
+            max-width: 900px; /* Match body width */
             margin: 0 auto;
             border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
             height: var(--header-height);
             display: flex;
             align-items: center;
-            padding-left: 2rem;
-            padding-right: 2rem;
+            padding-left: 1.5rem; /* Match body padding */
+            padding-right: 1.5rem; /* Match body padding */
             transition: all 0.3s ease;
         }
         
@@ -66,13 +66,14 @@
         }
         
         .sticky-header.scrolled h1 {
-            font-size: 1.8rem;
+            font-size: 2.2rem; /* Slightly larger when scrolled */
         }
         
         .sticky-header h1 {
             margin: 0;
             padding: 0;
-            font-size: 2.2rem;
+            font-size: 2.6rem; /* Increased from 2.2rem */
+            font-weight: 700; /* Made bolder */
             border-bottom: none;
             letter-spacing: -0.5px;
             white-space: nowrap;
@@ -87,17 +88,18 @@
         }
         
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.8rem; /* Increased from 2.5rem */
             margin-bottom: 1rem;
             border-bottom: 2px solid var(--accent-color-1);
             padding-bottom: 1rem;
             display: inline-block;
             color: var(--main-color);
+            letter-spacing: -0.8px;
         }
         
         h2 {
             font-family: 'Open Sans', sans-serif;
-            font-size: 2.1rem;
+            font-size: 2.3rem; /* Increased from 2.1rem */
             font-weight: 600;
             margin-top: 1rem;
             margin-bottom: 1.2rem;
@@ -107,14 +109,24 @@
         
         h3 {
             font-family: 'Open Sans', sans-serif;
-            font-size: 1.6rem;
+            font-size: 1.7rem;
             font-weight: 600;
             color: var(--accent-color-3);
-            border-bottom: 2px solid var(--accent-color-3);
             display: inline-block;
             padding-bottom: 0.25rem;
             letter-spacing: -0.3px;
-            margin-bottom: 0.8rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        h3::after {
+            content: "✦";
+            font-size: 0.7em;
+            position: relative;
+            top: -0.3em;
+            margin-left: 0.4em;
+            color: var(--accent-color-3);
+            opacity: 0.7;
         }
         
         a {
@@ -152,10 +164,26 @@
             gap: 2rem;
             margin-bottom: var(--section-spacing);
             align-items: flex-start;
-            padding: 1.5rem;
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            background-color: rgba(255, 255, 255, 0.4);
+            padding: 1.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bio-section::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 14px;
+            border: 1px dashed rgba(101, 116, 58, 0.25);
+            z-index: -1;
+            pointer-events: none;
         }
         
         .profile-image {
@@ -165,14 +193,16 @@
         
         .profile-img {
             width: 100%;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-            border: 3px solid white;
-            transition: transform 0.3s ease;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 4px solid white;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
         }
         
         .profile-img:hover {
-            transform: scale(1.02);
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
         }
         
         .bio-content {
@@ -205,10 +235,22 @@
         .bio-bullets li .emoji {
             position: absolute;
             left: 0;
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             display: inline-flex;
             align-items: center;
             justify-content: center;
+            transform-origin: center;
+            animation: gentle-bounce 5s infinite alternate ease-in-out;
+            animation-delay: calc(var(--emoji-index, 0) * 1.5s);
+        }
+        
+        .bio-bullets li:nth-child(1) .emoji { --emoji-index: 0; }
+        .bio-bullets li:nth-child(2) .emoji { --emoji-index: 1; }
+        .bio-bullets li:nth-child(3) .emoji { --emoji-index: 2; }
+        
+        @keyframes gentle-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
         }
         
         .nowrap {
@@ -233,18 +275,18 @@
         
         /* Ticker for Influences */
         .ticker-container {
-            margin: 3rem 0;
+            margin: 2rem 0; /* Reduced from 3rem */
         }
         
         .ticker {
             background-color: rgba(255, 255, 255, 0.5);
-            padding: 1rem 0;
+            padding: 1.2rem 0;
             overflow: hidden;
             white-space: nowrap;
-            border-top: 1px solid var(--border-color);
-            border-bottom: 1px solid var(--border-color);
-            border-radius: 5px;
-            border: 1px solid var(--border-color);
+            border-radius: 30px;
+            border: 2px solid var(--border-color);
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
         }
         
         .ticker-content {
@@ -286,15 +328,34 @@
             min-width: 200px;
             background-color: rgba(255, 255, 255, 0.6);
             padding: 1.5rem;
-            border-radius: 8px;
-            border-left: 3px solid var(--accent-color-3);
+            border-radius: 16px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offerings-column::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color-3);
+            transform: scaleX(0.92);
+            border-radius: 10px;
             transition: transform 0.3s ease;
         }
         
         .offerings-column:hover {
-            transform: translateY(-5px);
+            transform: translateY(-7px) scale(1.02);
+            box-shadow: 0 14px 24px rgba(0,0,0,0.1);
+        }
+        
+        .offerings-column:hover::before {
+            transform: scaleX(1);
         }
         
         /* Lists */
@@ -339,9 +400,68 @@
             margin-bottom: 0.5rem;
         }
         
+        /* Contact Section */
+        .contact-section {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 0;
+            background-color: transparent;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .contact-section h2 {
+            margin: 0;
+            color: var(--accent-color-1);
+            font-size: 1.6rem;
+            display: inline;
+        }
+        
+        .contact-section p {
+            margin: 0;
+            font-size: 1.1rem;
+            display: inline;
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-color-3);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(101, 116, 58, 0.15);
+            white-space: nowrap;
+        }
+        
+        .contact-button::before {
+            content: "✉️";
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-button:hover {
+            background-color: #7d8b53; /* Lighter version of accent-color-3 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .contact-button:hover::before {
+            /* Override the default link behavior */
+            width: 0;
+        }
+        
         /* Footer */
         footer {
-            margin-top: 3rem;
+            margin-top: 2rem; /* Reduced from 3rem */
             padding-top: 1rem;
             border-top: 1px solid var(--accent-color-1);
             font-size: 0.9rem;
@@ -373,6 +493,10 @@
             .services-section, .offerings-column {
                 padding: 1rem;
             }
+            
+            .contact-section {
+                padding: 1.5rem;
+            }
         }
         
         /* Additional breakpoint for medium-sized screens like tablets and split views */
@@ -389,7 +513,7 @@
 </head>
 <body>
     <header class="sticky-header">
-        <h1>Tanner Holman's website</h1>
+        <h1>Tanner's website</h1>
     </header>
     
     <!-- Bio section with image and text side by side -->
@@ -398,7 +522,7 @@
             <img src="tanner_photo.JPG" alt="Tanner Holman" class="profile-img" />
         </div>
         <div class="bio-content">
-            <p class="bio-tagline">Designing pathways to better movement and pain-free living.</p>
+            <p class="bio-tagline">Hi, I'm Tanner Holman. I'm designing pathways to better movement and pain-free living.</p>
             <ul class="bio-bullets">
                 <li><span class="emoji">🎭</span> Former actor (Florida State University BFA, RADA, Shakespeare & Co)</li>
                 <li><span class="emoji">🦾</span> Certified personal trainer & movement coach</li>
@@ -434,7 +558,7 @@
     
     <!-- Ticker for Influences at the bottom -->
     <div class="ticker-container">
-        <h2>Influences</h2>
+        <h2 style="text-align: center;">Wheel of Influences</h2>
         <div class="ticker">
             <div class="ticker-content">
                 <span><span class="emoji">🐒</span>Jozef Frucek & Linda Kapatena</span>
@@ -454,6 +578,12 @@
                 <span><span class="emoji">🕸</span>Moshe Feldenkrais</span>
             </div>
         </div>
+    </div>
+    
+    <!-- New Contact Section -->
+    <div class="contact-section">
+        <p>Ask me about movement, chronic pain, or anything, really.</p>
+        <a href="mailto:tannerholman97@gmail.com" class="contact-button">Email me</a>
     </div>
     
     <footer>
