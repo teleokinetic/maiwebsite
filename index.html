@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tanner Holman - Solution Architect</title>
+    <title>Tanner Holman's Website</title>
     <!-- Google Fonts for Headings and Body -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -19,6 +19,7 @@
             --text-color: #333;
             --section-spacing: 2rem;
             --border-color: rgba(57, 79, 73, 0.15); /* Dark slate gray with transparency */
+            --header-height: 70px; /* Increased height for the sticky header */
         }
         
         body {
@@ -29,10 +30,56 @@
             max-width: 1000px;
             margin: 0 auto;
             padding: 2rem;
+            padding-top: calc(var(--header-height) + 1.5rem); /* Adjusted padding */
             border-left: 1px solid var(--border-color);
             border-right: 1px solid var(--border-color);
             min-height: 100vh;
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Sticky Header */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(253, 245, 230, 0.97); /* Slightly more opaque */
+            padding: 0;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            max-width: 1000px;
+            margin: 0 auto;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding-left: 2rem;
+            padding-right: 2rem;
+            transition: all 0.3s ease;
+        }
+        
+        .sticky-header.scrolled {
+            height: 55px;
+            background-color: rgba(253, 245, 230, 0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .sticky-header.scrolled h1 {
+            font-size: 1.8rem;
+        }
+        
+        .sticky-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 2.2rem;
+            border-bottom: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            color: var(--main-color);
         }
         
         h1, h2, h3 {
@@ -50,38 +97,53 @@
         
         h2 {
             font-family: 'Open Sans', sans-serif;
-            font-size: 2rem;
+            font-size: 2.1rem;
             font-weight: 600;
             margin-top: 1rem;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             color: var(--accent-color-1);
             letter-spacing: -0.5px;
         }
         
         h3 {
             font-family: 'Open Sans', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             font-weight: 600;
             color: var(--accent-color-3);
             border-bottom: 2px solid var(--accent-color-3);
             display: inline-block;
-            padding-bottom: 0.2rem;
+            padding-bottom: 0.25rem;
             letter-spacing: -0.3px;
-            margin-bottom: 0.5rem;
+            margin-bottom: 0.8rem;
         }
         
         a {
             color: var(--accent-color-3);
             text-decoration: none;
+            position: relative;
             transition: all 0.3s ease;
-            border-bottom: 1px dotted var(--accent-color-3);
-            padding-bottom: 2px;
+            padding: 0 2px;
+            z-index: 1;
+        }
+        
+        a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(101, 116, 58, 0.1); /* Lighter version of accent-color-3 */
+            transition: width 0.3s ease;
+            z-index: -1;
         }
         
         a:hover {
             color: var(--accent-color-1);
-            border-bottom: 1px solid var(--accent-color-1);
-            text-decoration: none;
+        }
+        
+        a:hover::before {
+            width: 100%;
         }
         
         /* Bio Section - Image and text */
@@ -137,6 +199,7 @@
             margin-bottom: 0.75rem;
             display: flex;
             align-items: center;
+            flex-wrap: wrap;
         }
         
         .bio-bullets li .emoji {
@@ -146,6 +209,12 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
+        }
+        
+        .nowrap {
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
         }
         
         /* Services Section - Offerings */
@@ -244,6 +313,9 @@
         .offerings-column li {
             padding-left: 2rem;
             position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
         }
         
         .offerings-column li .emoji {
@@ -254,6 +326,13 @@
         
         .offerings-column li:hover {
             transform: translateX(5px);
+        }
+        
+        .seasonal-note {
+            font-style: italic;
+            font-size: 0.9em;
+            color: #777;
+            margin-left: 0.5rem;
         }
         
         .offering-title {
@@ -274,11 +353,13 @@
         @media (max-width: 768px) {
             .bio-section {
                 flex-direction: column;
+                align-items: center;
+                gap: 1rem;
             }
             
             .profile-image {
-                max-width: 100%;
-                margin-bottom: 1rem;
+                max-width: 200px;
+                margin-bottom: 0.5rem;
             }
             
             h1 {
@@ -293,10 +374,21 @@
                 padding: 1rem;
             }
         }
+        
+        /* Additional breakpoint for medium-sized screens like tablets and split views */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .bio-section {
+                gap: 1.5rem;
+            }
+            
+            .profile-image {
+                max-width: 180px;
+            }
+        }
     </style>
 </head>
 <body>
-    <header>
+    <header class="sticky-header">
         <h1>Tanner Holman's website</h1>
     </header>
     
@@ -306,11 +398,11 @@
             <img src="tanner_photo.JPG" alt="Tanner Holman" class="profile-img" />
         </div>
         <div class="bio-content">
-            <p class="bio-tagline">Solution architect designing pathways to better movement and pain-free living.</p>
+            <p class="bio-tagline">Designing pathways to better movement and pain-free living.</p>
             <ul class="bio-bullets">
                 <li><span class="emoji">🎭</span> Former actor (Florida State University BFA, RADA, Shakespeare & Co)</li>
                 <li><span class="emoji">🦾</span> Certified personal trainer & movement coach</li>
-                <li><span class="emoji">❤️‍🩹</span> Chronic pain educator at <a href="#" target="_blank">Debug Your Pain</a></li>
+                <li><span class="emoji">❤️‍🩹</span> Chronic pain educator&nbsp;<a href="https://debugyourpain.org" target="_blank">at Debug Your Pain</a></li>
             </ul>
         </div>
     </section>
@@ -321,19 +413,19 @@
             <h2>Current Offerings</h2>
             <div class="offerings">
                 <div class="offerings-column">
-                    <h3 class="offering-title">1on1 Coaching</h3>
+                    <h3 class="offering-title">1-on-1 Coaching</h3>
                     <ul>
-                        <li><span class="emoji">➡️</span> Movement online</li>
-                        <li><span class="emoji">➡️</span> Movement in-person (Denver)</li>
-                        <li><span class="emoji">➡️</span> Chronic pain (through Debug Your Pain)</li>
+                        <li><span class="emoji">👨🏼‍💻</span> <a href="#">Movement online</a></li>
+                        <li><span class="emoji">🕺</span> <a href="#">Movement in-person</a></li>
+                        <li><span class="emoji">🩻</span> <a href="https://tally.so/r/w71AAP" target="_blank">Chronic pain</a></li>
                     </ul>
                 </div>
                 
                 <div class="offerings-column">
                     <h3 class="offering-title">Group Classes</h3>
                     <ul>
-                        <li><span class="emoji">🦍</span> 3x Weekly: Movement+ at White Lotus Therapeutics</li>
-                        <li><span class="emoji">🐿️</span> Play in the Park (on seasonal hiatus, <a href="#">register interest here</a>)</li>
+                        <li><span class="emoji">🦍</span> Movement+ at White Lotus Therapeutics (3x/week)</li>
+                        <li><span class="emoji">🐿️</span> Play in the Park <a href="#">(register interest here)</a> <span class="seasonal-note">on seasonal hiatus</span></li>
                     </ul>
                 </div>
             </div>
@@ -382,6 +474,16 @@
                     ticker.style.animationPlayState = 'running';
                 });
             }
+            
+            // Subtle header effect on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.sticky-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
         });
     </script>
 </body>
