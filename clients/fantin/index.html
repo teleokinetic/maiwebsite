@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Feeling the Texture of Emotions | Client Portal</title>
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="stylesheet" href="../../css/portal.css">
+</head>
+<body>
+
+  <!-- ============================================
+       CLIENT CONFIGURATION
+       Change these 3 things for each new client:
+       1. PORTAL_CLIENT_ID - unique identifier (use their name, lowercase)
+       2. PORTAL_PASSWORD - their password
+       3. The welcome message below (line ~35)
+       ============================================ -->
+  <script>
+    window.PORTAL_CLIENT_ID = 'fantin';  // Change for each client
+    window.PORTAL_PASSWORD = 'welcome2025';  // Change for each client
+  </script>
+
+  <!-- Password Gate -->
+  <div id="password-gate" class="password-gate">
+    <div class="password-box">
+      <h1>Welcome, Fantin</h1>  <!-- Change name for each client -->
+      <p class="welcome-text">Enter your password to access your course materials.</p>
+      <form id="password-form">
+        <input
+          type="password"
+          id="password-input"
+          class="password-input"
+          placeholder="Enter password"
+          autocomplete="current-password"
+          required
+        >
+        <button type="submit" class="password-submit">Access Course</button>
+      </form>
+      <p id="password-error" class="password-error">Incorrect password. Please try again.</p>
+    </div>
+  </div>
+
+  <!-- Course Content (hidden until authenticated) -->
+  <div id="course-content" class="course-content">
+
+    <!-- Progress Bar -->
+    <div class="progress-bar">
+      <div class="progress-bar-inner">
+        <span class="progress-label">Progress</span>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <span id="progress-percent" class="progress-percent">0%</span>
+      </div>
+    </div>
+
+    <!-- Header -->
+    <header class="course-header">
+      <div class="course-header-inner">
+        <h1 class="course-title">Feeling the Texture of Emotions</h1>
+        <p class="course-subtitle">A Mini-Course in Emotional Interoception</p>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="course-main">
+
+      <!-- Table of Contents -->
+      <nav class="toc">
+        <h2 class="toc-title">Contents</h2>
+        <ul class="toc-list">
+          <li><a href="#why-this-matters">Why This Matters</a></li>
+          <li><a href="#five-skills">The Five Skills</a></li>
+          <li><a href="#session-1">Session 1: The Physical Baseline</a></li>
+          <li><a href="#session-2">Session 2: Two Emotional Memories</a></li>
+          <li><a href="#session-3">Session 3: Posture as Amplifier</a></li>
+          <li><a href="#session-4">Session 4: Present-Moment Emotions</a></li>
+          <li><a href="#session-5">Session 5: Resonance Deep Dive</a></li>
+          <li><a href="#scaffolding">Scaffolding Reference</a></li>
+          <li><a href="#whats-next">What Comes Next</a></li>
+        </ul>
+      </nav>
+
+      <!-- Why This Matters -->
+      <section id="why-this-matters" class="course-section">
+        <h2 class="section-title">Why This Matters</h2>
+        <div class="intro-text">
+          <p>Your experience is made of three things: thoughts, feelings, and actions. You're already precise with thoughts. This mini-course builds precision with feelings. Specifically, the ability to sense emotions as physical textures in your body.</p>
+          <p>The aim here is not to become more emotional, but to increase the resolution of what is already there. Higher resolution means:</p>
+          <ul>
+            <li><strong>Earlier signal detection.</strong> You notice what's happening before it drives behavior.</li>
+            <li><strong>More choicefulness.</strong> You can respond rather than react.</li>
+            <li><strong>Better data for habit change.</strong> Feelings can help maintain habits. If they are not sensed clearly, they may be maintaining habits without you realizing it.</li>
+          </ul>
+          <p>Increasing your ability to discriminate emotional textures can change the pain experience. This is distinct from "thinking positive." Thinking positively can be helpful, but this approach aims to give your nervous system better information.</p>
+          <p>For example: a client might feel "my back hurts" as one undifferentiated block. With more interoceptive resolution, they start to notice that part of what they're calling "pain" is actually frustration about the pain, or anxiety about it getting worse, or bracing against anticipated movement. These emotional textures have been fused with the nociceptive signal. When they can discriminate&mdash;"this part is the physical sensation, this part is my frustration about it"&mdash;the whole experience can shift, sometimes dramatically.</p>
+        </div>
+      </section>
+
+      <!-- The Five Skills -->
+      <section id="five-skills" class="course-section">
+        <h2 class="section-title">The Five Skills</h2>
+        <p>These skills work together. You'll practice all of them from day one, starting simple and adding complexity.</p>
+
+        <ul class="skills-list">
+          <li>
+            <span class="skill-name">1. Noticing</span>
+            <p class="skill-question">The question: Is something happening in my body right now?</p>
+            <p><strong>Basic unit:</strong> Binary detection. Yes, there's something. Or no, I can't find anything.</p>
+            <p><strong>What it's like when it's working:</strong> You become aware of a sensation you weren't aware of a moment ago. It's like noticing the song playing in the background at a cafe. It was always there, but now you've noticed it.</p>
+          </li>
+          <li>
+            <span class="skill-name">2. Locating</span>
+            <p class="skill-question">The question: Where in my body is this?</p>
+            <p><strong>Basic unit:</strong> Pointing to a general region (head, throat, chest, belly, limbs) without needing to be exact.</p>
+            <p><strong>What it's like when it's working:</strong> You can gesture toward the area. "It's somewhere around here." Precision comes later.</p>
+          </li>
+          <li>
+            <span class="skill-name">3. Describing</span>
+            <p class="skill-question">The question: What is this like?</p>
+            <p><strong>Basic unit:</strong> One quality-word that captures something true about it. (Tight, loose, warm, cool, heavy, light, buzzy, still, sharp, dull, hollow, full...)</p>
+            <p><strong>What it's like when it's working:</strong> The word comes from the sensation, not from your analysis. It might surprise you.</p>
+          </li>
+          <li>
+            <span class="skill-name">4. Resonance-Checking</span>
+            <p class="skill-question">The question: Does this description fit?</p>
+            <p><strong>Basic unit:</strong> Sensing whether a word feels "closer" or "further" from the sensation. Not right/wrong, but closer/further.</p>
+            <p><strong>What it's like when it's working:</strong> There's a subtle "click" or "yes" feeling when description matches sensation. Or a "not quite" feeling when it doesn't. This is a felt sense, not a logical judgment.</p>
+          </li>
+          <li>
+            <span class="skill-name">5. Tracking</span>
+            <p class="skill-question">The question: Is this changing?</p>
+            <p><strong>Basic unit:</strong> Noticing after 30-60 seconds whether the sensation is the same, different, gone, or shifted.</p>
+            <p><strong>What it's like when it's working:</strong> You catch a sensation mid-shift. You notice it getting stronger, softer, or moving.</p>
+          </li>
+        </ul>
+
+        <p><em>Note: these skills are not distinct. They overlap and inform each other. But, practicing them as distinct "moves" can help clarify what aspect of emotional interoception would be most helpful to practice.</em></p>
+      </section>
+
+      <!-- Session 1 -->
+      <article id="session-1" class="session-card">
+        <header class="session-header">
+          <div class="session-number">Session 1</div>
+          <h2 class="session-title">The Physical Baseline</h2>
+        </header>
+        <div class="session-body">
+          <p class="section-orientation">Orientation: Before we work with emotions, we establish that you already have this capacity with physical sensations.</p>
+
+          <!-- Part A -->
+          <div class="part">
+            <h3 class="part-title">Part A: Clenched vs. Unclenched <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Make a tight fist with your right hand. Hold for 10 seconds.</li>
+              <li><strong>Notice:</strong> What's happening in your hand? Where? What's it like? Say your answers out loud.</li>
+              <li>Release. Let the hand rest open.</li>
+              <li><strong>Notice:</strong> What's happening now? Where? What's it like? Say it out loud.</li>
+              <li>Repeat with left hand.</li>
+              <li>Repeat once more, but this time, try to catch the moment of change as you release.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <p style="font-size: 0.9rem; color: var(--color-text-muted); margin-bottom: 0.5rem;">(if your answer is no, revisit the exercise or use the "if you struggled" section 1-2x)</p>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s1a-1" class="checkpoint-checkbox">
+                <label for="s1a-1">I could tell the difference between fist-clenched and fist-open.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Couldn't find sensations</strong> &rarr; Try after mild exercise (i.e. 10 jumping jacks).</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part B -->
+          <div class="part">
+            <h3 class="part-title">Part B: Full Body Scan with Discrimination <span class="part-duration">(15 min)</span></h3>
+            <ol>
+              <li>Lie down or sit comfortably. Close your eyes.</li>
+              <li>Bring attention to your feet. Notice: Is there any sensation here? If yes, locate it. Give it one quality-word (tight, soft, light, heavy, etc). Say it out loud. Don't be afraid to be creative.</li>
+              <li>Move slowly upward: calves, knees, thighs, pelvis, belly, chest, shoulders, arms, hands, neck, face, scalp.</li>
+              <li>At each region, spend 30-60 seconds. Say the answers to these questions out loud:
+                <ul>
+                  <li>Is something here? (Notice)</li>
+                  <li>Where exactly? (Locate)</li>
+                  <li>What's it like? (Describe)</li>
+                  <li>Does that description fit? (Resonate)</li>
+                  <li>Is it changing? (Track)</li>
+                </ul>
+              </li>
+              <li>Physical sensation is fine to notice here (temperature, pressure, tension, tingling). Emotional and physical sensation are closely linked; the ability to make sensory distinctions in emotion and physicality feels very similar.</li>
+              <li>If some areas are "blank," note that and move on.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s1b-1" class="checkpoint-checkbox">
+                <label for="s1b-1">I found at least 2-3 regions with distinct sensations.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s1b-2" class="checkpoint-checkbox">
+                <label for="s1b-2">I noticed at least one sensation change during the scan.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Descriptions feel forced</strong> &rarr; Use this list and just pick the "least wrong" option: tight, loose, warm, cool, heavy, light, buzzy, still, sharp, dull.</li>
+                  <li><strong>Not sure if descriptions fit</strong> &rarr; Be theatrical. Make yourself feel "tight" and note what that is like. Do the same with the other quality words.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part C -->
+          <div class="part">
+            <h3 class="part-title">Part C: Comparison <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Recall the area with the most distinct sensation.</li>
+              <li>Recall an area that felt "blank" or unclear.</li>
+              <li>Go back and forth between them 3-4 times.</li>
+              <li>Can you sense the contrast? What is different? What words might you use to describe the difference? Say it out loud.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s1c-1" class="checkpoint-checkbox">
+                <label for="s1c-1">I could sense a contrast between the "loud" and "quiet" areas.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Can't sense contrast</strong> &rarr; Try comparing two "loud" areas instead. Different body parts often have different qualities even when both are active.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Log -->
+          <div class="session-log">
+            <h3 class="session-log-title">Session 1 Log</h3>
+            <div class="log-field">
+              <label for="log-s1-interesting">What was interesting?</label>
+              <textarea id="log-s1-interesting" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+            <div class="log-field">
+              <label for="log-s1-challenging">What was challenging?</label>
+              <textarea id="log-s1-challenging" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Session 2 -->
+      <article id="session-2" class="session-card">
+        <header class="session-header">
+          <div class="session-number">Session 2</div>
+          <h2 class="session-title">Two Emotional Memories</h2>
+        </header>
+        <div class="session-body">
+          <p class="section-orientation">Orientation: Today we bridge from physical to emotional sensation using strong, clear memories.</p>
+
+          <!-- Part A -->
+          <div class="part">
+            <h3 class="part-title">Part A: First Memory: Something Good <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Recall a time you felt genuinely alive, engaged, or joyful. Not a thought about it, actually put yourself back in the moment. See what you saw, hear what you heard.</li>
+              <li>Let the memory become vivid. Stay with it for 1-2 minutes.</li>
+              <li>Now shift attention from the memory content to your body right now. Say the answers out loud:
+                <ul>
+                  <li>Is something happening? Where?</li>
+                  <li>What's the quality? (One word)</li>
+                  <li>Does that word fit? Try another if not.</li>
+                </ul>
+              </li>
+              <li>Notice for 30 seconds: Is it stable or shifting?</li>
+              <li>Let the memory fade. Shake out your body briefly.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2a-1" class="checkpoint-checkbox">
+                <label for="s2a-1">I could feel something in my body connected to the positive memory.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2a-2" class="checkpoint-checkbox">
+                <label for="s2a-2">I could locate at least a vague region where the emotion was taking place.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Can't feel anything</strong> &rarr; Try "turning up the volume." Exaggerate the memory, make it more extreme than it was.</li>
+                  <li><strong>Feeling is there but without a specific location</strong> &rarr; Place a hand where you guess it might be. Does touching that area change anything?</li>
+                </ul>
+                <p><em>Don't worry about perfection, if you repeat a few times feel free to move on.</em></p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part B -->
+          <div class="part">
+            <h3 class="part-title">Part B: Second Memory: Something Irritating <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Recall a time you felt frustrated, annoyed, or blocked. Someone being obtuse, something not working, a stupid obstacle.</li>
+              <li>Same process: Let it become vivid. 1-2 minutes in the scene.</li>
+              <li>Shift to body. Say the answers out loud:
+                <ul>
+                  <li>Is something happening? Where?</li>
+                  <li>What's the quality?</li>
+                  <li>Does it fit?</li>
+                  <li>Is it shifting?</li>
+                </ul>
+              </li>
+              <li>Let the memory fade. Shake out.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2b-1" class="checkpoint-checkbox">
+                <label for="s2b-1">I could feel something in my body connected to the frustrating memory.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2b-2" class="checkpoint-checkbox">
+                <label for="s2b-2">I could locate at least a vague region where the emotion was taking place.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Words don't fit</strong> &rarr; Skip words entirely. Instead, give the sensation a color or shape.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part C -->
+          <div class="part">
+            <h3 class="part-title">Part C: Discrimination <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Without re-entering the memories fully, briefly recall the body feeling of the good memory.</li>
+              <li>Then switch to the body feeling of the irritating memory.</li>
+              <li>Go back and forth 3-4 times, like flipping between TV channels.</li>
+              <li>Can you sense the contrast? What's different? Location? Quality? Intensity? Movement? Say it out loud.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2c-1" class="checkpoint-checkbox">
+                <label for="s2c-1">When I flipped between them, I could sense the contrast.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s2c-2" class="checkpoint-checkbox">
+                <label for="s2c-2">I can name at least one clear difference between the two body feelings.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>They feel the same</strong> &rarr; Focus on just one dimension. Is there ANY difference in location? No? Try quality. Try "temperature." Try movement.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Log -->
+          <div class="session-log">
+            <h3 class="session-log-title">Session 2 Log</h3>
+            <div class="log-field">
+              <label for="log-s2-interesting">What was interesting?</label>
+              <textarea id="log-s2-interesting" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+            <div class="log-field">
+              <label for="log-s2-challenging">What was challenging?</label>
+              <textarea id="log-s2-challenging" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Session 3 -->
+      <article id="session-3" class="session-card">
+        <header class="session-header">
+          <div class="session-number">Session 3</div>
+          <h2 class="session-title">Posture as Amplifier</h2>
+        </header>
+        <div class="session-body">
+          <p class="section-orientation">Orientation: Today we use posture to make emotions more physically legible. This may feel theatrical or inauthentic at first, but the function is amplification for clearer sensing.</p>
+
+          <!-- Part A -->
+          <div class="part">
+            <h3 class="part-title">Part A: Embodying emotions as posture <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Stand up. Recall the frustrating memory from yesterday (or a fresh one).</li>
+              <li>Let your body take a shape that goes with this feeling. Don't think, let it happen. It might be subtle or obvious.</li>
+              <li>Once you're in a shape, exaggerate it by 20%. More of whatever it is.</li>
+              <li>Now scan. Say out loud: What sensations are present? Where? What quality?</li>
+              <li>Reset to neutral standing.</li>
+              <li>Recall the good memory. Let your body find its shape. Exaggerate by 20%.</li>
+              <li>Scan. Say out loud: What's here now? Where? What quality?</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s3a-1" class="checkpoint-checkbox">
+                <label for="s3a-1">Different postures produced different sensations.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s3a-2" class="checkpoint-checkbox">
+                <label for="s3a-2">I could describe the quality of each.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Posture feels "theatrical"/fake</strong> &rarr; The theatrical feeling is itself a sensation. Where is it? What's it like? (Often: tightness in chest, self-consciousness as a felt quality)</li>
+                  <li><strong>Can't find a posture</strong> &rarr; Try just one body part. What do your shoulders want to do? Your hands? Your face? Your jaw?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part B -->
+          <div class="part">
+            <h3 class="part-title">Part B: Shape-Shifting <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Start in the "frustrated" posture.</li>
+              <li>Slowly (over 30 seconds) morph into the "alive/joyful" posture.</li>
+              <li>Track the sensations as you move. Notice: When do they shift? What changes first?</li>
+              <li>Morph back to the frustrated posture, slowly.</li>
+              <li>Repeat 2 more times, noticing how physical and emotional sensation continues to change as you transition. What's happening there?</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s3b-1" class="checkpoint-checkbox">
+                <label for="s3b-1">I could track sensation changing during the morph between postures.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s3b-2" class="checkpoint-checkbox">
+                <label for="s3b-2">There was a clear difference in the physical and emotional quality of each posture.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>No sensation during morph</strong> &rarr; Go slower. Take 60 seconds instead of 30. Sense physical differences as well as emotional.</li>
+                  <li><strong>The transition feels blank or unclear</strong> &rarr; All good! See if you can notice the moment when one posture "wins" over the other.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part C -->
+          <div class="part">
+            <h3 class="part-title">Part C: Posture without Memory <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Without recalling any specific memory, take on a posture of "curiosity." Whatever that means to your body.</li>
+              <li>Notice: Is there a sensation that comes with this posture? Where? What's it like? Say it out loud.</li>
+              <li>Try one more: "hesitation." Let body find shape. Scan for sensation.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s3c-1" class="checkpoint-checkbox">
+                <label for="s3c-1">Posture-first (without memory) produced at least a faint feeling.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>No sensation in posture</strong> &rarr; Breathe into the posture for 3 breaths. Then scan again.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Log -->
+          <div class="session-log">
+            <h3 class="session-log-title">Session 3 Log</h3>
+            <div class="log-field">
+              <label for="log-s3-interesting">What was interesting?</label>
+              <textarea id="log-s3-interesting" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+            <div class="log-field">
+              <label for="log-s3-challenging">What was challenging?</label>
+              <textarea id="log-s3-challenging" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Session 4 -->
+      <article id="session-4" class="session-card">
+        <header class="session-header">
+          <div class="session-number">Session 4</div>
+          <h2 class="session-title">Present-Moment Emotions</h2>
+        </header>
+        <div class="session-body">
+          <p class="section-orientation">Orientation: Until now we've used memories and postures to generate feeling. Today we work with whatever is present right now, which may be subtle.</p>
+
+          <!-- Part A -->
+          <div class="part">
+            <h3 class="part-title">Part A: What's going on now? <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Sit or stand comfortably. Take 3 breaths to arrive.</li>
+              <li>Ask yourself out loud: "How am I, right now?" Not as analysis, but as an invitation to feel the answer somewhere within your body.</li>
+              <li>Wait. Don't rush to name it. Let something form. It might be a mood, or just a sense of "okayness" or "calm." Those count as emotional tone.</li>
+              <li>If something shows up, apply the five skills. Say answers out loud:
+                <ul>
+                  <li>Notice: Is something here?</li>
+                  <li>Locate: Where?</li>
+                  <li>Describe: What quality?</li>
+                  <li>Resonate: Does the description fit? Adjust.</li>
+                  <li>Track: Watch it for 60 seconds. Any shift?</li>
+                </ul>
+              </li>
+              <li>If nothing shows up, that's data. Note the quality of blankness. Is it numb, calm, empty, foggy? These are also feelings with texture.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4a-1" class="checkpoint-checkbox">
+                <label for="s4a-1">I found at least one present-moment sensation (even if subtle).</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4a-2" class="checkpoint-checkbox">
+                <label for="s4a-2">OR: I could describe the quality of not-feeling when nothing obvious was present.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Everything is blank</strong> &rarr; Check for physical sensation first (body temperature, breath, contact with chair). Then ask: Is there any emotional "tone" underneath these physical facts?</li>
+                  <li><strong>Only finding "calm" or "fine"</strong> &rarr; Perfect, these work well for this exercise. Investigate: Is it calm like a still lake, or calm like numbness? What is its texture? Is "fine" a presence or an absence?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part B -->
+          <div class="part">
+            <h3 class="part-title">Part B: Subtle Emotion Hunting <span class="part-duration">(10 min)</span></h3>
+            <ol>
+              <li>Think about the rest of your day. What's coming up? Any tasks, interactions, events?</li>
+              <li>As you scan across your day, notice: Does any upcoming thing produce even a flicker of body sensation?</li>
+              <li>When you catch a flicker, pause. Don't move on. Try to stay with the flicker.</li>
+              <li>Apply the five skills to whatever you catch, even if it's very faint. Say answers out loud.</li>
+              <li>If you find multiple flickers, practice discriminating: How is the sensation of each flicker different from the others?</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4b-1" class="checkpoint-checkbox">
+                <label for="s4b-1">I caught at least one flicker of sensation connected to an upcoming event.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4b-2" class="checkpoint-checkbox">
+                <label for="s4b-2">I could discriminate between the body-signatures of different upcoming events.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>All contexts feel "neutral"</strong> &rarr; Pick contexts with more charge. Think of a conversation you're dreading, or something you're genuinely looking forward to.</li>
+                  <li><strong>Anticipation feelings are vague</strong> &rarr; Make the imagination more vivid. Who's there? What are they saying? What is your posture like?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part C -->
+          <div class="part">
+            <h3 class="part-title">Part C: Comparison with Baseline <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Briefly recall one of your strong memories (good or frustrating).</li>
+              <li>Notice how loud that sensation is compared to your present-moment experience.</li>
+              <li>Now return to present. Can you find a present-moment sensation that's real but much quieter?</li>
+              <li>The ability to sense quiet signals is what we're developing. How faint can you go and still detect something?</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4c-1" class="checkpoint-checkbox">
+                <label for="s4c-1">I noticed a difference in "volume" between the memory-generated and present-moment feelings.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s4c-2" class="checkpoint-checkbox">
+                <label for="s4c-2">I found a quiet present-moment sensation.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Present moment feels boring</strong> &rarr; The feeling of "this is boring" is itself material. Where is boredom in your body? What's its texture?</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Log -->
+          <div class="session-log">
+            <h3 class="session-log-title">Session 4 Log</h3>
+            <div class="log-field">
+              <label for="log-s4-interesting">What was interesting?</label>
+              <textarea id="log-s4-interesting" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+            <div class="log-field">
+              <label for="log-s4-challenging">What was challenging?</label>
+              <textarea id="log-s4-challenging" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Session 5 -->
+      <article id="session-5" class="session-card">
+        <header class="session-header">
+          <div class="session-number">Session 5</div>
+          <h2 class="session-title">Resonance Deep Dive</h2>
+        </header>
+        <div class="session-body">
+          <p class="section-orientation">Orientation: Resonance-checking is the skill that makes this whole system reliable. Today we focus on developing your sensitivity to "fit."</p>
+
+          <!-- Part A -->
+          <div class="part">
+            <h3 class="part-title">Part A: Physical Resonance Training <span class="part-duration">(8 min)</span></h3>
+            <ol>
+              <li>Make a fist again. Feel the sensation.</li>
+              <li>Try the word "soft." Say it out loud, then check: Does "soft" fit this sensation? Notice the "no" signal in your body (a slight wrongness). Remember this is more sensorial than conceptual.</li>
+              <li>Try "tight." Check: Closer? Does your body give a small "yes"?</li>
+              <li>Try "heavy," "buzzy," "sharp," "stuck." For each, say the word out loud and notice the closer/further signal.</li>
+              <li>Repeat with an open hand. Try words. Notice which feel closer, which further.</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5a-1" class="checkpoint-checkbox">
+                <label for="s5a-1">I could feel the difference between a word that fits and one that doesn't.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5a-2" class="checkpoint-checkbox">
+                <label for="s5a-2">The "fit" signal was felt in my body, not just decided by my mind.</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>All words feel equally "meh"</strong> &rarr; Try extreme contrasts first. For a tight sensation, check: "soft as a cloud"&mdash;is that wrong? "Like a clamp"&mdash;is that closer? Start with obvious mismatches, then make them more subtle. Be playful, don't worry about being perfectly correct.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part B -->
+          <div class="part">
+            <h3 class="part-title">Part B: Emotional Resonance Training <span class="part-duration">(12 min)</span></h3>
+            <ol>
+              <li>Generate a feeling using memory or posture, your choice.</li>
+              <li>Once sensation is present, try words that are intentionally close but not quite right:
+                <ul>
+                  <li>If it seems like frustration, try "angry"... does it fit? Try "stuck"... closer? Try "hot"... how about that?</li>
+                </ul>
+              </li>
+              <li>The goal isn't to find the perfect word. It's to feel the difference between closer and further. Say each word out loud and check.</li>
+              <li>Notice: What happens in your body when a word gets close? Is there a release, a recognition, a settling?</li>
+              <li>Notice: What happens when a word is off? A tightening, a blankness, a "no"?</li>
+              <li>Try describing one sensation with three different words that all partially fit. Can you feel the slightly different "fit quality" of each?</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5b-1" class="checkpoint-checkbox">
+                <label for="s5b-1">I could use resonance-checking to improve a description (not just confirm it).</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5b-2" class="checkpoint-checkbox">
+                <label for="s5b-2">I noticed a body signal when a word fit (or didn't fit).</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>Can't tell fit from non-fit</strong> &rarr; Place attention (and maybe a hand) on your chest or gut before checking the word. Check there, not in your head.</li>
+                  <li><strong>The sensation is too faint</strong> &rarr; Generate a stronger one using a more vivid memory or more exaggerated posture, then try again.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Part C -->
+          <div class="part">
+            <h3 class="part-title">Part C: Image/Metaphor Resonance <span class="part-duration">(5 min)</span></h3>
+            <ol>
+              <li>Generate another feeling.</li>
+              <li>Instead of words, let an image or metaphor arise.</li>
+              <li>What object, texture, weather, animal, or scene goes with this feeling? Say it out loud.</li>
+              <li>Check resonance: Does the image fit? What might fit better?</li>
+              <li>Notice: Is resonance-checking easier with images than words? Or harder? (Both are valid, and it's good to know your tendencies)</li>
+            </ol>
+
+            <div class="checkpoint">
+              <div class="checkpoint-title">Checkpoint</div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5c-1" class="checkpoint-checkbox">
+                <label for="s5c-1">I found an image or metaphor that fit a sensation.</label>
+              </div>
+              <div class="checkpoint-item">
+                <input type="checkbox" id="s5c-2" class="checkpoint-checkbox">
+                <label for="s5c-2">I know whether images or words work better for me (for now).</label>
+              </div>
+            </div>
+
+            <div class="struggled-section">
+              <button class="struggled-toggle">If you struggled</button>
+              <div class="struggled-content">
+                <ul>
+                  <li><strong>No images come</strong> &rarr; Try categories. "If this were a weather, what would it be?" "If this were an animal?" Prompting with categories can help.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <!-- Session Log -->
+          <div class="session-log">
+            <h3 class="session-log-title">Session 5 Log</h3>
+            <div class="log-field">
+              <label for="log-s5-interesting">What was interesting?</label>
+              <textarea id="log-s5-interesting" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+            <div class="log-field">
+              <label for="log-s5-challenging">What was challenging?</label>
+              <textarea id="log-s5-challenging" class="log-textarea" placeholder="Type your reflections here..."></textarea>
+            </div>
+          </div>
+
+        </div>
+      </article>
+
+      <!-- Scaffolding Reference -->
+      <section id="scaffolding" class="scaffolding-section">
+        <h2 class="section-title">Scaffolding Reference</h2>
+        <p>Keep this list for when you get stuck at any stage:</p>
+
+        <h3>If you can't NOTICE (nothing is there):</h3>
+        <ul>
+          <li>Do light exercise first (jumping jacks, shake out)</li>
+          <li>Check for physical sensation as a gateway (temperature, pressure, heartbeat)</li>
+          <li>"Turn up the volume" on the emotion source, make the memory more extreme</li>
+          <li>Notice the quality of blankness itself: is it numb, empty, foggy, calm?</li>
+        </ul>
+
+        <h3>If you can't LOCATE (it's "everywhere" or "nowhere"):</h3>
+        <ul>
+          <li>Place a hand on different body regions and check each</li>
+          <li>Start with the big three: head, chest, belly. Which has more of something?</li>
+          <li>Use posture: let body take a shape, then feel where the posture is most alive</li>
+        </ul>
+
+        <h3>If you can't DESCRIBE (words don't come or don't fit):</h3>
+        <ul>
+          <li>Use the basic list: tight, loose, warm, cool, heavy, light, buzzy, still, sharp, dull</li>
+          <li>Just pick the "least wrong" word, precision comes later</li>
+          <li>Try images instead: What color? What texture? What object?</li>
+          <li>Try sounds: If this sensation made a noise, what would it be?</li>
+        </ul>
+
+        <h3>If you can't CHECK RESONANCE (all words feel the same):</h3>
+        <ul>
+          <li>Try obviously wrong words first to feel the "no" signal</li>
+          <li>Slow down&mdash;resonance is subtle and takes a second to register</li>
+          <li>Place attention in the body region before checking, not in your head</li>
+          <li>Check with images or metaphors instead of words</li>
+        </ul>
+
+        <h3>If you can't TRACK (nothing seems to change):</h3>
+        <ul>
+          <li>Stay longer&mdash;change is often slow</li>
+          <li>Take a breath and notice if that changes anything</li>
+          <li>Shift your body slightly (lean, sigh, stretch) and notice response</li>
+          <li>Accept that stability is valid data&mdash;some sensations don't change quickly</li>
+        </ul>
+
+        <h3>General amplification techniques:</h3>
+        <ul>
+          <li><strong>Exaggeration:</strong> Make the source stimulus more extreme</li>
+          <li><strong>Posture:</strong> Let body take a shape that matches the feeling</li>
+          <li><strong>Breath:</strong> Breathe into the region where sensation is located</li>
+          <li><strong>Movement:</strong> Rock, sway, or gesture and notice what emerges</li>
+        </ul>
+      </section>
+
+      <!-- What Comes Next -->
+      <section id="whats-next" class="course-section">
+        <h2 class="section-title">What Comes Next</h2>
+        <p>This course builds the basic capacity to sense emotional texture in your body. With this foundation, you can:</p>
+        <ul>
+          <li>Use emotions as data in decision-making (not just thoughts)</li>
+          <li>Notice emotional patterns that maintain habits (including pain-related habits)</li>
+          <li>Work with practices that require felt-sense access (Focusing, coherence therapy, somatic work)</li>
+          <li>Catch emotional responses earlier, before they drive unconscious behavior</li>
+        </ul>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="../../js/portal.js"></script>
+
+</body>
+</html>
