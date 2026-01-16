@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tanner Holman's Website</title>
+    <!-- Google Fonts for Headings and Body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@500;600;700&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        /* Global Styles */
+        :root {
+            --main-color: #330F0A; /* Black bean */
+            --accent-color-1: #394F49; /* Dark slate gray */
+            --accent-color-2: #FDF5E6; /* Old lace */
+            --accent-color-3: #65743A; /* Fern green */
+            --background-color: #FDF5E6; /* Old lace background */
+            --text-color: #333;
+            --section-spacing: 1.5rem; /* Reduced from 2rem */
+            --border-color: rgba(57, 79, 73, 0.15); /* Dark slate gray with transparency */
+            --header-height: 70px; /* Increased height for the sticky header */
+        }
+        
+        body {
+            font-family: 'Nunito', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--background-color);
+            max-width: 900px; /* Slightly narrower for better readability */
+            margin: 0 auto;
+            padding: 1.5rem; /* Reduced from 2rem */
+            padding-top: calc(var(--header-height) + 1.5rem); /* Adjusted padding */
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            min-height: 100vh;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+        }
+        
+        /* Sticky Header */
+        .sticky-header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background-color: rgba(253, 245, 230, 0.97); /* Slightly more opaque */
+            padding: 0;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            max-width: 900px; /* Match body width */
+            margin: 0 auto;
+            border-left: 1px solid var(--border-color);
+            border-right: 1px solid var(--border-color);
+            height: var(--header-height);
+            display: flex;
+            align-items: center;
+            padding-left: 1.5rem; /* Match body padding */
+            padding-right: 1.5rem; /* Match body padding */
+            transition: all 0.3s ease;
+        }
+        
+        .sticky-header.scrolled {
+            height: 55px;
+            background-color: rgba(253, 245, 230, 0.98);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+        
+        .sticky-header.scrolled h1 {
+            font-size: 2.2rem; /* Slightly larger when scrolled */
+        }
+        
+        .sticky-header h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 2.6rem; /* Increased from 2.2rem */
+            font-weight: 700; /* Made bolder */
+            border-bottom: none;
+            letter-spacing: -0.5px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            transition: all 0.3s ease;
+            color: var(--main-color);
+        }
+        
+        h1, h2, h3 {
+            color: var(--main-color);
+        }
+        
+        h1 {
+            font-size: 2.8rem; /* Increased from 2.5rem */
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--accent-color-1);
+            padding-bottom: 1rem;
+            display: inline-block;
+            color: var(--main-color);
+            letter-spacing: -0.8px;
+        }
+        
+        h2 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 2.3rem; /* Increased from 2.1rem */
+            font-weight: 600;
+            margin-top: 1rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent-color-1);
+            letter-spacing: -0.5px;
+        }
+        
+        h3 {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 1.7rem;
+            font-weight: 600;
+            color: var(--accent-color-3);
+            display: inline-block;
+            padding-bottom: 0.25rem;
+            letter-spacing: -0.3px;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        h3::after {
+            content: "✦";
+            font-size: 0.7em;
+            position: relative;
+            top: -0.3em;
+            margin-left: 0.4em;
+            color: var(--accent-color-3);
+            opacity: 0.7;
+        }
+        
+        a {
+            color: var(--accent-color-3);
+            text-decoration: none;
+            position: relative;
+            transition: all 0.3s ease;
+            padding: 0 2px;
+            z-index: 1;
+        }
+        
+        a::before {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 100%;
+            background-color: rgba(101, 116, 58, 0.1); /* Lighter version of accent-color-3 */
+            transition: width 0.3s ease;
+            z-index: -1;
+        }
+        
+        a:hover {
+            color: var(--accent-color-1);
+        }
+        
+        a:hover::before {
+            width: 100%;
+        }
+        
+        /* Bio Section - Image and text */
+        .bio-section {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: var(--section-spacing);
+            align-items: flex-start;
+            padding: 1.8rem;
+            border: 2px solid var(--border-color);
+            border-radius: 20px;
+            background-color: rgba(255, 255, 255, 0.5);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+            position: relative;
+            z-index: 1;
+        }
+        
+        .bio-section::before {
+            content: "";
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            right: 12px;
+            bottom: 12px;
+            border-radius: 14px;
+            border: 1px dashed rgba(101, 116, 58, 0.25);
+            z-index: -1;
+            pointer-events: none;
+        }
+        
+        .profile-image {
+            flex: 1;
+            max-width: 250px;
+        }
+        
+        .profile-img {
+            width: 100%;
+            border-radius: 18px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            border: 4px solid white;
+            transition: all 0.3s ease;
+            transform: rotate(-2deg);
+        }
+        
+        .profile-img:hover {
+            transform: rotate(0deg) scale(1.05);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+        
+        .bio-content {
+            flex: 2;
+        }
+        
+        .bio-tagline {
+            font-size: 1.3rem;
+            font-weight: 300;
+            color: var(--accent-color-1);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+        
+        /* Name hover/click bio */
+        .name-container {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-weight: 500;
+            color: var(--main-color);
+            transition: all 0.3s ease;
+            border-bottom: 1px dashed var(--accent-color-3);
+        }
+        
+        .name-container:hover {
+            color: var(--accent-color-3);
+        }
+        
+        .name-container::after {
+            content: "ⓘ";
+            font-size: 0.7em;
+            position: relative;
+            top: -0.5em;
+            margin-left: 0.2em;
+            color: var(--accent-color-3);
+            opacity: 0.8;
+        }
+        
+        .extended-bio {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            z-index: 100;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%) translateY(10px);
+            width: 300px;
+            background-color: white;
+            color: var(--text-color);
+            text-align: left;
+            border-radius: 10px;
+            padding: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+            font-weight: normal;
+            line-height: 1.6;
+            border: 1px solid var(--border-color);
+        }
+        
+        .extended-bio::before {
+            content: "";
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 8px;
+            border-style: solid;
+            border-color: transparent transparent white transparent;
+        }
+        
+        .name-container:hover .extended-bio,
+        .name-container.active .extended-bio {
+            visibility: visible;
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+        
+        .extended-bio-title {
+            color: var(--accent-color-1);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        /* Bio Bullet Points */
+        .bio-bullets {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .bio-bullets li {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .bio-bullets li .emoji {
+            position: absolute;
+            left: 0;
+            font-size: 1.4rem;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            transform-origin: center;
+            animation: gentle-bounce 5s infinite alternate ease-in-out;
+            animation-delay: calc(var(--emoji-index, 0) * 1.5s);
+        }
+        
+        .bio-bullets li:nth-child(1) .emoji { --emoji-index: 0; }
+        .bio-bullets li:nth-child(2) .emoji { --emoji-index: 1; }
+        .bio-bullets li:nth-child(3) .emoji { --emoji-index: 2; }
+        
+        @keyframes gentle-bounce {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+        }
+        
+        .nowrap {
+            white-space: nowrap;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        /* Services Section - Offerings */
+        .services-section {
+            margin-bottom: var(--section-spacing);
+            background-color: rgba(255, 255, 255, 0.4);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+        }
+        
+        .offerings-content {
+            width: 100%;
+        }
+        
+        /* Ticker for Influences */
+        .ticker-container {
+            margin: 2rem 0; /* Reduced from 3rem */
+        }
+        
+        .ticker {
+            background-color: rgba(255, 255, 255, 0.5);
+            padding: 1.2rem 0;
+            overflow: hidden;
+            white-space: nowrap;
+            border-radius: 30px;
+            border: 2px solid var(--border-color);
+            position: relative;
+            box-shadow: inset 0 0 15px rgba(0,0,0,0.03);
+        }
+        
+        .ticker-content {
+            display: inline-block;
+            animation: ticker 30s linear infinite;
+        }
+        
+        .ticker-content span {
+            margin: 0 1rem;
+            display: inline-flex;
+            align-items: center;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+        
+        .ticker-content span:hover {
+            transform: scale(1.1);
+            color: var(--accent-color-1);
+        }
+        
+        .ticker-content .emoji {
+            margin-right: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        @keyframes ticker {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        
+        /* Offerings Layout */
+        .offerings {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+        
+        /* Enhanced Offerings Section */
+        .offerings-column {
+            flex: 1;
+            min-width: 200px;
+            background-color: rgba(255, 255, 255, 0.7); /* Slightly more opaque background */
+            padding: 1.5rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .offerings-column::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background-color: var(--accent-color-3);
+            transform: scaleX(0.92);
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        
+        .offerings-column:hover {
+            transform: translateY(-7px) scale(1.02);
+            box-shadow: 0 14px 24px rgba(0,0,0,0.1);
+        }
+        
+        .offerings-column:hover::before {
+            transform: scaleX(1);
+        }
+        
+        /* Improved heading styles */
+        .offering-title {
+            margin-bottom: 1rem; /* Increased from 0.5rem */
+            padding-bottom: 0.5rem;
+            border-bottom: 1px dashed rgba(101, 116, 58, 0.25);
+            text-align: center;
+        }
+        
+        /* Lists */
+        ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        li {
+            margin-bottom: 0.75rem;
+            transition: transform 0.2s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Enhanced list items */
+        .offerings-column li {
+            padding: 0.7rem 0.5rem 0.7rem 2rem; /* Added padding top/bottom */
+            position: relative;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            border-radius: 8px;
+            transition: all 0.2s ease;
+            background-color: rgba(255, 255, 255, 0.5);
+        }
+        
+        .offerings-column li:hover {
+            transform: translateX(5px);
+            background-color: rgba(255, 255, 255, 0.8);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+        
+        .offerings-column li .emoji {
+            position: absolute;
+            left: 0.7rem;
+            font-size: 1.2rem;
+        }
+        
+        /* Better link styling */
+        .offerings-column a {
+            font-weight: 600;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .offerings-column a::after {
+            content: "→";
+            opacity: 0;
+            margin-left: 0.3rem;
+            transform: translateX(-5px);
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+        
+        .offerings-column a:hover::after {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        /* Improved seasonal note */
+        .seasonal-note {
+            font-style: italic;
+            font-size: 0.85em;
+            color: #777;
+            margin-left: 0.5rem;
+            padding: 0.1rem 0.4rem;
+            background-color: rgba(0,0,0,0.05);
+            border-radius: 4px;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            margin-top: 2rem;
+            margin-bottom: 1.5rem;
+            padding: 0;
+            background-color: transparent;
+            text-align: center;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+        
+        .contact-section h2 {
+            margin: 0;
+            color: var(--accent-color-1);
+            font-size: 1.6rem;
+            display: inline;
+        }
+        
+        .contact-section p {
+            margin: 0;
+            font-size: 1.1rem;
+            display: inline;
+        }
+        
+        .contact-button {
+            display: inline-flex;
+            align-items: center;
+            background-color: var(--accent-color-3);
+            color: white;
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            transition: all 0.25s ease;
+            box-shadow: 0 4px 10px rgba(101, 116, 58, 0.15);
+            white-space: nowrap;
+        }
+        
+        .contact-button::before {
+            content: "✉️";
+            margin-right: 0.5rem;
+            font-size: 1.1rem;
+        }
+        
+        .contact-button:hover {
+            background-color: #7d8b53; /* Lighter version of accent-color-3 */
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.1);
+        }
+        
+        .contact-button:hover::before {
+            /* Override the default link behavior */
+            width: 0;
+        }
+        
+        /* Footer */
+        footer {
+            margin-top: 2rem; /* Reduced from 3rem */
+            padding-top: 1rem;
+            border-top: 1px solid var(--accent-color-1);
+            font-size: 0.9rem;
+            text-align: center;
+            color: var(--accent-color-1);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bio-section {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem; /* Reduced from 1rem */
+                padding: 1.5rem; /* Slightly reduced padding */
+            }
+            
+            .profile-image {
+                max-width: 180px; /* Reduced from 200px */
+                margin-bottom: 0.2rem; /* Reduced from 0.5rem */
+            }
+            
+            .bio-content {
+                text-align: center; /* Center text on mobile */
+            }
+
+            .bio-tagline {
+                margin-top: 0.5rem;
+                margin-bottom: 1rem; /* Reduced from 1.5rem */
+            }
+
+            .bio-bullets {
+                text-align: left; /* Keep bullet points left-aligned */
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .services-section, .offerings-column {
+                padding: 1rem;
+            }
+            
+            .contact-section {
+                padding: 1.5rem;
+            }
+            
+            .offering-title {
+                text-align: left;
+                font-size: 1.5rem;
+            }
+            
+            .offerings {
+                gap: 1.5rem; /* Reduced from 2rem for mobile */
+            }
+            
+            /* Adjust the extended bio on mobile */
+            .extended-bio {
+                width: 250px;
+                left: 0;
+                transform: translateX(0) translateY(10px);
+            }
+            
+            .extended-bio::before {
+                left: 20%;
+            }
+            
+            .name-container:hover .extended-bio,
+            .name-container.active .extended-bio {
+                transform: translateX(0) translateY(0);
+            }
+        }
+        
+        /* Additional breakpoint for medium-sized screens like tablets and split views */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .bio-section {
+                gap: 1rem; /* Reduced from 1.5rem */
+            }
+            
+            .profile-image {
+                max-width: 160px; /* Reduced from 180px */
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="sticky-header">
+        <h1>Tanner's website</h1>
+    </header>
+    
+    <!-- Bio section with image and text side by side -->
+    <section class="bio-section">
+        <div class="profile-image">
+            <img src="tanner_photo.JPG" alt="Tanner Holman" class="profile-img" />
+        </div>
+        <div class="bio-content">
+            <p class="bio-tagline">Hi, I'm <span class="name-container">Tanner Holman<div class="extended-bio">
+                <div class="extended-bio-title">About me</div>
+                <p>I'm a movement coach and chronic pain educator with a background in performing arts. After my own journey recovering from injuries, I became fascinated with how our bodies move and heal.</p>
+                <p>I work with clients to develop personalized movement practices that help them overcome limitations, reduce pain, and rediscover joy in movement.</p>
+            </div></span>.<br>I'm designing pathways to better movement and pain-free living.</p>
+            <ul class="bio-bullets">
+                <li><span class="emoji">🎭</span> Former actor (Florida State University BFA, RADA, Shakespeare & Co)</li>
+                <li><span class="emoji">🦾</span> Certified personal trainer & movement coach</li>
+                <li><span class="emoji">❤️‍🩹</span> Chronic pain educator&nbsp;<a href="https://debugyourpain.org" target="_blank">at Debug Your Pain</a></li>
+            </ul>
+        </div>
+    </section>
+    
+    <!-- Services section with offerings -->
+    <div class="services-section">
+        <div class="offerings-content">
+            <h2>Current Offerings</h2>
+            <div class="offerings">
+                <div class="offerings-column">
+                    <h3 class="offering-title">1-on-1 Coaching</h3>
+                    <ul>
+                        <li><span class="emoji">👨🏼‍💻</span> Movement <a href="#">online</a></li>
+                        <li><span class="emoji">🕺</span> Movement <a href="#">in-person</a></li>
+                        <li><span class="emoji">🩻</span> Chronic pain <a href="https://tally.so/r/w71AAP" target="_blank">online</a></li>
+                    </ul>
+                </div>
+                
+                <div class="offerings-column">
+                    <h3 class="offering-title">Group Classes</h3>
+                    <ul>
+                        <li><span class="emoji">🦍</span> Movement+ at White Lotus Therapeutics (3x/week)</li>
+                        <li><span class="emoji">🐿️</span> Play in the Park <a href="#">(register interest here)</a> <span class="seasonal-note">on seasonal hiatus</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Ticker for Influences at the bottom -->
+    <div class="ticker-container">
+        <h2 style="text-align: center;">Wheel of Influences</h2>
+        <div class="ticker">
+            <div class="ticker-content">
+                <span><span class="emoji">🐒</span>Jozef Frucek & Linda Kapatena</span>
+                <span><span class="emoji">🦉</span>Charlie Awbery</span>
+                <span><span class="emoji">🐉</span>Jared Janes</span>
+                <span><span class="emoji">🧶</span>Olivier Goetgeluck</span>
+                <span><span class="emoji">📚</span>David Chapman</span>
+                <span><span class="emoji">🌳</span>Rafe Kelley</span>
+                <span><span class="emoji">🕸</span>Moshe Feldenkrais</span>
+                <!-- Repeat for scrolling effect -->
+                <span><span class="emoji">🐒</span>Jozef Frucek & Linda Kapatena</span>
+                <span><span class="emoji">🦉</span>Charlie Awbery</span>
+                <span><span class="emoji">🐉</span>Jared Janes</span>
+                <span><span class="emoji">🧶</span>Olivier Goetgeluck</span>
+                <span><span class="emoji">📚</span>David Chapman</span>
+                <span><span class="emoji">🌳</span>Rafe Kelley</span>
+                <span><span class="emoji">🕸</span>Moshe Feldenkrais</span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- New Contact Section -->
+    <div class="contact-section">
+        <p>Ask me about movement, chronic pain, or anything, really.</p>
+        <a href="mailto:tannerholman97@gmail.com" class="contact-button">Email me</a>
+    </div>
+    
+    <footer>
+        <p>&copy; 2025 Tanner Holman. All rights reserved.</p>
+    </footer>
+    
+    <script>
+        // Pause the ticker on hover
+        document.addEventListener('DOMContentLoaded', function() {
+            const ticker = document.querySelector('.ticker-content');
+            
+            if (ticker) {
+                ticker.parentElement.addEventListener('mouseenter', function() {
+                    ticker.style.animationPlayState = 'paused';
+                });
+                
+                ticker.parentElement.addEventListener('mouseleave', function() {
+                    ticker.style.animationPlayState = 'running';
+                });
+            }
+            
+            // Subtle header effect on scroll
+            window.addEventListener('scroll', function() {
+                const header = document.querySelector('.sticky-header');
+                if (window.scrollY > 50) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+            });
+            
+            // Handle click on name for extended bio
+            const nameContainer = document.querySelector('.name-container');
+            if (nameContainer) {
+                nameContainer.addEventListener('click', function(e) {
+                    this.classList.toggle('active');
+                    e.stopPropagation(); // Prevent body click from immediately closing it
+                });
+                
+                // Close bio when clicking outside
+                document.body.addEventListener('click', function() {
+                    nameContainer.classList.remove('active');
+                });
+                
+                // Prevent bio from closing when clicking inside the bio
+                const extendedBio = document.querySelector('.extended-bio');
+                if (extendedBio) {
+                    extendedBio.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
