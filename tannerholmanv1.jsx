@@ -1,27 +1,4 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tanner Holman</title>
-    <meta name="description" content="Chronic pain coach & movement teacher — evidence‑informed experiments that make pain relief stick." />
-    <!-- Tailwind (CDN, no build step) -->
-    <script>
-      window.tailwind = {}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="antialiased">
-    <div id="root"></div>
-    <noscript>This site requires JavaScript to run.</noscript>
-
-    <!-- React (UMD) + Babel Standalone to compile JSX in the browser -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-
-    <script type="text/babel" data-presets="env,react">
-function TannerHolmanSite() {
+export default function TannerHolmanSite() {
   const CONTACT_EMAIL = "tannerholman97@gmail.com"; // ← replace with your real email
   const CALENDLY = "https://calendly.com/tannerholman/consultation"; // ← replace with your scheduling link (e.g., https://calendly.com/yourname/intro)
 
@@ -332,11 +309,3 @@ function TannerHolmanSite() {
     </div>
   );
 }
-
-
-      // Mount the app
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<TannerHolmanSite />);
-    </script>
-  </body>
-</html>
