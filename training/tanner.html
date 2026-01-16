@@ -465,16 +465,7 @@
         <div class="text" id="cue-text"></div>
       </div>
 
-      <div class="last-session">
-        Last session: No previous data
-      </div>
-
       <div class="sets-container" id="sets-container"></div>
-
-      <div class="notes-section">
-        <label>Notes (optional)</label>
-        <textarea id="exercise-notes" placeholder="Any observations..."></textarea>
-      </div>
     </div>
 
     <button class="next-btn" id="next-btn" onclick="nextExercise()">Next →</button>
@@ -609,16 +600,17 @@
       ]
     };
 
-    // Flatten exercises for navigation
+    // Navigate by blocks instead of individual exercises
+    let currentBlockIndex = 0;
+    let sessionData = {};
+
+    // Flatten exercises for session data initialization
     let allExercises = [];
     PROGRAM.blocks.forEach(block => {
       block.exercises.forEach(ex => {
         allExercises.push({...ex, blockName: block.name, blockId: block.id});
       });
     });
-
-    let currentExerciseIndex = 0;
-    let sessionData = {};
 
     // Initialize overview
     function initOverview() {
@@ -656,135 +648,205 @@
     }
 
     function startSession() {
-      currentExerciseIndex = 0;
-      sessionData = {};
+      // Only reset if no session data exists (first start)
+      if (Object.keys(sessionData).length === 0) {
+        currentBlockIndex = 0;
 
-      // Initialize session data for all exercises
-      allExercises.forEach((ex, idx) => {
-        sessionData[idx] = {
-          exerciseId: ex.id,
-          exerciseName: ex.name,
-          sets: [],
-          notes: ''
-        };
-        for (let i = 0; i < ex.sets; i++) {
-          sessionData[idx].sets.push({
-            setNumber: i + 1,
-            targetReps: ex.reps,
-            actualReps: '',
-            load: ex.load === 'bodyweight' ? 'BW' : ex.load
-          });
-        }
-      });
+        // Initialize session data for all exercises
+        allExercises.forEach((ex, idx) => {
+          sessionData[idx] = {
+            exerciseId: ex.id,
+            exerciseName: ex.name,
+            sets: [],
+            notes: ''
+          };
+          for (let i = 0; i < ex.sets; i++) {
+            sessionData[idx].sets.push({
+              setNumber: i + 1,
+              targetReps: ex.reps,
+              actualReps: '',
+              load: ''  // Empty by default - will show placeholder
+            });
+          }
+        });
+      }
 
       document.getElementById('overview-screen').classList.add('hidden');
       document.getElementById('logging-screen').classList.add('active');
-      renderExercise();
+      renderBlock();
     }
 
-    function renderExercise() {
-      const ex = allExercises[currentExerciseIndex];
-      const data = sessionData[currentExerciseIndex];
+    function renderBlock() {
+      const block = PROGRAM.blocks[currentBlockIndex];
 
-      document.getElementById('progress').textContent = `${currentExerciseIndex + 1} of ${allExercises.length}`;
-      document.getElementById('exercise-name').textContent = ex.name;
+      // Update progress indicator
+      document.getElementById('progress').textContent = `Block ${currentBlockIndex + 1} of ${PROGRAM.blocks.length}`;
 
-      const loadStr = ex.load !== 'bodyweight' ? ` @ ${ex.load}` : '';
-      document.getElementById('exercise-target').textContent = `Target: ${ex.sets} sets × ${ex.reps} reps${loadStr}`;
+      // Update block header
+      document.getElementById('exercise-name').textContent = `${block.id}: ${block.name}`;
+      document.getElementById('exercise-target').textContent = `${block.exercises.length} exercise${block.exercises.length > 1 ? 's' : ''}`;
 
-      // Progression
-      const progBox = document.getElementById('progression-box');
-      if (ex.progressionNote) {
-        progBox.classList.remove('hidden');
-        document.getElementById('progression-text').textContent = ex.progressionNote;
-      } else {
-        progBox.classList.add('hidden');
-      }
+      // Hide progression and cue boxes (they'll be shown per-exercise below)
+      document.getElementById('progression-box').classList.add('hidden');
+      document.getElementById('cue-box').classList.add('hidden');
 
-      // Cue
-      const cueBox = document.getElementById('cue-box');
-      if (ex.customCue) {
-        cueBox.classList.remove('hidden');
-        document.getElementById('cue-text').textContent = ex.customCue;
-      } else {
-        cueBox.classList.add('hidden');
-      }
-
-      // Sets
+      // Render all exercises in this block
       const setsContainer = document.getElementById('sets-container');
       setsContainer.innerHTML = '';
 
-      for (let i = 0; i < ex.sets; i++) {
-        const setData = data.sets[i];
-        const setRow = document.createElement('div');
-        setRow.className = 'set-row';
-        setRow.innerHTML = `
-          <span class="set-label">Set ${i + 1}</span>
-          <input type="text" inputmode="numeric" class="reps-input"
-                 placeholder="${ex.reps}"
-                 value="${setData.actualReps}"
-                 onchange="updateSet(${i}, 'reps', this.value)">
-          <span class="at-symbol">@</span>
-          <input type="text" class="load-input"
-                 placeholder="${setData.load}"
-                 value="${setData.load}"
-                 onchange="updateSet(${i}, 'load', this.value)">
-        `;
-        setsContainer.appendChild(setRow);
+      // Calculate global exercise indices for this block
+      let globalExerciseIndex = 0;
+      for (let b = 0; b < currentBlockIndex; b++) {
+        globalExerciseIndex += PROGRAM.blocks[b].exercises.length;
       }
 
-      // Notes
-      document.getElementById('exercise-notes').value = data.notes;
+      block.exercises.forEach((ex, localIdx) => {
+        const exIndex = globalExerciseIndex + localIdx;
+        const data = sessionData[exIndex];
 
-      // Button text
+        // Create exercise section
+        const exerciseSection = document.createElement('div');
+        exerciseSection.className = 'exercise-section';
+        exerciseSection.style.marginBottom = '32px';
+        exerciseSection.style.paddingBottom = '24px';
+        exerciseSection.style.borderBottom = localIdx < block.exercises.length - 1 ? '1px solid #333' : 'none';
+
+        // Exercise header
+        const exerciseHeader = document.createElement('h3');
+        exerciseHeader.style.fontSize = '18px';
+        exerciseHeader.style.marginBottom = '8px';
+        exerciseHeader.textContent = ex.name;
+        exerciseSection.appendChild(exerciseHeader);
+
+        // Target
+        const loadStr = ex.load !== 'bodyweight' ? ` @ ${ex.load}` : '';
+        const targetDiv = document.createElement('div');
+        targetDiv.style.color = '#888';
+        targetDiv.style.fontSize = '15px';
+        targetDiv.style.marginBottom = '16px';
+        targetDiv.textContent = `Target: ${ex.sets} sets × ${ex.reps} reps${loadStr}`;
+        exerciseSection.appendChild(targetDiv);
+
+        // Progression note
+        if (ex.progressionNote) {
+          const progBox = document.createElement('div');
+          progBox.className = 'progression-box';
+          progBox.innerHTML = `
+            <div class="label">Progression</div>
+            <div class="text">${ex.progressionNote}</div>
+          `;
+          exerciseSection.appendChild(progBox);
+        }
+
+        // Custom cue
+        if (ex.customCue) {
+          const cueBox = document.createElement('div');
+          cueBox.className = 'cue-box';
+          cueBox.innerHTML = `
+            <div class="label">Cue</div>
+            <div class="text">${ex.customCue}</div>
+          `;
+          exerciseSection.appendChild(cueBox);
+        }
+
+        // Last session placeholder
+        const lastSession = document.createElement('div');
+        lastSession.className = 'last-session';
+        lastSession.textContent = 'Last session: No previous data';
+        exerciseSection.appendChild(lastSession);
+
+        // Sets
+        for (let i = 0; i < ex.sets; i++) {
+          const setData = data.sets[i];
+          const setRow = document.createElement('div');
+          setRow.className = 'set-row';
+          const loadPlaceholder = ex.load === 'bodyweight' ? 'BW' : ex.load;
+          setRow.innerHTML = `
+            <span class="set-label">Set ${i + 1}</span>
+            <input type="text" inputmode="numeric" class="reps-input"
+                   placeholder="${ex.reps}"
+                   value="${setData.actualReps}"
+                   onchange="updateSet(${exIndex}, ${i}, 'reps', this.value)">
+            <span class="at-symbol">@</span>
+            <input type="text" class="load-input"
+                   placeholder="${loadPlaceholder}"
+                   value="${setData.load}"
+                   onchange="updateSet(${exIndex}, ${i}, 'load', this.value)">
+          `;
+          exerciseSection.appendChild(setRow);
+        }
+
+        // Notes section for this exercise
+        const notesSection = document.createElement('div');
+        notesSection.className = 'notes-section';
+        notesSection.style.marginTop = '16px';
+        notesSection.innerHTML = `
+          <label>Notes (optional)</label>
+          <textarea id="exercise-notes-${exIndex}" placeholder="Any observations...">${data.notes}</textarea>
+        `;
+        exerciseSection.appendChild(notesSection);
+
+        setsContainer.appendChild(exerciseSection);
+      });
+
+      // Update button text
       const nextBtn = document.getElementById('next-btn');
-      if (currentExerciseIndex === allExercises.length - 1) {
+      if (currentBlockIndex === PROGRAM.blocks.length - 1) {
         nextBtn.textContent = 'Finish Session';
       } else {
-        nextBtn.textContent = `Next: ${allExercises[currentExerciseIndex + 1].name} →`;
+        const nextBlock = PROGRAM.blocks[currentBlockIndex + 1];
+        nextBtn.textContent = `Next: ${nextBlock.id} - ${nextBlock.name} →`;
       }
     }
 
-    function updateSet(setIndex, field, value) {
+    function updateSet(exerciseIndex, setIndex, field, value) {
       if (field === 'reps') {
-        sessionData[currentExerciseIndex].sets[setIndex].actualReps = value;
+        sessionData[exerciseIndex].sets[setIndex].actualReps = value;
       } else if (field === 'load') {
-        sessionData[currentExerciseIndex].sets[setIndex].load = value;
+        sessionData[exerciseIndex].sets[setIndex].load = value;
       }
     }
 
-    function saveCurrentExercise() {
-      sessionData[currentExerciseIndex].notes = document.getElementById('exercise-notes').value;
+    function saveCurrentBlock() {
+      // Calculate global exercise indices for this block
+      let globalExerciseIndex = 0;
+      for (let b = 0; b < currentBlockIndex; b++) {
+        globalExerciseIndex += PROGRAM.blocks[b].exercises.length;
+      }
 
-      // Save rep values from inputs
-      const inputs = document.querySelectorAll('.reps-input');
-      inputs.forEach((input, idx) => {
-        sessionData[currentExerciseIndex].sets[idx].actualReps = input.value;
+      const block = PROGRAM.blocks[currentBlockIndex];
+
+      // Save notes for each exercise in the block
+      block.exercises.forEach((ex, localIdx) => {
+        const exIndex = globalExerciseIndex + localIdx;
+        const notesTextarea = document.getElementById(`exercise-notes-${exIndex}`);
+        if (notesTextarea) {
+          sessionData[exIndex].notes = notesTextarea.value;
+        }
       });
 
-      const loadInputs = document.querySelectorAll('.load-input');
-      loadInputs.forEach((input, idx) => {
-        sessionData[currentExerciseIndex].sets[idx].load = input.value;
-      });
+      // Note: Set data is saved automatically via onchange handlers
     }
 
     function prevExercise() {
-      saveCurrentExercise();
-      if (currentExerciseIndex > 0) {
-        currentExerciseIndex--;
-        renderExercise();
+      saveCurrentBlock();
+      if (currentBlockIndex > 0) {
+        currentBlockIndex--;
+        renderBlock();
+        window.scrollTo(0, 0);
       } else {
-        // Go back to overview
+        // Go back to overview - keep session data intact
         document.getElementById('logging-screen').classList.remove('active');
         document.getElementById('overview-screen').classList.remove('hidden');
+        // Don't reset sessionData - preserve entered data
       }
     }
 
     function nextExercise() {
-      saveCurrentExercise();
-      if (currentExerciseIndex < allExercises.length - 1) {
-        currentExerciseIndex++;
-        renderExercise();
+      saveCurrentBlock();
+      if (currentBlockIndex < PROGRAM.blocks.length - 1) {
+        currentBlockIndex++;
+        renderBlock();
         window.scrollTo(0, 0);
       } else {
         showSummary();
