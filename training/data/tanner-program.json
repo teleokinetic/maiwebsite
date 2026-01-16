@@ -1,0 +1,109 @@
+{
+  "client": "tanner",
+  "sessionName": "Full Body",
+  "created": "2025-01-11",
+  "notes": "Rebuilding strength. Keep intensity manageable. Efficiency over volume.",
+  "blocks": [
+    {
+      "id": "A",
+      "name": "Squat",
+      "exercises": [
+        {
+          "id": "barbell-back-squat",
+          "name": "Barbell Back Squat",
+          "sets": 3,
+          "reps": "5",
+          "load": "185lb",
+          "progressionNote": "Build to 3x8 at 185 before adding load. Then 195lb for 3x5.",
+          "customCue": null,
+          "cues": ["Bar on upper back", "Brace before descent", "Knees track over toes"],
+          "notes": "1-2 RIR. Don't grind."
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Pull + Support",
+      "exercises": [
+        {
+          "id": "pullup",
+          "name": "Pull-Up",
+          "sets": 3,
+          "reps": "max",
+          "load": "bodyweight",
+          "progressionNote": "Track total reps. Build volume.",
+          "customCue": "Full dead hang at bottom",
+          "cues": ["Palms away (pronated)", "Pull chest toward bar", "Full extension at bottom"],
+          "notes": "Rebuilding capacity - just accumulate good reps"
+        },
+        {
+          "id": "ring-support-hold",
+          "name": "Ring Support Hold",
+          "sets": 3,
+          "reps": "30-45s",
+          "load": "bodyweight",
+          "progressionNote": "Build to 3x60s before ring dip eccentrics",
+          "customCue": "Try figure-8 weight shifts for variety",
+          "cues": ["Arms locked, rings at sides", "Depress shoulders", "Control the wobble"],
+          "notes": "Dip prep"
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Hamstring + Push",
+      "exercises": [
+        {
+          "id": "two-leg-hamstring-slide",
+          "name": "Two-Leg Hamstring Slide",
+          "sets": 3,
+          "reps": "8-10",
+          "load": "bodyweight",
+          "progressionNote": "Progress to 1-leg eccentric when 3x10 is easy and confident",
+          "customCue": "Keep hips up throughout",
+          "cues": ["Lie on back, heels on sliders", "Bridge up, slide heels in and out", "Keep hips elevated"],
+          "notes": "ACL history - stay conservative"
+        },
+        {
+          "id": "wall-hspu",
+          "name": "Wall Handstand Pushup",
+          "sets": 3,
+          "reps": "6",
+          "load": "bodyweight",
+          "progressionNote": "Build to 3x8, then add deficit or move to freestanding eccentrics",
+          "customCue": null,
+          "cues": ["Belly or back to wall", "Head to floor", "Full lockout at top"],
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "D",
+      "name": "Row + Push",
+      "exercises": [
+        {
+          "id": "ring-row",
+          "name": "Ring Row",
+          "sets": 3,
+          "reps": "8-10",
+          "load": "bodyweight",
+          "progressionNote": "Lower rings / increase angle as reps build. Target: horizontal archer rows 3x8",
+          "customCue": "Chest to rings",
+          "cues": ["Body straight from head to heels", "Pull to chest", "Adjust angle for difficulty"],
+          "notes": "Adjust angle to hit target reps"
+        },
+        {
+          "id": "pushup",
+          "name": "Push-Up",
+          "sets": 3,
+          "reps": "10-15",
+          "load": "bodyweight",
+          "progressionNote": "Progress to archer or ring push-ups when 3x15 is easy",
+          "customCue": null,
+          "cues": ["Hands shoulder-width", "Body straight", "Full ROM"],
+          "notes": null
+        }
+      ]
+    }
+  ]
+}

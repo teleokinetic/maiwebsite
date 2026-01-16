@@ -1,0 +1,1239 @@
+# Movement Coaching Exercise Library
+# Organized by movement pattern
+# video_url fields to be populated as videos are created
+
+exercises:
+
+  # ============================================
+  # PUSH HORIZONTAL
+  # ============================================
+  
+  # Pushup Progression (beginner → advanced)
+  - id: wall-pushup
+    name: Wall Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: beginner
+    progression_order: 1
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Hands at chest height"
+      - "Body in straight line"
+      - "Elbows at 45 degrees"
+    notes: "Entry point for pushup progression"
+
+  - id: incline-pushup
+    name: Incline Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: beginner
+    progression_order: 2
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Find a height where you can do 8-12 reps"
+      - "Lower the surface as you get stronger"
+      - "Full range of motion"
+    notes: "Bridge between wall and knee pushups"
+
+  - id: knee-pushup
+    name: Knee Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: beginner
+    progression_order: 3
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Hips extended, not piked"
+      - "Chest to floor"
+      - "Elbows at 45 degrees"
+    notes: ""
+
+  - id: eccentric-pushup
+    name: Eccentric Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: beginner
+    progression_order: 4
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "3-5 second lowering"
+      - "Lower with control to floor"
+      - "Reset from knees"
+    notes: "Use when close to full pushup but not quite there"
+
+  - id: pushup
+    name: Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: intermediate
+    progression_order: 5
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Body straight from head to heels"
+      - "Chest to floor"
+      - "Elbows at 45 degrees, not flared"
+    notes: ""
+
+  - id: diamond-pushup
+    name: Diamond Pushup
+    category:
+      pattern: push-horizontal
+      equipment: none
+      level: intermediate
+    progression_order: 6
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Hands together, thumbs and index fingers touching"
+      - "Elbows stay close to body"
+      - "Tricep emphasis"
+    notes: ""
+
+  - id: ring-wide-pushup
+    name: Ring Wide Pushup
+    category:
+      pattern: push-horizontal
+      equipment: rings
+      level: intermediate
+    progression_order: 7
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Rings set low"
+      - "Hands wider than shoulders"
+      - "Control the instability"
+    notes: "Introduces ring instability with wider base"
+
+  - id: ring-pushup
+    name: Ring Pushup
+    category:
+      pattern: push-horizontal
+      equipment: rings
+      level: intermediate-advanced
+    progression_order: 8
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Rings at hip height or lower"
+      - "Turn rings out at top"
+      - "Control the wobble"
+    notes: ""
+
+  - id: rto-pushup
+    name: RTO Pushup (Rings Turned Out)
+    category:
+      pattern: push-horizontal
+      equipment: rings
+      level: advanced
+    progression_order: 9
+    progression_family: pushup
+    video_url: ""
+    common_cues:
+      - "Maintain rings turned out throughout"
+      - "Significant shoulder/chest demand"
+      - "Keep elbows close"
+    notes: "Advanced ring pushup variation"
+
+  # Other Horizontal Push
+  - id: barbell-bench-press
+    name: Barbell Bench Press
+    category:
+      pattern: push-horizontal
+      equipment: barbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Feet flat on floor"
+      - "Slight arch, shoulder blades pinched"
+      - "Bar path: lower chest to lockout"
+    notes: ""
+
+  - id: db-bench-press
+    name: Dumbbell Bench Press
+    category:
+      pattern: push-horizontal
+      equipment: dumbbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Dumbbells at chest level at bottom"
+      - "Press up and slightly in"
+      - "Control the descent"
+    notes: "Good for asymmetry work"
+
+  - id: machine-chest-press
+    name: Machine Chest Press
+    category:
+      pattern: push-horizontal
+      equipment: machine
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Adjust seat so handles at chest height"
+      - "Shoulder blades back"
+      - "Full range of motion"
+    notes: "Good for beginners, fixed path"
+
+  - id: single-arm-cable-press
+    name: Single-Arm Cable Press
+    category:
+      pattern: push-horizontal
+      equipment: cable
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Staggered stance for stability"
+      - "Press forward, not across"
+      - "Anti-rotation demand"
+    notes: "Core engagement, unilateral"
+
+  # ============================================
+  # PRESS VERTICAL
+  # ============================================
+
+  # Handstand Pushup Progression
+  - id: pike-pushup
+    name: Pike Pushup
+    category:
+      pattern: press-vertical
+      equipment: none
+      level: beginner
+    progression_order: 1
+    progression_family: hspu
+    video_url: ""
+    common_cues:
+      - "Hips high, forming inverted V"
+      - "Head toward floor between hands"
+      - "Walk feet closer to increase difficulty"
+    notes: "Entry point for HSPU progression"
+
+  - id: box-hspu
+    name: Box Handstand Pushup
+    category:
+      pattern: press-vertical
+      equipment: box
+      level: intermediate
+    progression_order: 2
+    progression_family: hspu
+    video_url: ""
+    common_cues:
+      - "Feet on box, hips at 90 degrees"
+      - "Head between hands"
+      - "Adjust box height for difficulty"
+    notes: "Also called pike pushup on box"
+
+  - id: wall-hspu-eccentric
+    name: Wall HSPU Eccentric
+    category:
+      pattern: press-vertical
+      equipment: wall
+      level: intermediate
+    progression_order: 3
+    progression_family: hspu
+    video_url: ""
+    common_cues:
+      - "Kick up to wall"
+      - "Slow 3-5 second descent"
+      - "Come down, reset, repeat"
+    notes: "Building strength for full wall HSPU"
+
+  - id: wall-hspu
+    name: Wall Handstand Pushup
+    category:
+      pattern: press-vertical
+      equipment: wall
+      level: intermediate-advanced
+    progression_order: 4
+    progression_family: hspu
+    video_url: ""
+    common_cues:
+      - "Belly or back to wall"
+      - "Head to floor (or deficit)"
+      - "Full lockout at top"
+    notes: ""
+
+  - id: free-hspu
+    name: Freestanding Handstand Pushup
+    category:
+      pattern: press-vertical
+      equipment: none
+      level: advanced
+    progression_order: 5
+    progression_family: hspu
+    video_url: ""
+    common_cues:
+      - "Balance throughout"
+      - "Controlled descent and press"
+      - "Serious skill requirement"
+    notes: "Requires solid freestanding handstand"
+
+  # Other Vertical Press
+  - id: db-overhead-press
+    name: Dumbbell Overhead Press
+    category:
+      pattern: press-vertical
+      equipment: dumbbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Start at shoulders"
+      - "Press straight up, finish by ears"
+      - "Avoid excessive back arch"
+    notes: "Seated or standing"
+
+  - id: landmine-press
+    name: Landmine Press
+    category:
+      pattern: press-vertical
+      equipment: barbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Angled pressing path"
+      - "Shoulder-friendly"
+      - "Can be done kneeling or standing"
+    notes: "Good for those with overhead mobility limitations"
+
+  - id: cable-landmine-press
+    name: Cable Landmine Press
+    category:
+      pattern: press-vertical
+      equipment: cable
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Cable from low position"
+      - "Similar arc to landmine"
+      - "Constant tension"
+    notes: "Cable variation of landmine"
+
+  - id: incline-db-bench
+    name: Incline Dumbbell Bench Press
+    category:
+      pattern: press-vertical
+      equipment: dumbbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Bench at 30-45 degrees"
+      - "Press up and slightly back"
+      - "Upper chest emphasis"
+    notes: "Hybrid horizontal/vertical press"
+
+  - id: single-arm-downward-dog
+    name: Single-Arm Downward Dog
+    category:
+      pattern: press-vertical
+      equipment: none
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "One arm supports, other at side or back"
+      - "Weight over supporting hand"
+      - "Anti-rotation demand"
+    notes: "Shoulder stability and pressing prep"
+
+  # ============================================
+  # SQUAT
+  # ============================================
+
+  - id: goblet-squat
+    name: Goblet Squat
+    category:
+      pattern: squat
+      equipment: kettlebell
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Weight at chest, elbows inside knees at bottom"
+      - "Sit back and down"
+      - "Chest stays up"
+    notes: "Great teaching squat"
+
+  - id: barbell-back-squat
+    name: Barbell Back Squat
+    category:
+      pattern: squat
+      equipment: barbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Bar on upper back (high or low bar)"
+      - "Brace before descent"
+      - "Knees track over toes"
+    notes: ""
+
+  - id: barbell-front-squat
+    name: Barbell Front Squat
+    category:
+      pattern: squat
+      equipment: barbell
+      level: intermediate-advanced
+    video_url: ""
+    common_cues:
+      - "Elbows high, bar on front delts"
+      - "More upright torso than back squat"
+      - "Requires wrist/thoracic mobility"
+    notes: ""
+
+  - id: overhead-squat
+    name: Overhead Squat
+    category:
+      pattern: squat
+      equipment: barbell
+      level: advanced
+    video_url: ""
+    common_cues:
+      - "Bar locked out overhead throughout"
+      - "Requires significant mobility"
+      - "Active shoulders, armpits forward"
+    notes: "High mobility demand"
+
+  - id: stork-squat
+    name: Stork Squat
+    category:
+      pattern: squat
+      equipment: none
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "One leg bent behind"
+      - "Single leg squat variation"
+      - "Balance challenge"
+    notes: "Single-leg squat progression"
+
+  - id: shrimp-squat
+    name: Shrimp Squat
+    category:
+      pattern: squat
+      equipment: none
+      level: advanced
+    video_url: ""
+    common_cues:
+      - "Rear knee to floor"
+      - "Hold rear foot or not (variation)"
+      - "Deep single-leg squat"
+    notes: "Advanced single-leg squat"
+
+  - id: mountain-position
+    name: Mountain Position
+    category:
+      pattern: squat
+      equipment: none
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Deep squat hold"
+      - "Feet flat if possible"
+      - "Relaxed, not muscling it"
+    notes: "Squat mobility and resting position"
+
+  # ============================================
+  # HINGE
+  # ============================================
+
+  - id: rdl
+    name: Romanian Deadlift (RDL)
+    category:
+      pattern: hinge
+      equipment: barbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Soft knees, not bent knees"
+      - "Hinge at hips, not waist"
+      - "Bar stays close to legs"
+    notes: "Foundational hinge"
+
+  - id: wide-stance-rdl
+    name: Wide Stance RDL
+    category:
+      pattern: hinge
+      equipment: barbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Feet wider than hip width"
+      - "Toes slightly out"
+      - "Adductor emphasis"
+    notes: "Sumo-style RDL"
+
+  - id: good-morning
+    name: Good Morning
+    category:
+      pattern: hinge
+      equipment: barbell
+      level: intermediate
+    video_url: ""
+    common_cues:
+      - "Bar on back like squat"
+      - "Hinge with minimal knee bend"
+      - "Hamstring/lower back emphasis"
+    notes: ""
+
+  - id: kickstand-hinge
+    name: Kickstand Hinge
+    category:
+      pattern: hinge
+      equipment: dumbbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "One foot back, toe down for balance only"
+      - "Load the front leg"
+      - "Single-leg RDL regression"
+    notes: "Bridge to single-leg hinge work"
+
+  # ============================================
+  # HORIZONTAL PULL
+  # ============================================
+
+  # Ring Row Progression
+  - id: ring-row
+    name: Ring Row
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: beginner
+    progression_order: 1
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "Body straight from head to heels"
+      - "Pull to chest"
+      - "Adjust angle for difficulty"
+    notes: "Entry point for horizontal pulling"
+
+  - id: ring-row-eccentric
+    name: Ring Row Eccentric
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: beginner
+    progression_order: 2
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "Pull up, slow 3-5 second lower"
+      - "Control throughout descent"
+      - "Use harder angle than regular rows"
+    notes: ""
+
+  - id: ring-row-wide
+    name: Wide Ring Row
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: intermediate
+    progression_order: 3
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "Hands wider than shoulders"
+      - "Pull to chest"
+      - "Rear delt emphasis"
+    notes: ""
+
+  - id: archer-row
+    name: Archer Row
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: intermediate
+    progression_order: 4
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "One arm pulls, other extends straight"
+      - "Shift weight toward pulling arm"
+      - "Unilateral demand"
+    notes: "Progression toward one-arm work"
+
+  - id: archer-row-in
+    name: Archer Row (In)
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: intermediate-advanced
+    progression_order: 5
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "Start in archer, pull to narrow position"
+      - "Increased working arm demand"
+    notes: "Harder archer variation"
+
+  - id: straight-oa-row
+    name: Straight One-Arm Row (Assisted)
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: intermediate-advanced
+    progression_order: 6
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "One hand on ring, other assists minimally"
+      - "Keep body square"
+      - "Progression to full OA"
+    notes: ""
+
+  - id: one-arm-ring-row
+    name: One-Arm Ring Row
+    category:
+      pattern: pull-horizontal
+      equipment: rings
+      level: advanced
+    progression_order: 7
+    progression_family: ring-row
+    video_url: ""
+    common_cues:
+      - "Single arm pulling"
+      - "Anti-rotation challenge"
+      - "Significant lat demand"
+    notes: "End of ring row progression"
+
+  # Other Horizontal Pull
+  - id: cable-row
+    name: Cable Row
+    category:
+      pattern: pull-horizontal
+      equipment: cable
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Sit tall, chest up"
+      - "Pull to lower chest/upper abdomen"
+      - "Squeeze shoulder blades"
+    notes: ""
+
+  - id: db-row-single-arm
+    name: Single-Arm Dumbbell Row
+    category:
+      pattern: pull-horizontal
+      equipment: dumbbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Support with other hand"
+      - "Pull to hip"
+      - "Minimize rotation"
+    notes: ""
+
+  - id: db-row-two-arm
+    name: Two-Arm Dumbbell Row
+    category:
+      pattern: pull-horizontal
+      equipment: dumbbell
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Hinge position, chest supported or bent over"
+      - "Pull both dumbbells together"
+      - "Keep back flat"
+    notes: ""
+
+  - id: face-pull
+    name: Face Pull
+    category:
+      pattern: pull-horizontal
+      equipment: cable
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Pull to face, hands by ears"
+      - "External rotation at end"
+      - "Rear delt and rotator cuff"
+    notes: "Shoulder health staple"
+
+  # ============================================
+  # VERTICAL PULL
+  # ============================================
+
+  # Pull-up Progression
+  - id: dead-hang
+    name: Dead Hang
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: beginner
+    progression_order: 1
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Full grip, shoulders relaxed"
+      - "Build grip endurance"
+      - "Foundation for pulling"
+    checkpoint: "3 sets of 30-60 seconds"
+    notes: "Prerequisite for pullup work"
+
+  - id: active-hang
+    name: Active Hang
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: beginner
+    progression_order: 2
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Depress shoulders (opposite of shrug)"
+      - "Engage lats"
+      - "No arm bend yet"
+    checkpoint: "3 sets of 20-30 seconds"
+    notes: ""
+
+  - id: scap-pull
+    name: Scap Pull
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: beginner
+    progression_order: 3
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Start from dead hang"
+      - "Pull shoulder blades down and back"
+      - "Minimal arm bend—movement is from scaps"
+      - "Return to full dead hang each rep"
+    notes: "Teaches lat engagement for pullup initiation"
+
+  - id: band-assisted-pullup
+    name: Band-Assisted Pullup
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: beginner
+    progression_order: 4
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Band under feet or knees"
+      - "Full range of motion"
+      - "Reduce band thickness over time"
+    notes: "Use sparingly—can create dependency"
+
+  - id: pullup-eccentric
+    name: Pullup Eccentric (Negative)
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: beginner-intermediate
+    progression_order: 5
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Jump or step to top position"
+      - "Slow 3-5 second descent"
+      - "Full extension at bottom"
+    notes: "Key progression for building pullup"
+
+  - id: chin-up
+    name: Chin-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate
+    progression_order: 6
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Palms facing you (supinated)"
+      - "Pull chin over bar"
+      - "More bicep involvement than pullup"
+    notes: "Often easier than pullup"
+
+  - id: pullup
+    name: Pull-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate
+    progression_order: 7
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Palms away (pronated)"
+      - "Pull chest toward bar"
+      - "Full extension at bottom"
+    notes: ""
+
+  - id: weighted-pullup
+    name: Weighted Pull-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: advanced
+    progression_order: 8
+    progression_family: pullup
+    video_url: ""
+    common_cues:
+      - "Add weight via belt or vest"
+      - "Maintain form as load increases"
+      - "Progress load slowly"
+    notes: ""
+
+  # Muscle-Up Progression
+  - id: high-pullup
+    name: High Pull-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate-advanced
+    progression_order: 1
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Pull explosively"
+      - "Aim for chest to bar or higher"
+      - "Build pulling height over time"
+    notes: "Foundation for muscle-up transition"
+
+  - id: chest-to-bar-pullup
+    name: Chest-to-Bar Pull-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate-advanced
+    progression_order: 2
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Touch chest to bar, not just chin over"
+      - "Requires more pulling power"
+      - "Keep it clean before adding speed"
+    notes: ""
+
+  - id: jumping-muscle-up
+    name: Jumping Muscle-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate
+    progression_order: 3
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Use low bar or box assist"
+      - "Jump into the transition"
+      - "Learn the movement pattern"
+    notes: "Teaches transition mechanics"
+
+  - id: band-assisted-muscle-up
+    name: Band-Assisted Muscle-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: intermediate-advanced
+    progression_order: 4
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Band provides help through transition"
+      - "Focus on the pull-to-dip movement"
+      - "Reduce band assistance over time"
+    notes: ""
+
+  - id: muscle-up-negative
+    name: Muscle-Up Negative
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: advanced
+    progression_order: 5
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Start at top (dip position)"
+      - "Slow controlled descent through transition"
+      - "Feel the catch point"
+    notes: "Builds transition strength"
+
+  - id: muscle-up
+    name: Muscle-Up
+    category:
+      pattern: pull-vertical
+      equipment: bar
+      level: advanced
+    progression_order: 6
+    progression_family: muscle-up
+    video_url: ""
+    common_cues:
+      - "Explosive pull"
+      - "Lean forward through transition"
+      - "Finish in dip lockout"
+    notes: "Bar or ring"
+
+  # Ring Dip Progression
+  - id: ring-support-hold
+    name: Ring Support Hold
+    category:
+      pattern: push-vertical
+      equipment: rings
+      level: beginner
+    progression_order: 1
+    progression_family: ring-dip
+    video_url: ""
+    common_cues:
+      - "Arms locked, rings at sides"
+      - "Depress shoulders"
+      - "Control the wobble"
+    checkpoint: "3 sets of 1 minute each"
+    tasks:
+      - "Shift weight in small figure-eights"
+      - "Small circles in each direction"
+      - "Turn rings in/out slowly"
+    notes: "Prerequisite for ring dip work. Tasks add novelty and joint variability."
+
+  - id: rto-support-hold
+    name: RTO Support Hold (Rings Turned Out)
+    category:
+      pattern: push-vertical
+      equipment: rings
+      level: intermediate
+    progression_order: 2
+    progression_family: ring-dip
+    video_url: ""
+    common_cues:
+      - "Turn rings out to 45+ degrees"
+      - "Maintain lockout"
+      - "Significant shoulder demand"
+    notes: ""
+
+  - id: ring-dip-eccentric
+    name: Ring Dip Eccentric
+    category:
+      pattern: push-vertical
+      equipment: rings
+      level: intermediate
+    progression_order: 3
+    progression_family: ring-dip
+    video_url: ""
+    common_cues:
+      - "Start at top support"
+      - "Slow 3-5 second descent"
+      - "Go to comfortable depth, build over time"
+    notes: ""
+
+  - id: ring-dip
+    name: Ring Dip
+    category:
+      pattern: push-vertical
+      equipment: rings
+      level: intermediate-advanced
+    progression_order: 4
+    progression_family: ring-dip
+    video_url: ""
+    common_cues:
+      - "Full depth (shoulder below elbow)"
+      - "Lock out at top"
+      - "Keep rings close to body"
+    notes: ""
+
+  - id: ring-l-dip
+    name: Ring L-Dip
+    category:
+      pattern: push-vertical
+      equipment: rings
+      level: advanced
+    progression_order: 5
+    progression_family: ring-dip
+    video_url: ""
+    common_cues:
+      - "Hold L-sit position throughout"
+      - "Legs parallel to floor"
+      - "Massive core and tricep demand"
+    notes: "Advanced ring dip variation"
+
+  # Weighted/Parallel Bar Dip Progression
+  - id: parallel-bar-dip-eccentric
+    name: Parallel Bar Dip Eccentric
+    category:
+      pattern: push-vertical
+      equipment: bars
+      level: beginner-intermediate
+    progression_order: 1
+    progression_family: weighted-dip
+    video_url: ""
+    common_cues:
+      - "Jump or step to top position"
+      - "Slow 3-5 second descent"
+      - "Full depth, then reset"
+    checkpoint: ""  # TODO: Look up Steven Low's charts
+    notes: "Entry point for dip work"
+
+  - id: parallel-bar-dip
+    name: Parallel Bar Dip
+    category:
+      pattern: push-vertical
+      equipment: bars
+      level: intermediate
+    progression_order: 2
+    progression_family: weighted-dip
+    video_url: ""
+    common_cues:
+      - "Shoulder below elbow at bottom"
+      - "Lock out at top"
+      - "Slight forward lean for chest emphasis"
+    notes: "Bodyweight standard"
+
+  - id: weighted-dip-1-2x
+    name: Weighted Dip (1.2x BW)
+    category:
+      pattern: push-vertical
+      equipment: bars
+      level: intermediate-advanced
+    progression_order: 3
+    progression_family: weighted-dip
+    video_url: ""
+    common_cues:
+      - "Add weight via belt"
+      - "Maintain full ROM"
+      - "Target: bodyweight + 20%"
+    notes: "First weighted milestone"
+
+  - id: weighted-dip-1-38x
+    name: Weighted Dip (1.38x BW)
+    category:
+      pattern: push-vertical
+      equipment: bars
+      level: advanced
+    progression_order: 4
+    progression_family: weighted-dip
+    video_url: ""
+    common_cues:
+      - "Significant load"
+      - "Target: bodyweight + 38%"
+      - "Strong pushing foundation"
+    notes: "Advanced weighted milestone"
+
+  # Nordic/Natural Ham Curl Progression
+  - id: two-leg-hamstring-slide
+    name: Two-Leg Hamstring Slide
+    category:
+      pattern: knee-flexion
+      equipment: sliders
+      level: beginner
+    progression_order: 1
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Lie on back, heels on sliders"
+      - "Bridge up, slide heels in and out"
+      - "Keep hips elevated"
+    notes: "Entry point for ham curl progression"
+
+  - id: one-leg-hamstring-slide-eccentric
+    name: One-Leg Hamstring Slide Eccentric
+    category:
+      pattern: knee-flexion
+      equipment: sliders
+      level: beginner-intermediate
+    progression_order: 2
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Pull in with two legs"
+      - "Slow extend with one leg"
+      - "Control the eccentric"
+    notes: ""
+
+  - id: one-leg-hamstring-slide
+    name: One-Leg Hamstring Slide
+    category:
+      pattern: knee-flexion
+      equipment: sliders
+      level: intermediate
+    progression_order: 3
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Single leg curl, full movement"
+      - "Keep hips up throughout"
+      - "Significant hamstring demand"
+    notes: ""
+
+  - id: nordic-hip-hinge-vertical
+    name: Nordic Hip Hinge (Vertical Thighs)
+    category:
+      pattern: knee-flexion
+      equipment: none
+      level: intermediate
+    progression_order: 4
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Knees anchored, upright torso"
+      - "Hinge forward from knees"
+      - "Thighs stay vertical, hips hinge"
+    notes: "Introduces kneeling position"
+
+  - id: nordic-slow-eccentric
+    name: Nordic Slow Eccentric
+    category:
+      pattern: knee-flexion
+      equipment: none
+      level: intermediate-advanced
+    progression_order: 5
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Slow controlled fall to ground"
+      - "Catch yourself, push back up"
+      - "Build eccentric strength"
+    notes: "Key progression step"
+
+  - id: full-nordic-curl
+    name: Full Nordic Curl
+    category:
+      pattern: knee-flexion
+      equipment: none
+      level: advanced
+    progression_order: 6
+    progression_family: nordic
+    video_url: ""
+    common_cues:
+      - "Control down and pull back up"
+      - "No push-off from hands"
+      - "Full concentric hamstring curl"
+    notes: "Peak of nordic progression for most clients"
+
+  # Other Vertical Pull
+  - id: lat-pulldown
+    name: Lat Pulldown
+    category:
+      pattern: pull-vertical
+      equipment: cable
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Pull to upper chest"
+      - "Lean back slightly"
+      - "Control the return"
+    notes: "Good for building volume or when pullups aren't accessible"
+
+  # ============================================
+  # CORE
+  # ============================================
+
+  - id: wall-deadbug
+    name: Wall Deadbug
+    category:
+      pattern: core
+      equipment: wall
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Lower back pressed into floor"
+      - "Hands pressing into wall"
+      - "Extend opposite leg"
+    notes: "Regressed deadbug with feedback"
+
+  - id: deadbug
+    name: Deadbug
+    category:
+      pattern: core
+      equipment: none
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Lower back stays flat"
+      - "Opposite arm and leg extend"
+      - "Exhale as you extend"
+    notes: ""
+
+  - id: plank
+    name: Plank
+    category:
+      pattern: core
+      equipment: none
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Body straight from head to heels"
+      - "Don't sag or pike"
+      - "Breathe normally"
+    notes: "Time-based or breathing-based"
+
+  - id: pallof-press
+    name: Pallof Press
+    category:
+      pattern: core
+      equipment: cable
+      level: beginner-intermediate
+    video_url: ""
+    common_cues:
+      - "Resist rotation"
+      - "Press away from chest, hold"
+      - "Keep hips square"
+    notes: "Anti-rotation core work"
+
+  - id: half-kneeling-pallof-press
+    name: Half-Kneeling Pallof Press
+    category:
+      pattern: core
+      equipment: cable
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Inside knee down"
+      - "Tall posture"
+      - "Added stability challenge"
+    notes: ""
+
+  - id: farmers-carry
+    name: Farmer's Carry
+    category:
+      pattern: core
+      equipment: dumbbell
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Heavy weights at sides"
+      - "Walk tall, don't lean"
+      - "Grip, core, and posture"
+    notes: "Can be bilateral or single-arm (suitcase carry)"
+
+  # ============================================
+  # MOBILITY
+  # ============================================
+
+  - id: kot-calf-raise
+    name: KOT Calf Raise
+    category:
+      pattern: lower-leg
+      equipment: none
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Full stretch at bottom"
+      - "Slow eccentric (3-5 seconds)"
+      - "Can hold wall for balance"
+      - "Slight knee bend to bias soleus"
+    notes: "Knees Over Toes style. Soleus and Achilles health."
+
+  - id: 90-90-transitions
+    name: 90/90 Transitions
+    category:
+      pattern: mobility
+      equipment: none
+      level: beginner
+    video_url: ""
+    common_cues:
+      - "Both knees at 90 degrees"
+      - "Rotate from one side to other"
+      - "Keep chest up during transition"
+    notes: "Hip mobility staple"
+
+  # Placeholder for future mobility additions (David Grey, Fighting Monkey, etc.)

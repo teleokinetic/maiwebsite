@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Workout Logger</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a1a;
+      color: #f0f0f0;
+      min-height: 100vh;
+      padding: 16px;
+      padding-bottom: 100px;
+    }
+
+    .header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .header h1 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .header .session-name {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .program-notes {
+      background: #2a2a2a;
+      border-radius: 8px;
+      padding: 12px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #aaa;
+      font-style: italic;
+    }
+
+    /* Overview Screen */
+    .block {
+      background: #252525;
+      border-radius: 12px;
+      margin-bottom: 12px;
+      overflow: hidden;
+    }
+
+    .block-header {
+      padding: 14px 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .block-header h2 {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .block-header .toggle {
+      font-size: 12px;
+      color: #888;
+      transition: transform 0.2s;
+    }
+
+    .block.collapsed .toggle {
+      transform: rotate(-90deg);
+    }
+
+    .block.collapsed .block-exercises {
+      display: none;
+    }
+
+    .block-exercises {
+      padding: 0 16px 14px;
+    }
+
+    .exercise-item {
+      padding: 8px 0;
+      border-top: 1px solid #333;
+      font-size: 14px;
+    }
+
+    .exercise-item:first-child {
+      border-top: none;
+    }
+
+    .exercise-item .name {
+      font-weight: 500;
+    }
+
+    .exercise-item .prescription {
+      color: #888;
+      font-size: 13px;
+    }
+
+    /* Start Button */
+    .start-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 18px;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    .start-btn:active {
+      background: #45a049;
+    }
+
+    /* Exercise Logging Screen */
+    .logging-screen {
+      display: none;
+    }
+
+    .logging-screen.active {
+      display: block;
+    }
+
+    .nav-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .back-btn {
+      background: none;
+      border: none;
+      color: #4CAF50;
+      font-size: 16px;
+      cursor: pointer;
+      padding: 8px 0;
+    }
+
+    .progress-indicator {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .exercise-card {
+      background: #252525;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 16px;
+    }
+
+    .exercise-card h2 {
+      font-size: 22px;
+      margin-bottom: 8px;
+    }
+
+    .exercise-card .target {
+      color: #888;
+      font-size: 15px;
+      margin-bottom: 16px;
+    }
+
+    .progression-box {
+      background: #1a1a1a;
+      border-left: 3px solid #4CAF50;
+      padding: 12px;
+      margin-bottom: 16px;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .progression-box .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #4CAF50;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .progression-box .text {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .cue-box {
+      background: #2a2a3a;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 16px;
+    }
+
+    .cue-box .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      color: #7c7cff;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .cue-box .text {
+      font-size: 14px;
+      color: #ccc;
+    }
+
+    .last-session {
+      text-align: center;
+      padding: 12px;
+      background: #1f1f1f;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 13px;
+      color: #666;
+    }
+
+    /* Set Inputs */
+    .sets-container {
+      margin-bottom: 20px;
+    }
+
+    .set-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+
+    .set-label {
+      width: 50px;
+      font-size: 14px;
+      color: #888;
+    }
+
+    .set-row input {
+      flex: 1;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    .set-row input:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .set-row .reps-input {
+      max-width: 80px;
+    }
+
+    .set-row .load-input {
+      flex: 1;
+    }
+
+    .set-row .at-symbol {
+      color: #666;
+      font-size: 14px;
+    }
+
+    .notes-section {
+      margin-bottom: 20px;
+    }
+
+    .notes-section label {
+      display: block;
+      font-size: 13px;
+      color: #888;
+      margin-bottom: 8px;
+    }
+
+    .notes-section textarea {
+      width: 100%;
+      padding: 14px;
+      background: #1a1a1a;
+      border: 1px solid #333;
+      border-radius: 8px;
+      color: #fff;
+      font-size: 14px;
+      resize: vertical;
+      min-height: 60px;
+    }
+
+    .notes-section textarea:focus {
+      outline: none;
+      border-color: #4CAF50;
+    }
+
+    .next-btn {
+      display: block;
+      width: 100%;
+      padding: 18px;
+      background: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .next-btn:active {
+      background: #45a049;
+    }
+
+    /* Summary Screen */
+    .summary-screen {
+      display: none;
+    }
+
+    .summary-screen.active {
+      display: block;
+    }
+
+    .summary-header {
+      text-align: center;
+      margin-bottom: 24px;
+    }
+
+    .summary-header h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+
+    .summary-header .checkmark {
+      font-size: 48px;
+      margin-bottom: 8px;
+    }
+
+    .summary-header .date {
+      color: #888;
+      font-size: 16px;
+    }
+
+    .summary-list {
+      background: #252525;
+      border-radius: 12px;
+      padding: 16px;
+      margin-bottom: 20px;
+    }
+
+    .summary-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #333;
+    }
+
+    .summary-item:last-child {
+      border-bottom: none;
+    }
+
+    .summary-item .name {
+      font-weight: 500;
+      margin-bottom: 4px;
+    }
+
+    .summary-item .data {
+      color: #888;
+      font-size: 14px;
+    }
+
+    .summary-item .notes {
+      color: #7c7cff;
+      font-size: 13px;
+      margin-top: 4px;
+      font-style: italic;
+    }
+
+    .action-btn {
+      display: block;
+      width: 100%;
+      padding: 16px;
+      border: none;
+      border-radius: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      cursor: pointer;
+      margin-bottom: 12px;
+    }
+
+    .action-btn.primary {
+      background: #4CAF50;
+      color: white;
+    }
+
+    .action-btn.secondary {
+      background: #333;
+      color: #fff;
+    }
+
+    .action-btn:active {
+      opacity: 0.8;
+    }
+
+    .toast {
+      position: fixed;
+      bottom: 100px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: #fff;
+      padding: 12px 24px;
+      border-radius: 8px;
+      font-size: 14px;
+      opacity: 0;
+      transition: opacity 0.3s;
+      z-index: 100;
+    }
+
+    .toast.show {
+      opacity: 1;
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <!-- Overview Screen -->
+  <div id="overview-screen">
+    <div class="header">
+      <h1>Tanner's Workout</h1>
+      <div class="session-name">Full Body</div>
+    </div>
+
+    <div class="program-notes">
+      Rebuilding strength. Keep intensity manageable. Efficiency over volume.
+    </div>
+
+    <div id="blocks-container"></div>
+
+    <button class="start-btn" onclick="startSession()">Start Session</button>
+  </div>
+
+  <!-- Logging Screen -->
+  <div id="logging-screen" class="logging-screen">
+    <div class="nav-header">
+      <button class="back-btn" onclick="prevExercise()">← Back</button>
+      <span class="progress-indicator" id="progress"></span>
+    </div>
+
+    <div class="exercise-card">
+      <h2 id="exercise-name"></h2>
+      <div class="target" id="exercise-target"></div>
+
+      <div class="progression-box" id="progression-box">
+        <div class="label">Progression</div>
+        <div class="text" id="progression-text"></div>
+      </div>
+
+      <div class="cue-box" id="cue-box">
+        <div class="label">Cue</div>
+        <div class="text" id="cue-text"></div>
+      </div>
+
+      <div class="last-session">
+        Last session: No previous data
+      </div>
+
+      <div class="sets-container" id="sets-container"></div>
+
+      <div class="notes-section">
+        <label>Notes (optional)</label>
+        <textarea id="exercise-notes" placeholder="Any observations..."></textarea>
+      </div>
+    </div>
+
+    <button class="next-btn" id="next-btn" onclick="nextExercise()">Next →</button>
+  </div>
+
+  <!-- Summary Screen -->
+  <div id="summary-screen" class="summary-screen">
+    <div class="summary-header">
+      <div class="checkmark">✓</div>
+      <h1>Session Complete</h1>
+      <div class="date" id="summary-date"></div>
+    </div>
+
+    <div class="summary-list" id="summary-list"></div>
+
+    <button class="action-btn primary" onclick="copyToClipboard()">Copy to Clipboard</button>
+    <button class="action-btn secondary" onclick="downloadCSV()">Download CSV</button>
+    <button class="action-btn secondary" onclick="startOver()">Start Over</button>
+  </div>
+
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // Embedded program data
+    const PROGRAM = {
+      "client": "tanner",
+      "sessionName": "Full Body",
+      "created": "2025-01-11",
+      "notes": "Rebuilding strength. Keep intensity manageable. Efficiency over volume.",
+      "blocks": [
+        {
+          "id": "A",
+          "name": "Squat",
+          "exercises": [
+            {
+              "id": "barbell-back-squat",
+              "name": "Barbell Back Squat",
+              "sets": 3,
+              "reps": "5",
+              "load": "185lb",
+              "progressionNote": "Build to 3x8 at 185 before adding load. Then 195lb for 3x5.",
+              "customCue": null,
+              "cues": ["Bar on upper back", "Brace before descent", "Knees track over toes"],
+              "notes": "1-2 RIR. Don't grind."
+            }
+          ]
+        },
+        {
+          "id": "B",
+          "name": "Pull + Support",
+          "exercises": [
+            {
+              "id": "pullup",
+              "name": "Pull-Up",
+              "sets": 3,
+              "reps": "max",
+              "load": "bodyweight",
+              "progressionNote": "Track total reps. Build volume.",
+              "customCue": "Full dead hang at bottom",
+              "cues": ["Palms away (pronated)", "Pull chest toward bar", "Full extension at bottom"],
+              "notes": "Rebuilding capacity - just accumulate good reps"
+            },
+            {
+              "id": "ring-support-hold",
+              "name": "Ring Support Hold",
+              "sets": 3,
+              "reps": "30-45s",
+              "load": "bodyweight",
+              "progressionNote": "Build to 3x60s before ring dip eccentrics",
+              "customCue": "Try figure-8 weight shifts for variety",
+              "cues": ["Arms locked, rings at sides", "Depress shoulders", "Control the wobble"],
+              "notes": "Dip prep"
+            }
+          ]
+        },
+        {
+          "id": "C",
+          "name": "Hamstring + Push",
+          "exercises": [
+            {
+              "id": "two-leg-hamstring-slide",
+              "name": "Two-Leg Hamstring Slide",
+              "sets": 3,
+              "reps": "8-10",
+              "load": "bodyweight",
+              "progressionNote": "Progress to 1-leg eccentric when 3x10 is easy and confident",
+              "customCue": "Keep hips up throughout",
+              "cues": ["Lie on back, heels on sliders", "Bridge up, slide heels in and out", "Keep hips elevated"],
+              "notes": "ACL history - stay conservative"
+            },
+            {
+              "id": "wall-hspu",
+              "name": "Wall Handstand Pushup",
+              "sets": 3,
+              "reps": "6",
+              "load": "bodyweight",
+              "progressionNote": "Build to 3x8, then add deficit or move to freestanding eccentrics",
+              "customCue": null,
+              "cues": ["Belly or back to wall", "Head to floor", "Full lockout at top"],
+              "notes": null
+            }
+          ]
+        },
+        {
+          "id": "D",
+          "name": "Row + Push",
+          "exercises": [
+            {
+              "id": "ring-row",
+              "name": "Ring Row",
+              "sets": 3,
+              "reps": "8-10",
+              "load": "bodyweight",
+              "progressionNote": "Lower rings / increase angle as reps build. Target: horizontal archer rows 3x8",
+              "customCue": "Chest to rings",
+              "cues": ["Body straight from head to heels", "Pull to chest", "Adjust angle for difficulty"],
+              "notes": "Adjust angle to hit target reps"
+            },
+            {
+              "id": "pushup",
+              "name": "Push-Up",
+              "sets": 3,
+              "reps": "10-15",
+              "load": "bodyweight",
+              "progressionNote": "Progress to archer or ring push-ups when 3x15 is easy",
+              "customCue": null,
+              "cues": ["Hands shoulder-width", "Body straight", "Full ROM"],
+              "notes": null
+            }
+          ]
+        }
+      ]
+    };
+
+    // Flatten exercises for navigation
+    let allExercises = [];
+    PROGRAM.blocks.forEach(block => {
+      block.exercises.forEach(ex => {
+        allExercises.push({...ex, blockName: block.name, blockId: block.id});
+      });
+    });
+
+    let currentExerciseIndex = 0;
+    let sessionData = {};
+
+    // Initialize overview
+    function initOverview() {
+      const container = document.getElementById('blocks-container');
+      container.innerHTML = '';
+
+      PROGRAM.blocks.forEach(block => {
+        const blockEl = document.createElement('div');
+        blockEl.className = 'block';
+
+        let exercisesHtml = block.exercises.map(ex => {
+          const loadStr = ex.load !== 'bodyweight' ? ` @ ${ex.load}` : '';
+          return `
+            <div class="exercise-item">
+              <div class="name">${ex.name}</div>
+              <div class="prescription">${ex.sets}x${ex.reps}${loadStr}</div>
+            </div>
+          `;
+        }).join('');
+
+        blockEl.innerHTML = `
+          <div class="block-header" onclick="toggleBlock(this)">
+            <h2>${block.id}: ${block.name}</h2>
+            <span class="toggle">▼</span>
+          </div>
+          <div class="block-exercises">${exercisesHtml}</div>
+        `;
+
+        container.appendChild(blockEl);
+      });
+    }
+
+    function toggleBlock(header) {
+      header.parentElement.classList.toggle('collapsed');
+    }
+
+    function startSession() {
+      currentExerciseIndex = 0;
+      sessionData = {};
+
+      // Initialize session data for all exercises
+      allExercises.forEach((ex, idx) => {
+        sessionData[idx] = {
+          exerciseId: ex.id,
+          exerciseName: ex.name,
+          sets: [],
+          notes: ''
+        };
+        for (let i = 0; i < ex.sets; i++) {
+          sessionData[idx].sets.push({
+            setNumber: i + 1,
+            targetReps: ex.reps,
+            actualReps: '',
+            load: ex.load === 'bodyweight' ? 'BW' : ex.load
+          });
+        }
+      });
+
+      document.getElementById('overview-screen').classList.add('hidden');
+      document.getElementById('logging-screen').classList.add('active');
+      renderExercise();
+    }
+
+    function renderExercise() {
+      const ex = allExercises[currentExerciseIndex];
+      const data = sessionData[currentExerciseIndex];
+
+      document.getElementById('progress').textContent = `${currentExerciseIndex + 1} of ${allExercises.length}`;
+      document.getElementById('exercise-name').textContent = ex.name;
+
+      const loadStr = ex.load !== 'bodyweight' ? ` @ ${ex.load}` : '';
+      document.getElementById('exercise-target').textContent = `Target: ${ex.sets} sets × ${ex.reps} reps${loadStr}`;
+
+      // Progression
+      const progBox = document.getElementById('progression-box');
+      if (ex.progressionNote) {
+        progBox.classList.remove('hidden');
+        document.getElementById('progression-text').textContent = ex.progressionNote;
+      } else {
+        progBox.classList.add('hidden');
+      }
+
+      // Cue
+      const cueBox = document.getElementById('cue-box');
+      if (ex.customCue) {
+        cueBox.classList.remove('hidden');
+        document.getElementById('cue-text').textContent = ex.customCue;
+      } else {
+        cueBox.classList.add('hidden');
+      }
+
+      // Sets
+      const setsContainer = document.getElementById('sets-container');
+      setsContainer.innerHTML = '';
+
+      for (let i = 0; i < ex.sets; i++) {
+        const setData = data.sets[i];
+        const setRow = document.createElement('div');
+        setRow.className = 'set-row';
+        setRow.innerHTML = `
+          <span class="set-label">Set ${i + 1}</span>
+          <input type="text" inputmode="numeric" class="reps-input"
+                 placeholder="${ex.reps}"
+                 value="${setData.actualReps}"
+                 onchange="updateSet(${i}, 'reps', this.value)">
+          <span class="at-symbol">@</span>
+          <input type="text" class="load-input"
+                 placeholder="${setData.load}"
+                 value="${setData.load}"
+                 onchange="updateSet(${i}, 'load', this.value)">
+        `;
+        setsContainer.appendChild(setRow);
+      }
+
+      // Notes
+      document.getElementById('exercise-notes').value = data.notes;
+
+      // Button text
+      const nextBtn = document.getElementById('next-btn');
+      if (currentExerciseIndex === allExercises.length - 1) {
+        nextBtn.textContent = 'Finish Session';
+      } else {
+        nextBtn.textContent = `Next: ${allExercises[currentExerciseIndex + 1].name} →`;
+      }
+    }
+
+    function updateSet(setIndex, field, value) {
+      if (field === 'reps') {
+        sessionData[currentExerciseIndex].sets[setIndex].actualReps = value;
+      } else if (field === 'load') {
+        sessionData[currentExerciseIndex].sets[setIndex].load = value;
+      }
+    }
+
+    function saveCurrentExercise() {
+      sessionData[currentExerciseIndex].notes = document.getElementById('exercise-notes').value;
+
+      // Save rep values from inputs
+      const inputs = document.querySelectorAll('.reps-input');
+      inputs.forEach((input, idx) => {
+        sessionData[currentExerciseIndex].sets[idx].actualReps = input.value;
+      });
+
+      const loadInputs = document.querySelectorAll('.load-input');
+      loadInputs.forEach((input, idx) => {
+        sessionData[currentExerciseIndex].sets[idx].load = input.value;
+      });
+    }
+
+    function prevExercise() {
+      saveCurrentExercise();
+      if (currentExerciseIndex > 0) {
+        currentExerciseIndex--;
+        renderExercise();
+      } else {
+        // Go back to overview
+        document.getElementById('logging-screen').classList.remove('active');
+        document.getElementById('overview-screen').classList.remove('hidden');
+      }
+    }
+
+    function nextExercise() {
+      saveCurrentExercise();
+      if (currentExerciseIndex < allExercises.length - 1) {
+        currentExerciseIndex++;
+        renderExercise();
+        window.scrollTo(0, 0);
+      } else {
+        showSummary();
+      }
+    }
+
+    function showSummary() {
+      document.getElementById('logging-screen').classList.remove('active');
+      document.getElementById('summary-screen').classList.add('active');
+
+      const today = new Date();
+      const dateStr = today.toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+      });
+      document.getElementById('summary-date').textContent = dateStr;
+
+      const summaryList = document.getElementById('summary-list');
+      summaryList.innerHTML = '';
+
+      Object.values(sessionData).forEach(exData => {
+        const reps = exData.sets.map(s => s.actualReps || '-').join(', ');
+        const load = exData.sets[0]?.load || 'BW';
+
+        const item = document.createElement('div');
+        item.className = 'summary-item';
+        item.innerHTML = `
+          <div class="name">${exData.exerciseName}</div>
+          <div class="data">${reps} @ ${load}</div>
+          ${exData.notes ? `<div class="notes">"${exData.notes}"</div>` : ''}
+        `;
+        summaryList.appendChild(item);
+      });
+    }
+
+    function generateTextSummary() {
+      const today = new Date().toISOString().split('T')[0];
+      let text = `Workout Log - ${today}\n`;
+      text += `Session: ${PROGRAM.sessionName}\n`;
+      text += `Client: ${PROGRAM.client}\n\n`;
+
+      Object.values(sessionData).forEach(exData => {
+        const reps = exData.sets.map(s => s.actualReps || '-').join(', ');
+        const load = exData.sets[0]?.load || 'BW';
+        text += `${exData.exerciseName}: ${reps} @ ${load}`;
+        if (exData.notes) {
+          text += ` - "${exData.notes}"`;
+        }
+        text += '\n';
+      });
+
+      return text;
+    }
+
+    function copyToClipboard() {
+      const text = generateTextSummary();
+      navigator.clipboard.writeText(text).then(() => {
+        showToast('Copied to clipboard!');
+      }).catch(() => {
+        showToast('Failed to copy');
+      });
+    }
+
+    function downloadCSV() {
+      const today = new Date().toISOString().split('T')[0];
+      let csv = 'Date,Exercise,Set,Target Reps,Actual Reps,Load,Notes\n';
+
+      Object.values(sessionData).forEach(exData => {
+        exData.sets.forEach(set => {
+          csv += `${today},${exData.exerciseName},${set.setNumber},${set.targetReps},${set.actualReps || ''},${set.load},"${exData.notes.replace(/"/g, '""')}"\n`;
+        });
+      });
+
+      const blob = new Blob([csv], { type: 'text/csv' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `workout-${today}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+      showToast('CSV downloaded!');
+    }
+
+    function startOver() {
+      document.getElementById('summary-screen').classList.remove('active');
+      document.getElementById('overview-screen').classList.remove('hidden');
+      window.scrollTo(0, 0);
+    }
+
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 2000);
+    }
+
+    // Initialize
+    initOverview();
+  </script>
+</body>
+</html>
