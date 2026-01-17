@@ -124,6 +124,41 @@ Make the workout logger look polished and professional after core functionality 
 
 ---
 
+### Auto-Fill Input Boxes from Last Session
+
+**Priority**: Medium-High
+**Status**: Planned
+
+**Current Issue**:
+- "Last session" data displays at top (e.g., "5, 5, 5 @ 155lb")
+- But input boxes still show program defaults (e.g., placeholder "185lb")
+- User has to manually remember and type the previous session's values
+
+**Desired Behavior**:
+- Input boxes should pre-populate with last session's actual values
+- If last session was 5 reps @ 155lb, those should be the default values in the boxes
+- User can then adjust up/down as needed for progression
+- Falls back to program defaults if no previous session data exists
+
+**Implementation Approach**:
+- Extend `fetchLastSession()` to return the last session's reps and load
+- Store these values in sessionData when initializing
+- Pre-fill input boxes with last session values instead of program defaults
+- Keep placeholder text as fallback when no previous data
+
+**Benefits**:
+- Faster workout logging (less typing)
+- Easier to see progression (change from 155 to 160, not retype everything)
+- Reduces cognitive load (don't need to remember last week's numbers)
+- More seamless integration with Google Sheets data
+
+**Technical Notes**:
+- No LLM needed - just extend existing fetchLastSession() function
+- May need to handle cases where set count changed between sessions
+- Should still show target reps from program (e.g., "5") as reference
+
+---
+
 ### UI/UX Improvements
 - [ ] Add visual progress indicator showing reps added over time
 - [ ] Highlight when a PR is achieved
