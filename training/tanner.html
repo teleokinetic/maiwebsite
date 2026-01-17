@@ -489,6 +489,11 @@
   <div class="toast" id="toast"></div>
 
   <script>
+    // Google Apps Script webhook URL configuration
+    // TODO: Replace with your deployed Apps Script URL after setup
+    const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
+    const CLIENT_NAME = 'Tanner'; // Must match sheet name in Google Sheet
+
     // Embedded program data
     const PROGRAM = {
       "client": "tanner",
@@ -749,11 +754,15 @@
           exerciseSection.appendChild(cueBox);
         }
 
-        // Last session placeholder
+        // Last session - dynamically loaded from Google Sheets
         const lastSession = document.createElement('div');
         lastSession.className = 'last-session';
-        lastSession.textContent = 'Last session: No previous data';
+        lastSession.id = `last-session-${exIndex}`;
+        lastSession.textContent = 'Loading last session...';
         exerciseSection.appendChild(lastSession);
+
+        // Fetch and populate last session data
+        fetchLastSession(ex.id, `last-session-${exIndex}`);
 
         // Sets
         for (let i = 0; i < ex.sets; i++) {
@@ -881,6 +890,114 @@
         `;
         summaryList.appendChild(item);
       });
+
+      // AUTO-SYNC TO GOOGLE SHEETS
+      syncToGoogleSheets().then(success => {
+        if (success) {
+          showToast('✓ Session saved to Google Sheets!');
+        }
+      });
+    }
+
+    /**
+     * Syncs workout data to Google Sheets via Apps Script webhook
+     * Returns true on successful sync, false on failure
+     */
+    async function syncToGoogleSheets() {
+      // Skip sync if URL not configured
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+        console.warn('Google Sheets sync not configured - skipping');
+        return false;
+      }
+
+      const today = new Date();
+      const payload = {
+        clientName: CLIENT_NAME,
+        date: today.toISOString().split('T')[0], // YYYY-MM-DD
+        timestamp: today.toTimeString().split(' ')[0], // HH:MM:SS
+        sessionName: PROGRAM.sessionName,
+        exercises: []
+      };
+
+      // Build exercises array from sessionData
+      let globalExerciseIndex = 0;
+      PROGRAM.blocks.forEach(block => {
+        block.exercises.forEach(ex => {
+          const data = sessionData[globalExerciseIndex];
+
+          payload.exercises.push({
+            blockId: block.id,
+            blockName: block.name,
+            exerciseId: ex.id,
+            exerciseName: ex.name,
+            sets: data.sets.map(set => ({
+              setNumber: set.setNumber,
+              targetReps: set.targetReps,
+              actualReps: set.actualReps,
+              load: set.load || 'BW'
+            })),
+            notes: data.notes
+          });
+
+          globalExerciseIndex++;
+        });
+      });
+
+      try {
+        const response = await fetch(APPS_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Required for Apps Script
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify(payload)
+        });
+
+        // Note: no-cors means we can't read response, but request succeeds
+        console.log('Workout data synced to Google Sheets');
+        return true;
+      } catch (error) {
+        console.error('Failed to sync:', error);
+        showToast('⚠️ Auto-save failed. Use CSV download as backup.');
+        return false;
+      }
+    }
+
+    /**
+     * Fetches last session data for a specific exercise from Google Sheets
+     * Updates the UI to show previous performance
+     */
+    async function fetchLastSession(exerciseId, elementId) {
+      // Skip if URL not configured
+      if (APPS_SCRIPT_URL === 'YOUR_APPS_SCRIPT_URL_HERE') {
+        return;
+      }
+
+      try {
+        const url = `${APPS_SCRIPT_URL}?client=${CLIENT_NAME}&exerciseId=${exerciseId}`;
+        const response = await fetch(url);
+        const data = await response.json();
+
+        const elem = document.getElementById(elementId);
+        if (!elem) return;
+
+        if (data.success && data.hasData) {
+          const reps = data.sets.map(s => s.actualReps).join(', ');
+          const load = data.sets[0]?.load || 'BW';
+          const date = new Date(data.date).toLocaleDateString('en-US', {
+            month: 'short',
+            day: 'numeric'
+          });
+          elem.textContent = `Last session (${date}): ${reps} @ ${load}`;
+          elem.style.color = '#888';
+        } else {
+          elem.textContent = 'Last session: No previous data';
+        }
+      } catch (error) {
+        console.error('Failed to fetch last session:', error);
+        const elem = document.getElementById(elementId);
+        if (elem) {
+          elem.textContent = 'Last session: Unable to load';
+        }
+      }
     }
 
     function generateTextSummary() {
