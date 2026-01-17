@@ -607,6 +607,7 @@
     // Navigate by blocks instead of individual exercises
     let currentBlockIndex = 0;
     let sessionData = {};
+    let lastSessionData = {}; // Store last session data from Google Sheets
 
     // Flatten exercises for session data initialization
     let allExercises = [];
@@ -772,11 +773,13 @@
           setRow.innerHTML = `
             <span class="set-label">Set ${i + 1}</span>
             <input type="text" inputmode="numeric" class="reps-input"
+                   id="reps-${exIndex}-${i}"
                    placeholder="${ex.reps}"
                    value="${setData.actualReps}"
                    onchange="updateSet(${exIndex}, ${i}, 'reps', this.value)">
             <span class="at-symbol">@</span>
             <input type="text" class="load-input"
+                   id="load-${exIndex}-${i}"
                    placeholder="${loadPlaceholder}"
                    value="${setData.load}"
                    onchange="updateSet(${exIndex}, ${i}, 'load', this.value)">
@@ -962,7 +965,7 @@
 
     /**
      * Fetches last session data for a specific exercise from Google Sheets
-     * Updates the UI to show previous performance
+     * Updates the UI to show previous performance and stores data for auto-fill
      */
     async function fetchLastSession(exerciseId, elementId) {
       // Skip if URL not configured
@@ -979,6 +982,37 @@
         if (!elem) return;
 
         if (data.success && data.hasData) {
+          // Store last session data for auto-filling inputs
+          lastSessionData[exerciseId] = data.sets;
+
+          // Find the exercise index in sessionData and pre-fill values
+          const exerciseIdx = allExercises.findIndex(ex => ex.id === exerciseId);
+          if (exerciseIdx !== -1 && sessionData[exerciseIdx]) {
+            // Update sessionData with last session values
+            data.sets.forEach((lastSet, idx) => {
+              if (sessionData[exerciseIdx].sets[idx]) {
+                // Only pre-fill if current values are empty (first load)
+                if (!sessionData[exerciseIdx].sets[idx].actualReps) {
+                  sessionData[exerciseIdx].sets[idx].actualReps = lastSet.actualReps;
+                }
+                if (!sessionData[exerciseIdx].sets[idx].load) {
+                  sessionData[exerciseIdx].sets[idx].load = lastSet.load;
+                }
+
+                // Update the input fields in the DOM if they exist and are empty
+                const repsInput = document.getElementById(`reps-${exerciseIdx}-${idx}`);
+                const loadInput = document.getElementById(`load-${exerciseIdx}-${idx}`);
+
+                if (repsInput && !repsInput.value) {
+                  repsInput.value = lastSet.actualReps;
+                }
+                if (loadInput && !loadInput.value) {
+                  loadInput.value = lastSet.load;
+                }
+              }
+            });
+          }
+
           const reps = data.sets.map(s => s.actualReps).join(', ');
           const load = data.sets[0]?.load || 'BW';
           const date = new Date(data.date).toLocaleDateString('en-US', {
@@ -1050,6 +1084,7 @@
     function startOver() {
       // Reset session data
       sessionData = {};
+      lastSessionData = {}; // Clear last session data to fetch fresh for next session
       currentBlockIndex = 0;
       currentExerciseIndex = 0;
 
