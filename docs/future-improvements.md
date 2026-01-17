@@ -159,6 +159,104 @@ Make the workout logger look polished and professional after core functionality 
 
 ---
 
+### Tempo Prescription & Tracking
+
+**Priority**: TBD
+**Status**: Idea Stage
+
+**Purpose**:
+Add tempo prescription (e.g., "3-1-1-0") to exercises for movement quality and progression control.
+
+**Current State**:
+- No tempo information in exercise prescription
+- No way to specify eccentric/concentric speeds
+- Can only add general notes about tempo
+
+**Potential Features**:
+- [ ] Tempo field in exercise data (e.g., "3-1-1-0" = 3sec down, 1sec pause, 1sec up, 0sec top)
+- [ ] Display tempo in exercise card (near cues/progression)
+- [ ] Visual timer/metronome during sets (optional)
+- [ ] Track adherence to tempo in notes
+- [ ] Auto-adjust tempo as progression variable (slower eccentric = harder)
+
+**Use Cases**:
+- Tempo squats for strength building (controlled eccentric)
+- Pause reps for sticking points
+- Time under tension for hypertrophy
+- Movement quality emphasis for rehab/skill building
+
+**Implementation Questions**:
+- Format: Standard 4-digit (eccentric-pause-concentric-pause)?
+- Display: Where does it fit in the UI without clutter?
+- Tracking: Required field or optional variation?
+- Progression: How to progress tempo over time?
+
+**Technical Notes**:
+- Add `tempo` field to exercise JSON schema
+- Consider audio cues for timing (beep every second?)
+- May need timer/stopwatch integration for timed holds
+
+---
+
+### Video Embed UI/UX
+
+**Priority**: TBD (depends on Exercise Library development)
+**Status**: Idea Stage
+
+**Purpose**:
+Integrate exercise demonstration videos into the workout logger for technique reference.
+
+**Current State**:
+- No video support
+- Only text cues and progression notes
+- Client has to remember exercises or ask coach
+
+**Design Considerations**:
+
+**Where to show videos?**
+- [ ] Inline in exercise card (above/below sets)
+- [ ] Modal/overlay on tap
+- [ ] Thumbnail with expand option
+- [ ] Picture-in-picture while logging
+
+**Mobile Performance**:
+- [ ] Video file size optimization (important for phone data)
+- [ ] Lazy loading (don't load until needed)
+- [ ] Caching strategy (rewatch without re-download)
+- [ ] Offline fallback (thumbnail + text description)
+
+**UX Flow**:
+- [ ] Auto-play vs. tap-to-play?
+- [ ] Loop the video or play once?
+- [ ] Volume controls / mute by default?
+- [ ] Close/minimize behavior
+- [ ] Don't interfere with logging inputs
+
+**Content Strategy**:
+- [ ] Embedded YouTube/Vimeo links?
+- [ ] Self-hosted video files?
+- [ ] GIFs for simple movements?
+- [ ] Still images with key positions?
+
+**Accessibility**:
+- [ ] Captions/subtitles for cues
+- [ ] Audio descriptions
+- [ ] Alternative text descriptions
+
+**Technical Implementation**:
+- Add `videoUrl` field to exercise data
+- Consider video platform (YouTube API, direct embed, etc.)
+- Test mobile performance and bandwidth usage
+- Progressive enhancement (works without video if needed)
+
+**Related Features**:
+- Links to full exercise library
+- Alternative angle views
+- Common mistakes video
+- Coach commentary/overlay
+
+---
+
 ### UI/UX Improvements
 - [ ] Add visual progress indicator showing reps added over time
 - [ ] Highlight when a PR is achieved
