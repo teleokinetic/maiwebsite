@@ -44,6 +44,86 @@ Make progression guidance simple, actionable, and prescriptive:
 
 ## Other Future Ideas
 
+### Client Dashboard (Home Base)
+
+**Priority**: TBD
+**Status**: Idea Stage
+
+Build a central dashboard that serves as the client's home base for all workout-related activities.
+
+**Core Concept**:
+- Landing page when client visits their training URL
+- Replaces or enhances current overview screen
+- Focus on quick access and motivation
+
+**Potential Features** (to be defined):
+- [ ] Big, prominent "Start Next Workout" button
+- [ ] Data visualization/display (charts, trends, progress)
+- [ ] Recent workout summary
+- [ ] Streak tracking (consecutive workout days)
+- [ ] Quick stats (total sessions, volume milestones, etc.)
+- [ ] Personal records / achievements
+- [ ] Upcoming session preview
+- [ ] Notes/messages from coach
+
+**Design Philosophy**:
+- Clean, motivating, easy to navigate
+- Mobile-first (most clients will use on phone)
+- Fast load time
+- Clear call-to-action
+- Visual feedback on progress
+
+**Implementation Questions**:
+- What data visualizations are most motivating?
+- How much info before it feels overwhelming?
+- Balance between data and simplicity
+- Integration with Google Sheets data
+
+---
+
+### UI/UX Research & Design Polish
+
+**Priority**: Later (after functionality is solid)
+**Status**: Planned
+
+Make the workout logger look polished and professional after core functionality is working well.
+
+**Goals**:
+- Visual appeal and professionalism
+- Improved user experience
+- Brand consistency
+- Delight and motivation
+
+**Approach** (TBD):
+- [ ] Research best practices for workout logging UIs
+- [ ] Analyze competitor apps (Strong, Hevy, etc.)
+- [ ] Study fitness app design patterns
+- [ ] Gather user feedback on current design
+- [ ] Create mood board / design inspiration
+- [ ] Define color palette and typography
+- [ ] Design system / component library
+
+**Areas to Polish**:
+- [ ] Color scheme (currently basic dark mode)
+- [ ] Typography and hierarchy
+- [ ] Button styles and interactions
+- [ ] Form inputs and focus states
+- [ ] Animations and transitions
+- [ ] Loading states and feedback
+- [ ] Icons and visual elements
+- [ ] Spacing and layout rhythm
+- [ ] Mobile touch targets and gestures
+
+**Resources to Explore**:
+- Dribbble/Behance for fitness app designs
+- Apple Human Interface Guidelines
+- Material Design for motion/interaction patterns
+- Accessibility guidelines (WCAG)
+
+**Note**: Focus on making it work well first, then make it look great. Function before form.
+
+---
+
 ### UI/UX Improvements
 - [ ] Add visual progress indicator showing reps added over time
 - [ ] Highlight when a PR is achieved
