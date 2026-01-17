@@ -483,7 +483,7 @@
 
     <button class="action-btn primary" onclick="copyToClipboard()">Copy to Clipboard</button>
     <button class="action-btn secondary" onclick="downloadCSV()">Download CSV</button>
-    <button class="action-btn secondary" onclick="startOver()">Start Over</button>
+    <button class="action-btn secondary" onclick="startOver()">Start Next Session</button>
   </div>
 
   <div class="toast" id="toast"></div>
@@ -1048,8 +1048,20 @@
     }
 
     function startOver() {
+      // Reset session data
+      sessionData = {};
+      currentBlockIndex = 0;
+      currentExerciseIndex = 0;
+
+      // Hide summary screen
       document.getElementById('summary-screen').classList.remove('active');
+
+      // Show overview screen
       document.getElementById('overview-screen').classList.remove('hidden');
+
+      // Re-initialize overview
+      initOverview();
+
       window.scrollTo(0, 0);
     }
 
