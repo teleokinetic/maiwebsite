@@ -119,6 +119,23 @@ Make the workout logger look polished and professional after core functionality 
 - Apple Human Interface Guidelines
 - Material Design for motion/interaction patterns
 - Accessibility guidelines (WCAG)
+- **Top language learning apps** (Duolingo, Babbel, etc.) - excellent onboarding and gamification
+- **Things app** - clean task management UI, great mobile UX, minimal but powerful
+
+**Inspiration from Language Learning Apps**:
+- Onboarding flows that teach while doing
+- Progressive disclosure (don't show everything at once)
+- Clear visual feedback and progress
+- Bite-sized interactions
+- Celebration of small wins
+
+**Inspiration from Things App**:
+- Minimal, clean aesthetic
+- Thoughtful animations and transitions
+- Clear hierarchy and information architecture
+- Gesture-based interactions
+- Fast, responsive feel
+- Keyboard shortcuts and power-user features
 
 **Note**: Focus on making it work well first, then make it look great. Function before form.
 
@@ -156,6 +173,76 @@ Make the workout logger look polished and professional after core functionality 
 - No LLM needed - just extend existing fetchLastSession() function
 - May need to handle cases where set count changed between sessions
 - Should still show target reps from program (e.g., "5") as reference
+
+---
+
+### New Client Onboarding / Tutorial Mode
+
+**Priority**: Medium
+**Status**: Planned
+
+**Purpose**:
+Help new clients learn how to use the workout logger without feeling overwhelmed, especially those less tech-savvy.
+
+**Current State**:
+- No tutorial or onboarding
+- Users figure it out by exploring
+- May be confusing for first-time users
+- Coach has to walk them through manually
+
+**Potential Approaches**:
+
+**Tutorial Mode Toggle**:
+- [ ] Optional tutorial mode that can be turned on/off
+- [ ] Highlighted hints/tooltips on first use
+- [ ] Step-by-step walkthrough for first session
+- [ ] "Try it yourself" sandbox mode with sample workout
+- [ ] Progress indicator showing onboarding completion
+
+**Progressive Disclosure**:
+- [ ] Start with minimal features, reveal more as they use it
+- [ ] Contextual tips that appear when relevant
+- [ ] Dismissible help text
+- [ ] "?" help icons for features
+
+**Onboarding Flow Options**:
+- [ ] Welcome screen with 3-panel "how it works" overview
+- [ ] Interactive demo with fake workout data
+- [ ] Video walkthrough (2-3 minutes)
+- [ ] Coach-narrated tour
+- [ ] "Skip tutorial" option for tech-savvy clients
+
+**Key Areas to Teach**:
+1. How to navigate between blocks
+2. How to log reps and load
+3. What "Last session" means and how to use it
+4. How to add notes
+5. What happens when you finish (auto-save to Google Sheets)
+6. How to start next session
+
+**UX Patterns to Consider**:
+- Spotlight/highlight specific UI elements
+- Overlay tooltips with arrows
+- Inline help text that fades after first use
+- Completion checkmarks ("You've logged your first set!")
+- Gentle nudges ("Don't forget to add notes if needed")
+
+**Implementation Questions**:
+- One-time tutorial vs. always-available help mode?
+- How to track if someone completed onboarding?
+- Should coach be able to reset tutorial for a client?
+- Accessibility considerations for screen readers
+
+**Technical Notes**:
+- Store onboarding state in localStorage
+- Use CSS classes to highlight/spotlight elements
+- Consider a lightweight tutorial library vs. custom build
+- Should not block power users from jumping straight in
+
+**Inspiration**:
+- Duolingo's first lesson (teaches by doing, not by reading)
+- Things app's subtle hints
+- Notion's onboarding checklist
 
 ---
 
