@@ -45,6 +45,35 @@ Make progression guidance simple, actionable, and prescriptive:
 ## Other Future Ideas
 
 ### UI/UX Improvements
+
+#### Session Complete Screen Redesign
+**Priority**: Medium
+**Effort**: Medium (design + implementation)
+**Status**: Needs design exploration
+
+**Current State** (Jan 21, 2026):
+- Shows workout summary immediately after completion
+- Functional but not visually motivating
+- Lacks celebratory/encouraging feedback
+
+**Desired Behavior**:
+- Primary: Celebratory "Nice job!" / motivational message
+- Secondary: Access to workout details, trends, stats via buttons/links
+- Create a moment of satisfaction/accomplishment
+
+**UX Pattern Suggestions**:
+- Hero section with encouraging message + date
+- Summary stats (e.g., "5 exercises • 15 sets • 25 minutes")
+- Secondary actions: "View Details" | "See Trends" | "Done"
+- Consider: Streak tracking, PRs achieved this session, weekly volume comparison
+
+**Related Items**:
+- Pairs well with confetti animation (already planned)
+- Could show "PR achieved" badges if that feature is implemented
+- Opportunity to surface next session date/reminder
+
+---
+
 - [ ] Add visual progress indicator showing reps added over time
 - [ ] Highlight when a PR is achieved
 - [ ] Add confetti animation on session complete
