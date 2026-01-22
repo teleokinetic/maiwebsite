@@ -37,53 +37,13 @@ To add a new client:
 3. Update the program data in the HTML file to reference the new JSON
 4. Share direct URL: `tannerholman.space/training/[clientname].html`
 
-### Data Recording & Google Sheets Integration
+### Data Recording
 
-The workout logger automatically syncs session data to Google Sheets for tracking and analysis.
+The workout logger automatically syncs to Google Sheets for tracking and analysis.
 
-#### Setup (One-time)
+**Setup**: See [Google Sheets Integration Guide](docs/google-sheets-setup.md) for step-by-step setup.
 
-1. **Create Google Sheet**: "Movement Coaching - Session Data"
-2. **Add client sheet**: Create a tab/sheet named exactly as configured in the HTML (e.g., "Tanner")
-3. **Add column headers** in row 1:
-   ```
-   A: Date | B: Timestamp | C: Block ID | D: Block Name | E: Exercise ID
-   F: Exercise Name | G: Set Number | H: Target Reps | I: Actual Reps
-   J: Load | K: Notes | L: Session Notes
-   ```
-4. **Copy Apps Script code**: From `docs/apps-script.js`
-5. **Deploy Apps Script**:
-   - In Google Sheets: Extensions → Apps Script
-   - Paste the code from `docs/apps-script.js`
-   - Click "Deploy" → "New deployment"
-   - Type: Web app
-   - Execute as: Me
-   - Who has access: Anyone
-   - Copy the deployment URL
-6. **Update HTML file**: Replace `YOUR_APPS_SCRIPT_URL_HERE` with your deployment URL
-
-#### How It Works
-
-- **Auto-sync**: When client clicks "Finish Session", data automatically saves to Google Sheets
-- **Last session data**: Next workout loads previous performance in "Last session" fields
-- **Backup exports**: CSV download and clipboard copy still available if sync fails
-- **No authentication required**: Simple webhook approach, no OAuth complexity
-
-#### Data Structure
-
-Each row = one set of one exercise
-
-| Date | Time | Block | Exercise | Set# | Target | Actual | Load | Notes |
-|------|------|-------|----------|------|--------|--------|------|-------|
-| 2025-01-15 | 14:30:00 | A | Barbell Back Squat | 1 | 5 | 5 | 185lb | Good depth |
-
-#### Security Considerations
-
-- **Apps Script URL**: Not a secret, but worst case is someone logs fake data
-- **Sheet access**: Keep Google Sheet private (only coach has edit access)
-- **No PII**: Client doesn't need Google account to use logger
-- **Rate limiting**: Apps Script has built-in rate limiting (60 req/min)
-- **URL rotation**: Can redeploy script to get new URL if compromised
+**How it works**: When client clicks "Finish Session", data saves automatically. Next session loads previous performance for comparison. CSV and clipboard exports are available as backup.
 
 ### Future Development
 
@@ -105,55 +65,12 @@ Changes pushed to the main branch are typically live within 30 seconds.
 
 ## Automated Documentation Sync
 
-Documentation files are automatically backed up to GitHub every 30 minutes via a cron job. This ensures that local changes to docs are never lost and stay in sync with the remote repository.
-
-### How It Works
-
-- **Cron job** runs every 30 minutes (at :00 and :30 past each hour)
-- **Monitors** changes in: `docs/`, `training/docs/`, and `README.md`
-- **Auto-commits** any changes with timestamp
-- **Auto-pushes** to current git branch
-- **Zero manual intervention** required - just edit and save files
-
-### User Commands
-
-**Check sync status:**
-```bash
-# View recent activity
-tail -20 /home/user/maiwebsite/.github/logs/auto-sync.log
-
-# Check last commit
-git log -1
-```
-
-**Disable/enable syncing:**
-```bash
-# Disable: Comment out cron job
-crontab -e
-# Add # at start of the auto-sync line
-
-# Enable: Remove the #
-crontab -e
-# Remove # from the auto-sync line
-```
-
-**Force sync now:**
-```bash
-bash /home/user/maiwebsite/.github/scripts/auto-sync-docs.sh
-```
-
-### Files
+Docs are automatically backed up to GitHub every 30 minutes via cron job.
 
 - **Script**: `.github/scripts/auto-sync-docs.sh`
-- **Logs**: `.github/logs/auto-sync.log` (auto-rotated, keeps last 100 lines)
-- **Cron**: Check with `crontab -l`
-
-### Troubleshooting
-
-If commits aren't appearing:
-1. Check cron is running: `crontab -l`
-2. View logs: `tail -20 /home/user/maiwebsite/.github/logs/auto-sync.log`
-3. Manually run script: `bash /home/user/maiwebsite/.github/scripts/auto-sync-docs.sh`
+- **Logs**: `.github/logs/auto-sync.log`
+- **Check status**: `tail -20 .github/logs/auto-sync.log`
+- **Force sync**: `bash .github/scripts/auto-sync-docs.sh`
 
 ## Local Development
 

@@ -970,7 +970,7 @@ exercises:
       - "Jump or step to top position"
       - "Slow 3-5 second descent"
       - "Full depth, then reset"
-    checkpoint: ""  # TODO: Look up Steven Low's charts
+    checkpoint: ""
     notes: "Entry point for dip work"
 
   - id: parallel-bar-dip
