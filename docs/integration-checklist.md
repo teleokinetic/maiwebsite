@@ -121,20 +121,6 @@ syncToGoogleSheets().then(success => {
    - Verify data in Google Sheets
    - Test last session loading
 
-## Future Enhancements
-
-### Phase 2 (Next)
-- [ ] Coach review dashboard
-- [ ] Auto-flag progression criteria
-- [ ] Exercise library integration
-- [ ] Trend visualization
-
-### Phase 3 (Later)
-- [ ] Multiple clients support
-- [ ] Program versioning
-- [ ] Volume tracking
-- [ ] PR detection
-
 ## Success Criteria
 
 ✓ Auto-sync works without user interaction

@@ -87,28 +87,11 @@ Each row = one set of one exercise
 
 ### Future Development
 
-The training section is planned to evolve into a full coaching service offering with:
+See [`docs/future-improvements.md`](docs/future-improvements.md) for the full roadmap.
 
-**Phase 1 (Completed):**
-- ✓ Mobile-first workout logger
-- ✓ Block-based program navigation
-- ✓ Google Sheets auto-sync
-- ✓ Last session data loading
+**Completed:** Mobile-first workout logger, block-based navigation, Google Sheets auto-sync, last session loading.
 
-**Phase 2 (Planned):**
-- Review dashboard for coach to analyze trends
-- Auto-flag exercises meeting progression criteria
-- Surface "what comes next" suggestions from exercise library
-- 4-week trend visualization
-- Client notes aggregation
-
-**Phase 3 (Future):**
-- Landing page showcasing coaching services
-- Client onboarding information
-- Dynamic program loading from JSON files
-- Client authentication for privacy
-- Program creation interface
-- Volume and PR tracking
+**Up Next:** Coach dashboard, progression auto-flagging, exercise library integration.
 
 ## Deployment
 
