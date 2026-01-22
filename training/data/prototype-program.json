@@ -1,0 +1,70 @@
+{
+  "client": "prototype",
+  "sessionName": "UI Test Workout",
+  "created": "2026-01-22",
+  "notes": "Testing new UI/UX improvements. This is a safe prototype environment.",
+  "blocks": [
+    {
+      "id": "A",
+      "name": "Strength",
+      "exercises": [
+        {
+          "id": "barbell-squat",
+          "name": "Barbell Squat",
+          "sets": 3,
+          "reps": "5",
+          "load": "135lb",
+          "progressionNote": "Add 1 rep per set. When you hit 3x8, increase to 145lb.",
+          "customCue": null,
+          "cues": ["Chest up", "Knees out", "Full depth"],
+          "notes": "Focus on form"
+        }
+      ]
+    },
+    {
+      "id": "B",
+      "name": "Pull",
+      "exercises": [
+        {
+          "id": "pullup",
+          "name": "Pull-Up",
+          "sets": 3,
+          "reps": "max",
+          "load": "bodyweight",
+          "progressionNote": "Add 1 rep each session. At 15 total reps, add 5lb.",
+          "customCue": "Full dead hang at bottom",
+          "cues": ["Pull to chest", "Control descent", "Full extension"],
+          "notes": "Quality over quantity"
+        },
+        {
+          "id": "dumbbell-row",
+          "name": "Dumbbell Row",
+          "sets": 3,
+          "reps": "8-10",
+          "load": "50lb",
+          "progressionNote": "At 3x10, increase to 55lb.",
+          "customCue": "Pull with elbow, not hand",
+          "cues": ["Brace core", "Row to hip", "Squeeze at top"],
+          "notes": null
+        }
+      ]
+    },
+    {
+      "id": "C",
+      "name": "Push",
+      "exercises": [
+        {
+          "id": "bench-press",
+          "name": "Bench Press",
+          "sets": 3,
+          "reps": "8",
+          "load": "155lb",
+          "progressionNote": "Add 1 rep per set. When you hit 3x10, increase to 165lb.",
+          "customCue": null,
+          "cues": ["Retract shoulders", "Lower to chest", "Press up explosively"],
+          "notes": "Keep shoulders back"
+        }
+      ]
+    }
+  ]
+}
