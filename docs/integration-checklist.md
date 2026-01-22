@@ -21,41 +21,6 @@
 - [x] Added security considerations
 - [x] Documented data structure
 
-## Integration Points ✓
-
-### Configuration (lines 492-495)
-```javascript
-const APPS_SCRIPT_URL = 'YOUR_APPS_SCRIPT_URL_HERE';
-const CLIENT_NAME = 'Tanner';
-```
-
-### Auto-Sync on Session Complete (lines 894-899)
-```javascript
-// AUTO-SYNC TO GOOGLE SHEETS
-syncToGoogleSheets().then(success => {
-  if (success) {
-    showToast('✓ Session saved to Google Sheets!');
-  }
-});
-```
-
-### Sync Function (lines 906-962)
-- Builds payload from sessionData
-- POSTs to Apps Script webhook
-- Handles errors gracefully
-- Skips if URL not configured
-
-### Last Session Fetch (lines 968-1001)
-- GETs data from Apps Script
-- Updates UI with previous performance
-- Shows friendly fallback messages
-- Gracefully handles missing data
-
-### Dynamic Last Session Display (lines 757-765)
-- Creates element with unique ID
-- Shows "Loading..." state
-- Calls fetchLastSession() to populate
-
 ## Testing Checklist
 
 ### Phase 1: Local Verification
@@ -91,35 +56,6 @@ syncToGoogleSheets().then(success => {
 - [ ] Test with non-existent sheet name (should show error)
 - [ ] Test with no network (should show fallback message)
 - [ ] Test with no previous data (should show "No previous data")
-
-## Files Modified
-
-```
-/training/tanner.html          - Added sync functions and configuration
-/README.md                     - Added integration documentation
-/docs/apps-script.js          - NEW: Google Apps Script code
-/docs/google-sheets-setup.md  - NEW: Detailed setup guide
-/docs/integration-checklist.md - NEW: This checklist
-```
-
-## Deployment Steps
-
-1. **Commit changes**:
-   ```bash
-   git add .
-   git commit -m "Add Google Sheets auto-sync for workout data"
-   git push
-   ```
-
-2. **Follow setup guide**:
-   - See `docs/google-sheets-setup.md` for step-by-step instructions
-   - Deploy Apps Script
-   - Update HTML with deployment URL
-
-3. **Test integration**:
-   - Complete test workout
-   - Verify data in Google Sheets
-   - Test last session loading
 
 ## Success Criteria
 
