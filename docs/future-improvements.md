@@ -33,9 +33,6 @@ Rewrite verbose progression notes to be action-oriented:
 ### PR Highlight
 Compare current set to previous best, show "PR!" badge when exceeded.
 
-### Dark Mode Toggle
-Add CSS variables for theming and a toggle in the header.
-
 ### Fix exercises.yaml TODO
 Look up Steven Low's progression charts for `parallel-bar-dip-eccentric` checkpoint.
 Location: `training/data/exercises.yaml:973`
@@ -44,8 +41,8 @@ Location: `training/data/exercises.yaml:973`
 
 ## Next (1-3 hours each)
 
-### Confetti Animation on Session Complete
-Fun motivational touch when finishing a workout.
+### Session Complete Screen Redesign
+Current summary screen is unattractive and needs a visual refresh. Consider more engaging layout, better data presentation, and improved visual hierarchy.
 
 ### URL Parameters for Client Selection
 Allow `?client=tanner` to load different programs without separate HTML files. Foundation for multi-client support.
