@@ -103,6 +103,58 @@ This site is deployed via GitHub Pages:
 
 Changes pushed to the main branch are typically live within 30 seconds.
 
+## Automated Documentation Sync
+
+Documentation files are automatically backed up to GitHub every 30 minutes via a cron job. This ensures that local changes to docs are never lost and stay in sync with the remote repository.
+
+### How It Works
+
+- **Cron job** runs every 30 minutes (at :00 and :30 past each hour)
+- **Monitors** changes in: `docs/`, `training/docs/`, and `README.md`
+- **Auto-commits** any changes with timestamp
+- **Auto-pushes** to current git branch
+- **Zero manual intervention** required - just edit and save files
+
+### User Commands
+
+**Check sync status:**
+```bash
+# View recent activity
+tail -20 /home/user/maiwebsite/.github/logs/auto-sync.log
+
+# Check last commit
+git log -1
+```
+
+**Disable/enable syncing:**
+```bash
+# Disable: Comment out cron job
+crontab -e
+# Add # at start of the auto-sync line
+
+# Enable: Remove the #
+crontab -e
+# Remove # from the auto-sync line
+```
+
+**Force sync now:**
+```bash
+bash /home/user/maiwebsite/.github/scripts/auto-sync-docs.sh
+```
+
+### Files
+
+- **Script**: `.github/scripts/auto-sync-docs.sh`
+- **Logs**: `.github/logs/auto-sync.log` (auto-rotated, keeps last 100 lines)
+- **Cron**: Check with `crontab -l`
+
+### Troubleshooting
+
+If commits aren't appearing:
+1. Check cron is running: `crontab -l`
+2. View logs: `tail -20 /home/user/maiwebsite/.github/logs/auto-sync.log`
+3. Manually run script: `bash /home/user/maiwebsite/.github/scripts/auto-sync-docs.sh`
+
 ## Local Development
 
 No build process required. To test locally:
