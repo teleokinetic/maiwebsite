@@ -1,75 +1,93 @@
-# Future Improvements for Workout Logger
+# Roadmap & Future Improvements
 
-## Progression Content Simplification
+> **This is the single source of truth for planned work.**
 
-**Priority**: Medium
-**Status**: Planned
+## Completed
 
-### Current Issue
-Progression notes are too verbose and technical. Example:
-- Current: "Track total reps. Build volume."
-- Current: "Build to 3x8 at 185 before adding load. Then 195lb for 3x5."
+- [x] Mobile-first workout logger
+- [x] Block-based program navigation
+- [x] Google Sheets auto-sync
+- [x] Last session data loading
 
-### Desired Behavior
-Make progression guidance simple, actionable, and prescriptive:
-- **Better**: "Try to add 1 rep every session. Once you hit 10 reps, increase weight."
-- **Better**: "Add 5lb when you can do 3x8"
+---
 
-### Guidelines for Rewriting
-1. **Be specific**: Tell them exactly what to do next
-2. **Be concise**: 1-2 short sentences max
-3. **Focus on the next step**: Not the entire progression path
-4. **Use simple language**: Avoid jargon
+## Now (< 1 hour each)
 
-### Examples to Rewrite
+### Progression Content Simplification
+**Priority: High** | Content editing, no code changes
 
-| Exercise | Current Progression | Better Progression |
-|----------|-------------------|-------------------|
+Rewrite verbose progression notes to be action-oriented:
+
+| Exercise | Current | Better |
+|----------|---------|--------|
 | Pull-Up | "Track total reps. Build volume." | "Add 1 rep each session. At 15 total reps, add weight." |
 | Back Squat | "Build to 3x8 at 185 before adding load. Then 195lb for 3x5." | "Add 1 rep per set. When you hit 3x8, increase to 195lb." |
 | Ring Support | "Build to 3x60s before ring dip eccentrics" | "Add 5 seconds each session. At 3x60s, move to ring dips." |
 | Hamstring Slide | "Progress to 1-leg eccentric when 3x10 is easy and confident" | "At 3x10, switch to 1-leg eccentric (slower tempo)." |
 
-### Implementation Notes
-- This will require updating the `progressionNote` field in each exercise in the program JSON
-- Consider adding progression templates to make this easier for future programs
-- Could potentially auto-generate simple progression text based on exercise type
+**Guidelines:**
+1. Be specific—tell them exactly what to do next
+2. Be concise—1-2 short sentences max
+3. Focus on the next step, not the entire progression path
 
-### Related Improvements
-- Consider adding auto-flagging when progression criteria are met (Phase 2)
-- Surface "what comes next" from exercise library (Phase 2)
-- Visual indicators when client is ready to progress
+### PR Highlight
+Compare current set to previous best, show "PR!" badge when exceeded.
+
+### Dark Mode Toggle
+Add CSS variables for theming and a toggle in the header.
+
+### Fix exercises.yaml TODO
+Look up Steven Low's progression charts for `parallel-bar-dip-eccentric` checkpoint.
+Location: `training/data/exercises.yaml:973`
 
 ---
 
-## Other Future Ideas
+## Next (1-3 hours each)
 
-### UI/UX Improvements
-- [ ] Add visual progress indicator showing reps added over time
-- [ ] Highlight when a PR is achieved
-- [ ] Add confetti animation on session complete
-- [ ] Dark mode toggle
+### Confetti Animation on Session Complete
+Fun motivational touch when finishing a workout.
 
-### Data & Analytics
-- [ ] Coach dashboard with trend visualization
-- [ ] 4-week rolling averages
-- [ ] Volume tracking (sets × reps × load)
-- [ ] Frequency tracking
+### URL Parameters for Client Selection
+Allow `?client=tanner` to load different programs without separate HTML files. Foundation for multi-client support.
 
-### Program Management
-- [ ] Program versioning in Google Sheets
-- [ ] Multiple programs per client
-- [ ] Program templates library
-- [ ] Easy program duplication/modification
+### Visual Progress Indicator
+Show reps added over time as a simple sparkline or progress bar.
 
-### Multi-Client Support
-- [ ] Client selector on overview screen
-- [ ] URL parameters for client selection
-- [ ] Client authentication/privacy
-- [ ] Separate Google Sheet tabs auto-created
+### Landing Page
+Simple page showcasing coaching services. Doesn't need to wait for other features.
+
+---
+
+## Later
+
+### Coach Dashboard
+- Trend visualization (4-week rolling averages)
+- Auto-flag exercises meeting progression criteria
+- Client notes aggregation
+- Volume tracking (sets × reps × load)
 
 ### Exercise Library Integration
-- [ ] Link exercises to detailed library entries
-- [ ] Video demonstrations
-- [ ] Alternative exercise suggestions
-- [ ] Auto-regression when performance drops
+- Link exercises to detailed library entries
+- Surface "what comes next" suggestions
+- Alternative exercise suggestions
+- Auto-regression when performance drops
+
+### Multi-Client Support
+- Client selector on overview screen
+- Client authentication for privacy
+- Separate Google Sheet tabs auto-created
+
+### Program Management
+- Program versioning in Google Sheets
+- Multiple programs per client
+- Program templates library
+- Program creation interface
+
+---
+
+## Ideas (Unprioritized)
+
+- Frequency tracking
+- Video demonstrations for exercises
+- Easy program duplication/modification
+- Client onboarding flow
