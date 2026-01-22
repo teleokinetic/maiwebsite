@@ -616,6 +616,33 @@
       });
     });
 
+    // localStorage persistence helpers
+    const STORAGE_KEY = 'tanner-workout-session';
+
+    function saveToStorage() {
+      const state = {
+        sessionData,
+        currentBlockIndex,
+        timestamp: Date.now(),
+        programName: PROGRAM.name
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+    }
+
+    function loadFromStorage() {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (!saved) return null;
+      try {
+        return JSON.parse(saved);
+      } catch {
+        return null;
+      }
+    }
+
+    function clearStorage() {
+      localStorage.removeItem(STORAGE_KEY);
+    }
+
     // Initialize overview
     function initOverview() {
       const container = document.getElementById('blocks-container');
@@ -651,8 +678,17 @@
       header.parentElement.classList.toggle('collapsed');
     }
 
-    function startSession() {
-      // Only reset if no session data exists (first start)
+    function startSession(forceNew = false) {
+      // Try to restore from localStorage if not forcing new session
+      if (!forceNew) {
+        const saved = loadFromStorage();
+        if (saved && saved.programName === PROGRAM.name) {
+          sessionData = saved.sessionData;
+          currentBlockIndex = saved.currentBlockIndex;
+        }
+      }
+
+      // Only initialize if no session data exists (first start or forced new)
       if (Object.keys(sessionData).length === 0) {
         currentBlockIndex = 0;
 
@@ -673,6 +709,7 @@
             });
           }
         });
+        saveToStorage(); // Persist initial state
       }
 
       document.getElementById('overview-screen').classList.add('hidden');
@@ -813,6 +850,7 @@
       } else if (field === 'load') {
         sessionData[exerciseIndex].sets[setIndex].load = value;
       }
+      saveToStorage();
     }
 
     function saveCurrentBlock() {
@@ -834,6 +872,7 @@
       });
 
       // Note: Set data is saved automatically via onchange handlers
+      saveToStorage();
     }
 
     function prevExercise() {
@@ -893,6 +932,7 @@
       // AUTO-SYNC TO GOOGLE SHEETS
       syncToGoogleSheets().then(success => {
         if (success) {
+          clearStorage(); // Clear localStorage after successful sync
           showToast('✓ Session saved to Google Sheets!');
         }
       });
@@ -1048,6 +1088,9 @@
     }
 
     function startOver() {
+      // Clear localStorage
+      clearStorage();
+
       // Reset session data
       sessionData = {};
       currentBlockIndex = 0;
@@ -1076,6 +1119,34 @@
 
     // Initialize
     initOverview();
+
+    // Check for saved session and offer to resume
+    (function checkForSavedSession() {
+      const saved = loadFromStorage();
+      if (saved && saved.programName === PROGRAM.name) {
+        const age = Date.now() - saved.timestamp;
+        const minutes = Math.floor(age / (1000 * 60));
+        const hours = Math.floor(minutes / 60);
+
+        let timeAgo;
+        if (hours >= 24) {
+          const days = Math.floor(hours / 24);
+          timeAgo = `${days} day${days > 1 ? 's' : ''} ago`;
+        } else if (hours >= 1) {
+          timeAgo = `${hours} hour${hours > 1 ? 's' : ''} ago`;
+        } else if (minutes >= 1) {
+          timeAgo = `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+        } else {
+          timeAgo = 'just now';
+        }
+
+        if (confirm(`Resume workout from ${timeAgo}?`)) {
+          startSession(); // Will restore from storage
+        } else {
+          clearStorage();
+        }
+      }
+    })();
   </script>
 </body>
 </html>
