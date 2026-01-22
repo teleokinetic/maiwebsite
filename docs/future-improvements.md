@@ -2,7 +2,7 @@
 
 > **This is the single source of truth for planned work.**
 
-## Completed (Phase 1)
+## Completed
 
 - [x] Mobile-first workout logger
 - [x] Block-based program navigation
@@ -11,7 +11,7 @@
 
 ---
 
-## Quick Wins (< 1 hour each)
+## Now (< 1 hour each)
 
 ### Progression Content Simplification
 **Priority: High** | Content editing, no code changes
@@ -30,38 +30,35 @@ Rewrite verbose progression notes to be action-oriented:
 2. Be concise—1-2 short sentences max
 3. Focus on the next step, not the entire progression path
 
-### Dark Mode Toggle
-**Priority: Low** | ~30 min
-
-Add CSS variables for theming and a toggle in the header.
-
 ### PR Highlight
-**Priority: Medium** | ~30 min
-
 Compare current set to previous best, show "PR!" badge when exceeded.
 
-### Fix exercises.yaml TODO
-**Priority: Low** | ~15 min
+### Dark Mode Toggle
+Add CSS variables for theming and a toggle in the header.
 
+### Fix exercises.yaml TODO
 Look up Steven Low's progression charts for `parallel-bar-dip-eccentric` checkpoint.
 Location: `training/data/exercises.yaml:973`
 
 ---
 
-## Medium Projects (1-3 hours each)
+## Next (1-3 hours each)
 
 ### Confetti Animation on Session Complete
 Fun motivational touch when finishing a workout.
 
 ### URL Parameters for Client Selection
-Allow `?client=tanner` to load different programs without separate HTML files.
+Allow `?client=tanner` to load different programs without separate HTML files. Foundation for multi-client support.
 
 ### Visual Progress Indicator
 Show reps added over time as a simple sparkline or progress bar.
 
+### Landing Page
+Simple page showcasing coaching services. Doesn't need to wait for other features.
+
 ---
 
-## Phase 2: Coach Tools
+## Later
 
 ### Coach Dashboard
 - Trend visualization (4-week rolling averages)
@@ -75,10 +72,6 @@ Show reps added over time as a simple sparkline or progress bar.
 - Alternative exercise suggestions
 - Auto-regression when performance drops
 
----
-
-## Phase 3: Platform Growth
-
 ### Multi-Client Support
 - Client selector on overview screen
 - Client authentication for privacy
@@ -90,14 +83,11 @@ Show reps added over time as a simple sparkline or progress bar.
 - Program templates library
 - Program creation interface
 
-### Public Presence
-- Landing page showcasing coaching services
-- Client onboarding flow
-
 ---
 
-## Ideas Backlog (Unprioritized)
+## Ideas (Unprioritized)
 
 - Frequency tracking
 - Video demonstrations for exercises
 - Easy program duplication/modification
+- Client onboarding flow

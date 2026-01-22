@@ -91,7 +91,7 @@ See [`docs/future-improvements.md`](docs/future-improvements.md) for the full ro
 
 **Completed:** Mobile-first workout logger, block-based navigation, Google Sheets auto-sync, last session loading.
 
-**Up Next:** Coach dashboard, progression auto-flagging, exercise library integration.
+**Up Next:** Progression simplification, PR highlighting, coach dashboard.
 
 ## Deployment
 
