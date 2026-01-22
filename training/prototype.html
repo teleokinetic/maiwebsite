@@ -527,6 +527,248 @@
       font-weight: 600;
     }
 
+    /* ============================================
+       CHIP-BASED INPUT SYSTEM
+       ============================================ */
+
+    /* Collapsed state - tappable value chips */
+    .set-row-collapsed {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 0;
+    }
+
+    .value-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 48px;
+      height: 44px;
+      padding: 0 16px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s var(--spring-bounce);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .value-chip.default-selected {
+      background: transparent;
+      border: 2px solid var(--primary-green);
+      color: var(--primary-green);
+    }
+
+    .value-chip.confirmed {
+      background: var(--primary-green);
+      border: 2px solid var(--primary-green);
+      color: #1a2e05;
+      transform: scale(1.05);
+      box-shadow: var(--shadow-glow-green);
+    }
+
+    .value-chip:active {
+      transform: scale(0.95);
+    }
+
+    /* Expanded state - chip options */
+    .set-row-expanded {
+      display: none;
+      flex-direction: column;
+      gap: 12px;
+      padding: 16px;
+      background: var(--bg-input);
+      border-radius: 16px;
+      margin: 8px 0;
+      animation: expandIn 0.3s var(--spring-bounce);
+    }
+
+    .set-row-expanded.active {
+      display: flex;
+    }
+
+    @keyframes expandIn {
+      from {
+        opacity: 0;
+        transform: scaleY(0.8);
+        transform-origin: top;
+      }
+      to {
+        opacity: 1;
+        transform: scaleY(1);
+      }
+    }
+
+    .chip-row {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .chip-row-label {
+      min-width: 50px;
+      font-size: 13px;
+      color: var(--text-secondary);
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .chip-group {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 44px;
+      height: 44px;
+      padding: 0 12px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s var(--spring-bounce);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .chip:active {
+      transform: scale(0.92);
+    }
+
+    .chip.selected {
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+      color: #1a2e05;
+      transform: scale(1.08);
+      box-shadow: var(--shadow-glow-green);
+    }
+
+    .chip.default-highlight {
+      border-color: var(--primary-green);
+      color: var(--primary-green);
+    }
+
+    .chip-custom {
+      background: var(--bg-card);
+      border: 2px dashed var(--border-subtle);
+      font-size: 16px;
+    }
+
+    .chip-custom:hover, .chip-custom:active {
+      border-color: var(--text-secondary);
+    }
+
+    /* Load stepper chips */
+    .chip-stepper {
+      min-width: 40px;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .chip-value {
+      min-width: 70px;
+      font-size: 16px;
+    }
+
+    /* Custom input modal overlay */
+    .custom-input-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 0.2s ease;
+    }
+
+    .custom-input-overlay.active {
+      display: flex;
+    }
+
+    .custom-input-modal {
+      background: var(--bg-card);
+      border-radius: 20px;
+      padding: 24px;
+      width: 280px;
+      animation: modalIn 0.3s var(--spring-bounce);
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: scale(0.9) translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .custom-input-modal h4 {
+      margin: 0 0 16px 0;
+      font-size: 18px;
+      text-align: center;
+    }
+
+    .custom-input-modal input {
+      width: 100%;
+      padding: 16px;
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      border-radius: 12px;
+      color: var(--text-primary);
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .custom-input-modal input:focus {
+      outline: none;
+      border-color: var(--primary-green);
+      box-shadow: 0 0 0 4px var(--primary-green-glow);
+    }
+
+    .custom-input-actions {
+      display: flex;
+      gap: 12px;
+    }
+
+    .custom-input-actions button {
+      flex: 1;
+      padding: 14px;
+      border-radius: 12px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .custom-input-cancel {
+      background: var(--bg-input);
+      border: 2px solid var(--border-subtle);
+      color: var(--text-secondary);
+    }
+
+    .custom-input-confirm {
+      background: var(--primary-green);
+      border: none;
+      color: #1a2e05;
+    }
+
     /* Notes Section */
     .notes-section {
       margin-bottom: 20px;
@@ -1103,6 +1345,19 @@
 
   <div class="toast" id="toast"></div>
 
+  <!-- Custom Input Modal -->
+  <div class="custom-input-overlay" id="custom-input-overlay" onclick="if(event.target === this) cancelCustomInput()">
+    <div class="custom-input-modal">
+      <h4 id="custom-input-title">Enter Value</h4>
+      <input type="text" id="custom-input-field" inputmode="numeric" placeholder="Enter value..."
+             onkeydown="if(event.key === 'Enter') confirmCustomInput()">
+      <div class="custom-input-actions">
+        <button class="custom-input-cancel" onclick="cancelCustomInput()">Cancel</button>
+        <button class="custom-input-confirm" onclick="confirmCustomInput()">Confirm</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     // Load program data from external JSON
     let PROGRAM = null;
@@ -1330,22 +1585,44 @@
 
         for (let i = 0; i < ex.sets; i++) {
           const setData = data.sets[i];
-          const setRow = document.createElement('div');
-          setRow.className = 'set-row';
-          const loadPlaceholder = ex.load === 'bodyweight' ? 'BW' : ex.load;
-          setRow.innerHTML = `
+          const setContainer = document.createElement('div');
+          setContainer.className = 'set-container';
+          setContainer.id = `set-container-${exIndex}-${i}`;
+
+          // Determine display values and confirmation states
+          const targetReps = parseInt(ex.reps) || 5;
+          const displayReps = setData.actualReps || targetReps;
+          const repsConfirmed = setData.repsConfirmed || false;
+
+          const isBodyweight = ex.load === 'bodyweight';
+          const targetLoad = isBodyweight ? 'BW' : ex.load;
+          const displayLoad = setData.load || targetLoad;
+          const loadConfirmed = setData.loadConfirmed || false;
+
+          // Collapsed row (always visible)
+          const collapsedRow = document.createElement('div');
+          collapsedRow.className = 'set-row set-row-collapsed';
+          collapsedRow.id = `set-collapsed-${exIndex}-${i}`;
+          collapsedRow.innerHTML = `
             <span class="set-label">Set ${i + 1}</span>
-            <input type="text" inputmode="numeric" class="reps-input"
-                   placeholder="${ex.reps}"
-                   value="${setData.actualReps}"
-                   onchange="updateSet(${exIndex}, ${i}, 'reps', this.value)">
+            <span class="value-chip ${repsConfirmed ? 'confirmed' : 'default-selected'}"
+                  onclick="expandSetRow(${exIndex}, ${i}, 'reps')"
+                  id="reps-chip-${exIndex}-${i}">${displayReps}</span>
             <span class="at-symbol">@</span>
-            <input type="text" class="load-input"
-                   placeholder="${loadPlaceholder}"
-                   value="${setData.load}"
-                   onchange="updateSet(${exIndex}, ${i}, 'load', this.value)">
+            <span class="value-chip ${loadConfirmed ? 'confirmed' : 'default-selected'}"
+                  onclick="expandSetRow(${exIndex}, ${i}, 'load')"
+                  id="load-chip-${exIndex}-${i}">${displayLoad}</span>
           `;
-          exerciseSection.appendChild(setRow);
+          setContainer.appendChild(collapsedRow);
+
+          // Expanded row (hidden by default)
+          const expandedRow = document.createElement('div');
+          expandedRow.className = 'set-row-expanded';
+          expandedRow.id = `set-expanded-${exIndex}-${i}`;
+          expandedRow.innerHTML = generateChipOptions(exIndex, i, targetReps, targetLoad, displayReps, displayLoad, isBodyweight);
+          setContainer.appendChild(expandedRow);
+
+          exerciseSection.appendChild(setContainer);
         }
 
         const notesSection = document.createElement('div');
@@ -1374,13 +1651,202 @@
       }
     }
 
-    function updateSet(exerciseIndex, setIndex, field, value) {
+    function updateSet(exerciseIndex, setIndex, field, value, confirmed = true) {
       if (field === 'reps') {
         sessionData[exerciseIndex].sets[setIndex].actualReps = value;
+        sessionData[exerciseIndex].sets[setIndex].repsConfirmed = confirmed;
       } else if (field === 'load') {
         sessionData[exerciseIndex].sets[setIndex].load = value;
+        sessionData[exerciseIndex].sets[setIndex].loadConfirmed = confirmed;
       }
     }
+
+    // ============================================
+    // CHIP-BASED INPUT SYSTEM FUNCTIONS
+    // ============================================
+
+    let currentExpandedSet = null;
+
+    function generateChipOptions(exIndex, setIndex, targetReps, targetLoad, currentReps, currentLoad, isBodyweight) {
+      // Generate rep chip options: target-1, target, target+1, target+2, target+3
+      const repOptions = [];
+      for (let r = targetReps - 1; r <= targetReps + 3; r++) {
+        if (r > 0) repOptions.push(r);
+      }
+
+      const repsChipsHtml = repOptions.map(r => {
+        const isSelected = r == currentReps;
+        const isTarget = r === targetReps;
+        let chipClass = 'chip';
+        if (isSelected) chipClass += ' selected';
+        else if (isTarget) chipClass += ' default-highlight';
+        return `<button class="${chipClass}" onclick="selectChipValue(${exIndex}, ${setIndex}, 'reps', ${r})">${r}</button>`;
+      }).join('');
+
+      // Generate load chips based on exercise type
+      let loadChipsHtml;
+      if (isBodyweight) {
+        // Bodyweight: BW, BW+10, BW+20
+        const bwOptions = ['BW', 'BW+10', 'BW+20', 'BW+25'];
+        loadChipsHtml = bwOptions.map(opt => {
+          const isSelected = opt === currentLoad;
+          const isTarget = opt === 'BW';
+          let chipClass = 'chip';
+          if (isSelected) chipClass += ' selected';
+          else if (isTarget) chipClass += ' default-highlight';
+          return `<button class="${chipClass}" onclick="selectChipValue(${exIndex}, ${setIndex}, 'load', '${opt}')">${opt}</button>`;
+        }).join('');
+      } else {
+        // Weighted: stepper with -5, value, +5
+        const numericLoad = parseFloat(currentLoad) || parseFloat(targetLoad) || 0;
+        loadChipsHtml = `
+          <button class="chip chip-stepper" onclick="adjustLoad(${exIndex}, ${setIndex}, -5)">−5</button>
+          <span class="chip chip-value selected" id="load-display-${exIndex}-${setIndex}">${currentLoad}</span>
+          <button class="chip chip-stepper" onclick="adjustLoad(${exIndex}, ${setIndex}, 5)">+5</button>
+        `;
+      }
+
+      return `
+        <div class="chip-row">
+          <span class="chip-row-label">Reps</span>
+          <div class="chip-group">
+            ${repsChipsHtml}
+            <button class="chip chip-custom" onclick="showCustomInput(${exIndex}, ${setIndex}, 'reps')">✏️</button>
+          </div>
+        </div>
+        <div class="chip-row">
+          <span class="chip-row-label">Load</span>
+          <div class="chip-group">
+            ${loadChipsHtml}
+            <button class="chip chip-custom" onclick="showCustomInput(${exIndex}, ${setIndex}, 'load')">✏️</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function expandSetRow(exIndex, setIndex, field) {
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+
+      // Collapse any currently expanded row
+      if (currentExpandedSet) {
+        const prevExpanded = document.getElementById(`set-expanded-${currentExpandedSet.exIndex}-${currentExpandedSet.setIndex}`);
+        if (prevExpanded) prevExpanded.classList.remove('active');
+      }
+
+      // Expand the new row
+      const expandedRow = document.getElementById(`set-expanded-${exIndex}-${setIndex}`);
+      if (expandedRow) {
+        expandedRow.classList.add('active');
+        currentExpandedSet = { exIndex, setIndex };
+      }
+    }
+
+    function collapseSetRow() {
+      if (currentExpandedSet) {
+        const expandedRow = document.getElementById(`set-expanded-${currentExpandedSet.exIndex}-${currentExpandedSet.setIndex}`);
+        if (expandedRow) expandedRow.classList.remove('active');
+        currentExpandedSet = null;
+      }
+    }
+
+    function selectChipValue(exIndex, setIndex, field, value) {
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+
+      // Update the data
+      updateSet(exIndex, setIndex, field, value, true);
+
+      // Update the collapsed chip display
+      const chipId = field === 'reps' ? `reps-chip-${exIndex}-${setIndex}` : `load-chip-${exIndex}-${setIndex}`;
+      const chip = document.getElementById(chipId);
+      if (chip) {
+        chip.textContent = value;
+        chip.className = 'value-chip confirmed';
+      }
+
+      // Collapse the expanded row
+      collapseSetRow();
+    }
+
+    function adjustLoad(exIndex, setIndex, delta) {
+      // Haptic feedback
+      if (navigator.vibrate) navigator.vibrate(10);
+
+      const setData = sessionData[exIndex].sets[setIndex];
+      let currentLoad = parseFloat(setData.load) || 0;
+      currentLoad += delta;
+      if (currentLoad < 0) currentLoad = 0;
+
+      // Update the data
+      updateSet(exIndex, setIndex, 'load', currentLoad, true);
+
+      // Update the stepper display
+      const loadDisplay = document.getElementById(`load-display-${exIndex}-${setIndex}`);
+      if (loadDisplay) loadDisplay.textContent = currentLoad;
+
+      // Update the collapsed chip
+      const chip = document.getElementById(`load-chip-${exIndex}-${setIndex}`);
+      if (chip) {
+        chip.textContent = currentLoad;
+        chip.className = 'value-chip confirmed';
+      }
+    }
+
+    // Custom input modal state
+    let customInputState = null;
+
+    function showCustomInput(exIndex, setIndex, field) {
+      customInputState = { exIndex, setIndex, field };
+
+      const overlay = document.getElementById('custom-input-overlay');
+      const input = document.getElementById('custom-input-field');
+      const title = document.getElementById('custom-input-title');
+
+      title.textContent = field === 'reps' ? 'Enter Reps' : 'Enter Load';
+
+      const setData = sessionData[exIndex].sets[setIndex];
+      const currentValue = field === 'reps' ? setData.actualReps : setData.load;
+      input.value = currentValue || '';
+      input.type = field === 'reps' ? 'number' : 'text';
+      input.inputMode = field === 'reps' ? 'numeric' : 'text';
+
+      overlay.classList.add('active');
+      input.focus();
+      input.select();
+    }
+
+    function confirmCustomInput() {
+      if (!customInputState) return;
+
+      const input = document.getElementById('custom-input-field');
+      const value = input.value.trim();
+
+      if (value) {
+        selectChipValue(customInputState.exIndex, customInputState.setIndex, customInputState.field, value);
+      }
+
+      cancelCustomInput();
+    }
+
+    function cancelCustomInput() {
+      const overlay = document.getElementById('custom-input-overlay');
+      overlay.classList.remove('active');
+      customInputState = null;
+    }
+
+    // Close expanded row when tapping outside
+    document.addEventListener('click', function(e) {
+      if (!currentExpandedSet) return;
+
+      const expandedRow = document.getElementById(`set-expanded-${currentExpandedSet.exIndex}-${currentExpandedSet.setIndex}`);
+      const collapsedRow = document.getElementById(`set-collapsed-${currentExpandedSet.exIndex}-${currentExpandedSet.setIndex}`);
+
+      // Check if click is outside both the expanded and collapsed rows
+      if (expandedRow && !expandedRow.contains(e.target) && !collapsedRow.contains(e.target)) {
+        collapseSetRow();
+      }
+    });
 
     function saveCurrentBlock() {
       let globalExerciseIndex = 0;
