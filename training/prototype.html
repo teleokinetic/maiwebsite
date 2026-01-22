@@ -65,6 +65,7 @@
       padding: 20px;
       padding-bottom: 120px;
       line-height: 1.5;
+      overflow-x: hidden;
     }
 
     /* ============================================
@@ -387,6 +388,7 @@
       margin-bottom: 20px;
       box-shadow: var(--shadow-soft);
       border: 1px solid var(--border-subtle);
+      overflow: hidden;
     }
 
     .exercise-card h2 {
@@ -467,6 +469,7 @@
        ============================================ */
     .sets-container {
       margin-bottom: 24px;
+      overflow: hidden;
     }
 
     .set-row {
@@ -474,6 +477,7 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 14px;
+      max-width: 100%;
     }
 
     .set-label {
@@ -485,6 +489,7 @@
 
     .set-row input {
       flex: 1;
+      min-width: 0;
       padding: 16px;
       background: var(--bg-input);
       border: 2px solid var(--border-subtle);
