@@ -1310,8 +1310,8 @@
             sessionData[idx].sets.push({
               setNumber: i + 1,
               targetReps: ex.reps,
-              actualReps: '',
-              load: ''
+              actualReps: ex.reps,
+              load: ex.load
             });
           }
         });
@@ -1473,7 +1473,7 @@
       if (event.target.classList.contains('stepper-btn')) return;
 
       event.stopPropagation();
-      if (navigator.vibrate) navigator.vibrate(10);
+      if (navigator.vibrate) navigator.vibrate([10]);
 
       const containerId = `${field}-container-${exIndex}-${setIndex}`;
       const container = document.getElementById(containerId);
@@ -1495,7 +1495,7 @@
 
     function adjustValue(event, exIndex, setIndex, field, delta) {
       event.stopPropagation();
-      if (navigator.vibrate) navigator.vibrate(10);
+      if (navigator.vibrate) navigator.vibrate([10]);
 
       const valueId = `${field}-value-${exIndex}-${setIndex}`;
       const valueEl = document.getElementById(valueId);
@@ -1532,11 +1532,13 @@
             newValue = `BW${bwOffset}`;
           }
         } else {
-          // Numeric load
+          // Numeric load - preserve unit suffix (e.g., "lb")
+          const unitMatch = currentValue.match(/[a-zA-Z]+$/);
+          const unit = unitMatch ? unitMatch[0] : '';
           let numValue = parseFloat(currentValue) || 0;
           numValue += delta;
           if (numValue < 0) numValue = 0; // Min 0 load
-          newValue = numValue;
+          newValue = unit ? `${numValue}${unit}` : numValue;
         }
       }
 
