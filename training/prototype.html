@@ -327,9 +327,9 @@
 
     .nav-header {
       display: flex;
-      justify-content: space-between;
       align-items: center;
       margin-bottom: 20px;
+      gap: 12px;
     }
 
     .back-btn {
@@ -348,14 +348,57 @@
       background: rgba(88, 204, 2, 0.1);
     }
 
-    .progress-indicator {
-      color: var(--text-secondary);
-      font-size: 14px;
-      font-weight: 600;
+    /* NAV PROGRESS BAR - Duolingo-style */
+    .nav-progress-bar {
+      flex: 1;
+      height: 10px;
       background: var(--bg-card);
-      padding: 10px 16px;
-      border-radius: 12px;
-      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .nav-progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 6px;
+      background: linear-gradient(90deg, var(--primary-green), #7FE030, var(--primary-green));
+      background-size: 200% 100%;
+      animation: shimmer 2s infinite linear;
+      box-shadow: 0 0 8px var(--primary-green-glow);
+      transition: width 0.4s var(--spring-smooth);
+    }
+
+    /* Pulse animation on progress update */
+    .nav-progress-fill.pulse {
+      animation: shimmer 2s infinite linear, progressPulse 0.5s var(--spring-bounce);
+    }
+
+    /* Enhanced glow during updates */
+    .nav-progress-fill.glow-intense {
+      box-shadow:
+        0 0 12px var(--primary-green-glow),
+        0 0 24px var(--primary-green-glow),
+        0 0 36px rgba(88, 204, 2, 0.15);
+    }
+
+    /* Block completion celebration */
+    .nav-progress-fill.celebrate {
+      animation: shimmer 2s infinite linear, progressCelebrate 0.6s var(--spring-bounce);
+    }
+
+    @keyframes progressPulse {
+      0% { transform: scaleY(1); box-shadow: 0 0 8px var(--primary-green-glow); }
+      40% { transform: scaleY(1.3); box-shadow: 0 0 16px var(--primary-green-glow), 0 0 32px var(--primary-green-glow); }
+      70% { transform: scaleY(0.9); }
+      100% { transform: scaleY(1); box-shadow: 0 0 8px var(--primary-green-glow); }
+    }
+
+    @keyframes progressCelebrate {
+      0% { transform: scaleY(1); filter: brightness(1); }
+      25% { transform: scaleY(1.4); filter: brightness(1.3); }
+      50% { transform: scaleY(1.1); filter: brightness(1.15); }
+      100% { transform: scaleY(1); filter: brightness(1); }
     }
 
     /* Encouragement Message - Duolingo style with spring */
@@ -1166,7 +1209,9 @@
   <div id="logging-screen" class="logging-screen">
     <div class="nav-header">
       <button class="back-btn" onclick="prevExercise()">← Back</button>
-      <span class="progress-indicator" id="progress"></span>
+      <div class="nav-progress-bar">
+        <div class="nav-progress-fill" id="nav-progress-fill"></div>
+      </div>
     </div>
 
     <div class="encouragement" id="encouragement"></div>
@@ -1373,6 +1418,7 @@
       document.getElementById('logging-screen').classList.add('active');
       renderBlock();
       updateProgressBar();
+      updateNavProgressBar(false);
     }
 
     function updateProgressBar() {
@@ -1380,6 +1426,37 @@
       const completed = currentBlockIndex;
       const percent = (completed / total) * 100;
       document.getElementById('overall-progress').style.width = percent + '%';
+    }
+
+    function getCurrentGlobalExerciseIndex() {
+      let index = 0;
+      for (let b = 0; b < currentBlockIndex; b++) {
+        index += PROGRAM.blocks[b].exercises.length;
+      }
+      return index;
+    }
+
+    function updateNavProgressBar(triggerAnimation = false) {
+      const totalExercises = allExercises.length;
+      const currentIndex = getCurrentGlobalExerciseIndex();
+      const percent = (currentIndex / totalExercises) * 100;
+
+      const fill = document.getElementById('nav-progress-fill');
+      if (!fill) return;
+
+      fill.style.width = percent + '%';
+
+      if (triggerAnimation) {
+        fill.classList.add('pulse', 'glow-intense');
+        setTimeout(() => fill.classList.remove('pulse', 'glow-intense'), 500);
+      }
+    }
+
+    function celebrateBlockCompletion() {
+      const fill = document.getElementById('nav-progress-fill');
+      if (!fill) return;
+      fill.classList.add('celebrate', 'glow-intense');
+      setTimeout(() => fill.classList.remove('celebrate', 'glow-intense'), 600);
     }
 
     function showEncouragement() {
@@ -1395,7 +1472,6 @@
     function renderBlock() {
       const block = PROGRAM.blocks[currentBlockIndex];
 
-      document.getElementById('progress').textContent = `Block ${currentBlockIndex + 1} of ${PROGRAM.blocks.length}`;
       document.getElementById('exercise-name').textContent = `${block.id}: ${block.name}`;
       document.getElementById('exercise-target').textContent = `${block.exercises.length} exercise${block.exercises.length > 1 ? 's' : ''}`;
 
@@ -1637,6 +1713,7 @@
         currentBlockIndex--;
         renderBlock();
         updateProgressBar();
+        updateNavProgressBar(true);
         window.scrollTo(0, 0);
       } else {
         document.getElementById('logging-screen').classList.remove('active');
@@ -1650,6 +1727,8 @@
         currentBlockIndex++;
         renderBlock();
         updateProgressBar();
+        updateNavProgressBar(true);
+        celebrateBlockCompletion();
         window.scrollTo(0, 0);
       } else {
         showSummary();
@@ -1778,6 +1857,8 @@
 
       initOverview();
       document.getElementById('overall-progress').style.width = '0%';
+      const navFill = document.getElementById('nav-progress-fill');
+      if (navFill) navFill.style.width = '0%';
 
       window.scrollTo(0, 0);
     }
