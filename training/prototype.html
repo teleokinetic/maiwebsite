@@ -1463,7 +1463,9 @@
           const targetReps = parseInt(ex.reps) || 5;
           const targetLoad = isBodyweight ? 'BW' : ex.load;
           const displayReps = setData.actualReps || targetReps;
-          const displayLoad = setData.load || targetLoad;
+          let displayLoad = setData.load || targetLoad;
+          // Normalize "bodyweight" to "BW" for consistent display
+          if (displayLoad === 'bodyweight') displayLoad = 'BW';
           const loadDelta = isBodyweight ? 10 : 5;
 
           setRow.innerHTML = `
@@ -1566,9 +1568,9 @@
       } else {
         // Load: handle BW or numeric
         if (isBodyweight) {
-          // Parse BW format: "BW", "BW+10", "BW-10"
+          // Parse BW format: "BW", "BW+10", "BW-10" (also handle legacy "bodyweight")
           let bwOffset = 0;
-          if (currentValue === 'BW') {
+          if (currentValue === 'BW' || currentValue === 'bodyweight') {
             bwOffset = 0;
           } else if (currentValue.startsWith('BW+')) {
             bwOffset = parseInt(currentValue.replace('BW+', '')) || 0;
