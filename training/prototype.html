@@ -527,6 +527,80 @@
       font-weight: 600;
     }
 
+    /* Inline Stepper Chips */
+    .chip-container {
+      display: inline-flex;
+      align-items: center;
+      gap: 0;
+    }
+
+    .value-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 52px;
+      height: 48px;
+      padding: 0 14px;
+      background: var(--bg-input);
+      border: 2px solid var(--primary-green);
+      border-radius: 12px;
+      color: var(--primary-green);
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.25s var(--spring-bounce);
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+
+    .value-chip:active {
+      transform: scale(0.95);
+    }
+
+    .stepper-btn {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      background: var(--bg-card);
+      border: 2px solid var(--border-subtle);
+      border-radius: 10px;
+      color: var(--text-secondary);
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s var(--spring-bounce);
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .stepper-btn:active {
+      transform: scale(0.9);
+      background: var(--primary-green);
+      border-color: var(--primary-green);
+      color: #1a2e05;
+    }
+
+    .chip-container.expanded .stepper-btn {
+      display: inline-flex;
+    }
+
+    .chip-container.expanded .stepper-btn.minus {
+      border-radius: 10px 0 0 10px;
+      border-right: none;
+    }
+
+    .chip-container.expanded .value-chip {
+      border-radius: 0;
+      background: var(--primary-green);
+      color: #1a2e05;
+    }
+
+    .chip-container.expanded .stepper-btn.plus {
+      border-radius: 0 10px 10px 0;
+      border-left: none;
+    }
+
     /* Notes Section */
     .notes-section {
       margin-bottom: 20px;
@@ -1332,18 +1406,27 @@
           const setData = data.sets[i];
           const setRow = document.createElement('div');
           setRow.className = 'set-row';
-          const loadPlaceholder = ex.load === 'bodyweight' ? 'BW' : ex.load;
+
+          const isBodyweight = ex.load === 'bodyweight';
+          const targetReps = parseInt(ex.reps) || 5;
+          const targetLoad = isBodyweight ? 'BW' : ex.load;
+          const displayReps = setData.actualReps || targetReps;
+          const displayLoad = setData.load || targetLoad;
+          const loadDelta = isBodyweight ? 10 : 5;
+
           setRow.innerHTML = `
             <span class="set-label">Set ${i + 1}</span>
-            <input type="text" inputmode="numeric" class="reps-input"
-                   placeholder="${ex.reps}"
-                   value="${setData.actualReps}"
-                   onchange="updateSet(${exIndex}, ${i}, 'reps', this.value)">
+            <div class="chip-container" id="reps-container-${exIndex}-${i}" onclick="toggleExpand(event, ${exIndex}, ${i}, 'reps')">
+              <button class="stepper-btn minus" onclick="adjustValue(event, ${exIndex}, ${i}, 'reps', -1)">−1</button>
+              <span class="value-chip" id="reps-value-${exIndex}-${i}">${displayReps}</span>
+              <button class="stepper-btn plus" onclick="adjustValue(event, ${exIndex}, ${i}, 'reps', 1)">+1</button>
+            </div>
             <span class="at-symbol">@</span>
-            <input type="text" class="load-input"
-                   placeholder="${loadPlaceholder}"
-                   value="${setData.load}"
-                   onchange="updateSet(${exIndex}, ${i}, 'load', this.value)">
+            <div class="chip-container" id="load-container-${exIndex}-${i}" onclick="toggleExpand(event, ${exIndex}, ${i}, 'load')" data-delta="${loadDelta}" data-bodyweight="${isBodyweight}">
+              <button class="stepper-btn minus" onclick="adjustValue(event, ${exIndex}, ${i}, 'load', -${loadDelta})">−${loadDelta}</button>
+              <span class="value-chip" id="load-value-${exIndex}-${i}">${displayLoad}</span>
+              <button class="stepper-btn plus" onclick="adjustValue(event, ${exIndex}, ${i}, 'load', ${loadDelta})">+${loadDelta}</button>
+            </div>
           `;
           exerciseSection.appendChild(setRow);
         }
@@ -1381,6 +1464,99 @@
         sessionData[exerciseIndex].sets[setIndex].load = value;
       }
     }
+
+    // Inline Stepper Functions
+    let expandedContainer = null;
+
+    function toggleExpand(event, exIndex, setIndex, field) {
+      // Don't toggle if clicking a stepper button
+      if (event.target.classList.contains('stepper-btn')) return;
+
+      event.stopPropagation();
+      if (navigator.vibrate) navigator.vibrate(10);
+
+      const containerId = `${field}-container-${exIndex}-${setIndex}`;
+      const container = document.getElementById(containerId);
+
+      if (expandedContainer === container) {
+        // Collapse if already expanded
+        container.classList.remove('expanded');
+        expandedContainer = null;
+      } else {
+        // Collapse any other expanded container
+        if (expandedContainer) {
+          expandedContainer.classList.remove('expanded');
+        }
+        // Expand this one
+        container.classList.add('expanded');
+        expandedContainer = container;
+      }
+    }
+
+    function adjustValue(event, exIndex, setIndex, field, delta) {
+      event.stopPropagation();
+      if (navigator.vibrate) navigator.vibrate(10);
+
+      const valueId = `${field}-value-${exIndex}-${setIndex}`;
+      const valueEl = document.getElementById(valueId);
+      const container = document.getElementById(`${field}-container-${exIndex}-${setIndex}`);
+      const isBodyweight = container.dataset.bodyweight === 'true';
+
+      let currentValue = valueEl.textContent;
+      let newValue;
+
+      if (field === 'reps') {
+        // Reps: simple numeric
+        let numValue = parseInt(currentValue) || 0;
+        numValue += delta;
+        if (numValue < 1) numValue = 1; // Min 1 rep
+        newValue = numValue;
+      } else {
+        // Load: handle BW or numeric
+        if (isBodyweight) {
+          // Parse BW format: "BW", "BW+10", "BW-10"
+          let bwOffset = 0;
+          if (currentValue === 'BW') {
+            bwOffset = 0;
+          } else if (currentValue.startsWith('BW+')) {
+            bwOffset = parseInt(currentValue.replace('BW+', '')) || 0;
+          } else if (currentValue.startsWith('BW-')) {
+            bwOffset = -(parseInt(currentValue.replace('BW-', '')) || 0);
+          }
+          bwOffset += delta;
+          if (bwOffset === 0) {
+            newValue = 'BW';
+          } else if (bwOffset > 0) {
+            newValue = `BW+${bwOffset}`;
+          } else {
+            newValue = `BW${bwOffset}`;
+          }
+        } else {
+          // Numeric load
+          let numValue = parseFloat(currentValue) || 0;
+          numValue += delta;
+          if (numValue < 0) numValue = 0; // Min 0 load
+          newValue = numValue;
+        }
+      }
+
+      valueEl.textContent = newValue;
+      updateSet(exIndex, setIndex, field, newValue);
+    }
+
+    function collapseAllChips() {
+      if (expandedContainer) {
+        expandedContainer.classList.remove('expanded');
+        expandedContainer = null;
+      }
+    }
+
+    // Collapse when clicking outside
+    document.addEventListener('click', function(e) {
+      if (expandedContainer && !expandedContainer.contains(e.target)) {
+        collapseAllChips();
+      }
+    });
 
     function saveCurrentBlock() {
       let globalExerciseIndex = 0;
