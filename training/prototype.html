@@ -469,7 +469,7 @@
        ============================================ */
     .sets-container {
       margin-bottom: 24px;
-      overflow: hidden;
+      /* Removed overflow: hidden to allow expanded stepper chips to be visible */
     }
 
     .set-row {
@@ -477,7 +477,7 @@
       align-items: center;
       gap: 12px;
       margin-bottom: 14px;
-      max-width: 100%;
+      /* Removed max-width: 100% to allow expanded chips room */
     }
 
     .set-label {
@@ -1085,6 +1085,58 @@
       font-size: 15px;
       margin-bottom: 16px;
       font-weight: 500;
+    }
+
+    /* ============================================
+       RESPONSIVE: Compact stepper sizing for narrow mobile screens
+       ============================================ */
+    @media (max-width: 380px) {
+      .set-label {
+        min-width: 42px;
+        font-size: 13px;
+      }
+
+      .set-row {
+        gap: 8px;
+      }
+
+      .stepper-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 13px;
+      }
+
+      .value-chip {
+        min-width: 44px;
+        height: 40px;
+        padding: 0 10px;
+        font-size: 15px;
+      }
+
+      .at-symbol {
+        font-size: 14px;
+      }
+    }
+
+    /* Extra compact for very narrow screens (iPhone SE, etc.) */
+    @media (max-width: 340px) {
+      .set-label {
+        min-width: 36px;
+        font-size: 12px;
+      }
+
+      .stepper-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+      }
+
+      .value-chip {
+        min-width: 40px;
+        height: 36px;
+        padding: 0 8px;
+        font-size: 14px;
+      }
     }
   </style>
 </head>
