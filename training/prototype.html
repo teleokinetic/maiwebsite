@@ -335,17 +335,31 @@
     .back-btn {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
-      color: var(--primary-green);
-      font-size: 15px;
-      font-weight: 600;
       cursor: pointer;
-      padding: 10px 16px;
-      border-radius: 12px;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       transition: all 0.2s;
+    }
+
+    .back-btn svg {
+      width: 20px;
+      height: 20px;
+      stroke: var(--primary-green);
+      stroke-width: 2.5;
+      fill: none;
     }
 
     .back-btn:hover {
       background: rgba(88, 204, 2, 0.1);
+    }
+
+    .back-btn:active {
+      transform: scale(0.95);
+      background: rgba(88, 204, 2, 0.15);
     }
 
     /* NAV PROGRESS BAR - Duolingo-style */
@@ -1208,7 +1222,9 @@
   <!-- Logging Screen -->
   <div id="logging-screen" class="logging-screen">
     <div class="nav-header">
-      <button class="back-btn" onclick="prevExercise()">← Back</button>
+      <button class="back-btn" onclick="prevExercise()" aria-label="Go back">
+        <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"></polyline></svg>
+      </button>
       <div class="nav-progress-bar">
         <div class="nav-progress-fill" id="nav-progress-fill"></div>
       </div>
