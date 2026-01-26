@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cristy's Exercises</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #FFFBF5;
+      color: #374151;
+      line-height: 1.6;
+      padding: 20px;
+      padding-bottom: 60px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .page-header {
+      text-align: center;
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+      border-bottom: 2px solid #E5E7EB;
+    }
+
+    .page-header h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 8px;
+    }
+
+    .page-header p {
+      color: #6B7280;
+      font-size: 16px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      background: #F0FDF4;
+      border-left: 4px solid #86EFAC;
+      padding: 12px 16px;
+      margin: 32px 0 20px 0;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .section-header h2 {
+      font-size: 18px;
+      font-weight: 600;
+      color: #1F2937;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .section-header p {
+      font-size: 14px;
+      color: #6B7280;
+      margin-top: 4px;
+    }
+
+    /* Exercise Cards */
+    .exercise-card {
+      background: #FFFFFF;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      border: 1px solid #E5E7EB;
+    }
+
+    .exercise-card h3 {
+      font-size: 20px;
+      font-weight: 600;
+      color: #1F2937;
+      margin-bottom: 16px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .video-container {
+      margin-bottom: 16px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #F3F4F6;
+    }
+
+    .video-container iframe {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 400px;
+      display: block;
+    }
+
+    .exercise-detail {
+      margin-bottom: 12px;
+    }
+
+    .exercise-detail:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-label {
+      font-weight: 600;
+      color: #1F2937;
+      font-size: 14px;
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .detail-text {
+      color: #4B5563;
+      font-size: 15px;
+    }
+
+    .cue-text {
+      color: #059669;
+      font-style: italic;
+      font-size: 15px;
+    }
+
+    .reps-badge {
+      display: inline-block;
+      background: #ECFDF5;
+      color: #059669;
+      padding: 6px 12px;
+      border-radius: 20px;
+      font-weight: 600;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+
+    /* Walking Section Special Styling */
+    .walking-note {
+      background: #FEF3C7;
+      border: 1px solid #FCD34D;
+      border-radius: 8px;
+      padding: 12px 16px;
+      margin-top: 12px;
+      font-size: 14px;
+      color: #92400E;
+    }
+
+    /* Footer */
+    .page-footer {
+      text-align: center;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 2px solid #E5E7EB;
+      color: #9CA3AF;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="page-header">
+    <h1>Cristy's Daily Exercises</h1>
+    <p>10-20 minutes daily. Take it slow.</p>
+  </header>
+
+  <!-- DAILY ROUTINE -->
+  <div class="section-header">
+    <h2>Daily Routine</h2>
+  </div>
+
+  <article class="exercise-card">
+    <h3>90:90 Transitions</h3>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/eTkvEaoWqIA"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Setup</span>
+      <span class="detail-text">Seated on floor. 90° angle at each knee.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Use your hands for support. Back knee opens out to the side, pelvis turns with it, front knee follows. Land in 90:90 on the other side. Repeat back and forth.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Slow and pain-free. Back knee leads, pelvis follows.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Hip rotation mobility.</span>
+    </div>
+    <span class="reps-badge">10 transitions</span>
+  </article>
+
+  <article class="exercise-card">
+    <h3>Clamshell</h3>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/me8N8repU2g"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Side-lying, knees bent 45°, feet together. Lift top knee, keeping feet touching. Lower.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Don't let your pelvis roll backward. Feel the side of your hip working.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Strengthens the outside of the hip — your weaker side is the right.</span>
+    </div>
+    <span class="reps-badge">15 each side</span>
+  </article>
+
+  <article class="exercise-card">
+    <h3>Single Leg Balance</h3>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Stand with fingertips on counter. Lift one foot. Hold 10-30 seconds each side.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Light touch for confidence, not support. Stand tall.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Balance and hip stability.</span>
+    </div>
+    <span class="reps-badge">2-3 holds per side</span>
+  </article>
+
+  <!-- BED-BASED EXERCISES -->
+  <div class="section-header">
+    <h2>Bed-Based Exercises</h2>
+    <p>Morning before getting up, night before sleep</p>
+  </div>
+
+  <article class="exercise-card">
+    <h3>Supine Glute Squeezes</h3>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Lying on back, squeeze your glutes together. Hold 5 seconds. Release.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Squeeze like you're cracking a walnut. Everything else stays relaxed.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Wake up the glutes.</span>
+    </div>
+    <span class="reps-badge">10-15 reps</span>
+  </article>
+
+  <article class="exercise-card">
+    <h3>Bed Stretch (Thomas Position)</h3>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Lie on back at edge of bed. Pull one knee to chest, let the other leg hang off the side. Hold 30-60 seconds each side. Can also do slow reps — let it hang, bring it up, repeat.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Relax the hanging leg. Let gravity do the work.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Lengthens the hip flexor.</span>
+    </div>
+    <span class="reps-badge">30-60 sec hold each side, or 10 slow reps</span>
+  </article>
+
+  <!-- MOVEMENT SNACKS -->
+  <div class="section-header">
+    <h2>Movement Snacks</h2>
+    <p>Throughout the day</p>
+  </div>
+
+  <article class="exercise-card">
+    <h3>Hip Circles with Counter Support</h3>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Stand holding counter. Lift one leg slightly, make small circles with the knee. 10 circles each direction, each leg.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Easy, smooth circles. Like stirring a pot.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Hip mobility, breaks up sitting.</span>
+    </div>
+    <span class="reps-badge">10 circles each direction, each leg</span>
+  </article>
+
+  <article class="exercise-card">
+    <h3>Teacups (Single Arm)</h3>
+    <div class="video-container">
+      <iframe
+        src="https://www.youtube.com/embed/hxXQ94uFAu8"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Stand or sit. Hold arm out like carrying a teacup. Make slow circles — keep the "cup" level. Both directions.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Smooth and controlled. Don't spill the tea.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Shoulder mobility, upper body movement snack.</span>
+    </div>
+    <span class="reps-badge">10 circles each direction, each arm</span>
+  </article>
+
+  <!-- WALKING PRESCRIPTION -->
+  <div class="section-header">
+    <h2>Walking Prescription</h2>
+  </div>
+
+  <article class="exercise-card">
+    <h3>Interval Walking</h3>
+    <div class="exercise-detail">
+      <span class="detail-label">Do</span>
+      <span class="detail-text">Walk 2-3 minutes → sit and rest 1-2 minutes → repeat 2-3 times. Stop the session before any aching starts.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Cue</span>
+      <span class="cue-text">Rest before it hurts, even if you feel fine. We're building up slowly.</span>
+    </div>
+    <div class="exercise-detail">
+      <span class="detail-label">Why</span>
+      <span class="detail-text">Building walking tolerance without triggering the pain cycle.</span>
+    </div>
+    <div class="walking-note">
+      <strong>Track:</strong> How many intervals you complete comfortably.
+    </div>
+  </article>
+
+  <footer class="page-footer">
+    Take it easy. Consistency beats intensity.
+  </footer>
+
+</body>
+</html>
