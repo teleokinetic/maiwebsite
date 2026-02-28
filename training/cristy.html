@@ -4,6 +4,9 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cristy's Exercises</title>
+  <link rel="preconnect" href="https://www.youtube.com">
+  <link rel="preconnect" href="https://www.google.com">
+  <link rel="preconnect" href="https://i.ytimg.com">
   <style>
     /* ============================================
        DESIGN TOKENS
@@ -395,7 +398,7 @@
     }
 
     .exercise-card[aria-expanded="true"] .card-body .exercise-detail,
-    .exercise-card[aria-expanded="true"] .card-body .video-trigger,
+    .exercise-card[aria-expanded="true"] .card-body .video-facade,
     .exercise-card[aria-expanded="true"] .card-body .walking-note {
       animation: contentReveal 0.3s var(--spring-gentle) both;
     }
@@ -405,7 +408,7 @@
     .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(3) { animation-delay: 100ms; }
     .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(4) { animation-delay: 150ms; }
     .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(5) { animation-delay: 200ms; }
-    .exercise-card[aria-expanded="true"] .card-body .video-trigger { animation-delay: 200ms; }
+    .exercise-card[aria-expanded="true"] .card-body .video-facade { animation-delay: 200ms; }
     .exercise-card[aria-expanded="true"] .card-body .walking-note { animation-delay: 200ms; }
 
     /* Exercise details */
@@ -455,48 +458,52 @@
     }
 
     /* ============================================
-       VIDEO LAZY LOADING
+       VIDEO FACADE
        ============================================ */
-    .video-trigger {
-      display: flex;
-      align-items: center;
-      gap: var(--space-sm);
-      width: 100%;
-      margin-top: var(--space-md);
-      padding: var(--space-md) var(--space-lg);
-      background: var(--bg-section);
-      border: none;
-      border-radius: var(--radius-md);
-      cursor: pointer;
-      font-family: inherit;
-      font-size: var(--font-base);
-      font-weight: 600;
-      color: var(--action);
-      min-height: 44px;
-      transition: background 0.15s ease;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    .video-trigger:active {
-      background: var(--action-light);
-    }
-
-    .video-trigger .play-icon {
-      flex-shrink: 0;
-    }
-
-    .video-container {
+    .video-facade {
+      position: relative;
       margin-top: var(--space-md);
       border-radius: var(--radius-md);
       overflow: hidden;
+      cursor: pointer;
       background: var(--bg-section);
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .video-container iframe {
+    .video-facade img {
       width: 100%;
-      aspect-ratio: 16 / 9;
+      aspect-ratio: 9 / 16;
+      max-height: 400px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .video-facade .play-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .video-facade iframe {
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      max-height: 400px;
       display: block;
       border: none;
+    }
+
+    .video-hide-link {
+      display: block;
+      margin-top: var(--space-xs);
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      cursor: pointer;
+      background: none;
+      border: none;
+      font-family: inherit;
+      padding: 0;
     }
 
     /* ============================================
@@ -591,11 +598,12 @@
             <span class="detail-label">Why</span>
             <span class="why-text">Hip rotation mobility.</span>
           </div>
-          <button class="video-trigger" data-video-id="eTkvEaoWqIA">
-            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch demo
-          </button>
-          <div class="video-container" data-video-id="eTkvEaoWqIA"></div>
+          <div class="video-facade" data-video-id="eTkvEaoWqIA">
+            <img src="https://img.youtube.com/vi/eTkvEaoWqIA/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -622,11 +630,12 @@
             <span class="detail-label">Why</span>
             <span class="why-text">Glute endurance and pelvic stability.</span>
           </div>
-          <button class="video-trigger" data-video-id="KsYwYl13IDc">
-            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch demo
-          </button>
-          <div class="video-container" data-video-id="KsYwYl13IDc"></div>
+          <div class="video-facade" data-video-id="KsYwYl13IDc">
+            <img src="https://img.youtube.com/vi/KsYwYl13IDc/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -731,11 +740,12 @@
             <span class="detail-label">Why</span>
             <span class="why-text">Ankle strength and balance support.</span>
           </div>
-          <button class="video-trigger" data-video-id="GQa_N7wft7M">
-            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch demo
-          </button>
-          <div class="video-container" data-video-id="GQa_N7wft7M"></div>
+          <div class="video-facade" data-video-id="GQa_N7wft7M">
+            <img src="https://img.youtube.com/vi/GQa_N7wft7M/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -765,11 +775,12 @@
           <div class="walking-note">
             <strong>Note:</strong> In the video, the model goes very deep. For you, only go as deep as you can keep your pelvis level — straight down, no lateral movement.
           </div>
-          <button class="video-trigger" data-video-id="gXxcpFpJiLA">
-            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-            Watch demo
-          </button>
-          <div class="video-container" data-video-id="gXxcpFpJiLA"></div>
+          <div class="video-facade" data-video-id="gXxcpFpJiLA">
+            <img src="https://img.youtube.com/vi/gXxcpFpJiLA/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
+          </div>
         </div>
       </article>
 
@@ -1134,29 +1145,39 @@
     }
 
     // ============================================
-    // VIDEO LAZY LOADING
+    // VIDEO FACADE → IFRAME
     // ============================================
-    document.querySelectorAll('.video-trigger').forEach(btn => {
-      btn.addEventListener('click', (e) => {
+    document.querySelectorAll('.video-facade').forEach(facade => {
+      facade.addEventListener('click', (e) => {
         e.stopPropagation();
-        const videoId = btn.dataset.videoId;
-        const container = btn.parentElement.querySelector(`.video-container[data-video-id="${videoId}"]`);
-        if (!container) return;
+        if (facade.querySelector('iframe')) return;
+        const videoId = facade.dataset.videoId;
+        const thumb = facade.querySelector('img');
+        const overlay = facade.querySelector('.play-overlay');
 
-        const existing = container.querySelector('iframe');
-        if (existing) {
-          // Remove video
-          container.innerHTML = '';
-          btn.innerHTML = `<svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch demo`;
-        } else {
-          // Load video
-          const iframe = document.createElement('iframe');
-          iframe.src = `https://www.youtube.com/embed/${videoId}`;
-          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
-          iframe.allowFullscreen = true;
-          container.appendChild(iframe);
-          btn.innerHTML = `<svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg> Hide video`;
-        }
+        // Swap thumbnail for iframe
+        thumb.style.display = 'none';
+        overlay.style.display = 'none';
+        facade.style.cursor = 'default';
+        const iframe = document.createElement('iframe');
+        iframe.src = `https://www.youtube.com/embed/${videoId}?autoplay=1`;
+        iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+        iframe.allowFullscreen = true;
+        facade.appendChild(iframe);
+
+        // Add "Hide video" link
+        const hide = document.createElement('button');
+        hide.className = 'video-hide-link';
+        hide.textContent = 'Hide video';
+        hide.addEventListener('click', (ev) => {
+          ev.stopPropagation();
+          iframe.remove();
+          hide.remove();
+          thumb.style.display = '';
+          overlay.style.display = '';
+          facade.style.cursor = 'pointer';
+        });
+        facade.parentElement.insertBefore(hide, facade.nextSibling);
       });
     });
 
