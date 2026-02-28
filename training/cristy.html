@@ -5,6 +5,152 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cristy's Exercises</title>
   <style>
+    /* ============================================
+       DESIGN TOKENS
+       ============================================ */
+    :root {
+      /* Colors — Warm Light */
+      --bg-page: #FFFBF5;
+      --bg-card: #FFFFFF;
+      --bg-section: #F7F5F0;
+      --text-primary: #1F2937;
+      --text-secondary: #4B5563;
+      --text-muted: #9CA3AF;
+      --text-label: #6B7280;
+      --action: #2D8A4E;
+      --action-light: rgba(45, 138, 78, 0.08);
+      --action-lighter: rgba(45, 138, 78, 0.04);
+      --border-subtle: rgba(0, 0, 0, 0.06);
+      --divider: #E5E7EB;
+
+      /* Shadows — Layered (Josh W. Comeau style) */
+      --shadow-card:
+        0 1px 2px rgba(0, 0, 0, 0.04),
+        0 2px 4px rgba(0, 0, 0, 0.04),
+        0 4px 8px rgba(0, 0, 0, 0.03),
+        0 8px 16px rgba(0, 0, 0, 0.02);
+      --shadow-card-hover:
+        0 1px 2px rgba(0, 0, 0, 0.06),
+        0 2px 6px rgba(0, 0, 0, 0.06),
+        0 6px 12px rgba(0, 0, 0, 0.04),
+        0 12px 24px rgba(0, 0, 0, 0.03);
+      --shadow-section:
+        0 1px 2px rgba(0, 0, 0, 0.03),
+        0 2px 4px rgba(0, 0, 0, 0.02);
+      --shadow-toast:
+        0 2px 4px rgba(0, 0, 0, 0.06),
+        0 4px 12px rgba(0, 0, 0, 0.08),
+        0 8px 24px rgba(0, 0, 0, 0.06);
+      --shadow-check:
+        0 1px 3px rgba(45, 138, 78, 0.3),
+        0 2px 6px rgba(45, 138, 78, 0.15);
+
+      /* Spring Physics */
+      --spring-bounce: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      --spring-snappy: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      --spring-smooth: cubic-bezier(0.34, 1.56, 0.64, 1);
+      --spring-gentle: cubic-bezier(0.25, 0.46, 0.45, 1.2);
+
+      /* Typography */
+      --font-xs: 11px;
+      --font-sm: 12px;
+      --font-base: 14px;
+      --font-md: 16px;
+      --font-lg: 18px;
+      --font-xl: 24px;
+
+      /* Spacing */
+      --space-xs: 4px;
+      --space-sm: 8px;
+      --space-md: 12px;
+      --space-lg: 16px;
+      --space-xl: 20px;
+      --space-2xl: 24px;
+      --space-3xl: 32px;
+
+      /* Radii */
+      --radius-sm: 6px;
+      --radius-md: 10px;
+      --radius-lg: 14px;
+      --radius-full: 50%;
+    }
+
+    /* ============================================
+       DARK MODE
+       ============================================ */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg-page: #1A1814;
+        --bg-card: #252118;
+        --bg-section: #1F1C16;
+        --text-primary: #F5F0E8;
+        --text-secondary: #C4BCB0;
+        --text-muted: #7A7268;
+        --text-label: #9A9186;
+        --action: #6ECE8A;
+        --action-light: rgba(110, 206, 138, 0.12);
+        --action-lighter: rgba(110, 206, 138, 0.05);
+        --border-subtle: rgba(255, 255, 255, 0.06);
+        --divider: rgba(255, 255, 255, 0.08);
+
+        --shadow-card:
+          0 1px 2px rgba(0, 0, 0, 0.2),
+          0 2px 4px rgba(0, 0, 0, 0.15),
+          0 4px 8px rgba(0, 0, 0, 0.1),
+          0 8px 16px rgba(0, 0, 0, 0.08);
+        --shadow-card-hover:
+          0 1px 2px rgba(0, 0, 0, 0.25),
+          0 2px 6px rgba(0, 0, 0, 0.2),
+          0 6px 12px rgba(0, 0, 0, 0.15),
+          0 12px 24px rgba(0, 0, 0, 0.1);
+        --shadow-section:
+          0 1px 2px rgba(0, 0, 0, 0.15),
+          0 2px 4px rgba(0, 0, 0, 0.1);
+        --shadow-toast:
+          0 2px 4px rgba(0, 0, 0, 0.2),
+          0 4px 12px rgba(0, 0, 0, 0.25),
+          0 8px 24px rgba(0, 0, 0, 0.2);
+        --shadow-check:
+          0 1px 3px rgba(110, 206, 138, 0.3),
+          0 2px 6px rgba(110, 206, 138, 0.15);
+      }
+    }
+
+    /* ============================================
+       KEYFRAMES
+       ============================================ */
+    @keyframes checkPop {
+      0%   { transform: scale(0); }
+      50%  { transform: scale(1.3); }
+      65%  { transform: scale(0.9); }
+      80%  { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+
+    @keyframes contentReveal {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes toastIn {
+      0%   { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+      50%  { transform: translateX(-50%) translateY(-4px) scale(1.02); }
+      100% { opacity: 1; transform: translateX(-50%) translateY(0) scale(1); }
+    }
+
+    @keyframes toastOut {
+      to { opacity: 0; transform: translateX(-50%) translateY(20px) scale(0.9); }
+    }
+
+    /* ============================================
+       GLOBAL STYLES
+       ============================================ */
     * {
       box-sizing: border-box;
       margin: 0;
@@ -13,82 +159,337 @@
 
     body {
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-      background: #FFFBF5;
-      color: #374151;
+      background: var(--bg-page);
+      color: var(--text-secondary);
       line-height: 1.6;
-      padding: 20px;
-      padding-bottom: 60px;
+      padding: var(--space-xl);
+      padding-bottom: 80px;
       max-width: 600px;
       margin: 0 auto;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Header */
+    /* ============================================
+       HEADER
+       ============================================ */
     .page-header {
       text-align: center;
-      margin-bottom: 32px;
-      padding-bottom: 24px;
-      border-bottom: 2px solid #E5E7EB;
+      margin-bottom: var(--space-3xl);
+      padding-bottom: var(--space-2xl);
+      border-bottom: 1px solid var(--divider);
     }
 
     .page-header h1 {
-      font-size: 28px;
+      font-size: var(--font-xl);
+      font-weight: 700;
+      color: var(--text-primary);
+      margin-bottom: var(--space-xs);
+      letter-spacing: -0.3px;
+    }
+
+    .page-header .subtitle {
+      color: var(--text-muted);
+      font-size: var(--font-base);
+    }
+
+    .progress-summary {
+      display: inline-block;
+      margin-top: var(--space-md);
+      padding: var(--space-xs) var(--space-md);
+      background: var(--action-light);
+      color: var(--action);
+      font-size: var(--font-sm);
       font-weight: 600;
-      color: #1F2937;
-      margin-bottom: 8px;
+      border-radius: 20px;
     }
 
-    .page-header p {
-      color: #6B7280;
-      font-size: 16px;
+    /* ============================================
+       SECTION TOGGLES
+       ============================================ */
+    .exercise-section {
+      margin-bottom: var(--space-2xl);
     }
 
-    /* Section Headers */
-    .section-header {
-      background: #F0FDF4;
-      border-left: 4px solid #86EFAC;
-      padding: 12px 16px;
-      margin: 32px 0 20px 0;
-      border-radius: 0 8px 8px 0;
+    .section-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: var(--bg-section);
+      border: none;
+      padding: var(--space-md) var(--space-lg);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      margin-bottom: var(--space-lg);
+      box-shadow: var(--shadow-section);
+      font-family: inherit;
+      text-align: left;
+      min-height: 44px;
+      transition: background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
     }
 
-    .section-header h2 {
-      font-size: 18px;
-      font-weight: 600;
-      color: #1F2937;
+    .section-toggle:active {
+      background: var(--action-lighter);
+    }
+
+    .section-toggle h2 {
+      font-size: var(--font-base);
+      font-weight: 700;
+      color: var(--text-primary);
       text-transform: uppercase;
       letter-spacing: 0.5px;
     }
 
-    .section-header p {
-      font-size: 14px;
-      color: #6B7280;
-      margin-top: 4px;
+    .section-toggle .section-right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
     }
 
-    /* Exercise Cards */
-    .exercise-card {
-      background: #FFFFFF;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-      border: 1px solid #E5E7EB;
-    }
-
-    .exercise-card h3 {
-      font-size: 20px;
+    .section-count {
+      font-size: var(--font-xs);
+      color: var(--text-muted);
       font-weight: 600;
-      color: #1F2937;
-      margin-bottom: 16px;
-      padding-bottom: 12px;
-      border-bottom: 1px solid #E5E7EB;
+    }
+
+    .section-subtitle {
+      display: block;
+      font-size: var(--font-sm);
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-top: 2px;
+    }
+
+    .section-chevron {
+      color: var(--text-muted);
+      transition: transform 0.3s var(--spring-gentle);
+      flex-shrink: 0;
+    }
+
+    .exercise-section[aria-expanded="false"] .section-chevron {
+      transform: rotate(-90deg);
+    }
+
+    .exercise-section[aria-expanded="false"] .section-cards {
+      display: none;
+    }
+
+    /* ============================================
+       EXERCISE CARDS
+       ============================================ */
+    .exercise-card {
+      background: var(--bg-card);
+      border-radius: var(--radius-lg);
+      margin-bottom: var(--space-md);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      transition: box-shadow 0.2s ease;
+    }
+
+    /* Card Header — always visible */
+    .card-header {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-lg);
+      cursor: pointer;
+      min-height: 56px;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+      transition: background 0.1s ease;
+    }
+
+    .card-header:active {
+      background: var(--action-lighter);
+    }
+
+    /* Completion checkbox */
+    .complete-btn {
+      width: 32px;
+      height: 32px;
+      min-width: 32px;
+      border-radius: var(--radius-full);
+      border: 2px solid var(--divider);
+      background: transparent;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      transition: border-color 0.15s ease, background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+      /* Expand touch target */
+      position: relative;
+    }
+
+    .complete-btn::before {
+      content: '';
+      position: absolute;
+      inset: -6px;
+    }
+
+    .complete-btn svg {
+      opacity: 0;
+      color: white;
+    }
+
+    .exercise-card[data-completed="true"] .complete-btn {
+      background: var(--action);
+      border-color: var(--action);
+      box-shadow: var(--shadow-check);
+    }
+
+    .exercise-card[data-completed="true"] .complete-btn svg {
+      opacity: 1;
+      animation: checkPop 0.4s var(--spring-bounce) both;
+    }
+
+    .exercise-card[data-completed="true"] .card-header {
+      opacity: 0.55;
+    }
+
+    .exercise-card[data-completed="true"] .exercise-name {
+      text-decoration: line-through;
+      text-decoration-color: var(--text-muted);
+    }
+
+    .exercise-name {
+      flex: 1;
+      font-size: var(--font-lg);
+      font-weight: 700;
+      color: var(--text-primary);
+      letter-spacing: -0.2px;
+    }
+
+    .reps-badge {
+      font-size: var(--font-sm);
+      font-weight: 600;
+      color: var(--action);
+      background: var(--action-light);
+      padding: 3px 10px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .card-chevron {
+      color: var(--text-muted);
+      transition: transform 0.3s var(--spring-gentle);
+      flex-shrink: 0;
+    }
+
+    .exercise-card[aria-expanded="true"] .card-chevron {
+      transform: rotate(180deg);
+    }
+
+    /* Card Body — collapsible */
+    .card-body {
+      display: none;
+      padding: 0 var(--space-lg) var(--space-lg);
+      border-top: 1px solid var(--divider);
+    }
+
+    .exercise-card[aria-expanded="true"] .card-body {
+      display: block;
+    }
+
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail,
+    .exercise-card[aria-expanded="true"] .card-body .video-trigger,
+    .exercise-card[aria-expanded="true"] .card-body .walking-note {
+      animation: contentReveal 0.3s var(--spring-gentle) both;
+    }
+
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(1) { animation-delay: 0ms; }
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(2) { animation-delay: 50ms; }
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(3) { animation-delay: 100ms; }
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(4) { animation-delay: 150ms; }
+    .exercise-card[aria-expanded="true"] .card-body .exercise-detail:nth-child(5) { animation-delay: 200ms; }
+    .exercise-card[aria-expanded="true"] .card-body .video-trigger { animation-delay: 200ms; }
+    .exercise-card[aria-expanded="true"] .card-body .walking-note { animation-delay: 200ms; }
+
+    /* Exercise details */
+    .exercise-detail {
+      margin-top: var(--space-md);
+    }
+
+    .detail-label {
+      font-size: var(--font-xs);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: var(--text-muted);
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .detail-text {
+      color: var(--text-secondary);
+      font-size: var(--font-base);
+    }
+
+    .cue-text {
+      color: var(--action);
+      font-size: var(--font-md);
+      font-weight: 600;
+      font-style: italic;
+    }
+
+    .why-text {
+      color: var(--text-muted);
+      font-size: var(--font-sm);
+    }
+
+    /* Walking note */
+    .walking-note {
+      background: var(--action-light);
+      border-radius: var(--radius-sm);
+      padding: var(--space-md) var(--space-lg);
+      margin-top: var(--space-md);
+      font-size: var(--font-base);
+      color: var(--text-secondary);
+    }
+
+    .walking-note strong {
+      color: var(--text-primary);
+    }
+
+    /* ============================================
+       VIDEO LAZY LOADING
+       ============================================ */
+    .video-trigger {
+      display: flex;
+      align-items: center;
+      gap: var(--space-sm);
+      width: 100%;
+      margin-top: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      background: var(--bg-section);
+      border: none;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-family: inherit;
+      font-size: var(--font-base);
+      font-weight: 600;
+      color: var(--action);
+      min-height: 44px;
+      transition: background 0.15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .video-trigger:active {
+      background: var(--action-light);
+    }
+
+    .video-trigger .play-icon {
+      flex-shrink: 0;
     }
 
     .video-container {
-      margin-bottom: 16px;
-      border-radius: 8px;
+      margin-top: var(--space-md);
+      border-radius: var(--radius-md);
       overflow: hidden;
-      background: #F3F4F6;
+      background: var(--bg-section);
     }
 
     .video-container iframe {
@@ -96,65 +497,48 @@
       aspect-ratio: 9 / 16;
       max-height: 400px;
       display: block;
+      border: none;
     }
 
-    .exercise-detail {
-      margin-bottom: 12px;
-    }
-
-    .exercise-detail:last-child {
-      margin-bottom: 0;
-    }
-
-    .detail-label {
+    /* ============================================
+       TOAST
+       ============================================ */
+    .toast {
+      position: fixed;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%) translateY(20px) scale(0.9);
+      background: var(--bg-card);
+      color: var(--text-primary);
+      padding: var(--space-md) var(--space-2xl);
+      border-radius: var(--radius-lg);
+      font-size: var(--font-base);
       font-weight: 600;
-      color: #1F2937;
-      font-size: 14px;
-      display: block;
-      margin-bottom: 2px;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 100;
+      box-shadow: var(--shadow-toast);
+      white-space: nowrap;
     }
 
-    .detail-text {
-      color: #4B5563;
-      font-size: 15px;
+    .toast.show {
+      animation: toastIn 0.4s var(--spring-bounce) forwards;
     }
 
-    .cue-text {
-      color: #059669;
-      font-style: italic;
-      font-size: 15px;
+    .toast.hide {
+      animation: toastOut 0.3s ease forwards;
     }
 
-    .reps-badge {
-      display: inline-block;
-      background: #ECFDF5;
-      color: #059669;
-      padding: 6px 12px;
-      border-radius: 20px;
-      font-weight: 600;
-      font-size: 14px;
-      margin-top: 8px;
-    }
-
-    /* Walking Section Special Styling */
-    .walking-note {
-      background: #FEF3C7;
-      border: 1px solid #FCD34D;
-      border-radius: 8px;
-      padding: 12px 16px;
-      margin-top: 12px;
-      font-size: 14px;
-      color: #92400E;
-    }
-
-    /* Footer */
+    /* ============================================
+       FOOTER
+       ============================================ */
     .page-footer {
       text-align: center;
       margin-top: 40px;
-      padding-top: 24px;
-      border-top: 2px solid #E5E7EB;
-      color: #9CA3AF;
-      font-size: 14px;
+      padding-top: var(--space-2xl);
+      border-top: 1px solid var(--divider);
+      color: var(--text-muted);
+      font-size: var(--font-sm);
     }
   </style>
 </head>
@@ -162,313 +546,662 @@
 
   <header class="page-header">
     <h1>Cristy's Daily Exercises</h1>
-    <p>10-20 minutes daily. Take it slow.</p>
+    <p class="subtitle">10-20 minutes daily. Take it slow.</p>
+    <div class="progress-summary" id="progress-summary">0 of 13 done</div>
   </header>
 
-  <!-- DAILY ROUTINE -->
-  <div class="section-header">
-    <h2>Daily Routine</h2>
+  <!-- ============================================
+       DAILY ROUTINE (7 exercises)
+       ============================================ -->
+  <div class="exercise-section" aria-expanded="true" data-section="daily">
+    <button class="section-toggle" aria-controls="daily-cards">
+      <div>
+        <h2>Daily Routine</h2>
+      </div>
+      <div class="section-right">
+        <span class="section-count" data-count="daily">0 / 7</span>
+        <svg class="section-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+      </div>
+    </button>
+    <div class="section-cards" id="daily-cards">
+
+      <!-- 1. 90:90 Transitions -->
+      <article class="exercise-card" data-exercise="ninety-ninety" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="90:90 Transitions">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">90:90 Transitions</span>
+          <span class="reps-badge">10 reps</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Slow and pain-free. Back knee leads, pelvis follows.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Setup</span>
+            <span class="detail-text">Seated on floor. 90° angle at each knee.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Use your hands for support. Back knee opens out to the side, pelvis turns with it, front knee follows. Land in 90:90 on the other side. Repeat back and forth.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Hip rotation mobility.</span>
+          </div>
+          <button class="video-trigger" data-video-id="eTkvEaoWqIA">
+            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch demo
+          </button>
+          <div class="video-container" data-video-id="eTkvEaoWqIA"></div>
+        </div>
+      </article>
+
+      <!-- 2. Bridge March -->
+      <article class="exercise-card" data-exercise="bridge-march" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Bridge March">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Bridge March</span>
+          <span class="reps-badge">2 x 20s</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Keep the walnut clenched. March the feet. Hips level — no rocking side to side.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Hold bridge position, then alternate lifting each foot slightly off the ground. Keep hips level throughout.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Glute endurance and pelvic stability.</span>
+          </div>
+          <button class="video-trigger" data-video-id="KsYwYl13IDc">
+            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch demo
+          </button>
+          <div class="video-container" data-video-id="KsYwYl13IDc"></div>
+        </div>
+      </article>
+
+      <!-- 3. Side-Lying Hip Abduction -->
+      <article class="exercise-card" data-exercise="hip-abduction" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Side-Lying Hip Abduction">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Side-Lying Hip Abduction</span>
+          <span class="reps-badge">15 ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Straight leg — don't let your pelvis roll back. Feel the side of your hip.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Side-lying, bottom knee bent for stability. Lift the top leg straight up toward the ceiling. Lower slowly.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Strengthens the outside of the hip — your weaker side is the right.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Single Leg Balance -->
+      <article class="exercise-card" data-exercise="single-leg-balance" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Single Leg Balance">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Single Leg Balance</span>
+          <span class="reps-badge">2-3 ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Stand tall. No hands — you've got this.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Stand on one leg. Hold 30 seconds each side.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Balance and hip stability.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Single-Leg Hip Hikes + Reach -->
+      <article class="exercise-card" data-exercise="hip-hikes" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Single-Leg Hip Hikes + Reach">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Hip Hikes + Reach</span>
+          <span class="reps-badge">10 ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Press down on stance leg. Floating leg lifts and locks. Opposite arm reaches up.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Stand on one leg (stance leg). Press down through it, let the other leg hang, then lift and lock the hip higher. As the hip lifts, reach the opposite arm overhead.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Hip stability and glute med strengthening.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. Calf Raises -->
+      <article class="exercise-card" data-exercise="calf-raises" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Calf Raises">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Calf Raises</span>
+          <span class="reps-badge">10-15</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Toes about 3 feet from the wall. Slow up, slow down.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Stand facing a wall, toes about 3 feet away. Rise up onto your toes slowly, then lower back down slowly.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Ankle strength and balance support.</span>
+          </div>
+          <button class="video-trigger" data-video-id="GQa_N7wft7M">
+            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch demo
+          </button>
+          <div class="video-container" data-video-id="GQa_N7wft7M"></div>
+        </div>
+      </article>
+
+      <!-- 7. Stork Squat -->
+      <article class="exercise-card" data-exercise="stork-squat" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Stork Squat">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Stork Squat</span>
+          <span class="reps-badge">8 ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Only go down to where you can keep your pelvis level. Knee over little toe, hips level — imagine a tray of drinks. Stay tall. Slow on the way down — that's the gold. Use a mirror for feedback.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Stand on one leg. Slowly lower into a single-leg squat. Drive through your heel to stand back up.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Single-leg strength and pelvic stability under load.</span>
+          </div>
+          <div class="walking-note">
+            <strong>Note:</strong> In the video, the model goes very deep. For you, only go as deep as you can keep your pelvis level — straight down, no lateral movement.
+          </div>
+          <button class="video-trigger" data-video-id="gXxcpFpJiLA">
+            <svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            Watch demo
+          </button>
+          <div class="video-container" data-video-id="gXxcpFpJiLA"></div>
+        </div>
+      </article>
+
+    </div>
   </div>
 
-  <article class="exercise-card">
-    <h3>90:90 Transitions</h3>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/eTkvEaoWqIA"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Setup</span>
-      <span class="detail-text">Seated on floor. 90° angle at each knee.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Use your hands for support. Back knee opens out to the side, pelvis turns with it, front knee follows. Land in 90:90 on the other side. Repeat back and forth.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Slow and pain-free. Back knee leads, pelvis follows.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Hip rotation mobility.</span>
-    </div>
-    <span class="reps-badge">10 transitions</span>
-  </article>
+  <!-- ============================================
+       BED-BASED EXERCISES (1 exercise)
+       ============================================ -->
+  <div class="exercise-section" aria-expanded="true" data-section="bed">
+    <button class="section-toggle" aria-controls="bed-cards">
+      <div>
+        <h2>Bed-Based</h2>
+        <span class="section-subtitle">Morning & night</span>
+      </div>
+      <div class="section-right">
+        <span class="section-count" data-count="bed">0 / 1</span>
+        <svg class="section-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+      </div>
+    </button>
+    <div class="section-cards" id="bed-cards">
 
-  <article class="exercise-card">
-    <h3>Bridge March</h3>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/KsYwYl13IDc"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Hold bridge position, then alternate lifting each foot slightly off the ground. Keep hips level throughout.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Keep the walnut clenched. March the feet. Hips level — no rocking side to side.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Glute endurance and pelvic stability.</span>
-    </div>
-    <span class="reps-badge">2 sets x 20 sec</span>
-  </article>
+      <!-- 8. Bed Stretch (Thomas Position) -->
+      <article class="exercise-card" data-exercise="thomas-stretch" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Bed Stretch (Thomas Position)">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Bed Stretch</span>
+          <span class="reps-badge">30-60s ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Relax the hanging leg. Find a position that gives you a stretch in the front of the hip.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Lie on back at edge of bed. Pull one knee to chest, let the other leg hang off the side. Hold 30-60 seconds each side. Can also do slow reps — let it hang, bring it up, repeat.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Lengthens the hip flexor.</span>
+          </div>
+        </div>
+      </article>
 
-  <article class="exercise-card">
-    <h3>Side-Lying Hip Abduction</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Side-lying, bottom knee bent for stability. Lift the top leg straight up toward the ceiling. Lower slowly.</span>
     </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Straight leg — don't let your pelvis roll back. Feel the side of your hip.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Strengthens the outside of the hip — your weaker side is the right.</span>
-    </div>
-    <span class="reps-badge">15 each side</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Single Leg Balance</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Stand on one leg. Hold 30 seconds each side.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Stand tall. No hands — you've got this.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Balance and hip stability.</span>
-    </div>
-    <span class="reps-badge">2-3 holds per side</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Single-Leg Hip Hikes + Reach</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Stand on one leg (stance leg). Press down through it, let the other leg hang, then lift and lock the hip higher. As the hip lifts, reach the opposite arm overhead.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Press down on stance leg. Floating leg lifts and locks. Opposite arm reaches up.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Hip stability and glute med strengthening.</span>
-    </div>
-    <span class="reps-badge">10 each side</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Calf Raises</h3>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/GQa_N7wft7M"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Stand facing a wall, toes about 3 feet away. Rise up onto your toes slowly, then lower back down slowly.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Toes about 3 feet from the wall. Slow up, slow down.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Ankle strength and balance support.</span>
-    </div>
-    <span class="reps-badge">10-15 reps</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Stork Squat</h3>
-    <div class="video-container">
-      <iframe
-        src="https://www.youtube.com/embed/gXxcpFpJiLA"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen>
-      </iframe>
-    </div>
-    <div class="walking-note">
-      <strong>Note:</strong> In the video, the model goes very deep. For you, only go as deep as you can keep your pelvis level — straight down, no lateral movement.
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Stand on one leg. Slowly lower into a single-leg squat. Drive through your heel to stand back up.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Only go down to where you can keep your pelvis level. Knee over little toe, hips level — imagine a tray of drinks. Stay tall. Slow on the way down — that's the gold. Use a mirror for feedback.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Single-leg strength and pelvic stability under load.</span>
-    </div>
-    <span class="reps-badge">8 each side</span>
-  </article>
-
-  <!-- BED-BASED EXERCISES -->
-  <div class="section-header">
-    <h2>Bed-Based Exercises</h2>
-    <p>Morning before getting up, night before sleep</p>
   </div>
 
-  <article class="exercise-card">
-    <h3>Bed Stretch (Thomas Position)</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Lie on back at edge of bed. Pull one knee to chest, let the other leg hang off the side. Hold 30-60 seconds each side. Can also do slow reps — let it hang, bring it up, repeat.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Relax the hanging leg. Find a position that gives you a stretch in the front of the hip.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Lengthens the hip flexor.</span>
-    </div>
-    <span class="reps-badge">30-60 sec hold each side, or 10 slow reps</span>
-  </article>
+  <!-- ============================================
+       MOVEMENT SNACKS (5 exercises)
+       ============================================ -->
+  <div class="exercise-section" aria-expanded="true" data-section="snacks">
+    <button class="section-toggle" aria-controls="snacks-cards">
+      <div>
+        <h2>Movement Snacks</h2>
+        <span class="section-subtitle">Throughout the day</span>
+      </div>
+      <div class="section-right">
+        <span class="section-count" data-count="snacks">0 / 4</span>
+        <svg class="section-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+      </div>
+    </button>
+    <div class="section-cards" id="snacks-cards">
 
-  <!-- MOVEMENT SNACKS -->
-  <div class="section-header">
-    <h2>Movement Snacks</h2>
-    <p>Throughout the day</p>
+      <!-- 9. Marches -->
+      <article class="exercise-card" data-exercise="marches" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Marches">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Marches</span>
+          <span class="reps-badge">any time</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Lift knee, controlled lower. Light and easy.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Standing tall, alternate lifting each knee up toward your chest. Controlled and deliberate — one leg at a time.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Hip flexor activation, balance, movement snack.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 10. Chicken Arm Circles -->
+      <article class="exercise-card" data-exercise="arm-circles" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Chicken Arm Circles">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Chicken Arm Circles</span>
+          <span class="reps-badge">10 ea dir</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Work within a comfortable range. Don't push through.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Stand or sit. Make small arm circles in each direction. Keep the movement easy and within a range that feels comfortable.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Shoulder mobility, upper body movement snack.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 11. Wrist Circles -->
+      <article class="exercise-card" data-exercise="wrist-circles" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Wrist Circles">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Wrist Circles</span>
+          <span class="reps-badge">30s ea</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Easy and gentle. Keep them moving.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Make gentle circles with each wrist. Both directions. Great while watching TV.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Wrist mobility, easy movement snack.</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- 12. Ape Feet -->
+      <article class="exercise-card" data-exercise="ape-feet" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Ape Feet">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Ape Feet</span>
+          <span class="reps-badge">10 pulses</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Spread the floor with your feet. Great while watching TV.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Standing or sitting, spread your toes and press them into the floor. Tripod contact — big toe, little toe, heel. Pulse and release.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Foot activation and balance support.</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
   </div>
 
-  <article class="exercise-card">
-    <h3>Marches</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Standing tall, alternate lifting each knee up toward your chest. Controlled and deliberate — one leg at a time.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Lift knee, controlled lower. Light and easy.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Hip flexor activation, balance, movement snack.</span>
-    </div>
-    <span class="reps-badge">Throughout day</span>
-  </article>
+  <!-- ============================================
+       WALKING PRESCRIPTION (1 exercise)
+       ============================================ -->
+  <div class="exercise-section" aria-expanded="true" data-section="walking">
+    <button class="section-toggle" aria-controls="walking-cards">
+      <div>
+        <h2>Walking</h2>
+      </div>
+      <div class="section-right">
+        <span class="section-count" data-count="walking">0 / 1</span>
+        <svg class="section-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+      </div>
+    </button>
+    <div class="section-cards" id="walking-cards">
 
-  <article class="exercise-card">
-    <h3>Chicken Arm Circles</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Stand or sit. Make small arm circles in each direction. Keep the movement easy and within a range that feels comfortable.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Work within a comfortable range. Don't push through.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Shoulder mobility, upper body movement snack.</span>
-    </div>
-    <span class="reps-badge">10 reps each direction</span>
-  </article>
+      <!-- 14. Walking -->
+      <article class="exercise-card" data-exercise="walking" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Walking">
+          <button class="complete-btn" aria-label="Mark complete">
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
+          </button>
+          <span class="exercise-name">Walking</span>
+          <span class="reps-badge">5x/wk</span>
+          <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
+        </div>
+        <div class="card-body">
+          <div class="exercise-detail">
+            <span class="detail-label">Cue</span>
+            <span class="cue-text">Rest before it hurts. You're doing great — keep building.</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Do</span>
+            <span class="detail-text">Use the interval format (2-3 min walk / 1 min rest) as your baseline. Real-world walking is encouraged too — errands, shopping, whatever gets you moving. Stop before aching starts, even if you feel fine. 5x/week minimum — listen to music, keep it fun!</span>
+          </div>
+          <div class="exercise-detail">
+            <span class="detail-label">Why</span>
+            <span class="why-text">Building walking tolerance without triggering the pain cycle.</span>
+          </div>
+          <div class="walking-note">
+            <strong>Track:</strong> What you did and how it felt.
+          </div>
+        </div>
+      </article>
 
-  <article class="exercise-card">
-    <h3>Wrist Circles</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Make gentle circles with each wrist. Both directions. Great while watching TV.</span>
     </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Easy and gentle. Keep them moving.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Wrist mobility, easy movement snack.</span>
-    </div>
-    <span class="reps-badge">30 sec each direction</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Counter Wrist Extensions</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Place the back of your hand against the edge of a counter. Gently press to extend the wrist. Hold or do slow reps.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Extend your wrist against the counter edge. Easy.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Wrist mobility, floor transition prep.</span>
-    </div>
-    <span class="reps-badge">30 sec each direction</span>
-  </article>
-
-  <article class="exercise-card">
-    <h3>Ape Feet</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Standing or sitting, spread your toes and press them into the floor. Tripod contact — big toe, little toe, heel. Pulse and release.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Spread the floor with your feet. Great while watching TV.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Foot activation and balance support.</span>
-    </div>
-    <span class="reps-badge">10 pulses, both feet</span>
-  </article>
-
-  <!-- WALKING PRESCRIPTION -->
-  <div class="section-header">
-    <h2>Walking Prescription</h2>
   </div>
 
-  <article class="exercise-card">
-    <h3>Walking</h3>
-    <div class="exercise-detail">
-      <span class="detail-label">Do</span>
-      <span class="detail-text">Use the interval format (2-3 min walk / 1 min rest) as your baseline. Real-world walking is encouraged too — errands, shopping, whatever gets you moving. Stop before aching starts, even if you feel fine. 5x/week minimum — listen to music, keep it fun!</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Cue</span>
-      <span class="cue-text">Rest before it hurts. You're doing great — keep building.</span>
-    </div>
-    <div class="exercise-detail">
-      <span class="detail-label">Why</span>
-      <span class="detail-text">Building walking tolerance without triggering the pain cycle.</span>
-    </div>
-    <div class="walking-note">
-      <strong>Track:</strong> What you did and how it felt.
-    </div>
-  </article>
+  <footer class="page-footer" id="footer"></footer>
 
-  <footer class="page-footer">
-    Take it easy. Consistency beats intensity.
-  </footer>
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ============================================
+    // STORAGE
+    // ============================================
+    const STORAGE_KEY = 'cristy-exercises';
+    const TOTAL_EXERCISES = 13;
+
+    function todayStr() {
+      return new Date().toISOString().split('T')[0];
+    }
+
+    function loadState() {
+      try {
+        const raw = localStorage.getItem(STORAGE_KEY);
+        if (!raw) return null;
+        const state = JSON.parse(raw);
+        if (state.date !== todayStr()) return null; // daily reset
+        return state;
+      } catch { return null; }
+    }
+
+    function saveState(completed) {
+      localStorage.setItem(STORAGE_KEY, JSON.stringify({
+        date: todayStr(),
+        completed
+      }));
+    }
+
+    function getCompleted() {
+      const state = loadState();
+      return state ? state.completed : {};
+    }
+
+    // ============================================
+    // INIT — restore completion state
+    // ============================================
+    function init() {
+      const completed = getCompleted();
+      const cards = document.querySelectorAll('.exercise-card[data-exercise]');
+      cards.forEach(card => {
+        const slug = card.dataset.exercise;
+        if (completed[slug]) {
+          card.setAttribute('data-completed', 'true');
+        }
+      });
+      updateAllCounts();
+      initFooter();
+    }
+
+    // ============================================
+    // SECTION TOGGLE
+    // ============================================
+    document.querySelectorAll('.section-toggle').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const section = btn.closest('.exercise-section');
+        const expanded = section.getAttribute('aria-expanded') === 'true';
+        section.setAttribute('aria-expanded', String(!expanded));
+      });
+    });
+
+    // ============================================
+    // CARD ACCORDION
+    // ============================================
+    document.querySelectorAll('.card-header').forEach(header => {
+      header.addEventListener('click', (e) => {
+        // Don't toggle if they tapped the complete button
+        if (e.target.closest('.complete-btn')) return;
+        const card = header.closest('.exercise-card');
+        const expanded = card.getAttribute('aria-expanded') === 'true';
+        card.setAttribute('aria-expanded', String(!expanded));
+      });
+
+      header.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          if (e.target.closest('.complete-btn')) return;
+          const card = header.closest('.exercise-card');
+          const expanded = card.getAttribute('aria-expanded') === 'true';
+          card.setAttribute('aria-expanded', String(!expanded));
+        }
+      });
+    });
+
+    // ============================================
+    // COMPLETION
+    // ============================================
+    document.querySelectorAll('.complete-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const card = btn.closest('.exercise-card');
+        const slug = card.dataset.exercise;
+        const wasCompleted = card.getAttribute('data-completed') === 'true';
+        const nowCompleted = !wasCompleted;
+
+        card.setAttribute('data-completed', String(nowCompleted));
+
+        // Haptic feedback
+        if (nowCompleted && navigator.vibrate) {
+          navigator.vibrate([10]);
+        }
+
+        // Persist
+        const completed = getCompleted();
+        if (nowCompleted) {
+          completed[slug] = true;
+        } else {
+          delete completed[slug];
+        }
+        saveState(completed);
+        updateAllCounts();
+      });
+    });
+
+    // ============================================
+    // COUNTS
+    // ============================================
+    function updateAllCounts() {
+      // Section counts
+      document.querySelectorAll('.exercise-section').forEach(section => {
+        const sectionName = section.dataset.section;
+        const cards = section.querySelectorAll('.exercise-card[data-exercise]');
+        const total = cards.length;
+        const done = section.querySelectorAll('.exercise-card[data-completed="true"]').length;
+        const countEl = section.querySelector(`[data-count="${sectionName}"]`);
+        if (countEl) countEl.textContent = `${done} / ${total}`;
+      });
+
+      // Header progress
+      const allDone = document.querySelectorAll('.exercise-card[data-completed="true"]').length;
+      const summary = document.getElementById('progress-summary');
+      summary.textContent = `${allDone} of ${TOTAL_EXERCISES} done`;
+
+      // All done toast
+      if (allDone === TOTAL_EXERCISES) {
+        showToast('All done today!');
+      }
+    }
+
+    // ============================================
+    // VIDEO LAZY LOADING
+    // ============================================
+    document.querySelectorAll('.video-trigger').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const videoId = btn.dataset.videoId;
+        const container = btn.parentElement.querySelector(`.video-container[data-video-id="${videoId}"]`);
+        if (!container) return;
+
+        const existing = container.querySelector('iframe');
+        if (existing) {
+          // Remove video
+          container.innerHTML = '';
+          btn.innerHTML = `<svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg> Watch demo`;
+        } else {
+          // Load video
+          const iframe = document.createElement('iframe');
+          iframe.src = `https://www.youtube.com/embed/${videoId}`;
+          iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture';
+          iframe.allowFullscreen = true;
+          container.appendChild(iframe);
+          btn.innerHTML = `<svg class="play-icon" width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14" rx="1"/><rect x="14" y="5" width="4" height="14" rx="1"/></svg> Hide video`;
+        }
+      });
+    });
+
+    // ============================================
+    // TOAST
+    // ============================================
+    let toastTimeout;
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      clearTimeout(toastTimeout);
+      toast.className = 'toast';
+      toast.textContent = message;
+
+      // Force reflow
+      void toast.offsetWidth;
+      toast.classList.add('show');
+
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+        toast.classList.add('hide');
+      }, 2500);
+    }
+
+    // ============================================
+    // FOOTER
+    // ============================================
+    function initFooter() {
+      const messages = [
+        'Take it easy. Consistency beats intensity.',
+        'A little movement every day adds up.',
+        'You showed up. That\'s the hard part.',
+        'Slow and steady wins the race.',
+        'Progress, not perfection.',
+        'Your body thanks you for moving today.'
+      ];
+      const footer = document.getElementById('footer');
+      footer.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+
+    // ============================================
+    // GO
+    // ============================================
+    init();
+  </script>
 
 </body>
 </html>
