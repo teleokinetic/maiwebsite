@@ -494,6 +494,13 @@
       border: none;
     }
 
+    .video-facade--landscape img {
+      aspect-ratio: 16 / 9;
+    }
+    .video-facade--landscape iframe {
+      aspect-ratio: 16 / 9;
+    }
+
     .video-hide-link {
       display: block;
       margin-top: var(--space-xs);
@@ -584,7 +591,7 @@
         <div class="card-body">
           <div class="exercise-detail">
             <span class="detail-label">Cue</span>
-            <span class="cue-text">Slow and pain-free. Back knee leads, pelvis follows.</span>
+            <span class="cue-text">Slow and pain-free. Back knee leads, pelvis follows. Practice reducing hand support. Left side is harder — that's normal.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Setup</span>
@@ -678,7 +685,7 @@
         <div class="card-body">
           <div class="exercise-detail">
             <span class="detail-label">Cue</span>
-            <span class="cue-text">Stand tall. No hands — you've got this.</span>
+            <span class="cue-text">Seaweed energy — lose the balance so you can find it. Playful, not rigid. Spread your Ape Feet.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Do</span>
@@ -713,6 +720,12 @@
           <div class="exercise-detail">
             <span class="detail-label">Why</span>
             <span class="why-text">Hip stability and glute med strengthening.</span>
+          </div>
+          <div class="video-facade" data-video-id="bX1RLweNitw">
+            <img src="https://img.youtube.com/vi/bX1RLweNitw/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
           </div>
         </div>
       </article>
@@ -749,34 +762,31 @@
         </div>
       </article>
 
-      <!-- 7. Stork Squat -->
-      <article class="exercise-card" data-exercise="stork-squat" aria-expanded="false">
-        <div class="card-header" role="button" tabindex="0" aria-label="Stork Squat">
+      <!-- 7. Goblet Box Squat -->
+      <article class="exercise-card" data-exercise="goblet-squat" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Goblet Box Squat">
           <button class="complete-btn" aria-label="Mark complete">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
           </button>
-          <span class="exercise-name">Stork Squat</span>
-          <span class="reps-badge">8 ea</span>
+          <span class="exercise-name">Goblet Box Squat</span>
+          <span class="reps-badge">10-15</span>
           <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
         </div>
         <div class="card-body">
           <div class="exercise-detail">
             <span class="detail-label">Cue</span>
-            <span class="cue-text">Only go down to where you can keep your pelvis level. Knee over little toe, hips level — imagine a tray of drinks. Stay tall. Slow on the way down — that's the gold. Use a mirror for feedback.</span>
+            <span class="cue-text">Light dumbbell at chest — counterbalance, not resistance. Only go as deep as your pelvis stays controlled. The box is your guide.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Do</span>
-            <span class="detail-text">Stand on one leg. Slowly lower into a single-leg squat. Drive through your heel to stand back up.</span>
+            <span class="detail-text">Hold a light dumbbell at your chest. Sit down to a box or chair, controlling the descent. Stand back up by driving through your heels. The box height is set to where your pelvis stays controlled — that's your depth.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Why</span>
-            <span class="why-text">Single-leg strength and pelvic stability under load.</span>
+            <span class="why-text">Squat strength and sit-to-stand pattern.</span>
           </div>
-          <div class="walking-note">
-            <strong>Note:</strong> In the video, the model goes very deep. For you, only go as deep as you can keep your pelvis level — straight down, no lateral movement.
-          </div>
-          <div class="video-facade" data-video-id="gXxcpFpJiLA">
-            <img src="https://img.youtube.com/vi/gXxcpFpJiLA/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+          <div class="video-facade video-facade--landscape" data-video-id="uzjfcTvgpoc">
+            <img src="https://img.youtube.com/vi/uzjfcTvgpoc/hqdefault.jpg" alt="Exercise demo" loading="lazy">
             <div class="play-overlay">
               <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
             </div>
@@ -848,54 +858,60 @@
     </button>
     <div class="section-cards" id="snacks-cards">
 
-      <!-- 9. Marches -->
+      <!-- 9. Marches + Arms -->
       <article class="exercise-card" data-exercise="marches" aria-expanded="false">
-        <div class="card-header" role="button" tabindex="0" aria-label="Marches">
+        <div class="card-header" role="button" tabindex="0" aria-label="Marches + Arms">
           <button class="complete-btn" aria-label="Mark complete">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
           </button>
-          <span class="exercise-name">Marches</span>
+          <span class="exercise-name">Marches + Arms</span>
           <span class="reps-badge">any time</span>
           <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
         </div>
         <div class="card-body">
           <div class="exercise-detail">
             <span class="detail-label">Cue</span>
-            <span class="cue-text">Lift knee, controlled lower. Light and easy.</span>
+            <span class="cue-text">Opposite arm, opposite leg. Let your body twist naturally.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Do</span>
-            <span class="detail-text">Standing tall, alternate lifting each knee up toward your chest. Controlled and deliberate — one leg at a time.</span>
+            <span class="detail-text">Standing tall, alternate lifting each knee. As the knee comes up, swing the opposite arm forward — left knee, right arm. Let your trunk rotate a little. Keep it light and rhythmic.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Why</span>
-            <span class="why-text">Hip flexor activation, balance, movement snack.</span>
+            <span class="why-text">Hip flexor activation, rotational patterning, movement snack.</span>
+          </div>
+          <div class="video-facade" data-video-id="ARqKV6Hljy8">
+            <img src="https://img.youtube.com/vi/ARqKV6Hljy8/hqdefault.jpg" alt="Exercise demo" loading="lazy">
+            <div class="play-overlay">
+              <svg width="56" height="56" viewBox="0 0 56 56"><circle cx="28" cy="28" r="28" fill="rgba(0,0,0,0.55)"/><path d="M22 17v22l16-11z" fill="white"/></svg>
+            </div>
           </div>
         </div>
       </article>
 
-      <!-- 10. Chicken Arm Circles -->
-      <article class="exercise-card" data-exercise="arm-circles" aria-expanded="false">
-        <div class="card-header" role="button" tabindex="0" aria-label="Chicken Arm Circles">
+      <!-- 10. Arm Exploration -->
+      <article class="exercise-card" data-exercise="arm-exploration" aria-expanded="false">
+        <div class="card-header" role="button" tabindex="0" aria-label="Arm Exploration">
           <button class="complete-btn" aria-label="Mark complete">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3.5 8.5 6.5 11.5 12.5 5.5"/></svg>
           </button>
-          <span class="exercise-name">Chicken Arm Circles</span>
-          <span class="reps-badge">10 ea dir</span>
+          <span class="exercise-name">Arm Exploration</span>
+          <span class="reps-badge">30s</span>
           <svg class="card-chevron" width="20" height="20" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 8 10 12 14 8"/></svg>
         </div>
         <div class="card-body">
           <div class="exercise-detail">
             <span class="detail-label">Cue</span>
-            <span class="cue-text">Work within a comfortable range. Don't push through.</span>
+            <span class="cue-text">Explore whatever range feels comfortable. No pushing through.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Do</span>
-            <span class="detail-text">Stand or sit. Make small arm circles in each direction. Keep the movement easy and within a range that feels comfortable.</span>
+            <span class="detail-text">Stand or sit. Move your arms in any direction that feels good — circles, reaches, swings. Stay within a comfortable range and let it be easy.</span>
           </div>
           <div class="exercise-detail">
             <span class="detail-label">Why</span>
-            <span class="why-text">Shoulder mobility, upper body movement snack.</span>
+            <span class="why-text">Shoulder mobility — gentle exploration.</span>
           </div>
         </div>
       </article>
