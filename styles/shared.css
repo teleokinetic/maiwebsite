@@ -1,0 +1,124 @@
+/* ──────────────────────────────────────────────
+   shared tokens, base, primitives, footer, toast
+   ────────────────────────────────────────────── */
+
+:root {
+  --paper:#e8e5d9;
+  --paper-alt:#f0ebd8;
+  --stone:#ddd6c3;
+  --ink:#1f2a3d;
+  --brown:#7a5a3c;
+  --accent-blue:#cfdbdf;
+  --accent-green:#dde3cf;
+  --accent-yellow:#f7e6b5;
+  --accent-pink:#efd9d1;
+  --red:#b04a3b;
+  --mono:'JetBrains Mono', monospace;
+}
+
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--stone);
+  font-family: 'Patrick Hand', cursive;
+  color: #1a1a1a;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; }
+
+img { max-width: 100%; height: auto; display: block; }
+
+/* Paper "page" wrap — fills viewport, paper-colored, centered with soft edge shadow on wide screens */
+.paper-wrap {
+  background: var(--paper);
+  max-width: 1240px;
+  min-height: 100vh;
+  margin: 0 auto;
+  box-shadow: 0 0 80px rgba(0,0,0,0.08);
+  position: relative;
+}
+@media (max-width: 1240px) {
+  .paper-wrap { box-shadow: none; }
+}
+
+/* Shared visual primitives */
+.tape {
+  position: absolute;
+  background: rgba(180,200,210,0.72);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+.sticky {
+  background: var(--accent-yellow);
+  box-shadow: 3px 4px 0 rgba(0,0,0,0.12);
+  font-family: 'Kalam', cursive;
+  padding: 10px 14px;
+  font-size: 15px;
+  border: 1.5px solid var(--ink);
+}
+.chip {
+  display: inline-block;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  border-radius: 30px;
+  padding: 6px 14px;
+  font-family: 'Kalam', cursive;
+  font-size: 14px;
+  background: #fff;
+}
+.placeholder {
+  border: 1.5px solid var(--ink);
+  background-image: repeating-linear-gradient(135deg, transparent 0 9px, rgba(31,42,61,0.09) 9px 10px);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 10px; color: var(--ink);
+  text-transform: uppercase; letter-spacing: 0.1em;
+  white-space: pre; text-align: center;
+}
+.card {
+  border: 1.5px solid var(--ink);
+  background: #fff;
+  box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+}
+
+/* Shared footer (the "thanks for scrolling" rule) */
+.site-footer {
+  text-align: center;
+  padding: 40px 24px 48px;
+  font-family: 'Caveat', cursive;
+  color: var(--brown);
+  font-size: 20px;
+  border-top: 1.5px dashed var(--ink);
+}
+.site-footer .links {
+  margin-top: 8px;
+  font-family: 'Kalam', cursive;
+  font-size: 14px;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+.site-footer .links a {
+  color: var(--ink);
+  text-decoration: none;
+  margin: 0 8px;
+  border-bottom: 1.5px solid var(--ink);
+  cursor: pointer;
+}
+
+/* Say-hi toast (copy-to-clipboard confirmation) */
+.hi-toast {
+  display: inline-block;
+  margin-top: 10px;
+  font-family: 'Kalam', cursive;
+  font-size: 14px;
+  color: var(--brown);
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+  min-height: 1.2em;
+}
+.hi-toast.visible { opacity: 1; transform: translateY(0); }
+
+/* Selection color feels paper-ish, not bright blue */
+::selection { background: var(--accent-yellow); color: var(--ink); }

@@ -1,342 +1,391 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Tanner Holman</title>
-    <meta name="description" content="Chronic pain coach & movement teacher — evidence‑informed experiments that make pain relief stick." />
-    <!-- Tailwind (CDN, no build step) -->
-    <script>
-      window.tailwind = {}
-    </script>
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
-  <body class="antialiased">
-    <div id="root"></div>
-    <noscript>This site requires JavaScript to run.</noscript>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tanner Holman — i help meditators feel good in their bodies.</title>
+<meta name="description" content="Coaching, personal training, and movement classes for meditators. Make your body a home you can trust.">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>✎</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Shadows+Into+Light+Two&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Indie+Flower&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles/shared.css">
+<style>
+  /* ───────── HOME · DESKTOP (default) ───────── */
+  .site { background: var(--paper); }
+  .spread { position: relative; padding: 72px 80px; }
+  .spread + .spread { border-top: 1.5px dashed var(--ink); }
+  .spread-tag {
+    position: absolute; top: 36px; right: 56px;
+    font-family: var(--mono); font-size: 11px; color: #666; letter-spacing: 0.15em;
+  }
+  .spread-tag .rom { color: var(--ink); margin-right: 6px; }
+  .margin-note {
+    position: absolute; left: 28px; top: 84px;
+    font-family: var(--mono); font-size: 10px; color: #888; letter-spacing: 0.2em;
+    writing-mode: vertical-rl; transform: rotate(180deg);
+  }
 
-    <!-- React (UMD) + Babel Standalone to compile JSX in the browser -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js" crossorigin></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  /* Spread 1 — cover */
+  .spread-1 { padding-top: 84px; padding-bottom: 80px; }
+  .cover { display: grid; grid-template-columns: 1fr 1.05fr; gap: 56px; align-items: center; }
+  .cover-left { position: relative; }
+  .portrait-polaroid {
+    position: relative; width: 100%; max-width: 420px; background: #fff;
+    padding: 12px 12px 56px; box-shadow: 4px 5px 0 rgba(0,0,0,0.16); transform: rotate(0.8deg);
+  }
+  .portrait-polaroid .poltape {
+    position: absolute; top: -14px; left: 50%; margin-left: -60px;
+    width: 120px; height: 26px; background: rgba(180,200,210,0.72);
+    border: 1px solid rgba(0,0,0,0.08); transform: rotate(-2deg); z-index: 2;
+  }
+  .portrait-photo { position: relative; line-height: 0; overflow: hidden; aspect-ratio: 4/5; }
+  .portrait-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .portrait-anno {
+    position: absolute; color: #fff; line-height: 1; pointer-events: none; z-index: 3;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.35);
+    font-family: 'Indie Flower', cursive; font-weight: 700;
+  }
+  .portrait-anno svg { display: block; overflow: visible; filter: drop-shadow(0 1px 1px rgba(0,0,0,0.35)); }
+  .portrait-anno.girl { top: 7%; left: 4%; font-size: 32px; transform: rotate(-3deg); }
+  .portrait-anno.girl .arrow { position: absolute; top: 100%; left: 10px; margin-top: 6px; }
+  .portrait-anno.me { bottom: 9%; right: 4%; font-size: 30px; transform: rotate(2deg); text-align: right; }
+  .portrait-anno.me .arrow { position: absolute; bottom: 100%; right: 14px; margin-bottom: 3px; }
+  .cover-title {
+    font-family: 'Shadows Into Light Two', cursive; color: var(--ink);
+    font-size: clamp(72px, 9.5vw, 120px); line-height: 0.92; letter-spacing: -0.01em;
+  }
+  .cover-title .name { white-space: nowrap; }
+  .cover-sub {
+    font-family: 'Patrick Hand', cursive; font-size: 22px; line-height: 1.45;
+    color: #2a2a2a; margin-top: 22px; max-width: 480px;
+  }
+  .cover-meta { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 28px; align-items: center; }
+  .cover-meta .chip { transform: rotate(-1deg); text-decoration: none; transition: transform 0.15s ease, box-shadow 0.15s ease; }
+  .cover-meta .chip:nth-child(even) { transform: rotate(1.2deg); }
+  .cover-meta .chip:hover { box-shadow: 2px 2px 0 rgba(0,0,0,0.12); transform: translate(-1px,-1px) rotate(-1deg); }
+  .cover-meta .chip:nth-child(even):hover { transform: translate(-1px,-1px) rotate(1.2deg); }
+  .cover-pull {
+    position: absolute; bottom: -4px; left: -22px; transform: rotate(-3deg);
+    background: var(--paper); border: 1.5px dashed var(--ink); padding: 14px 18px;
+    max-width: 280px; font-family: 'Libre Caslon Text', serif; font-style: italic;
+    font-size: 17px; line-height: 1.35; color: var(--ink);
+  }
 
-    <script type="text/babel" data-presets="env,react">
-function TannerHolmanSite() {
-  const CONTACT_EMAIL = "tannerholman97@gmail.com";
-  const CALENDLY = "https://calendly.com/tannerholman/consultation";
+  /* Spread 2 — offerings */
+  .spread-2 { padding-top: 68px; padding-bottom: 80px; }
+  .spread-2 .head { display: flex; align-items: baseline; gap: 22px; margin-bottom: 36px; flex-wrap: wrap; }
+  .spread-2 .head h2 {
+    font-family: 'Shadows Into Light Two', cursive; color: var(--ink);
+    font-size: 64px; margin: 0; line-height: 1;
+  }
+  .spread-2 .head .sub { font-family: 'Caveat', cursive; font-size: 22px; color: var(--brown); }
+  .offerings { display: grid; grid-template-columns: repeat(4, 1fr); gap: 22px; }
+  .offer {
+    position: relative; border: 1.5px solid var(--ink); padding: 22px 22px 24px;
+    box-shadow: 4px 4px 0 rgba(0,0,0,0.1); display: flex; flex-direction: column;
+    text-decoration: none; color: inherit; transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .offer:hover { transform: translate(-2px,-2px) rotate(0deg) !important; box-shadow: 6px 6px 0 rgba(0,0,0,0.15); }
+  .offer .num { position: absolute; top: 10px; right: 14px; font-family: var(--mono); font-size: 11px; color: #888; }
+  .offer .tag { font-family: 'Kalam', cursive; font-weight: 700; font-size: 20px; color: var(--ink); }
+  .offer .desc { font-family: 'Libre Caslon Text', serif; font-size: 15px; line-height: 1.45; margin-top: 10px; color: #2a2a2a; flex: 1; }
+  .offer .foot { margin-top: 14px; display: flex; justify-content: space-between; align-items: center; font-family: 'Patrick Hand', cursive; font-size: 14px; color: var(--brown); }
+  .offer .foot .arr { font-family: 'Libre Caslon Text', serif; font-size: 22px; color: var(--ink); }
+  .offer .ribbon {
+    position: absolute; top: -10px; left: -12px; background: var(--accent-yellow);
+    border: 1.5px solid var(--ink); padding: 4px 10px; font-family: 'Kalam', cursive;
+    font-size: 12px; transform: rotate(-4deg); box-shadow: 2px 2px 0 rgba(0,0,0,0.1);
+  }
+  .offer-1 { background: #fff; transform: rotate(-0.6deg); }
+  .offer-2 { background: var(--accent-blue); transform: rotate(0.6deg); }
+  .offer-3 { background: #fff; transform: rotate(-0.3deg); }
+  .offer-4 { background: var(--accent-green); transform: rotate(0.5deg); }
 
-  const handleEmailSubmit = (e) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const name = encodeURIComponent(form.get("name") || "");
-    const email = encodeURIComponent(form.get("email") || "");
-    const message = encodeURIComponent(form.get("message") || "");
-    const subject = encodeURIComponent("Inquiry from website");
-    const body = encodeURIComponent(`Name: ${name}\nEmail: ${email}\n\n${message}`);
-    window.location.href = `mailto:${CONTACT_EMAIL}?subject=${subject}&body=${body}`;
-  };
+  /* Pull quote rule */
+  .pull-rule { position: relative; height: 92px; background: var(--paper); border-top: 1.5px dashed var(--ink); border-bottom: 1.5px dashed var(--ink); }
+  .pull-card {
+    position: absolute; left: 50%; top: -22px; transform: translateX(-50%) rotate(-1.2deg);
+    width: 580px; max-width: calc(100% - 40px); background: var(--accent-yellow); border: 1.5px solid var(--ink);
+    padding: 18px 22px; box-shadow: 3px 3px 0 rgba(0,0,0,0.1);
+    display: flex; align-items: center; gap: 18px;
+  }
+  .pull-card .pulltape {
+    position: absolute; top: -11px; left: 50%; margin-left: -42px;
+    width: 84px; height: 20px; background: rgba(180,200,210,0.7);
+    border: 1px solid rgba(0,0,0,0.08); transform: rotate(-2deg);
+  }
+  .pull-card .mark { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 56px; color: var(--brown); line-height: 0.6; padding-top: 14px; align-self: flex-start; }
+  .pull-card .body { flex: 1; }
+  .pull-card .quote { font-family: 'Patrick Hand', cursive; font-size: 19px; line-height: 1.35; color: var(--ink); }
+  .pull-card .attrib { font-family: 'Caveat', cursive; font-size: 19px; color: var(--ink); margin-top: 4px; display: block; line-height: 1.25; }
+  .pull-card .attrib::before { content: "— "; color: var(--brown); }
+  .pull-card .attrib .role { font-family: 'Patrick Hand', cursive; font-size: 14px; color: #666; }
+  .pull-card .attrib .pub { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 14px; color: var(--ink); border-bottom: 1px solid var(--ink); text-decoration: none; }
 
-  const features = [
-    {
-      title: "Clarity",
-      body: "Update your model of pain: understand threat prediction, context effects, and why pain can persist without damage.",
-      icon: (
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6"><path fill="currentColor" d="M11 2a9 9 0 1 0 9 9h-2A7 7 0 1 1 11 4V2zm1 3h8v2h-8z"/></svg>
-      )
-    },
-    {
-      title: "Calibration",
-      body: "Gentle, targeted movement experiments that to unlearn movement avoidance and rediscover movement options.",
-      icon: (
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6"><path fill="currentColor" d="M12 2l3 7h7l-5.5 4 2 8L12 16l-6.5 5 2-8L2 9h7z"/></svg>
-      )
-    },
-    {
-      title: "Carryover",
-      body: "Practice co‑piloting turns insights into results during real‑world triggers at work, gym, or life.",
-      icon: (
-        <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6"><path fill="currentColor" d="M3 3h18v2H3V3zm2 5h14v2H5V8zm-2 5h18v2H3v-2zm2 5h14v2H5v-2z"/></svg>
-      )
+  /* Spread 3 — coming up */
+  .spread-3 { padding-top: 68px; padding-bottom: 96px; }
+  .spread-3-grid { display: grid; grid-template-columns: 1.3fr 1fr; gap: 56px; align-items: start; }
+  .spread-3 h2 { font-family: 'Shadows Into Light Two', cursive; color: var(--ink); font-size: 64px; margin: 0 0 28px; line-height: 1; }
+  .class-card {
+    position: relative; border: 1.5px solid var(--ink); background: #fff;
+    padding: 32px 36px; box-shadow: 5px 5px 0 rgba(0,0,0,0.1); transform: rotate(-0.6deg);
+  }
+  .class-card .kicker { font-family: 'Kalam', cursive; color: var(--brown); font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
+  .class-card .class-title { font-family: 'Libre Caslon Text', serif; font-size: 40px; line-height: 1.1; margin-top: 6px; color: var(--ink); }
+  .class-card .details { display: flex; gap: 28px; margin-top: 18px; font-family: 'Patrick Hand', cursive; font-size: 18px; flex-wrap: wrap; }
+  .class-card .details .item { display: flex; flex-direction: column; }
+  .class-card .details .item .k { font-family: var(--mono); font-size: 11px; color: #888; letter-spacing: 0.1em; text-transform: uppercase; }
+  .class-card .cta {
+    display: inline-flex; align-items: center; gap: 10px; margin-top: 22px;
+    border: 1.5px solid var(--ink); padding: 10px 20px; border-radius: 30px;
+    background: var(--accent-yellow); font-family: 'Kalam', cursive; font-size: 16px;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.1); text-decoration: none; color: var(--ink);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .class-card .cta:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 rgba(0,0,0,0.15); }
+  .class-card .sticky-seat {
+    position: absolute; top: -18px; right: -24px; width: 168px;
+    transform: rotate(6deg); font-size: 15px; text-align: center; line-height: 1.25;
+    padding: 12px 14px;
+  }
+  .class-card .sticky-seat a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+
+  .letter {
+    border: 1.5px dashed var(--ink); padding: 28px 28px 24px; background: #fdfaf1;
+    position: relative; transform: rotate(0.4deg);
+  }
+  .letter .ps { font-family: 'Caveat', cursive; font-size: 30px; color: var(--ink); line-height: 1; }
+  .letter .note { font-family: 'Patrick Hand', cursive; font-size: 16px; color: #555; margin-top: 6px; line-height: 1.4; }
+  .letter .note a { color: var(--ink); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .letter .featured {
+    display: block; text-decoration: none; color: inherit; margin-top: 18px;
+    padding: 16px 18px; border: 1.5px solid var(--ink); background: #fff;
+    box-shadow: 3px 3px 0 rgba(0,0,0,0.08); position: relative;
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .letter .featured:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 rgba(0,0,0,0.12); }
+  .letter .featured .tag {
+    position: absolute; top: -10px; left: 16px; background: var(--accent-yellow);
+    border: 1.5px solid var(--ink); padding: 2px 10px; font-family: var(--mono);
+    font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+  }
+  .letter .featured .t { font-family: 'Libre Caslon Text', serif; font-size: 22px; line-height: 1.2; color: var(--ink); margin-top: 4px; }
+  .letter .featured .l { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 15px; color: #555; margin-top: 6px; line-height: 1.35; }
+  .letter .featured .d { font-family: var(--mono); font-size: 11px; color: #888; letter-spacing: 0.1em; margin-top: 10px; }
+
+  /* ───────── HOME · MOBILE (<900px) ───────── */
+  @media (max-width: 899px) {
+    .spread { padding: 36px 22px; }
+    .spread-1 { padding-top: 30px; padding-bottom: 24px; }
+    .margin-note { display: none; }
+    .spread-tag { top: 16px; right: 20px; font-size: 10px; }
+
+    /* Cover becomes stacked: polaroid → title sticker → sub → chips */
+    .cover { grid-template-columns: 1fr; gap: 28px; align-items: stretch; }
+    .cover-left { order: 1; }
+    .portrait-polaroid { max-width: 100%; transform: rotate(1.2deg); padding: 10px 10px 42px; }
+    .portrait-polaroid .poltape { width: 88px; margin-left: -44px; height: 20px; }
+    .portrait-anno.girl { font-size: 22px; top: 6%; left: 5%; }
+    .portrait-anno.me { font-size: 22px; bottom: 7%; right: 4%; }
+    .cover-pull { display: none; }
+
+    .cover-right { order: 2; margin-top: 8px; position: relative; }
+    /* Title becomes an overlapping sticker, inspired by the mobile prototype */
+    .cover-title {
+      font-size: clamp(44px, 12vw, 64px);
+      line-height: 0.95;
+      display: inline-block;
+      background: var(--paper);
+      padding: 4px 10px;
+      transform: rotate(-1.2deg);
+      border: 1.5px solid var(--ink);
+      box-shadow: 2px 2px 0 rgba(0,0,0,0.08);
+      margin-top: -28px; margin-left: -6px;
+      position: relative; z-index: 2;
     }
-  ];
+    .cover-sub { font-size: 17px; margin-top: 20px; }
+    .cover-meta { gap: 10px; margin-top: 20px; }
+    .cover-meta .chip { padding: 5px 12px; font-size: 13px; }
 
-  return (
-    <div className="min-h-screen bg-gradient-to-b from-white to-neutral-50 text-neutral-900 antialiased selection:bg-neutral-900 selection:text-white">
-      {/* Skip link for accessibility */}
-      <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-50 focus:rounded-lg focus:bg-black focus:px-3 focus:py-2 focus:text-white">Skip to content</a>
+    /* Offerings stack vertically */
+    .spread-2 { padding-top: 28px; padding-bottom: 32px; }
+    .spread-2 .head h2 { font-size: 36px; }
+    .spread-2 .head .sub { font-size: 18px; }
+    .offerings { grid-template-columns: 1fr; gap: 12px; }
+    .offer { padding: 14px 16px; }
+    .offer .tag { font-size: 17px; }
+    .offer .desc { font-size: 14px; margin-top: 6px; }
+    .offer .num { font-size: 10px; top: 8px; right: 10px; }
+    .offer .foot { margin-top: 10px; font-size: 13px; }
+    .offer .ribbon { font-size: 10px; padding: 3px 8px; top: -8px; left: -8px; }
 
-      {/* Header */}
-      <header className="sticky top-0 z-40 border-b border-neutral-200/60 bg-white/80 backdrop-blur supports-[backdrop-filter]:bg-white/60">
-        <div className="mx-auto flex h-16 max-w-6xl items-center justify-between px-4 sm:h-20">
-          <a href="#home" className="group inline-flex items-center gap-2 font-medium">
-            <span className="inline-flex size-8 items-center justify-center rounded-xl bg-neutral-900 text-white">TH</span>
-            <span className="text-sm tracking-wide text-neutral-700 group-hover:text-neutral-900">Tanner Holman</span>
-          </a>
-          <nav className="hidden items-center gap-6 text-sm text-neutral-700 md:flex">
-            <a className="hover:text-neutral-900" href="#approach">Approach</a>
-            <a className="hover:text-neutral-900" href="#services">Services</a>
-            <a className="hover:text-neutral-900" href="#testimonials">Results</a>
-            <a className="inline-flex items-center rounded-xl bg-neutral-900 px-3 py-2 font-medium text-white hover:bg-neutral-800" href="#contact">Book a consult</a>
-          </nav>
-          {/* Mobile menu */}
-          <details className="md:hidden">
-            <summary aria-label="Open menu" className="list-none rounded-xl p-2 hover:bg-neutral-100 active:bg-neutral-200">
-              <svg aria-hidden="true" viewBox="0 0 24 24" className="size-6"><path fill="currentColor" d="M3 6h18v2H3V6zm0 5h18v2H3v-2zm0 5h18v2H3v-2z"/></svg>
-            </summary>
-            <div className="absolute inset-x-0 top-16 border-b border-neutral-200/60 bg-white p-4 shadow-lg">
-              <div className="grid gap-1">
-                <a className="rounded-lg px-3 py-2 hover:bg-neutral-100" href="#approach">Approach</a>
-                <a className="rounded-lg px-3 py-2 hover:bg-neutral-100" href="#services">Services</a>
-                <a className="rounded-lg px-3 py-2 hover:bg-neutral-100" href="#testimonials">Results</a>
-                <a className="rounded-lg bg-neutral-900 px-3 py-2 text-white hover:bg-neutral-800" href="#contact">Tell me about your pain</a>
-              </div>
+    /* Pull rule */
+    .pull-rule { height: auto; padding: 32px 20px; border-top: 1.5px dashed var(--ink); border-bottom: 1.5px dashed var(--ink); }
+    .pull-card { position: static; transform: rotate(-1deg); width: 100%; padding: 14px 16px; gap: 12px; align-items: flex-start; }
+    .pull-card .mark { font-size: 42px; padding-top: 10px; }
+    .pull-card .quote { font-size: 15px; }
+    .pull-card .attrib { font-size: 16px; }
+    .pull-card .attrib .role, .pull-card .attrib .pub { font-size: 11px; }
+
+    /* Coming up */
+    .spread-3 { padding-top: 28px; padding-bottom: 48px; }
+    .spread-3 h2 { font-size: 36px; margin-bottom: 16px; }
+    .spread-3-grid { grid-template-columns: 1fr; gap: 28px; }
+    .class-card { padding: 18px 20px; transform: rotate(-0.8deg); }
+    .class-card .class-title { font-size: 22px; }
+    .class-card .details {
+      display: grid; grid-template-columns: 72px 1fr; gap: 4px 14px;
+      font-size: 15px; margin-top: 12px;
+    }
+    .class-card .details .item { flex-direction: row; gap: 0; display: contents; }
+    .class-card .details .item .k { font-size: 10px; align-self: baseline; }
+    .class-card .sticky-seat { width: 128px; right: -8px; top: -12px; font-size: 12px; padding: 8px 10px; }
+    .class-card .cta { font-size: 14px; padding: 8px 16px; margin-top: 14px; }
+
+    .letter { padding: 18px 18px 16px; }
+    .letter .ps { font-size: 24px; }
+    .letter .featured .t { font-size: 17px; }
+    .letter .featured .l { font-size: 14px; }
+    .letter .featured .d { font-size: 10px; }
+    .letter .note { font-size: 14px; }
+  }
+
+  @media (max-width: 420px) {
+    .spread { padding: 28px 16px; }
+    .cover-title { font-size: clamp(40px, 13vw, 52px); }
+  }
+</style>
+</head>
+<body>
+<div class="paper-wrap site">
+
+  <section class="spread spread-1">
+    <div class="margin-note">— I — COVER</div>
+    <div class="spread-tag"><span class="rom">— i —</span>cover</div>
+
+    <div class="cover">
+      <div class="cover-left">
+        <div class="portrait-polaroid">
+          <div class="poltape"></div>
+          <div class="portrait-photo">
+            <img src="assets/portrait-placeholder.jpg" alt="portrait of Tanner">
+            <div class="portrait-anno girl">
+              girlfriend!
+              <svg class="arrow" width="90" height="130" viewBox="0 0 90 130" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M6 4 C 10 40, 40 80, 80 122" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                <path d="M66 114 L82 126 L82 108" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
             </div>
-          </details>
-        </div>
-      </header>
-
-      {/* Hero */}
-      <section id="home" className="relative">
-        <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
-          <div className="absolute left-1/2 top-[-10%] aspect-[1/1] w-[60rem] -translate-x-1/2 rounded-full bg-gradient-to-tr from-neutral-200/50 to-transparent blur-3xl"/>
-        </div>
-        <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 py-16 sm:py-20 md:grid-cols-2 md:gap-12 lg:py-24">
-          <div>
-            <h1 className="text-balance text-4xl font-semibold tracking-tight sm:text-5xl lg:text-6xl">
-              Chronic pain relief that <span className="underline decoration-4 decoration-neutral-900 underline-offset-4">sticks</span>
-            </h1>
-            <p className="mt-5 max-w-prose text-pretty text-base leading-relaxed text-neutral-600 sm:text-lg">
-              I'm Tanner Holman, chronic pain coach and movement teacher. I use evidence‑informed practice and movement experiments to change how your system predicts pain, so you can get back to what matters.
-            </p>
-            <div className="mt-8 flex flex-wrap items-center gap-3">
-              <a href="#contact" className="inline-flex items-center justify-center rounded-xl bg-neutral-900 px-5 py-3 text-sm font-medium text-white hover:bg-neutral-800 focus:outline-none focus:ring-2 focus:ring-neutral-400">Book a free consult</a>
-              <a href="#approach" className="inline-flex items-center justify-center rounded-xl border border-neutral-300 px-5 py-3 text-sm font-medium text-neutral-800 hover:bg-neutral-100">How it works</a>
-            </div>
-            <div className="mt-8 text-sm text-neutral-500">
-              <span className="rounded-full border border-neutral-200 px-3 py-1">Evidence‑based</span>
-              <span className="ml-2 rounded-full border border-neutral-200 px-3 py-1">Practice‑forward</span>
-              <span className="ml-2 rounded-full border border-neutral-200 px-3 py-1">Nervous system‑informed</span>
-            </div>
-          </div>
-          <div className="relative">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <blockquote className="text-pretty text-neutral-700">
-                “I felt like I'd never get rid of the pain. Now I can release my low back at will, move my neck into new territory, and I'm back to walking and running.”
-              </blockquote>
-              <div className="mt-4 text-sm text-neutral-500">— S.V. </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Approach */}
-      <section id="approach" className="scroll-mt-20 border-t border-neutral-200/60 bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">A simple approach that respects complexity</h2>
-            <p className="mt-3 text-neutral-600">We don’t chase symptoms. We update predictions, expand movement options, and test carryover where it counts.</p>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {features.map((f, i) => (
-              <div key={i} className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm transition-colors hover:border-neutral-300">
-                <div className="flex items-center gap-3">
-                  <div className="rounded-xl bg-neutral-900/90 p-2 text-white">{f.icon}</div>
-                  <h3 className="text-lg font-semibold">{f.title}</h3>
-                </div>
-                <p className="mt-3 text-sm leading-6 text-neutral-600">{f.body}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Services / Pricing */}
-      <section id="services" className="scroll-mt-20 py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Ways to work together</h2>
-            <p className="mt-3 text-neutral-600">Choose a light‑touch weekly cadence or an intensive designed for momentum.</p>
-          </div>
-          <div className="mt-10 grid gap-6 sm:grid-cols-2">
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-              <div className="flex items-baseline justify-between">
-                <h3 className="text-lg font-semibold">Hourly Coaching</h3>
-                <div className="text-right">
-                  <div className="text-2xl font-semibold">$200</div>
-                  <div className="text-xs text-neutral-500">per 60‑minute session</div>
-                </div>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-neutral-700">
-                <li>• Weekly sessions for ~8 weeks</li>
-                <li>• Email/text support between sessions</li>
-                <li>• Optional daily accountability check‑ins</li>
-              </ul>
-              <a href="#contact" className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-800">Get started</a>
-            </div>
-            <div className="rounded-2xl border border-neutral-900 bg-neutral-900 p-6 text-white shadow-sm">
-              <div className="flex items-baseline justify-between">
-                <h3 className="text-lg font-semibold">8‑Week Intensive</h3>
-                <div className="text-right">
-                  <div className="text-2xl font-semibold">$3,000</div>
-                  <div className="text-xs/5 text-neutral-300">high‑touch support</div>
-                </div>
-              </div>
-              <ul className="mt-4 space-y-2 text-sm text-neutral-100">
-                <li>• Functionally unlimited booking (M–F, up to 5 hrs/wk)</li>
-                <li>• Live co‑piloting before or during triggers</li>
-                <li>• Priority troubleshooting + daily accountability</li>
-                <li>• Payment split: half at start, half at satisfaction</li>
-              </ul>
-              <a href="#contact" className="mt-6 inline-flex w-full items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-medium text-neutral-900 hover:bg-neutral-100">Apply</a>
-            </div>
-          </div>
-          <p className="mt-4 text-center text-xs text-neutral-500">Coaching is educational and collaborative. This is not medical care and does not replace your clinician.</p>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      <section id="testimonials" className="scroll-mt-20 border-t border-neutral-200/60 bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Results clients notice</h2>
-            <p className="mt-3 text-neutral-600">Short sessions, big shifts. Here’s what people report.</p>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                quote: "The most surprising thing was how easy it felt—and how attuned to my body I am now. This is a skill for life.",
-                name: "A.R.",
-              },
-              {
-                quote: "Most of my upper‑back pain is gone. I can touch my toes again and get back to long walks.",
-                name: "J.K.",
-              },
-              {
-                quote: "We found the protective pattern and switched it off. Neck range I thought was impossible showed up in minutes.",
-                name: "S.M.",
-              },
-            ].map((t, i) => (
-              <figure key={i} className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm">
-                <blockquote className="text-pretty text-neutral-700">“{t.quote}”</blockquote>
-                <figcaption className="mt-4 text-sm text-neutral-500">— {t.name}</figcaption>
-              </figure>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Callout */}
-      <section className="py-12">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="relative overflow-hidden rounded-3xl border border-neutral-200 bg-gradient-to-tr from-neutral-900 to-neutral-700 p-8 text-white shadow-sm">
-            <div className="relative z-10">
-              <h3 className="text-balance text-2xl font-semibold sm:text-3xl">Let’s make the next 8 weeks count</h3>
-              <p className="mt-2 max-w-prose text-neutral-200">If you’ve plateaued with exercises and appointments, we can change the game in a few focused sessions.</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <a href="#contact" className="inline-flex items-center justify-center rounded-xl bg-white px-5 py-3 text-sm font-medium text-neutral-900 hover:bg-neutral-100">Book a consult</a>
-                <a href={CALENDLY} className="inline-flex items-center justify-center rounded-xl border border-white/30 px-5 py-3 text-sm font-medium text-white/90 hover:bg-white/10">View availability</a>
-              </div>
-            </div>
-            <div aria-hidden className="pointer-events-none absolute -right-20 -top-20 aspect-square w-96 rounded-full bg-white/10 blur-3xl"/>
-          </div>
-        </div>
-      </section>
-
-      {/* FAQ */}
-      <section className="border-t border-neutral-200/60 bg-white py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Common questions</h2>
-          </div>
-          <div className="mx-auto mt-8 max-w-3xl divide-y divide-neutral-200 rounded-2xl border border-neutral-200 bg-white">
-            {[{
-              q: "Is this physical therapy?",
-              a: "No—it's coaching and education. We collaborate to change habits and predictions that keep pain sticky. I can coordinate with your clinician if helpful.",
-            }, {
-              q: "Do I need to be ‘in shape’?",
-              a: "No. We start from what you can do now. Many sessions are desk‑friendly experiments that fit into daily life.",
-            }, {
-              q: "How soon will I notice a change?",
-              a: "Often within a session or two. We look for early ‘green shoots’—less guarding, smoother motion, and better carryover.",
-            }].map((item, i) => (
-              <details key={i} className="group open:bg-neutral-50 open:shadow-sm">
-                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 text-left text-sm font-medium">
-                  {item.q}
-                  <span className="rounded-md border border-neutral-300 px-2 py-1 text-[10px] text-neutral-600 group-open:hidden">Open</span>
-                  <span className="hidden rounded-md border border-neutral-300 px-2 py-1 text-[10px] text-neutral-600 group-open:inline">Close</span>
-                </summary>
-                <div className="px-5 pb-5 text-sm leading-6 text-neutral-700">{item.a}</div>
-              </details>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Contact */}
-      <section id="contact" className="scroll-mt-20 py-16 sm:py-24">
-        <div className="mx-auto max-w-6xl px-4">
-          <div className="mx-auto max-w-2xl text-center">
-            <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Start with a free consult</h2>
-            <p className="mt-3 text-neutral-600">Tell me a bit about your situation. I’ll reply with next steps and a couple of times to meet.</p>
-          </div>
-          <div className="mx-auto mt-10 grid max-w-3xl gap-6 sm:grid-cols-5">
-            <form onSubmit={handleEmailSubmit} className="rounded-2xl border border-neutral-200 bg-white p-6 shadow-sm sm:col-span-3">
-              <div className="grid gap-4">
-                <label className="grid gap-1 text-sm">
-                  <span className="text-neutral-700">Name</span>
-                  <input name="name" required placeholder="Jane Doe" className="h-10 rounded-xl border border-neutral-300 px-3 outline-none ring-0 placeholder:text-neutral-400 focus:border-neutral-900" />
-                </label>
-                <label className="grid gap-1 text-sm">
-                  <span className="text-neutral-700">Email</span>
-                  <input type="email" name="email" required placeholder="you@example.com" className="h-10 rounded-xl border border-neutral-300 px-3 outline-none ring-0 placeholder:text-neutral-400 focus:border-neutral-900" />
-                </label>
-                <label className="grid gap-1 text-sm">
-                  <span className="text-neutral-700">Message</span>
-                  <textarea name="message" rows={5} placeholder="What's going on and what you'd like help with" className="resize-y rounded-xl border border-neutral-300 px-3 py-2 outline-none placeholder:text-neutral-400 focus:border-neutral-900" />
-                </label>
-                <button type="submit" className="inline-flex items-center justify-center rounded-xl bg-neutral-900 px-4 py-2.5 text-sm font-medium text-white hover:bg-neutral-800">Send</button>
-              </div>
-              <p className="mt-3 text-xs text-neutral-500">This opens your email app with a pre‑filled message to {CONTACT_EMAIL.replace(/@.*/, "@…")}.</p>
-            </form>
-            <div className="rounded-2xl border border-neutral-200 bg-white p-6 text-sm text-neutral-700 shadow-sm sm:col-span-2">
-              <div className="space-y-4">
-                <div>
-                  <div className="text-xs uppercase tracking-wide text-neutral-500">Email</div>
-                  <a className="mt-1 inline-flex items-center gap-2 text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900" href={`mailto:${CONTACT_EMAIL}`}>{CONTACT_EMAIL}</a>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-wide text-neutral-500">Schedule</div>
-                  <a className="mt-1 inline-flex items-center gap-2 text-neutral-900 underline decoration-neutral-300 underline-offset-4 hover:decoration-neutral-900" href={CALENDLY}>View availability</a>
-                </div>
-                <div>
-                  <div className="text-xs uppercase tracking-wide text-neutral-500">Based in</div>
-                  <p className="mt-1">Denver, Colorado (remote worldwide)</p>
-                </div>
-              </div>
+            <div class="portrait-anno me">
+              <svg class="arrow" width="42" height="120" viewBox="0 0 42 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M32 118 C 28 80, 24 42, 20 6" stroke="#fff" stroke-width="2.2" stroke-linecap="round" fill="none"/>
+                <path d="M10 18 L20 2 L30 18" stroke="#fff" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+              </svg>
+              that's me
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-neutral-200/60 bg-white py-10 text-sm text-neutral-600">
-        <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-4 sm:flex-row">
-          <p>© {new Date().getFullYear()} Tanner Holman. All rights reserved.</p>
-          <nav className="flex items-center gap-4">
-            <a href="#approach" className="hover:text-neutral-900">Approach</a>
-            <a href="#services" className="hover:text-neutral-900">Services</a>
-            <a href="#contact" className="hover:text-neutral-900">Contact</a>
-          </nav>
+      </div>
+      <div class="cover-right">
+        <div class="cover-title">hello,<br><span class="name">i'm Tanner.</span></div>
+        <div class="cover-sub">i help meditators feel good in their bodies.</div>
+        <div class="cover-meta">
+          <a class="chip" href="coaching.html">coaching</a>
+          <a class="chip" href="pt-for-meditators.html" style="background:var(--accent-blue);">pt · meditators</a>
+          <a class="chip" href="dzogchen-movement.html">dzogchen movement</a>
+          <a class="chip" href="body-mapping.html" style="background:var(--accent-green);">body mapping</a>
         </div>
-      </footer>
+      </div>
     </div>
-  );
-}
+  </section>
 
+  <section class="spread spread-2" id="offerings">
+    <div class="margin-note">— II — OFFERINGS</div>
+    <div class="spread-tag"><span class="rom">— ii —</span>offerings</div>
+    <div class="head">
+      <h2>what i offer</h2>
+      <span class="sub">four doorways to ease &amp; enjoyment.</span>
+    </div>
+    <div class="offerings">
+      <a class="offer offer-1" href="coaching.html">
+        <div class="num">01</div>
+        <div class="ribbon">most popular</div>
+        <div class="tag">coaching</div>
+        <div class="desc">1:1 coaching for finding ease in meditation posture.</div>
+        <div class="foot"><span>learn more</span><span class="arr">→</span></div>
+      </a>
+      <a class="offer offer-2" href="pt-for-meditators.html">
+        <div class="num">02</div>
+        <div class="tag">pt for meditators</div>
+        <div class="desc">personal training as an extension of practice. find enjoyment in motion.</div>
+        <div class="foot"><span>learn more</span><span class="arr">→</span></div>
+      </a>
+      <a class="offer offer-3" href="dzogchen-movement.html">
+        <div class="num">03</div>
+        <div class="tag">dzogchen movement</div>
+        <div class="desc">a bridge from the cushion into the rest of your life. similar to qi gong. every other tuesday.</div>
+        <div class="foot"><span>learn more</span><span class="arr">→</span></div>
+      </a>
+      <a class="offer offer-4" href="body-mapping.html">
+        <div class="num">04</div>
+        <div class="tag">body mapping</div>
+        <div class="desc">monthly class for meditators. the body is not a side quest, it's part of the practice. next class in may, tba.</div>
+        <div class="foot"><span>learn more</span><span class="arr">→</span></div>
+      </a>
+    </div>
+  </section>
 
-      // Mount the app
-      const root = ReactDOM.createRoot(document.getElementById('root'));
-      root.render(<TannerHolmanSite />);
-    </script>
-  </body>
+  <div class="pull-rule" role="note" aria-label="kind words">
+    <div class="pull-card">
+      <div class="pulltape"></div>
+      <div class="mark">&ldquo;</div>
+      <div class="body">
+        <div class="quote">an easy recommendation for anyone who meditates.</div>
+        <span class="attrib">Max Soweski <span class="role">— writer,</span> <a class="pub" href="https://open.substack.com/pub/feelingtones/p/full-of-feeling-in-any-situation" target="_blank" rel="noopener">Feeling Tones</a></span>
+      </div>
+    </div>
+  </div>
+
+  <section class="spread spread-3">
+    <div class="margin-note">— III — COMING UP</div>
+    <div class="spread-tag"><span class="rom">— iii —</span>coming up</div>
+    <h2>coming up</h2>
+    <div class="spread-3-grid">
+      <div class="class-card">
+        <div class="kicker">body mapping — monthly class</div>
+        <div class="class-title">find ease in sitting &amp; standing.</div>
+        <div class="details">
+          <div class="item"><span class="k">when</span><span>may · tba</span></div>
+          <div class="item"><span class="k">duration</span><span>60 min</span></div>
+          <div class="item"><span class="k">where</span><span>zoom</span></div>
+          <div class="item"><span class="k">tuition</span><span>$20 · recording included</span></div>
+        </div>
+        <a class="cta" href="body-mapping.html">save me a seat →</a>
+        <div class="sticky sticky-seat">offered through<br><a href="https://www.evolvingground.org/join" target="_blank" rel="noopener">Evolving Ground</a></div>
+      </div>
+      <div class="letter">
+        <div class="ps">writing —</div>
+        <a class="featured" href="https://mvmnt.substack.com/p/is-your-meditation-posture-making" target="_blank" rel="noopener">
+          <div class="tag">featured post</div>
+          <div class="t">is your meditation posture making things worse?</div>
+          <div class="l">the purpose of posture is what it does.</div>
+          <div class="d">mar 25, 2026 · read →</div>
+        </a>
+        <div class="note" style="margin-top:18px;">writing about posture, the body, and meditation at <a href="https://mvmnt.substack.com" target="_blank" rel="noopener">stillness &amp; movement</a> &rarr;</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    — thanks for scrolling —
+    <div class="links">
+      <a href="#offerings">offerings</a> ·
+      <a href="https://mvmnt.substack.com" target="_blank" rel="noopener">writing</a> ·
+      <a href="#" class="say-hi" data-email="tannerholman97@gmail.com">say hi</a>
+    </div>
+    <div class="hi-toast" role="status" aria-live="polite"></div>
+  </footer>
+
+</div>
+<script src="js/say-hi.js"></script>
+</body>
 </html>

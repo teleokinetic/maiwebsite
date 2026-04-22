@@ -1,5 +1,1 @@
-# Auto-sync logs
-.github/logs/*.log
-
-# macOS
 .DS_Store
