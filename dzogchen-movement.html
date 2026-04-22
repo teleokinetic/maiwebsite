@@ -4,379 +4,470 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>dzogchen movement — the sky realm series — Tanner Holman</title>
-<meta name="description" content="A bridge from the cushion into the rest of your life. Sky realm series (nam'khor): five animals, five elements, twenty-five movements.">
+<meta name="description" content="A bridge from the cushion into the rest of your life. The sky realm series (nam'khor): five animals, five elements, twenty-five movements. Biweekly on Zoom.">
 <link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Kalam:wght@300;400;700&family=Patrick+Hand&family=Shadows+Into+Light+Two&family=Caveat:wght@400;700&family=JetBrains+Mono:wght@400;500&family=Libre+Caslon+Text:ital,wght@0,400;1,400&family=Indie+Flower&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles/shared.css">
 <style>
-  .paper-wrap { background: var(--paper-alt); }
-  .page { padding: 56px 64px 72px; position: relative; }
-  .page::before {
-    content:""; position:absolute; inset:0; pointer-events:none; opacity:0.22;
-    background-image:
-      linear-gradient(rgba(31,42,61,0.18) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(31,42,61,0.18) 1px, transparent 1px);
-    background-size: 28px 28px;
-  }
-  .page > * { position: relative; z-index: 1; }
-
-  .stamp {
-    position: absolute; top: 24px; right: 44px;
-    border: 2px solid var(--red); color: var(--red); padding: 6px 14px 5px;
-    font-family: 'Kalam', cursive; font-weight: 700; font-size: 13px; letter-spacing: 0.18em;
-    transform: rotate(-8deg); background: transparent; text-transform: uppercase;
-    box-shadow: inset 0 0 0 1px var(--red); opacity: 0.88;
+  /* ───── dzogchen movement · N3 variant A (distant landscape) ───── */
+  html, body {
+    background: #ece2ca;
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #2a1f14;
   }
 
-  .hero { position: relative; min-height: 380px; margin-top: 12px; }
-  .hero .kick { font-family: var(--mono); font-size: 12px; color: #888; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
-  .hero .kick a { color: inherit; text-decoration: none; border-bottom: 1px dotted #aaa; display: inline-block; padding: 2px 3px; cursor: pointer; position: relative; z-index: 10; transition: color 0.15s ease, border-color 0.15s ease; }
-  .hero .kick a:hover { color: var(--ink); border-bottom-color: var(--ink); }
-  .hero .title { font-family: 'Shadows Into Light Two', cursive; color: var(--ink); font-size: clamp(52px, 9.5vw, 110px); line-height: 0.9; letter-spacing: -0.01em; max-width: 860px; }
-  .hero .series { display: inline-block; margin-top: 14px; font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 28px; color: var(--brown); }
-  .hero .sub { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 22px; line-height: 1.35; color: var(--ink); margin-top: 14px; max-width: 560px; }
-  .hero .scrawl {
-    position: absolute; top: 36px; right: 28px;
-    font-family: 'Indie Flower', cursive; font-size: 26px; color: var(--red);
-    transform: rotate(-6deg); line-height: 1.1; max-width: 240px; text-align: center;
+  .dz-wrap { max-width: 640px; margin: 0 auto; min-height: 100vh; display: flex; flex-direction: column; }
+
+  /* ───── Hero: sky gradient + distant landscape ───── */
+  .dz-hero {
+    position: relative; overflow: hidden;
+    padding: 30px 22px 220px;
+    background: linear-gradient(to bottom,
+      #2f7eb7 0%, #5198ca 14%, #79b3dc 28%, #a2cbea 42%,
+      #c8dced 52%, #e7d3a8 64%, #e8c688 74%, #ece2ca 90%, #ece2ca 100%);
   }
-  .hero .scrawl svg { display: block; margin: 6px auto 0; }
-  .hero .pink-sticky {
-    position: absolute; bottom: -10px; right: 40px;
-    background: var(--accent-pink); border: 1.5px solid var(--ink);
-    padding: 14px 18px; font-family: 'Kalam', cursive; font-size: 15px;
-    transform: rotate(3deg); box-shadow: 3px 3px 0 rgba(0,0,0,0.12);
-    max-width: 280px; line-height: 1.35;
+  .dz-hero-content { position: relative; z-index: 2; }
+
+  .dz-crumb {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(247,253,255,0.85);
   }
-  .hero .pink-sticky .tt { position: absolute; top: -10px; left: 20px; width: 60px; height: 18px; background: rgba(180,200,210,0.7); border: 1px solid rgba(0,0,0,0.08); transform: rotate(-5deg); }
+  .dz-crumb a { color: inherit; text-decoration: none; border-bottom: 1px dotted rgba(247,253,255,0.5); padding-bottom: 1px; }
+  .dz-crumb a:hover { color: #ffffff; border-bottom-color: #ffffff; }
 
-  .what { display: grid; grid-template-columns: 1.3fr 1fr; gap: 40px; margin-top: 56px; align-items: start; }
-  .what .txt h3 { font-family: 'Kalam', cursive; font-weight: 700; font-size: 22px; color: var(--brown); margin: 0 0 12px; text-transform: uppercase; letter-spacing: 0.08em; }
-  .what .txt p { font-family: 'Libre Caslon Text', serif; font-size: 19px; line-height: 1.55; color: var(--ink); margin: 0 0 14px; }
-  .what .txt .inline { font-family: 'Indie Flower', cursive; color: var(--red); font-size: 20px; }
-  .what .pull-col {
-    position: relative; background: var(--accent-yellow); border: 1.5px solid var(--ink);
-    padding: 22px 24px; transform: rotate(1.5deg); box-shadow: 4px 4px 0 rgba(0,0,0,0.12);
+  .dz-title {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: clamp(52px, 11vw, 76px); line-height: 0.98; letter-spacing: -0.015em;
+    margin: 32px 0 0; color: #ffffff;
+    text-shadow: 0 2px 20px rgba(18,58,95,0.4);
   }
-  .what .pull-col .t { position: absolute; top: -11px; left: 40px; width: 84px; height: 22px; background: rgba(180,200,210,0.7); border: 1px solid rgba(0,0,0,0.08); transform: rotate(-4deg); }
-  .what .pull-col .mk { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 52px; color: var(--brown); line-height: 0.5; padding-top: 8px; display: inline-block; }
-  .what .pull-col .q { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 22px; line-height: 1.35; color: var(--ink); margin-top: 4px; }
-  .what .pull-col .cite { font-family: 'Patrick Hand', cursive; font-size: 15px; color: var(--brown); margin-top: 10px; }
-
-  .expect { margin-top: 56px; position: relative; padding: 40px 44px; border: 1.5px dashed var(--ink); }
-  .expect .h3 { font-family: 'Kalam', cursive; font-weight: 700; font-size: 22px; color: var(--brown); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px; }
-  .expect p { font-family: 'Libre Caslon Text', serif; font-size: 19px; line-height: 1.55; color: var(--ink); margin: 0 0 14px; max-width: 760px; }
-  .expect .metaphor { margin-top: 18px; font-family: 'Indie Flower', cursive; font-size: 26px; color: var(--red); transform: rotate(-1deg); display: inline-block; }
-  .expect .tape { position: absolute; width: 90px; height: 22px; background: rgba(180,200,210,0.72); border: 1px solid rgba(0,0,0,0.08); }
-  .expect .tape.t1 { top: -12px; left: 60px; transform: rotate(-3deg); }
-  .expect .tape.t2 { top: -12px; right: 60px; transform: rotate(2deg); background: rgba(247,230,181,0.8); }
-
-  .animals-sec { margin-top: 72px; }
-  .animals-sec .h3 { font-family: 'Shadows Into Light Two', cursive; font-size: clamp(42px, 6vw, 72px); line-height: 1; color: var(--ink); margin: 0 0 8px; }
-  .animals-sec .kick { font-family: var(--mono); font-size: 12px; color: #888; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
-  .animals-sec .lede { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 20px; color: var(--ink); max-width: 620px; margin: 0 0 32px; line-height: 1.4; }
-
-  .animals { display: grid; grid-template-columns: repeat(5, 1fr); gap: 22px; }
-  .animal { position: relative; background: #fff; padding: 10px 10px 46px; box-shadow: 4px 5px 0 rgba(0,0,0,0.15); }
-  .animal:nth-child(1) { transform: rotate(-2deg); }
-  .animal:nth-child(2) { transform: rotate(1.2deg); margin-top: 14px; }
-  .animal:nth-child(3) { transform: rotate(-0.8deg); }
-  .animal:nth-child(4) { transform: rotate(2deg); margin-top: 18px; }
-  .animal:nth-child(5) { transform: rotate(-1.4deg); }
-  .animal .tape { position: absolute; top: -12px; left: 50%; margin-left: -42px; width: 84px; height: 20px; background: rgba(180,200,210,0.7); border: 1px solid rgba(0,0,0,0.08); transform: rotate(-3deg); }
-  .animal .ph {
-    aspect-ratio: 4/5; border: 1.5px solid var(--ink);
-    background-image: repeating-linear-gradient(135deg, transparent 0 8px, rgba(31,42,61,0.1) 8px 9px);
-    display: flex; align-items: center; justify-content: center; font-family: var(--mono); font-size: 10px; color: var(--ink); letter-spacing: 0.12em; text-transform: uppercase;
+  .dz-series {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 19px; margin: 14px 0 0; color: #f8fbfd; opacity: 0.94;
   }
-  .animal .name-row { margin-top: 10px; display: flex; align-items: baseline; justify-content: space-between; gap: 6px; }
-  .animal .name { font-family: 'Kalam', cursive; font-weight: 700; font-size: 20px; color: var(--ink); letter-spacing: 0.04em; }
-  .animal .elem { font-family: var(--mono); font-size: 10px; color: var(--brown); letter-spacing: 0.15em; text-transform: uppercase; }
-  .animal .line { font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 14px; color: #444; line-height: 1.35; margin-top: 6px; }
-  .animal .sign { position: absolute; bottom: 8px; right: 10px; font-family: var(--mono); font-size: 9px; color: #888; letter-spacing: 0.1em; }
 
-  .animals-sec .matrix { margin-top: 36px; font-family: var(--mono); font-size: 12px; color: var(--ink); letter-spacing: 0.1em; display: flex; gap: 18px; align-items: center; flex-wrap: wrap; }
-  .animals-sec .matrix .cell { border: 1.5px solid var(--ink); padding: 6px 12px; background: #fff; }
-  .animals-sec .matrix .op { color: var(--brown); }
+  .dz-horizon { height: 1px; background: rgba(40,25,18,0.35); margin: 36px 0 22px; position: relative; }
+  .dz-horizon::before { content: ""; position: absolute; left: 50%; top: -2px; width: 5px; height: 5px; border-radius: 50%; transform: translateX(-50%); background: #3a2f20; }
 
-  .diff { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: start; }
-  .diff h3 { font-family: 'Kalam', cursive; font-weight: 700; font-size: 22px; color: var(--brown); text-transform: uppercase; letter-spacing: 0.08em; margin: 0 0 14px; }
-  .diff p { font-family: 'Libre Caslon Text', serif; font-size: 19px; line-height: 1.55; color: var(--ink); margin: 0 0 14px; }
-  .diff .emph { background: rgba(247,230,181,0.5); padding: 0 4px; }
-  .diff .right { position: relative; background: var(--accent-blue); border: 1.5px solid var(--ink); padding: 22px 24px; transform: rotate(-1deg); box-shadow: 4px 4px 0 rgba(0,0,0,0.12); }
-  .diff .right .tape { position: absolute; top: -11px; left: 40px; width: 84px; height: 22px; background: rgba(180,200,210,0.7); border: 1px solid rgba(0,0,0,0.08); transform: rotate(-4deg); }
-  .diff .right h4 { font-family: 'Kalam', cursive; font-weight: 700; font-size: 18px; margin: 0 0 10px; color: var(--ink); }
-  .diff .right .list { font-family: 'Libre Caslon Text', serif; font-size: 17px; line-height: 1.5; color: var(--ink); }
-  .diff .right .list .not { text-decoration: line-through; color: #999; display: block; margin-bottom: 4px; }
-  .diff .right .list .yes { display: block; }
-  .diff .right .list .yes::before { content: "✓ "; color: #3a7a4a; font-family: 'Kalam', cursive; font-weight: 700; }
+  .dz-sub {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 19px; line-height: 1.5; max-width: 380px;
+    color: #2a1f14; margin: 0;
+  }
 
-  .classcard-wrap { margin-top: 64px; }
-  .classcard-wrap .h3 { font-family: 'Shadows Into Light Two', cursive; font-size: clamp(36px, 5vw, 56px); margin: 0 0 20px; color: var(--ink); line-height: 1; }
-  .classcard { position: relative; border: 1.5px solid var(--ink); background: #fff; padding: 32px 36px; box-shadow: 5px 5px 0 rgba(0,0,0,0.12); transform: rotate(-0.4deg); }
-  .classcard .kicker { font-family: 'Kalam', cursive; color: var(--brown); font-size: 14px; letter-spacing: 0.05em; text-transform: uppercase; }
-  .classcard .title { font-family: 'Libre Caslon Text', serif; font-size: 40px; line-height: 1.1; margin-top: 6px; color: var(--ink); }
-  .classcard .details { display: flex; gap: 28px; margin-top: 18px; font-family: 'Patrick Hand', cursive; font-size: 18px; flex-wrap: wrap; }
-  .classcard .details .item { display: flex; flex-direction: column; }
-  .classcard .details .item .k { font-family: var(--mono); font-size: 11px; color: #888; letter-spacing: 0.1em; text-transform: uppercase; }
-  .classcard .cta {
-    display: inline-flex; align-items: center; gap: 10px; margin-top: 22px;
-    border: 1.5px solid var(--ink); padding: 10px 20px; border-radius: 30px; background: var(--accent-yellow);
-    font-family: 'Kalam', cursive; font-size: 16px; box-shadow: 3px 3px 0 rgba(0,0,0,0.1); text-decoration: none; color: var(--ink);
+  /* cloud sticky — integrated with sky */
+  .dz-cloud {
+    margin-top: 24px; display: inline-block;
+    padding: 12px 22px; max-width: 340px;
+    background: rgba(255,253,245,0.5);
+    backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
+    border-radius: 24px;
+    border: 1px solid rgba(255,253,245,0.7);
+    box-shadow: 0 8px 28px rgba(30,55,90,0.15), inset 0 1px 0 rgba(255,255,255,0.6);
+  }
+  .dz-cloud .k {
+    display: block;
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #1e4a74;
+  }
+  .dz-cloud .v {
+    display: block; margin-top: 3px;
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 15.5px; line-height: 1.4; color: #2a1f14;
+  }
+
+  /* landscape layers */
+  .dz-layer { position: absolute; left: 0; right: 0; pointer-events: none; z-index: 1; }
+  .dz-layer svg { display: block; overflow: visible; }
+  .dz-layer-hills { bottom: 100px; height: 50px; }
+  .dz-hills { width: 100%; height: 100%; opacity: 0.55; }
+  .dz-hills path { fill: #4a6a78; }
+  .dz-layer-trees { bottom: 80px; height: 50px; }
+  .dz-tree {
+    position: absolute; bottom: 0; transform-origin: bottom center;
+    opacity: 0.7; animation: dz-sway 20s ease-in-out infinite;
+  }
+  @keyframes dz-sway { 0%, 100% { transform: rotate(-0.8deg); } 50% { transform: rotate(0.8deg); } }
+  .dz-tree svg { display: block; }
+  .dz-tree svg path { fill: #2a4050; }
+
+  /* ───── Content area: cream background ───── */
+  .dz-content {
+    padding: 36px 22px 6px;
+  }
+
+  .dz-section { margin-top: 32px; padding-top: 22px; border-top: 1px solid rgba(58,47,32,0.28); }
+  .dz-section:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+  .dz-h {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: #6a4a1a;
+    margin: 0 0 14px;
+  }
+  .dz-p {
+    font-family: 'Instrument Serif', serif; font-size: 17px; line-height: 1.6;
+    color: #2a1f14; margin: 0 0 12px;
+  }
+  .dz-p em { font-style: italic; color: #6a4a1a; }
+  .dz-p .dz-inline { font-style: italic; color: #a8481a; }
+
+  /* pull quote with attribution */
+  .dz-pull {
+    margin: 18px 0 0; padding: 16px 18px;
+    background: rgba(106,74,26,0.06);
+    border-left: 2px solid #6a4a1a;
+  }
+  .dz-pull .q {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 18px; line-height: 1.45; color: #2a1f14;
+  }
+  .dz-pull .cite {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 13px; color: #6a4a1a; margin-top: 8px; display: block;
+  }
+
+  /* 5-animal specimen grid */
+  .dz-animals {
+    margin-top: 18px;
+    display: grid; grid-template-columns: 1fr; gap: 10px;
+  }
+  @media (min-width: 520px) {
+    .dz-animals { grid-template-columns: repeat(2, 1fr); }
+  }
+  .dz-animal {
+    padding: 12px 14px;
+    background: rgba(255,253,245,0.5);
+    border: 1px solid rgba(58,47,32,0.22);
+  }
+  .dz-animal .row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    margin-bottom: 4px;
+  }
+  .dz-animal .name {
+    font-family: 'Instrument Serif', serif; font-size: 20px; color: #2a1f14;
+    letter-spacing: -0.005em;
+  }
+  .dz-animal .elem {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 0.18em; text-transform: uppercase; color: #6a4a1a;
+  }
+  .dz-animal .line {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 14px; color: #2a1f14; line-height: 1.45;
+  }
+  .dz-animal .sign {
+    font-family: 'JetBrains Mono', monospace; font-size: 8.5px;
+    letter-spacing: 0.14em; color: #8a6a3a; margin-top: 6px; display: block;
+  }
+
+  .dz-matrix {
+    margin-top: 18px; padding: 14px 16px; text-align: center;
+    background: rgba(106,74,26,0.06);
+    border: 1px dashed rgba(58,47,32,0.35);
+    font-family: 'JetBrains Mono', monospace; font-size: 13px;
+    color: #2a1f14; letter-spacing: 0.04em;
+  }
+  .dz-matrix .cell { color: #2a1f14; font-weight: 500; }
+  .dz-matrix .op { color: #a8481a; margin: 0 6px; }
+
+  /* two-column prose + list */
+  .dz-twocol {
+    display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 8px;
+  }
+  @media (min-width: 520px) {
+    .dz-twocol { grid-template-columns: 1.2fr 1fr; }
+  }
+  .dz-list-box {
+    padding: 14px 16px;
+    background: rgba(255,253,245,0.5);
+    border: 1px solid rgba(58,47,32,0.22);
+  }
+  .dz-list-title {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px; font-weight: 500;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #6a4a1a; margin: 0 0 10px;
+  }
+  .dz-list { font-family: 'Instrument Serif', serif; font-size: 14.5px; line-height: 1.45; }
+  .dz-list .not { color: #a88e76; text-decoration: line-through; display: block; padding: 3px 0; }
+  .dz-list .yes { color: #2a1f14; display: block; padding: 3px 0; }
+  .dz-list .yes::before { content: "+ "; color: #6a4a1a; font-weight: 500; }
+
+  /* class card */
+  .dz-classcard {
+    margin-top: 18px; padding: 20px 22px;
+    background: rgba(255,253,245,0.7);
+    border: 1px solid rgba(58,47,32,0.3);
+    position: relative;
+  }
+  .dz-classcard .kicker {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #6a4a1a;
+  }
+  .dz-classcard .ctitle {
+    font-family: 'Instrument Serif', serif; font-size: 32px; line-height: 1.1;
+    color: #2a1f14; margin: 6px 0 12px;
+  }
+  .dz-classcard .ctitle em { font-style: italic; color: #6a4a1a; }
+  .dz-classcard .details {
+    display: grid; grid-template-columns: 90px 1fr; gap: 6px 14px;
+    font-family: 'Instrument Serif', serif; font-size: 15px; color: #2a1f14;
+    padding: 10px 0; border-top: 1px dashed rgba(58,47,32,0.3); border-bottom: 1px dashed rgba(58,47,32,0.3);
+  }
+  .dz-classcard .details .k {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #6a4a1a;
+    padding-top: 2px;
+  }
+  .dz-classcard .cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 10px 18px;
+    background: #2a1f14; color: #ece2ca;
+    font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+    text-decoration: none; letter-spacing: 0.01em;
     transition: transform 0.15s ease, box-shadow 0.15s ease;
   }
-  .classcard .cta:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 rgba(0,0,0,0.15); }
-  .classcard .sticky-seat { position: absolute; top: -18px; right: -20px; background: var(--accent-yellow); border: 1.5px solid var(--ink); padding: 10px 14px; font-family: 'Kalam', cursive; font-size: 14px; text-align: center; line-height: 1.25; width: 168px; transform: rotate(7deg); box-shadow: 2px 2px 0 rgba(0,0,0,0.12); }
+  .dz-classcard .cta:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #a8481a; }
 
-  .cta-row { margin-top: 64px; display: grid; grid-template-columns: 1fr 1fr; gap: 36px; align-items: center; }
-  .cta-row h3 { font-family: 'Shadows Into Light Two', cursive; font-size: clamp(48px, 8vw, 96px); margin: 0; color: var(--ink); line-height: 1; }
-  .cta-row .btn {
-    display: inline-flex; align-items: center; gap: 10px; margin-top: 16px;
-    border: 1.5px solid var(--ink); padding: 14px 28px; background: var(--ink); color: var(--paper);
-    font-family: 'Kalam', cursive; font-weight: 700; font-size: 18px; box-shadow: 3px 3px 0 rgba(0,0,0,0.15); border-radius: 32px; text-decoration: none;
-    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  /* main CTA */
+  .dz-cta {
+    margin-top: 36px; padding: 22px 22px;
+    background: rgba(30,74,116,0.04);
+    border: 1px solid rgba(30,74,116,0.2);
+    display: grid; grid-template-columns: 1fr; gap: 14px;
   }
-  .cta-row .btn:hover { transform: translate(-1px,-1px); box-shadow: 4px 4px 0 rgba(0,0,0,0.2); }
-  .cta-row .aside { position: relative; background: var(--accent-yellow); border: 1.5px solid var(--ink); padding: 20px 22px; transform: rotate(1.5deg); box-shadow: 4px 4px 0 rgba(0,0,0,0.15); font-family: 'Kalam', cursive; font-size: 16px; line-height: 1.4; color: var(--ink); }
-  .cta-row .aside .t { position: absolute; top: -11px; left: 40px; width: 80px; height: 22px; background: rgba(180,200,210,0.7); border: 1px solid rgba(0,0,0,0.08); transform: rotate(-4deg); }
-
-  .also { margin-top: 56px; padding-top: 28px; border-top: 1.5px dashed var(--ink); }
-  .also .kick { font-family: var(--mono); font-size: 11px; color: #888; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 14px; }
-  .also .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
-  .also a { display: block; border: 1.5px solid var(--ink); padding: 14px 16px; text-decoration: none; color: inherit; background: #fff; box-shadow: 3px 3px 0 rgba(0,0,0,0.08); transition: transform 0.15s ease, box-shadow 0.15s ease; }
-  .also a:hover { transform: translate(-1px,-1px); box-shadow: 5px 5px 0 rgba(0,0,0,0.12); }
-  .also a .lbl { font-family: var(--mono); font-size: 10px; color: var(--brown); letter-spacing: 0.15em; text-transform: uppercase; }
-  .also a .nm { font-family: 'Kalam', cursive; font-weight: 700; font-size: 17px; color: var(--ink); margin-top: 4px; }
-
-  /* ───────── MOBILE (<900px) ───────── */
-  @media (max-width: 899px) {
-    .page { padding: 32px 22px 48px; }
-    .page::before { background-size: 22px 22px; opacity: 0.16; }
-    .stamp { top: 14px; right: 22px; font-size: 11px; padding: 4px 10px 4px; }
-
-    .hero { min-height: auto; margin-top: 0; }
-    .hero .title { font-size: clamp(46px, 14vw, 68px); }
-    .hero .series { font-size: 20px; }
-    .hero .sub { font-size: 17px; }
-    .hero .kick { font-size: 10px; }
-    .hero .scrawl { display: none; }
-    .hero .pink-sticky { position: static; margin-top: 22px; max-width: 100%; transform: rotate(-1deg); }
-
-    .what { grid-template-columns: 1fr; gap: 28px; margin-top: 36px; }
-    .what .txt p { font-size: 17px; }
-    .what .pull-col { padding: 18px 20px; }
-    .what .pull-col .q { font-size: 18px; }
-
-    .expect { padding: 28px 22px; margin-top: 36px; }
-    .expect p { font-size: 17px; }
-    .expect .metaphor { font-size: 20px; }
-
-    .animals-sec { margin-top: 44px; }
-    .animals-sec .lede { font-size: 17px; margin-bottom: 22px; }
-    .animals { grid-template-columns: repeat(2, 1fr); gap: 14px; }
-    .animal { padding: 8px 8px 34px; }
-    .animal:nth-child(2), .animal:nth-child(4) { margin-top: 0; }
-    .animal .name { font-size: 17px; }
-    .animal .line { font-size: 13px; }
-    .animals-sec .matrix { font-size: 11px; gap: 10px; margin-top: 24px; }
-    .animals-sec .matrix .cell { padding: 5px 10px; }
-
-    .diff { grid-template-columns: 1fr; gap: 28px; margin-top: 44px; }
-    .diff p { font-size: 17px; }
-
-    .classcard-wrap { margin-top: 48px; }
-    .classcard { padding: 22px 22px; transform: rotate(-0.6deg); }
-    .classcard .title { font-size: 26px; }
-    .classcard .details {
-      display: grid; grid-template-columns: 92px 1fr; gap: 4px 14px; font-size: 15px; margin-top: 12px;
-    }
-    .classcard .details .item { display: contents; }
-    .classcard .details .item .k { font-size: 10px; align-self: baseline; }
-    .classcard .sticky-seat { width: 120px; right: -6px; top: -12px; font-size: 11px; padding: 8px 10px; }
-    .classcard .cta { font-size: 14px; padding: 8px 16px; margin-top: 14px; }
-
-    .cta-row { grid-template-columns: 1fr; gap: 20px; margin-top: 44px; }
-    .cta-row h3 { font-size: clamp(44px, 12vw, 64px); }
-    .cta-row .aside { padding: 16px 18px; }
-
-    .also .row { grid-template-columns: 1fr; gap: 10px; }
+  @media (min-width: 520px) {
+    .dz-cta { grid-template-columns: 1.3fr 1fr; align-items: center; }
+  }
+  .dz-cta h2 {
+    font-family: 'Instrument Serif', serif; font-weight: 400;
+    font-size: 38px; line-height: 1.05; margin: 0; color: #2a1f14;
+  }
+  .dz-cta .btn {
+    display: inline-flex; align-items: center; gap: 8px; margin-top: 10px;
+    padding: 10px 18px; background: #2a1f14; color: #ece2ca;
+    font-family: 'Inter', sans-serif; font-weight: 500; font-size: 14px;
+    text-decoration: none; letter-spacing: 0.01em;
+  }
+  .dz-cta .btn:hover { transform: translate(-1px,-1px); box-shadow: 3px 3px 0 #a8481a; }
+  .dz-cta .aside {
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    font-size: 14.5px; line-height: 1.5; color: #2a1f14;
+  }
+  .dz-cta .aside b {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.16em; text-transform: uppercase; color: #6a4a1a;
+    font-style: normal; font-weight: 500; display: block; margin-bottom: 4px;
   }
 
-  @media (max-width: 520px) {
-    .animals { grid-template-columns: 1fr; }
-    .animal:nth-child(odd) { transform: rotate(-1deg); }
-    .animal:nth-child(even) { transform: rotate(1deg); }
+  /* other ways in */
+  .dz-also { margin: 36px 0 0; padding-top: 20px; border-top: 1px solid rgba(58,47,32,0.3); }
+  .dz-also-kick {
+    font-family: 'JetBrains Mono', monospace; font-size: 10px;
+    letter-spacing: 0.2em; text-transform: uppercase; color: #8a6a4e;
+    margin-bottom: 14px;
+  }
+  .dz-also-row {
+    display: grid; grid-template-columns: 1fr; gap: 8px;
+  }
+  @media (min-width: 520px) {
+    .dz-also-row { grid-template-columns: repeat(3, 1fr); }
+  }
+  .dz-also-row a {
+    display: block; padding: 12px 14px;
+    background: rgba(255,253,245,0.5);
+    border: 1px solid rgba(58,47,32,0.22);
+    text-decoration: none; color: inherit;
+    transition: background 0.15s ease, border-color 0.15s ease;
+  }
+  .dz-also-row a:hover { background: rgba(255,253,245,0.9); border-color: #6a4a1a; }
+  .dz-also-row a .lbl {
+    font-family: 'JetBrains Mono', monospace; font-size: 9.5px;
+    letter-spacing: 0.14em; text-transform: uppercase; color: #6a4a1a;
+    display: block;
+  }
+  .dz-also-row a .nm {
+    font-family: 'Instrument Serif', serif; font-size: 16px; color: #2a1f14;
+    margin-top: 3px; display: block;
   }
 
-  @media (max-width: 420px) {
-    .page { padding: 28px 16px 40px; }
-    .hero .title { font-size: clamp(42px, 15vw, 54px); }
+  /* site footer */
+  .site-footer {
+    margin: 32px 22px 0; padding: 18px 0 12px;
+    font-family: 'Instrument Serif', serif; font-style: italic;
+    color: #6a4a1a; font-size: 14px; text-align: center;
+    border-top: 1px dashed rgba(58,47,32,0.3);
   }
+  .site-footer .links {
+    margin-top: 8px; font-family: 'Inter', sans-serif;
+    font-size: 12px; letter-spacing: 0.04em; font-style: normal; color: #5a4a3a;
+  }
+  .site-footer .links a {
+    color: #2a1f14; text-decoration: none;
+    border-bottom: 1px solid #6a4a1a; padding-bottom: 1px;
+    margin: 0 6px;
+  }
+  .site-footer .hi-toast { font-family: 'Inter', sans-serif; color: #6a4a1a; font-size: 13px; font-style: normal; }
 </style>
 </head>
 <body>
-<div class="paper-wrap">
-  <div class="page">
+<div class="dz-wrap">
 
-    <div class="stamp">sky realm · series 1</div>
-
-    <div class="hero">
-      <div class="kick"><a href="index.html">home</a> › <a href="index.html#offerings">offerings</a> › dzogchen movement</div>
-      <div class="title">dzogchen<br>movement.</div>
-      <div class="series">the sky realm series <em>(nam'khor)</em>.</div>
-      <div class="sub">a bridge from the cushion into the rest of your life.</div>
-
-      <div class="scrawl">
-        every other tues!
-        <svg width="78" height="52" viewBox="0 0 78 52" fill="none">
-          <path d="M4 4 C 18 24, 40 40, 72 44" stroke="#b04a3b" stroke-width="2" stroke-linecap="round" fill="none"/>
-          <path d="M62 36 L74 46 L64 50" stroke="#b04a3b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
-        </svg>
-      </div>
-      <div class="pink-sticky">
-        <div class="tt"></div>
-        live on zoom · drop in any tuesday. rolling enrollment, no audition.
+  <!-- HERO: sky gradient + content + distant landscape -->
+  <section class="dz-hero">
+    <div class="dz-hero-content">
+      <div class="dz-crumb"><a href="index.html">home</a> · <a href="index.html#offerings">offerings</a> · dzogchen movement</div>
+      <h1 class="dz-title">dzogchen<br>movement.</h1>
+      <div class="dz-series">— the sky realm series (nam'khor) —</div>
+      <div class="dz-horizon"></div>
+      <p class="dz-sub">a bridge from the cushion into the rest of your life.</p>
+      <div class="dz-cloud">
+        <span class="k">biweekly · live on zoom</span>
+        <span class="v">every other tuesday · drop in, rolling enrollment</span>
       </div>
     </div>
+    <!-- distant hills -->
+    <div class="dz-layer dz-layer-hills" aria-hidden="true">
+      <svg class="dz-hills" viewBox="0 0 300 50" preserveAspectRatio="none"><path d="M 0 40 C 30 20, 60 24, 90 18 C 120 14, 150 26, 180 20 C 210 14, 240 28, 270 22 C 285 20, 295 24, 300 22 L 300 50 L 0 50 Z"/><path d="M 0 44 C 40 32, 80 34, 120 28 C 160 24, 200 36, 240 30 C 270 26, 290 32, 300 30 L 300 50 L 0 50 Z" fill="#3a5a68" opacity="0.6"/></svg>
+    </div>
+    <!-- far tree silhouettes -->
+    <div class="dz-layer dz-layer-trees" aria-hidden="true">
+      <div class="dz-tree" style="left: 10%; width: 24px; height: 40px;"><svg viewBox="0 0 26 44"><rect x="11" y="34" width="4" height="10" fill="#2a2018"/><path d="M13 4 C 6 6, 2 20, 6 28 C 2 32, 8 38, 13 38 C 20 38, 24 30, 22 22 C 24 16, 20 4, 13 4 Z"/></svg></div>
+      <div class="dz-tree" style="left: 26%; width: 20px; height: 36px; animation-delay: -4s; animation-duration: 22s;"><svg viewBox="0 0 26 44"><rect x="11" y="34" width="4" height="10" fill="#2a2018"/><path d="M13 2 L 4 14 L 8 14 L 0 28 L 6 28 L -2 38 L 28 38 L 20 28 L 26 28 L 18 14 L 22 14 Z"/></svg></div>
+      <div class="dz-tree" style="left: 45%; width: 24px; height: 40px; animation-delay: -2s; animation-duration: 18s;"><svg viewBox="0 0 26 44"><rect x="11" y="34" width="4" height="10" fill="#2a2018"/><path d="M13 4 C 6 6, 2 20, 6 28 C 2 32, 8 38, 13 38 C 20 38, 24 30, 22 22 C 24 16, 20 4, 13 4 Z"/></svg></div>
+      <div class="dz-tree" style="left: 64%; width: 18px; height: 32px; animation-delay: -6s; animation-duration: 20s;"><svg viewBox="0 0 26 44"><rect x="11" y="34" width="4" height="10" fill="#2a2018"/><path d="M13 2 L 4 14 L 8 14 L 0 28 L 6 28 L -2 38 L 28 38 L 20 28 L 26 28 L 18 14 L 22 14 Z"/></svg></div>
+      <div class="dz-tree" style="left: 82%; width: 24px; height: 40px; animation-delay: -3s; animation-duration: 21s;"><svg viewBox="0 0 26 44"><rect x="11" y="34" width="4" height="10" fill="#2a2018"/><path d="M13 4 C 6 6, 2 20, 6 28 C 2 32, 8 38, 13 38 C 20 38, 24 30, 22 22 C 24 16, 20 4, 13 4 Z"/></svg></div>
+    </div>
+  </section>
 
-    <div class="what">
-      <div class="txt">
-        <h3>what it is</h3>
-        <p>the sky realm series <em>(nam'khor)</em> is a <span class="inline">dzogchen longde</span> movement cycle that reveals the connection between <em>clarity</em> and <em>blissful sensation</em> in the energetic body.</p>
-        <p>each standing movement coordinates the eyes, breath, and body into a unique elemental expression. the movements are gentle, precise, and often challenging when first practiced.</p>
-      </div>
-      <div class="pull-col">
-        <div class="t"></div>
-        <span class="mk">"</span>
+  <!-- CONTENT -->
+  <div class="dz-content">
+
+    <!-- What it is -->
+    <div class="dz-section">
+      <div class="dz-h">What it is</div>
+      <p class="dz-p">the sky realm series <em>(nam'khor)</em> is a <span class="dz-inline">dzogchen longde</span> movement cycle that reveals the connection between <em>clarity</em> and <em>blissful sensation</em> in the energetic body.</p>
+      <p class="dz-p">each standing movement coordinates the eyes, breath, and body into a unique elemental expression. the movements are gentle, precise, and often challenging when first practiced.</p>
+      <div class="dz-pull">
         <div class="q">what sitting reveals about habits of mind, nam'khor reveals about habits of body.</div>
-        <div class="cite">— a student, after four weeks.</div>
+        <span class="cite">— a student, after four weeks.</span>
       </div>
     </div>
 
-    <div class="expect">
-      <div class="tape t1"></div><div class="tape t2"></div>
-      <div class="h3">what to expect</div>
-      <p>you can expect a practice that <em>rhymes with</em> (but is distinct from) qigong. there is a lot of standing and waving your arms about, and it is <em>extraordinarily enjoyable</em>.</p>
-      <p>practically, consistent practice makes my shoulders and torso feel amazing. biomechanically, the sky realm series is like a ctrl+z after hours of computer work. standing and sitting feel easier and more grounded, and vividness in the physical, energetic, and visual fields is palpable and immediate.</p>
-      <div class="metaphor">↳ ctrl+z for computer posture.</div>
+    <!-- What to expect -->
+    <div class="dz-section">
+      <div class="dz-h">What to expect</div>
+      <p class="dz-p">you can expect a practice that <em>rhymes with</em> (but is distinct from) qigong. there is a lot of standing and waving your arms about, and it is <em>extraordinarily enjoyable</em>.</p>
+      <p class="dz-p">practically, consistent practice makes my shoulders and torso feel amazing. biomechanically, the sky realm series is like a ctrl+z after hours of computer work. standing and sitting feel easier and more grounded, and vividness in the physical, energetic, and visual fields is palpable and immediate.</p>
     </div>
 
-    <div class="animals-sec">
-      <div class="kick">§ 3 · the matrix</div>
-      <div class="h3">five animals, five elements.</div>
-      <div class="lede">each movement is an animal crossed with an element. five animals, five elements, twenty-five movements. each animal embodies a quality of presence; each element gives that quality a particular shape.</div>
-
-      <div class="animals">
-        <div class="animal">
-          <div class="tape"></div>
-          <div class="ph">dragon</div>
-          <div class="name-row"><span class="name">dragon</span><span class="elem">space</span></div>
+    <!-- Five animals, five elements -->
+    <div class="dz-section">
+      <div class="dz-h">§ 3 · the matrix</div>
+      <p class="dz-p">each movement is an animal crossed with an element. <em>five animals, five elements, twenty-five movements.</em> each animal embodies a quality of presence; each element gives that quality a particular shape.</p>
+      <div class="dz-animals">
+        <div class="dz-animal">
+          <div class="row"><span class="name">dragon</span><span class="elem">space</span></div>
           <div class="line">vast, indomitable. the dragon moves as space itself made manifest.</div>
-          <div class="sign">01 / 05</div>
+          <span class="sign">01 / 05</span>
         </div>
-        <div class="animal">
-          <div class="tape"></div>
-          <div class="ph">hawk</div>
-          <div class="name-row"><span class="name">hawk</span><span class="elem">air</span></div>
+        <div class="dz-animal">
+          <div class="row"><span class="name">hawk</span><span class="elem">air</span></div>
           <div class="line">precise, networked. the hawk rides the air as knowledge itself.</div>
-          <div class="sign">02 / 05</div>
+          <span class="sign">02 / 05</span>
         </div>
-        <div class="animal">
-          <div class="tape"></div>
-          <div class="ph">leopard</div>
-          <div class="name-row"><span class="name">leopard</span><span class="elem">fire</span></div>
+        <div class="dz-animal">
+          <div class="row"><span class="name">leopard</span><span class="elem">fire</span></div>
           <div class="line">explosive, exact. the leopard moves through fire's logic.</div>
-          <div class="sign">03 / 05</div>
+          <span class="sign">03 / 05</span>
         </div>
-        <div class="animal">
-          <div class="tape"></div>
-          <div class="ph">raven</div>
-          <div class="name-row"><span class="name">raven</span><span class="elem">water</span></div>
+        <div class="dz-animal">
+          <div class="row"><span class="name">raven</span><span class="elem">water</span></div>
           <div class="line">context-dependent, playful. the raven is water in motion.</div>
-          <div class="sign">04 / 05</div>
+          <span class="sign">04 / 05</span>
         </div>
-        <div class="animal">
-          <div class="tape"></div>
-          <div class="ph">bear</div>
-          <div class="name-row"><span class="name">bear</span><span class="elem">earth</span></div>
+        <div class="dz-animal">
+          <div class="row"><span class="name">bear</span><span class="elem">earth</span></div>
           <div class="line">abundant, generously massive. the bear is earth embodied.</div>
-          <div class="sign">05 / 05</div>
+          <span class="sign">05 / 05</span>
         </div>
       </div>
-
-      <div class="matrix">
+      <div class="dz-matrix">
         <span class="cell">5 animals</span><span class="op">×</span><span class="cell">5 elements</span><span class="op">=</span><span class="cell">25 movements</span>
       </div>
     </div>
 
-    <div class="diff">
-      <div class="left">
-        <h3>a note on difficulty</h3>
-        <p><span class="emph">awkwardness is a feature, not a bug.</span> the precision of the movements is often off-putting at first — coordinating the body in these specific ways is challenging for most people.</p>
-        <p>the reason it's challenging is precisely because of habitual ways we use our bodies. being frustrated, confused, and awkward is a sign you're <em>doing</em> the practice — not a sign you shouldn't.</p>
-        <p>this series is accessible and adaptable to nearly everyone.</p>
-      </div>
-      <div class="right">
-        <div class="tape"></div>
-        <h4>how it lands in the body</h4>
-        <div class="list">
-          <span class="not">a workout</span>
-          <span class="not">choreography to memorize</span>
-          <span class="not">something you "master"</span>
-          <span class="yes">gentle &amp; precise</span>
-          <span class="yes">challenging when first met</span>
-          <span class="yes">accessible to nearly everyone</span>
+    <!-- Difficulty note -->
+    <div class="dz-section">
+      <div class="dz-h">A note on difficulty</div>
+      <div class="dz-twocol">
+        <div>
+          <p class="dz-p"><em>awkwardness is a feature, not a bug.</em> the precision of the movements is often off-putting at first — coordinating the body in these specific ways is challenging for most people.</p>
+          <p class="dz-p">the reason it's challenging is precisely because of habitual ways we use our bodies. being frustrated, confused, and awkward is a sign you're <em>doing</em> the practice — not a sign you shouldn't.</p>
+          <p class="dz-p">this series is accessible and adaptable to nearly everyone.</p>
+        </div>
+        <div class="dz-list-box">
+          <div class="dz-list-title">How it lands in the body</div>
+          <div class="dz-list">
+            <span class="not">a workout</span>
+            <span class="not">choreography to memorize</span>
+            <span class="not">something you "master"</span>
+            <span class="yes">gentle &amp; precise</span>
+            <span class="yes">challenging when first met</span>
+            <span class="yes">accessible to nearly everyone</span>
+          </div>
         </div>
       </div>
     </div>
 
-    <div class="classcard-wrap">
-      <div class="h3">when &amp; where.</div>
-      <div class="classcard">
-        <div class="sticky-seat">live · every other tues.</div>
-        <div class="kicker">weekly practice — rolling</div>
-        <div class="title">sky realm series <em style="font-family:'Libre Caslon Text',serif; font-style:italic; color:var(--brown);">(nam'khor)</em>.</div>
+    <!-- When & Where -->
+    <div class="dz-section">
+      <div class="dz-h">When &amp; where</div>
+      <div class="dz-classcard">
+        <div class="kicker">weekly practice · rolling enrollment</div>
+        <div class="ctitle">sky realm series <em>(nam'khor)</em>.</div>
         <div class="details">
-          <div class="item"><span class="k">when</span><span>every other tuesday</span></div>
-          <div class="item"><span class="k">duration</span><span>[tba]</span></div>
-          <div class="item"><span class="k">where</span><span>zoom</span></div>
-          <div class="item"><span class="k">tuition</span><span>[$ tba] · sliding</span></div>
+          <div class="k">when</div><div>every other tuesday</div>
+          <div class="k">duration</div><div>[tba]</div>
+          <div class="k">where</div><div>zoom</div>
+          <div class="k">tuition</div><div>[$ tba] · sliding</div>
         </div>
-        <a class="cta say-hi" href="#" data-email="tannerholman97@gmail.com">join the next session →</a>
+        <a class="cta say-hi" href="#" data-email="tannerholman97@gmail.com">→ join the next session</a>
       </div>
     </div>
 
-    <div class="cta-row">
+    <!-- CTA -->
+    <div class="dz-cta">
       <div>
-        <h3>come play.</h3>
+        <h2>come play.</h2>
         <a class="btn say-hi" href="#" data-email="tannerholman97@gmail.com">→ next tuesday</a>
       </div>
       <div class="aside">
-        <div class="t"></div>
-        <b style="font-family:'Kalam',cursive;font-weight:700;">ps</b> — never done this? perfect. awkwardness is the doorway. drop in and see.
+        <b>ps</b>never done this? perfect. awkwardness is the doorway. drop in and see.
       </div>
     </div>
 
-    <div class="also">
-      <div class="kick">other ways in</div>
-      <div class="row">
-        <a href="coaching.html"><div class="lbl">01 · coaching</div><div class="nm">1:1 coaching →</div></a>
-        <a href="pt-for-meditators.html"><div class="lbl">02 · pt for meditators</div><div class="nm">the experiment →</div></a>
-        <a href="body-mapping.html"><div class="lbl">04 · body mapping</div><div class="nm">monthly class →</div></a>
+    <!-- Other ways in -->
+    <div class="dz-also">
+      <div class="dz-also-kick">Other ways in</div>
+      <div class="dz-also-row">
+        <a href="coaching.html"><span class="lbl">01 · coaching</span><span class="nm">1:1 coaching →</span></a>
+        <a href="pt-for-meditators.html"><span class="lbl">02 · pt for meditators</span><span class="nm">the experiment →</span></a>
+        <a href="body-mapping.html"><span class="lbl">04 · body mapping</span><span class="nm">monthly class →</span></a>
       </div>
     </div>
+
+    <footer class="site-footer">
+      the sky realm is boundless, but this page ends here
+      <div class="links">
+        <a href="index.html">home</a> ·
+        <a href="index.html#offerings">offerings</a> ·
+        <a href="#" class="say-hi" data-email="tannerholman97@gmail.com">say hi</a>
+      </div>
+      <div class="hi-toast" role="status" aria-live="polite"></div>
+    </footer>
 
   </div>
-
-  <footer class="site-footer">
-    the sky realm is boundless, but this page ends here
-    <div class="links">
-      <a href="index.html">home</a> ·
-      <a href="index.html#offerings">offerings</a> ·
-      <a href="#" class="say-hi" data-email="tannerholman97@gmail.com">say hi</a>
-    </div>
-    <div class="hi-toast" role="status" aria-live="polite"></div>
-  </footer>
 </div>
 <script src="js/say-hi.js"></script>
 </body>
