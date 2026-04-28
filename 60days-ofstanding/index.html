@@ -1,0 +1,2507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sixty Days of Standing · a practice journal</title>
+<meta name="description" content="Public practice journal: 60 days of 60 minutes of standing meditation. By Tanner Holman.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Caveat:wght@400;500;600&family=Special+Elite&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --desk: #e5d5b0;
+    --paper: #faf4e4;
+    --paper-hover: #f2e9cf;
+    --paper-complete: #f3ecd8;
+    --paper-warm: #f7eed5;
+    --paper-dot: rgba(107, 61, 28, 0.13);
+    --ink: #1f1810;
+    --ink-muted: #5a4530;
+    --ink-faint: #a89872;
+    --chestnut: #6b3d1c;
+    --chestnut-dark: #3d2412;
+    --border: rgba(107, 61, 28, 0.22);
+    --border-subtle: rgba(107, 61, 28, 0.1);
+    --ribbon: #b73a3a;
+    --ribbon-dark: #8a2a2a;
+    --ribbon-shadow: rgba(90, 20, 20, 0.35);
+    --leaf: #4a7a1f;
+    --leaf-light: #6b9a35;
+    --leaf-glow: rgba(74, 122, 31, 0.3);
+    --redacted: #1c1208;
+    --radius: 4px;
+    --radius-sm: 3px;
+  }
+
+  html, body { overflow-x: hidden; }
+
+  body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--desk);
+    background-image:
+      radial-gradient(ellipse at 22% 8%, rgba(255, 238, 180, 0.55) 0%, transparent 40%),
+      radial-gradient(ellipse at 88% 90%, rgba(90, 122, 50, 0.10) 0%, transparent 55%),
+      radial-gradient(ellipse at 70% 20%, rgba(255, 220, 150, 0.22) 0%, transparent 38%);
+    color: var(--ink);
+    font-size: 14px;
+    line-height: 1.5;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .app {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 36px 24px 28px;
+  }
+
+  /* ========== PAGE HEADER ========== */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 22px;
+    padding: 0 4px;
+    gap: 16px;
+  }
+  .page-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--chestnut);
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .page-title .sprig { color: var(--leaf); margin-right: 6px; }
+  .page-back {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    text-decoration: none;
+    transition: color .12s;
+  }
+  .page-back:hover { color: var(--chestnut); }
+  .page-sub {
+    font-family: 'Caveat', cursive;
+    font-size: 16px;
+    color: var(--chestnut);
+    font-weight: 500;
+  }
+
+  /* ========== BOOKING CARD ========== */
+  .booking-card {
+    background:
+      radial-gradient(circle, var(--paper-dot) 1px, transparent 1.2px) 0 0 / 16px 16px,
+      var(--paper);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(90, 60, 20, 0.08),
+      0 3px 8px rgba(90, 60, 20, 0.12),
+      0 16px 40px rgba(60, 40, 15, 0.22);
+  }
+  .booking-card::before {
+    content: '';
+    position: absolute;
+    left: 300px;
+    top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(180deg,
+      rgba(107, 61, 28, 0.12) 0%,
+      rgba(107, 61, 28, 0.34) 50%,
+      rgba(107, 61, 28, 0.12) 100%);
+    pointer-events: none;
+    z-index: 5;
+  }
+  .booking-card::after {
+    content: '';
+    position: absolute;
+    left: 292px;
+    top: 22px; bottom: 22px;
+    width: 16px;
+    background: linear-gradient(90deg, transparent 0%, rgba(90, 60, 20, 0.09) 50%, transparent 100%);
+    pointer-events: none;
+    z-index: 4;
+  }
+
+  /* ========== SIDEBAR ========== */
+  .sidebar {
+    padding: 28px 24px 100px;
+    position: relative;
+  }
+  .avatar {
+    width: 40px; height: 40px;
+    border-radius: 50%;
+    background: var(--chestnut-dark);
+    color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'EB Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    box-shadow:
+      inset 0 -1px 2px rgba(255, 220, 180, 0.12),
+      0 1px 3px rgba(60, 30, 10, 0.3);
+  }
+  .host-name {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    color: var(--chestnut);
+    margin-bottom: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+  .event-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 28px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    line-height: 1.05;
+    margin-bottom: 10px;
+    color: var(--ink);
+  }
+  .event-title .leaf { color: var(--leaf); font-weight: 400; margin-left: 4px; font-size: 20px; vertical-align: 2px; }
+  .event-description {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    color: var(--ink-muted);
+    font-size: 15px;
+    margin-bottom: 22px;
+    line-height: 1.55;
+  }
+  .info-list {
+    display: flex;
+    flex-direction: column;
+    gap: 11px;
+    margin-bottom: 22px;
+    padding-bottom: 20px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .info-row {
+    display: flex; align-items: center;
+    gap: 11px;
+    font-size: 13px;
+    color: var(--ink);
+    font-family: 'EB Garamond', serif;
+  }
+  .info-row svg { width: 14px; height: 14px; color: var(--chestnut); flex-shrink: 0; stroke-width: 1.6; }
+
+  .progress-block { margin-bottom: 22px; }
+  .progress-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--chestnut);
+    margin-bottom: 10px;
+    font-weight: 500;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .progress-label .leaf-icon { color: var(--leaf); }
+  .progress-track {
+    height: 5px;
+    background: rgba(107, 61, 28, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--leaf) 0%, var(--leaf-light) 100%);
+    width: 0%;
+    border-radius: 4px;
+    box-shadow: 0 0 8px var(--leaf-glow);
+    transition: width .4s ease;
+  }
+  .progress-text {
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    font-family: 'EB Garamond', serif;
+  }
+  .progress-text strong {
+    color: var(--ink);
+    font-weight: 600;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 14px;
+  }
+
+  .about-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--chestnut);
+    text-decoration: none;
+    padding: 8px 0;
+    border-top: 1px dotted var(--border);
+    border-bottom: 1px dotted var(--border);
+    width: 100%;
+    transition: color .12s, padding-left .15s;
+    cursor: pointer;
+    background: none;
+    border-left: none;
+    border-right: none;
+  }
+  .about-link::before { content: '❧'; color: var(--leaf); font-size: 13px; }
+  .about-link::after { content: '→'; margin-left: auto; color: var(--ink-faint); transition: transform .15s, color .12s; }
+  .about-link:hover { color: var(--ink); padding-left: 4px; }
+  .about-link:hover::after { transform: translateX(3px); color: var(--chestnut); }
+  .about-link.active { color: var(--ink); background: rgba(107, 61, 28, 0.04); }
+  .about-link.active::after { color: var(--ribbon); }
+  .about-link + .about-link { border-top: 1px dotted var(--border-subtle); }
+  .about-link.hidden { display: none; }
+  .random-link::after { content: '↻'; font-size: 14px; }
+  .random-link:hover::after { transform: rotate(60deg); color: var(--leaf); }
+
+  .sidebar-note {
+    position: absolute;
+    left: 24px; right: 24px;
+    bottom: 24px;
+    font-family: 'Caveat', cursive;
+    font-size: 15px;
+    color: var(--chestnut);
+    line-height: 1.3;
+    opacity: 0.9;
+    padding-top: 16px;
+    border-top: 1px dotted var(--border);
+  }
+  .sidebar-note::before { content: '— '; color: var(--leaf); }
+
+  /* ========== MAIN ========== */
+  .main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    min-height: 0;
+    background: transparent;
+  }
+  .calendar-panel {
+    padding: 28px 24px;
+    border-right: 1px dashed var(--border);
+    position: relative;
+  }
+  .entry-panel {
+    padding: 28px 26px;
+    min-height: 600px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+  }
+
+  /* ========== CALENDAR ========== */
+  .calendar-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 22px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+  .section-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 19px;
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+  }
+  .month-nav { display: flex; align-items: center; gap: 4px; }
+  .month-nav-btn {
+    width: 26px; height: 26px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    color: var(--chestnut);
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    transition: all .15s ease;
+  }
+  .month-nav-btn:hover { background: var(--paper-hover); color: var(--ink); border-color: var(--chestnut); }
+  .month-label {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    font-weight: 500;
+    font-style: italic;
+    padding: 0 10px;
+    min-width: 130px;
+    text-align: center;
+    color: var(--ink);
+  }
+  .weekday-header { display: grid; grid-template-columns: repeat(7, 1fr); margin-bottom: 8px; }
+  .weekday-header span {
+    text-align: center;
+    font-size: 10.5px;
+    font-weight: 500;
+    color: var(--chestnut);
+    padding: 6px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .calendar-grid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: 3px;
+    position: relative;
+    overflow: visible;
+  }
+  .ribbon {
+    position: absolute;
+    width: 22px;
+    background: linear-gradient(180deg,
+      var(--ribbon-dark) 0%,
+      var(--ribbon) 8%,
+      var(--ribbon) 92%,
+      var(--ribbon-dark) 100%);
+    box-shadow:
+      inset 1px 0 0 rgba(255, 255, 255, 0.12),
+      inset -1px 0 0 rgba(0, 0, 0, 0.15),
+      1px 2px 4px var(--ribbon-shadow);
+    pointer-events: none;
+    z-index: 1;
+    top: 0;
+    transition: left .28s cubic-bezier(0.4, 0.0, 0.2, 1),
+                height .28s cubic-bezier(0.4, 0.0, 0.2, 1);
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), 50% 100%, 0 calc(100% - 10px));
+  }
+  .ribbon::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      repeating-linear-gradient(0deg,
+        transparent 0px, transparent 2px,
+        rgba(255, 255, 255, 0.06) 2px, rgba(255, 255, 255, 0.06) 3px);
+    pointer-events: none;
+  }
+  .day-cell {
+    aspect-ratio: 1;
+    max-height: 52px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--ink);
+    border: none;
+    background: transparent;
+    transition: background .12s ease, color .12s ease;
+    font-family: 'EB Garamond', serif;
+    z-index: 2;
+    -webkit-tap-highlight-color: transparent;
+    padding: 0;
+  }
+  .day-cell.empty { visibility: hidden; }
+  .day-cell.out-of-range { color: var(--ink-faint); cursor: not-allowed; opacity: 0.45; pointer-events: none; }
+  .day-cell:hover:not(.out-of-range):not(.selected) { background: var(--paper-hover); }
+  .day-cell.completed { background: var(--paper-complete); }
+  .day-cell.completed:hover:not(.selected) { background: var(--paper-hover); }
+  .day-cell.completed::after {
+    content: '';
+    position: absolute;
+    bottom: 6px;
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--leaf);
+    box-shadow: 0 0 3px var(--leaf-glow);
+  }
+  .day-cell.today { box-shadow: inset 0 0 0 1.5px var(--chestnut); }
+  .day-cell.selected { background: transparent; color: var(--paper); font-weight: 600; z-index: 3; }
+  .day-cell.selected.completed::after { background: var(--paper); box-shadow: none; opacity: 0.7; }
+
+  .legend {
+    display: flex;
+    gap: 18px;
+    margin-top: 24px;
+    padding-top: 16px;
+    border-top: 1px dotted var(--border);
+    font-size: 11px;
+    color: var(--ink-muted);
+    flex-wrap: wrap;
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+  }
+  .legend-item { display: flex; align-items: center; gap: 7px; }
+  .legend-dot { width: 9px; height: 9px; border-radius: 50%; background: var(--leaf); box-shadow: 0 0 3px var(--leaf-glow); }
+  .legend-dot.today { background: transparent; box-shadow: inset 0 0 0 1.5px var(--chestnut); border-radius: 2px; }
+  .legend-dot.future { background: rgba(107, 61, 28, 0.2); box-shadow: none; }
+  .legend-dot.selected { background: var(--ribbon); border-radius: 1px; height: 11px; width: 5px; box-shadow: 0 0 2px var(--ribbon-shadow); }
+
+  /* ========== ENTRY PANEL ========== */
+  .entry-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex: 1;
+    color: var(--ink-muted);
+    text-align: center;
+    padding: 40px 20px;
+  }
+  .entry-empty-icon { font-family: 'EB Garamond', serif; font-size: 52px; margin-bottom: 16px; color: var(--ink-faint); line-height: 1; }
+  .entry-empty-text { font-family: 'EB Garamond', serif; font-style: italic; font-size: 18px; color: var(--ink); margin-bottom: 6px; }
+  .entry-empty-sub { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; }
+
+  .entry { flex: 1; display: flex; flex-direction: column; }
+  .entry-header { padding-bottom: 18px; border-bottom: 1px dotted var(--border); margin-bottom: 22px; }
+  .entry-day-badge { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 12px; font-family: 'IBM Plex Mono', monospace; }
+  .entry-day-num {
+    background: var(--chestnut-dark);
+    color: var(--paper);
+    padding: 3px 9px;
+    border-radius: 3px;
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+  .entry-day-total { font-size: 10px; color: var(--chestnut); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 500; }
+  .entry-date {
+    font-family: 'EB Garamond', serif;
+    font-size: 26px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    margin-bottom: 10px;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+  .entry-meta-line { display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--ink-muted); flex-wrap: wrap; }
+  .format-chip {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 3px 10px;
+    background: var(--paper-complete);
+    border: 1px solid var(--border-subtle);
+    border-radius: 3px;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--chestnut-dark);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-family: 'IBM Plex Mono', monospace;
+  }
+  .today-pill {
+    padding: 2px 9px;
+    border-radius: 20px;
+    background: rgba(74, 122, 31, 0.14);
+    color: #2d5512;
+    font-size: 10.5px;
+    font-weight: 500;
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+  }
+
+  .entry-body { flex: 1; min-height: 240px; }
+
+  /* ===== FORMAT: HAIKU ===== */
+  .entry-haiku {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    line-height: 1.9;
+    color: var(--ink);
+    font-weight: 400;
+    padding: 24px 0;
+    letter-spacing: -0.005em;
+  }
+  .entry-haiku div { margin-bottom: 2px; }
+
+  /* ===== FORMAT: RIGOROUS / JOURNAL ===== */
+  .entry-rigorous {
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--ink);
+    padding: 12px 0;
+  }
+  .entry-rigorous p { margin-bottom: 14px; }
+  .entry-rigorous em { font-style: italic; }
+  .entry-rigorous strong { font-weight: 600; }
+
+  /* ===== FORMAT: POINTERS ===== */
+  .entry-pointers { padding: 12px 0; font-family: 'EB Garamond', serif; }
+  .entry-pointers .pointers-intro { font-size: 16px; color: var(--ink); font-style: italic; margin-bottom: 16px; }
+  .entry-pointers ul { list-style: none; padding: 0; }
+  .entry-pointers li {
+    padding: 10px 0;
+    border-bottom: 1px dotted var(--border-subtle);
+    display: grid;
+    grid-template-columns: 14px 1fr;
+    gap: 10px;
+    font-size: 15px;
+  }
+  .entry-pointers li:last-child { border-bottom: none; }
+  .entry-pointers li::before { content: '❧'; color: var(--leaf); }
+  .entry-pointers .pointer-title { color: var(--ink); font-weight: 500; }
+  .entry-pointers .pointer-title a { color: var(--chestnut); text-decoration: none; border-bottom: 1px dotted var(--chestnut); }
+  .entry-pointers .pointer-title a:hover { color: var(--ink); }
+  .entry-pointers .pointer-note { color: var(--ink-muted); font-style: italic; font-size: 14px; margin-top: 2px; }
+
+  /* ===== FORMAT: LETTER ===== */
+  .entry-letter {
+    font-family: 'EB Garamond', serif;
+    padding: 20px 8px;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .entry-letter .letter-to { font-style: italic; margin-bottom: 16px; font-size: 17px; }
+  .entry-letter .letter-body { white-space: pre-wrap; margin-bottom: 18px; }
+  .entry-letter .letter-sign {
+    font-family: 'Caveat', cursive;
+    font-size: 22px;
+    color: var(--chestnut);
+    text-align: right;
+  }
+
+  /* ===== FORMAT: RECIPE ===== */
+  .entry-recipe {
+    background: var(--paper-warm);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px 22px;
+    box-shadow: 0 1px 3px rgba(60, 30, 10, 0.08);
+  }
+  .entry-recipe .recipe-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: var(--ink);
+    text-align: center;
+    margin-bottom: 4px;
+  }
+  .entry-recipe .recipe-divider {
+    text-align: center;
+    color: var(--leaf);
+    font-size: 14px;
+    margin-bottom: 14px;
+  }
+  .entry-recipe .recipe-section {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--chestnut);
+    margin: 14px 0 8px;
+    font-weight: 600;
+  }
+  .entry-recipe ul, .entry-recipe ol {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    line-height: 1.7;
+    color: var(--ink);
+    padding-left: 24px;
+  }
+  .entry-recipe li { margin-bottom: 4px; }
+
+  /* ===== FORMAT: FIELD NOTES ===== */
+  .entry-field-notes {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13.5px;
+    line-height: 1.7;
+    color: var(--ink-muted);
+    padding: 16px 0;
+  }
+  .entry-field-notes .fn-subject {
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 8px;
+    margin-bottom: 14px;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--chestnut);
+    font-weight: 600;
+  }
+  .entry-field-notes .fn-body { color: var(--ink); }
+
+  /* ===== FORMAT: FOOTNOTE ===== */
+  .entry-footnote {
+    font-family: 'EB Garamond', serif;
+    padding: 16px 0;
+    color: var(--ink);
+  }
+  .entry-footnote .fn-body {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 26px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--ink-muted);
+    font-style: italic;
+  }
+  .entry-footnote .fn-body sup {
+    color: var(--chestnut);
+    font-weight: 600;
+    font-size: 11px;
+    margin-left: 1px;
+  }
+  .entry-footnote .fn-citations {
+    font-size: 13px;
+    line-height: 1.6;
+    color: var(--ink);
+    list-style: none;
+    counter-reset: citation;
+  }
+  .entry-footnote .fn-citations li {
+    counter-increment: citation;
+    padding: 4px 0 4px 24px;
+    position: relative;
+  }
+  .entry-footnote .fn-citations li::before {
+    content: counter(citation) '.';
+    position: absolute;
+    left: 0;
+    color: var(--chestnut);
+    font-weight: 600;
+  }
+
+  /* ===== FORMAT: AI-ART ===== */
+  .entry-ai-art { padding: 12px 0; }
+  .entry-ai-art .aa-image {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--paper-complete);
+    display: flex; align-items: center; justify-content: center;
+    overflow: hidden;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(60, 30, 10, 0.12);
+  }
+  .entry-ai-art .aa-image img { width: 100%; height: 100%; object-fit: cover; }
+  .entry-ai-art .aa-image-placeholder {
+    color: var(--ink-faint);
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+  }
+  .entry-ai-art .aa-prompt-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--chestnut);
+    margin-bottom: 6px;
+    font-weight: 600;
+  }
+  .entry-ai-art .aa-prompt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--ink);
+    padding: 10px 12px;
+    background: var(--paper-complete);
+    border-left: 3px solid var(--leaf);
+    border-radius: 2px;
+  }
+
+  /* ===== FORMAT: BLACKOUT ===== */
+  .entry-blackout {
+    font-family: 'EB Garamond', serif;
+    font-size: 17px;
+    line-height: 2;
+    color: var(--ink);
+    padding: 20px 0;
+    word-spacing: 4px;
+  }
+  .entry-blackout .redacted {
+    background: var(--redacted);
+    color: var(--redacted);
+    padding: 0 4px;
+    border-radius: 1px;
+    user-select: none;
+  }
+
+  /* ===== FORMAT: RECEIPT ===== */
+  .entry-receipt {
+    font-family: 'IBM Plex Mono', monospace;
+    background: var(--paper-warm);
+    padding: 22px 18px;
+    border-radius: var(--radius);
+    border: 1px dashed var(--border);
+    font-size: 12.5px;
+    color: var(--ink);
+    max-width: 360px;
+    margin: 12px auto;
+    box-shadow: 0 1px 3px rgba(60, 30, 10, 0.06);
+  }
+  .entry-receipt .rc-header {
+    text-align: center;
+    border-bottom: 1px dashed var(--border);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+  }
+  .entry-receipt .rc-shop {
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.18em;
+  }
+  .entry-receipt .rc-shop-sub {
+    font-size: 9.5px;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-top: 4px;
+  }
+  .entry-receipt .rc-row {
+    display: grid;
+    grid-template-columns: 70px 1fr auto;
+    gap: 8px;
+    padding: 4px 0;
+    align-items: baseline;
+  }
+  .entry-receipt .rc-row .rc-label {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+  .entry-receipt .rc-row .rc-time { color: var(--ink-faint); font-size: 11px; }
+  .entry-receipt .rc-total {
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border);
+    font-weight: 600;
+    display: flex;
+    justify-content: space-between;
+    text-transform: uppercase;
+  }
+  .entry-receipt .rc-footer {
+    text-align: center;
+    margin-top: 14px;
+    padding-top: 8px;
+    border-top: 1px dotted var(--border);
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.06em;
+  }
+
+  /* ===== FORMAT: WEATHER ===== */
+  .entry-weather {
+    background: linear-gradient(180deg, #f5e8c8 0%, var(--paper-warm) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 22px;
+    box-shadow: 0 2px 6px rgba(60, 30, 10, 0.08);
+  }
+  .entry-weather .wx-banner {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    color: var(--chestnut);
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    text-align: center;
+    border-bottom: 2px solid var(--chestnut-dark);
+    padding-bottom: 6px;
+    margin-bottom: 16px;
+    font-weight: 600;
+  }
+  .entry-weather .wx-today {
+    font-family: 'EB Garamond', serif;
+    font-size: 19px;
+    line-height: 1.45;
+    color: var(--ink);
+    font-style: italic;
+    margin-bottom: 16px;
+  }
+  .entry-weather .wx-stats {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 8px 16px;
+    padding: 12px 0;
+    border-top: 1px dashed var(--border);
+    border-bottom: 1px dashed var(--border);
+    margin-bottom: 14px;
+  }
+  .entry-weather .wx-stat {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+  }
+  .entry-weather .wx-stat .lbl { color: var(--chestnut); text-transform: uppercase; letter-spacing: 0.08em; font-size: 9.5px; align-self: center; }
+  .entry-weather .wx-outlook {
+    font-family: 'EB Garamond', serif;
+    font-size: 13.5px;
+    color: var(--ink-muted);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .entry-weather .wx-outlook::before { content: 'Outlook — '; font-style: normal; font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: var(--chestnut); text-transform: uppercase; letter-spacing: 0.1em; font-weight: 600; }
+
+  /* ===== FORMAT: MTG ===== */
+  .entry-mtg { padding: 8px 0; display: flex; justify-content: center; }
+  .mtg-card {
+    background: linear-gradient(180deg, var(--paper) 0%, var(--paper-complete) 100%);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 18px;
+    max-width: 320px;
+    width: 100%;
+    box-shadow: 0 2px 6px rgba(90, 60, 20, 0.1);
+  }
+  .mtg-top { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 4px; }
+  .mtg-name { font-family: 'EB Garamond', serif; font-size: 17px; font-weight: 600; letter-spacing: -0.005em; color: var(--ink); }
+  .mtg-cost { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--chestnut); }
+  .mtg-type {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--chestnut);
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-subtle);
+    margin-bottom: 10px;
+  }
+  .mtg-text { font-family: 'EB Garamond', serif; font-size: 14.5px; line-height: 1.55; color: var(--ink); white-space: pre-wrap; }
+  .mtg-flavor {
+    font-family: 'EB Garamond', serif;
+    font-size: 13px;
+    font-style: italic;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+    line-height: 1.5;
+  }
+  .mtg-footer {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border-subtle);
+    font-size: 10px;
+    color: var(--chestnut);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.03em;
+  }
+
+  /* ===== FORMAT: AUDIO (CD-PLAYER + SELF-GUIDED) ===== */
+  .entry-audio { padding: 16px 0; }
+  .audio-player {
+    background: var(--paper-complete);
+    border: 1px solid var(--border-subtle);
+    border-radius: var(--radius);
+    padding: 16px 18px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 12px;
+  }
+  .play-btn {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: var(--chestnut-dark);
+    color: var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    border: none;
+    flex-shrink: 0;
+    font-size: 12px;
+    padding-left: 2px;
+    box-shadow: 0 1px 3px rgba(60, 30, 10, 0.25);
+    transition: background .12s;
+  }
+  .play-btn:hover { background: var(--chestnut); }
+  .play-btn.playing { padding-left: 0; }
+  .audio-info { flex: 1; min-width: 0; }
+  .audio-waveform { height: 32px; display: flex; align-items: center; gap: 2px; }
+  .audio-bar { flex: 1; background: var(--leaf-light); border-radius: 1px; min-width: 2px; opacity: 0.8; }
+  .audio-bar.passed { opacity: 1; background: var(--leaf); }
+  .audio-duration {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--chestnut);
+    margin-top: 8px;
+    letter-spacing: 0.03em;
+  }
+  audio.entry-audio-el { display: none; }
+
+  .transcript {
+    font-family: 'EB Garamond', serif;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--ink);
+    margin-top: 12px;
+    padding: 14px 0;
+    border-top: 1px dotted var(--border);
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .transcript .ts-row { display: grid; grid-template-columns: 50px 1fr; gap: 12px; padding: 5px 0; transition: background .15s; border-radius: 2px; }
+  .transcript .ts-row.active { background: rgba(74, 122, 31, 0.1); padding-left: 6px; }
+  .transcript .ts-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--chestnut);
+    align-self: start;
+    padding-top: 4px;
+    letter-spacing: 0.03em;
+  }
+  .transcript .ts-text { color: var(--ink-muted); }
+  .transcript .ts-row.active .ts-text { color: var(--ink); }
+
+  /* ===== FORMAT: VIDEO ===== */
+  .entry-video { padding: 12px 0; }
+  .entry-video video {
+    width: 100%;
+    max-height: 480px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    background: var(--chestnut-dark);
+    box-shadow: 0 2px 6px rgba(60, 30, 10, 0.12);
+    display: block;
+  }
+  .entry-video .video-caption {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink-muted);
+    margin-top: 10px;
+    text-align: center;
+  }
+
+  /* ===== FORMAT: HANDWRITTEN ===== */
+  .entry-handwritten { padding: 12px 0; text-align: center; }
+  .entry-handwritten img {
+    max-width: 100%;
+    max-height: 600px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 2px 8px rgba(60, 30, 10, 0.15);
+    background: var(--paper-warm);
+  }
+  .entry-handwritten .hw-caption {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-muted);
+    margin-top: 12px;
+  }
+
+  /* ===== FORMAT: POLAROID ===== */
+  .entry-polaroid { padding: 16px 0; display: flex; justify-content: center; }
+  .polaroid-frame {
+    background: #fbf6e4;
+    padding: 14px 14px 56px;
+    box-shadow: 0 4px 16px rgba(60, 30, 10, 0.22), 0 1px 3px rgba(60, 30, 10, 0.1);
+    transform: rotate(-1.2deg);
+    max-width: 340px;
+    position: relative;
+    border-radius: 2px;
+  }
+  .polaroid-frame img {
+    width: 100%;
+    aspect-ratio: 1;
+    object-fit: cover;
+    background: var(--paper-complete);
+    border-radius: 1px;
+    display: block;
+  }
+  .polaroid-frame.skeletal img { object-fit: contain; background: var(--paper); padding: 8px; }
+  .polaroid-frame .pl-caption {
+    position: absolute;
+    bottom: 14px;
+    left: 14px; right: 14px;
+    font-family: 'Caveat', cursive;
+    font-size: 17px;
+    color: var(--chestnut);
+    text-align: center;
+    line-height: 1.2;
+  }
+
+  /* ===== FORMAT: COLOR PALETTE ===== */
+  .entry-color-palette { padding: 20px 0; }
+  .palette-row {
+    display: grid;
+    gap: 1px;
+    border-radius: var(--radius);
+    overflow: hidden;
+    box-shadow: 0 2px 6px rgba(60, 30, 10, 0.12);
+    margin-bottom: 16px;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+  .palette-swatch {
+    aspect-ratio: 1;
+    min-height: 80px;
+    position: relative;
+  }
+  .palette-labels {
+    display: grid;
+    gap: 1px;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+  }
+  .palette-labels .lbl {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 12px;
+    color: var(--ink-muted);
+    text-align: center;
+    padding: 6px 4px;
+    line-height: 1.3;
+  }
+  .palette-labels .hex {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 2px;
+  }
+
+  /* ===== FORMAT: FLOOR PLAN ===== */
+  .entry-floor-plan { padding: 12px 0; text-align: center; }
+  .entry-floor-plan img {
+    max-width: 100%;
+    max-height: 500px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: var(--paper-warm);
+    padding: 10px;
+    box-shadow: 0 2px 6px rgba(60, 30, 10, 0.1);
+  }
+  .entry-floor-plan .fp-caption {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--chestnut);
+    margin-top: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  /* ===== FORMAT: SONG ===== */
+  .entry-song { padding: 12px 0; }
+  .entry-song .song-embed { margin-bottom: 12px; }
+  .entry-song .song-embed iframe { border-radius: var(--radius); border: 1px solid var(--border); }
+  .entry-song .song-line {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 15px;
+    color: var(--ink-muted);
+    text-align: center;
+    line-height: 1.5;
+    padding: 0 16px;
+  }
+
+  /* ===== FORMAT: FOUND POEM ===== */
+  .entry-found-poem {
+    font-family: 'Cormorant Garamond', serif;
+    padding: 28px 0 12px;
+  }
+  .entry-found-poem .fp-row {
+    display: grid;
+    grid-template-columns: 56px 1fr;
+    gap: 20px;
+    align-items: baseline;
+    padding: 14px 0;
+  }
+  .entry-found-poem .fp-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.08em;
+    text-align: right;
+    padding-top: 6px;
+  }
+  .entry-found-poem .fp-text {
+    font-size: 23px;
+    line-height: 1.5;
+    color: var(--ink);
+    font-weight: 400;
+    letter-spacing: -0.005em;
+  }
+  .entry-found-poem .fp-attribution {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 13px;
+    color: var(--ink-muted);
+    text-align: right;
+    margin-top: 22px;
+    padding-right: 4px;
+  }
+  @media (max-width: 640px) {
+    .entry-found-poem .fp-row { grid-template-columns: 44px 1fr; gap: 14px; padding: 11px 0; }
+    .entry-found-poem .fp-text { font-size: 19px; }
+  }
+
+  /* ===== FORMAT: DIAL ===== */
+  .entry-dial { padding: 20px 0 12px; }
+  .entry-dial .dial-svg {
+    width: 100%;
+    height: auto;
+    max-height: 520px;
+    display: block;
+  }
+  .entry-dial .dial-ring {
+    fill: var(--paper-warm);
+    stroke: var(--ink-muted);
+    stroke-width: 1.25;
+  }
+  .entry-dial .dial-inner-ring {
+    fill: none;
+    stroke: var(--border-subtle);
+    stroke-width: 0.75;
+  }
+  .entry-dial .dial-major-tick { stroke: var(--ink-muted); stroke-width: 1.4; stroke-linecap: round; }
+  .entry-dial .dial-minor-tick { stroke: var(--ink-faint); stroke-width: 0.9; opacity: 0.7; }
+  .entry-dial .dial-tick-mark { stroke: var(--ribbon); stroke-width: 2.5; stroke-linecap: round; }
+  .entry-dial .dial-leader {
+    stroke: var(--ink-faint);
+    stroke-width: 0.85;
+    stroke-dasharray: 2 3;
+    fill: none;
+    opacity: 0.85;
+  }
+  .entry-dial .dial-mark-dot { fill: var(--ribbon); }
+  .entry-dial .dial-mark-halo { fill: var(--ribbon); opacity: 0.18; }
+  .entry-dial .dial-quarter {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    fill: var(--ink-muted);
+    text-anchor: middle;
+    dominant-baseline: middle;
+    letter-spacing: 0.06em;
+  }
+  .entry-dial .dial-center-label {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 14px;
+    fill: var(--ink-muted);
+    text-anchor: middle;
+    letter-spacing: 0.02em;
+  }
+  .entry-dial .dial-center-sub {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    fill: var(--ink-faint);
+    text-anchor: middle;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+  .entry-dial .dial-label-time {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    fill: var(--chestnut);
+    font-weight: 600;
+  }
+  .entry-dial .dial-label-text {
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    fill: var(--ink);
+    font-style: italic;
+  }
+  .entry-dial .dial-caption {
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: var(--ink-muted);
+    font-style: italic;
+    text-align: center;
+    margin-top: 18px;
+    padding: 0 32px;
+    line-height: 1.55;
+  }
+  @media (max-width: 640px) {
+    .entry-dial { padding: 12px 0 8px; }
+    .entry-dial .dial-label-text { font-size: 11px; }
+    .entry-dial .dial-label-time { font-size: 8.5px; }
+    .entry-dial .dial-quarter { font-size: 9px; }
+    .entry-dial .dial-center-label { font-size: 12px; }
+    .entry-dial .dial-center-sub { font-size: 7.5px; }
+    .entry-dial .dial-caption { font-size: 13px; padding: 0 16px; }
+  }
+
+  /* ===== ENTRY FOOTER ===== */
+  .entry-footer {
+    margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px dotted var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+  }
+  .entry-nav { display: flex; gap: 8px; }
+  .nav-btn {
+    padding: 7px 12px;
+    font-size: 12px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--ink);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    transition: all .12s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .nav-btn:hover:not(:disabled) { background: var(--paper-hover); border-color: var(--chestnut); color: var(--chestnut-dark); }
+  .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+  .entry-timestamp { font-family: 'IBM Plex Mono', monospace; font-size: 10.5px; color: var(--chestnut); letter-spacing: 0.05em; }
+
+  /* ========== ABOUT VIEW ========== */
+  .entry.about-view .entry-header { border-bottom: 1px solid var(--border); padding-bottom: 16px; margin-bottom: 24px; }
+  .about-eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    color: var(--leaf);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .about-eyebrow::before { content: '❧ '; }
+  .about-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 30px;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+    line-height: 1.1;
+    color: var(--ink);
+    margin-bottom: 8px;
+  }
+  .about-subtitle {
+    font-family: 'EB Garamond', serif;
+    font-style: italic;
+    font-size: 15.5px;
+    color: var(--ink-muted);
+  }
+  .about-section { margin-bottom: 28px; }
+  .about-section h3 {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--chestnut);
+    margin-bottom: 10px;
+    font-weight: 600;
+  }
+  .about-section p {
+    font-family: 'EB Garamond', serif;
+    font-size: 16px;
+    line-height: 1.7;
+    color: var(--ink);
+  }
+  .about-back {
+    margin-top: 24px;
+    padding-top: 18px;
+    border-top: 1px dotted var(--border);
+  }
+  .about-back .nav-btn { font-family: 'EB Garamond', serif; font-style: italic; font-size: 14px; }
+
+  /* ========== APP FOOTER ========== */
+  .app-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    padding: 0 8px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    color: var(--chestnut);
+    letter-spacing: 0.05em;
+    gap: 12px;
+  }
+  .running-header { font-family: 'EB Garamond', serif; font-style: italic; font-size: 12px; letter-spacing: 0.04em; }
+  .footer-about-link { color: var(--chestnut); text-decoration: none; border-bottom: 1px dotted var(--border); padding-bottom: 1px; transition: color .12s; }
+  .footer-about-link:hover { color: var(--ink); }
+  .page-num { font-weight: 500; }
+  .page-num .sep { color: var(--ink-faint); margin: 0 4px; }
+  .folio-sprig { color: var(--leaf); }
+
+  /* ========== WRITE-MODE ADMIN PANEL ========== */
+  .write-panel {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 320px;
+    max-width: calc(100vw - 32px);
+    background:
+      radial-gradient(circle, var(--paper-dot) 1px, transparent 1.2px) 0 0 / 12px 12px,
+      var(--paper);
+    border: 1px solid var(--chestnut);
+    border-radius: var(--radius);
+    box-shadow: 0 8px 32px rgba(60, 30, 10, 0.3);
+    padding: 16px 18px 14px;
+    z-index: 50;
+    font-family: 'EB Garamond', serif;
+  }
+  body.write-mode .write-panel { display: block; }
+  .wp-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+    padding-bottom: 10px;
+    border-bottom: 1px dashed var(--border);
+  }
+  .wp-title {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.13em;
+    color: var(--chestnut);
+    font-weight: 600;
+  }
+  .wp-title .leaf { color: var(--leaf); margin-right: 4px; }
+  .wp-close {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    color: var(--ink-muted);
+    padding: 0 4px;
+  }
+  .wp-day {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    color: var(--ink-faint);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+  .wp-prompt {
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--ink);
+    padding: 8px 0 12px;
+    min-height: 60px;
+  }
+  .wp-prompt-meta { font-size: 11px; color: var(--ink-faint); font-style: italic; margin-top: 6px; font-family: 'EB Garamond', serif; }
+  .wp-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px dotted var(--border);
+  }
+  .wp-btn {
+    padding: 6px 12px;
+    font-size: 11.5px;
+    border: 1px solid var(--border);
+    background: transparent;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    transition: all .12s;
+  }
+  .wp-btn:hover { background: var(--paper-hover); border-color: var(--chestnut); }
+  .wp-btn.primary { background: var(--chestnut-dark); color: var(--paper); border-color: var(--chestnut-dark); }
+  .wp-btn.primary:hover { background: var(--chestnut); }
+  .wp-pool-toggle {
+    display: block;
+    margin-top: 10px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    color: var(--ink-muted);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 4px 0;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .wp-pool-toggle:hover { color: var(--ink); }
+  .wp-pool {
+    display: none;
+    margin-top: 8px;
+    padding-top: 10px;
+    border-top: 1px dotted var(--border);
+    max-height: 240px;
+    overflow-y: auto;
+    font-size: 13.5px;
+    line-height: 1.5;
+  }
+  .write-panel.show-pool .wp-pool { display: block; }
+  .wp-pool .pool-section {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--chestnut);
+    margin-top: 10px;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .wp-pool .pool-section:first-child { margin-top: 0; }
+  .wp-pool .pool-item {
+    padding: 4px 0;
+    border-bottom: 1px dotted var(--border-subtle);
+    color: var(--ink-muted);
+    cursor: pointer;
+    transition: color .12s;
+  }
+  .wp-pool .pool-item:hover { color: var(--ink); }
+  .wp-pool .pool-item .pi-fmt {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9px;
+    color: var(--chestnut);
+    margin-right: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+
+  /* ========== MOBILE ========== */
+  @media (max-width: 960px) {
+    .app { padding: 0; max-width: 100%; }
+    .page-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(250, 244, 228, 0.94);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 18px;
+      margin-bottom: 0;
+      gap: 12px;
+    }
+    .page-header .page-sub { display: none; }
+    .booking-card {
+      grid-template-columns: 1fr;
+      border-radius: 0;
+      border-left: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      box-shadow: 0 0 0 1px rgba(107, 61, 28, 0.05), 0 8px 40px rgba(60, 40, 15, 0.12);
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .booking-card::before, .booking-card::after { display: none; }
+    .main { grid-template-columns: 1fr; }
+    .sidebar {
+      padding: 22px 22px 22px;
+      border-bottom: 1px dashed var(--border);
+    }
+    .sidebar-note {
+      position: static;
+      margin-top: 16px;
+    }
+    .calendar-panel {
+      padding: 22px 22px;
+      border-right: none;
+      border-bottom: 1px dashed var(--border);
+    }
+    .entry-panel { padding: 24px 22px; min-height: auto; }
+    .day-cell { font-size: 15px; max-height: none; }
+    .event-title { font-size: 26px; }
+    .entry-date { font-size: 22px; }
+    .app-footer { padding: 16px 22px 28px; max-width: 480px; margin: 0 auto; }
+    .write-panel {
+      bottom: 12px;
+      right: 12px;
+      left: 12px;
+      width: auto;
+    }
+  }
+
+  @media (max-width: 480px) {
+    .palette-row { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important; }
+    .palette-labels { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important; }
+    .entry-receipt { font-size: 11px; padding: 18px 14px; }
+    .entry-receipt .rc-row { grid-template-columns: 60px 1fr auto; gap: 6px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="page-header">
+    <div class="page-title"><span class="sprig">❧</span> Practice Journal</div>
+    <a class="page-back" href="/">← tannerholman.space</a>
+    <div class="page-sub">spring, 2026</div>
+  </div>
+
+  <div class="booking-card">
+    <aside class="sidebar">
+      <div class="avatar">T</div>
+      <div class="host-name">Tanner Holman</div>
+      <h1 class="event-title">Sixty Days of Standing<span class="leaf">❧</span></h1>
+      <div class="event-description">
+        60 days of 60 minutes of standing meditation.
+      </div>
+
+      <div class="info-list">
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          <span>60 (accumulated) minutes per day</span>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M3 21v-5h5"/></svg>
+          <span>minimum 5 days per week</span>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          <span>wherever i happen to be</span>
+        </div>
+        <div class="info-row">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+          <span id="info-dates">Apr 27 — Jun 25</span>
+        </div>
+      </div>
+
+      <div class="progress-block">
+        <div class="progress-label"><span class="leaf-icon">❧</span> Progress</div>
+        <div class="progress-track"><div class="progress-fill" id="progress-fill"></div></div>
+        <div class="progress-text"><strong id="progress-count">0</strong> of 60 days logged</div>
+      </div>
+
+      <button class="about-link" id="about-link" type="button">about this project</button>
+      <button class="about-link random-link hidden" id="random-link" type="button">open to a random journal entry</button>
+
+      <div class="sidebar-note">a public experiment,<br>sixty days long</div>
+    </aside>
+
+    <main class="main">
+      <section class="calendar-panel">
+        <div class="calendar-header">
+          <h2 class="section-title">Select a day</h2>
+          <div class="month-nav">
+            <button class="month-nav-btn" id="prev-month" aria-label="Previous month">‹</button>
+            <span class="month-label" id="month-label">April 2026</span>
+            <button class="month-nav-btn" id="next-month" aria-label="Next month">›</button>
+          </div>
+        </div>
+        <div class="weekday-header">
+          <span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+        </div>
+        <div class="calendar-grid" id="calendar-grid">
+          <div class="ribbon" id="ribbon" style="display: none;"></div>
+        </div>
+        <div class="legend">
+          <div class="legend-item"><div class="legend-dot"></div> entry logged</div>
+          <div class="legend-item"><div class="legend-dot today"></div> today</div>
+          <div class="legend-item"><div class="legend-dot selected"></div> selected</div>
+          <div class="legend-item"><div class="legend-dot future"></div> not yet</div>
+        </div>
+      </section>
+
+      <section class="entry-panel" id="entry-panel"></section>
+    </main>
+  </div>
+
+  <div class="app-footer">
+    <div class="running-header">notes on a quiet practice</div>
+    <a class="footer-about-link" id="footer-about-link" href="#about">about</a>
+    <div class="page-num">
+      <span class="folio-sprig">❧</span> p. <span id="footer-page">001</span><span class="sep">/</span>060
+    </div>
+  </div>
+
+</div>
+
+<!-- WRITE-MODE PANEL (admin, ?write only) -->
+<div class="write-panel" id="write-panel">
+  <div class="wp-head">
+    <div class="wp-title"><span class="leaf">❧</span> Today's prompt</div>
+    <button class="wp-close" id="wp-close" aria-label="Close write panel">×</button>
+  </div>
+  <div class="wp-day" id="wp-day">Day —</div>
+  <div class="wp-prompt" id="wp-prompt">…</div>
+  <div class="wp-prompt-meta" id="wp-prompt-meta"></div>
+  <div class="wp-actions">
+    <button class="wp-btn primary" id="wp-shuffle">Shuffle</button>
+    <button class="wp-btn" id="wp-bound">Format-bound</button>
+    <button class="wp-btn" id="wp-constraint">Constraint</button>
+  </div>
+  <button class="wp-pool-toggle" id="wp-pool-toggle">▾ All prompts</button>
+  <div class="wp-pool" id="wp-pool"></div>
+</div>
+
+<script>
+  // ============================================================
+  //   STATE
+  // ============================================================
+  const MONTH_NAMES = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const MONTH_SHORT = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  const WEEKDAY = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+
+  let CONFIG = null;
+  let ENTRIES = {};
+  let ABOUT = null;
+  let PROMPTS = null;
+  let START_DATE = null;
+  let TODAY = null;
+  let TOTAL_DAYS = 60;
+
+  let currentMonth, currentYear, selectedDay;
+  let activeView = 'entry';
+
+  // ============================================================
+  //   UTILITIES
+  // ============================================================
+  function escapeHtml(s) {
+    return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
+
+  function dayNumberFor(date) {
+    const MS = 86400000;
+    const a = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+    const b = new Date(START_DATE.getFullYear(), START_DATE.getMonth(), START_DATE.getDate());
+    const diff = Math.round((a - b) / MS);
+    if (diff < 0 || diff >= TOTAL_DAYS) return null;
+    return diff + 1;
+  }
+
+  function dateForDayNumber(n) {
+    const d = new Date(START_DATE);
+    d.setDate(d.getDate() + n - 1);
+    return d;
+  }
+
+  function sameDay(a, b) {
+    return a.getFullYear() === b.getFullYear() &&
+           a.getMonth()    === b.getMonth() &&
+           a.getDate()     === b.getDate();
+  }
+
+  function weekFor(dayNum) {
+    return Math.min(12, Math.max(1, Math.ceil(dayNum / 5)));
+  }
+
+  function fmtDuration(secs) {
+    const m = Math.floor(secs / 60);
+    const s = Math.floor(secs % 60);
+    return `${m}:${String(s).padStart(2, '0')}`;
+  }
+
+  // ============================================================
+  //   FORMAT RENDERERS
+  // ============================================================
+  const renderers = {
+
+    haiku: (e) => {
+      return `<div class="entry-haiku">${e.lines.map(l => `<div>${escapeHtml(l)}</div>`).join('')}</div>`;
+    },
+
+    rigorous: (e) => {
+      const paras = (e.body || '').split(/\n\n+/).map(p => `<p>${markdownLight(p)}</p>`).join('');
+      return `<div class="entry-rigorous">${paras}</div>`;
+    },
+
+    pointers: (e) => {
+      const items = (e.items || []).map(it => {
+        const titleHtml = it.link
+          ? `<a href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>`
+          : escapeHtml(it.title);
+        const note = it.note ? `<div class="pointer-note">${escapeHtml(it.note)}</div>` : '';
+        return `<li><div></div><div><div class="pointer-title">${titleHtml}</div>${note}</div></li>`;
+      }).join('');
+      return `<div class="entry-pointers">
+        ${e.intro ? `<div class="pointers-intro">${escapeHtml(e.intro)}</div>` : ''}
+        <ul>${items}</ul>
+      </div>`;
+    },
+
+    letter: (e) => {
+      return `<div class="entry-letter">
+        <div class="letter-to">Dear ${escapeHtml(e.to || 'you')},</div>
+        <div class="letter-body">${escapeHtml(e.body || '')}</div>
+        <div class="letter-sign">${escapeHtml(e.sign || '— T')}</div>
+      </div>`;
+    },
+
+    recipe: (e) => {
+      const ing = (e.ingredients || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+      const meth = (e.method || []).map(x => `<li>${escapeHtml(x)}</li>`).join('');
+      return `<div class="entry-recipe">
+        <div class="recipe-title">${escapeHtml(e.title || 'Untitled recipe')}</div>
+        <div class="recipe-divider">❧</div>
+        <div class="recipe-section">Ingredients</div>
+        <ul>${ing}</ul>
+        <div class="recipe-section">Method</div>
+        <ol>${meth}</ol>
+      </div>`;
+    },
+
+    'field-notes': (e) => {
+      return `<div class="entry-field-notes">
+        ${e.subject ? `<div class="fn-subject">${escapeHtml(e.subject)}</div>` : ''}
+        <div class="fn-body">${escapeHtml(e.body || '')}</div>
+      </div>`;
+    },
+
+    footnote: (e) => {
+      const cites = (e.citations || []).map(c => `<li>${escapeHtml(c)}</li>`).join('');
+      // Replace ¹²³ unicode superscripts in body with styled sups
+      const body = String(e.body || '').replace(/([¹²³⁴⁵⁶⁷⁸⁹])/g, '<sup>$1</sup>');
+      return `<div class="entry-footnote">
+        <div class="fn-body">${body}</div>
+        <ol class="fn-citations">${cites}</ol>
+      </div>`;
+    },
+
+    'ai-art': (e) => {
+      const img = e.image
+        ? `<img src="${escapeHtml(e.image)}" alt="AI-generated image">`
+        : `<div class="aa-image-placeholder">no image yet</div>`;
+      return `<div class="entry-ai-art">
+        <div class="aa-image">${img}</div>
+        <div class="aa-prompt-label">Prompt</div>
+        <div class="aa-prompt">${escapeHtml(e.prompt || '')}</div>
+      </div>`;
+    },
+
+    blackout: (e) => {
+      // Words wrapped in {curly braces} are visible. Everything else gets redacted.
+      // We'll process the body and render redactions as <span class="redacted">...</span>
+      const body = String(e.body || '');
+      const html = body.replace(/(\{[^}]*\}|[^{}\s]+)/g, (match) => {
+        if (match.startsWith('{') && match.endsWith('}')) {
+          return escapeHtml(match.slice(1, -1));
+        }
+        return `<span class="redacted">${escapeHtml(match)}</span>`;
+      });
+      return `<div class="entry-blackout">${html}</div>`;
+    },
+
+    receipt: (e) => {
+      const rows = (e.items || []).map(it => `
+        <div class="rc-row">
+          <span class="rc-time">${escapeHtml(it.time || '')}</span>
+          <span class="rc-label">${escapeHtml(it.label || '')}</span>
+          <span class="rc-cost">${escapeHtml(it.cost || '')}</span>
+        </div>`).join('');
+      return `<div class="entry-receipt">
+        <div class="rc-header">
+          <div class="rc-shop">Standing Practice</div>
+          <div class="rc-shop-sub">register #1 · day ${e.__day || ''}</div>
+        </div>
+        ${rows}
+        <div class="rc-total"><span>Total</span><span>${escapeHtml(e.total || '')}</span></div>
+        <div class="rc-footer">— thank you for your practice —</div>
+      </div>`;
+    },
+
+    weather: (e) => {
+      const stats = [];
+      if (e.high) stats.push(['High', e.high]);
+      if (e.low) stats.push(['Low', e.low]);
+      if (e.wind) stats.push(['Wind', e.wind]);
+      if (e.pressure) stats.push(['Pressure', e.pressure]);
+      const statsHtml = stats.map(([k, v]) =>
+        `<div class="wx-stat"><span class="lbl">${escapeHtml(k)}</span><span>${escapeHtml(v)}</span></div>`
+      ).join('');
+      return `<div class="entry-weather">
+        <div class="wx-banner">Practice Forecast</div>
+        ${e.today ? `<div class="wx-today">${escapeHtml(e.today)}</div>` : ''}
+        ${statsHtml ? `<div class="wx-stats">${statsHtml}</div>` : ''}
+        ${e.outlook ? `<div class="wx-outlook">${escapeHtml(e.outlook)}</div>` : ''}
+      </div>`;
+    },
+
+    mtg: (e, day) => {
+      return `<div class="entry-mtg">
+        <div class="mtg-card">
+          <div class="mtg-top">
+            <div class="mtg-name">${escapeHtml(e.name || 'Untitled')}</div>
+            ${e.cost ? `<div class="mtg-cost">${escapeHtml(e.cost)}</div>` : ''}
+          </div>
+          <div class="mtg-type">${escapeHtml(e.type || '')}</div>
+          <div class="mtg-text">${escapeHtml(e.text || '')}</div>
+          ${e.flavor ? `<div class="mtg-flavor">${escapeHtml(e.flavor)}</div>` : ''}
+          <div class="mtg-footer"><span>day ${day}/60</span><span>${escapeHtml(e.stats || '')}</span></div>
+        </div>
+      </div>`;
+    },
+
+    'cd-audio': (e, day) => {
+      const bars = generateWaveform(day);
+      return `<div class="entry-audio">
+        <div class="audio-player">
+          <button class="play-btn" data-audio="${escapeHtml(e.file || '')}" aria-label="Play">▶</button>
+          <div class="audio-info">
+            <div class="audio-waveform">${bars}</div>
+            <div class="audio-duration">${escapeHtml(e.duration || '')}${e.notes ? '  ·  ' + escapeHtml(e.notes) : ''}</div>
+          </div>
+        </div>
+        ${e.file ? `<audio class="entry-audio-el" src="${escapeHtml(e.file)}" preload="metadata"></audio>` : ''}
+      </div>`;
+    },
+
+    'self-guided': (e, day) => {
+      const bars = generateWaveform(day);
+      const transcript = (e.transcript || []).map((row, i) =>
+        `<div class="ts-row" data-time="${escapeHtml(row.time || '')}"><div class="ts-time">${escapeHtml(row.time || '')}</div><div class="ts-text">${escapeHtml(row.text || '')}</div></div>`
+      ).join('');
+      return `<div class="entry-audio">
+        <div class="audio-player">
+          <button class="play-btn" data-audio="${escapeHtml(e.file || '')}" aria-label="Play">▶</button>
+          <div class="audio-info">
+            <div class="audio-waveform">${bars}</div>
+            <div class="audio-duration">${escapeHtml(e.duration || '')} · self-guided · live transcript</div>
+          </div>
+        </div>
+        ${e.file ? `<audio class="entry-audio-el" src="${escapeHtml(e.file)}" preload="metadata"></audio>` : ''}
+        <div class="transcript">${transcript}</div>
+      </div>`;
+    },
+
+    vine: (e) => videoRender(e, 'six seconds'),
+    'static-take': (e) => videoRender(e, 'fifteen seconds, locked camera'),
+    'sped-up': (e) => videoRender(e, '60× speed'),
+
+    handwritten: (e) => {
+      return `<div class="entry-handwritten">
+        ${e.image ? `<img src="${escapeHtml(e.image)}" alt="${escapeHtml(e.alt || 'Handwritten journal page')}">` : '<div class="entry-empty-text">no image</div>'}
+        ${e.alt ? `<div class="hw-caption">${escapeHtml(e.alt)}</div>` : ''}
+      </div>`;
+    },
+
+    polaroid: (e) => {
+      const cls = e.style === 'skeletal' ? 'polaroid-frame skeletal' : 'polaroid-frame';
+      return `<div class="entry-polaroid">
+        <div class="${cls}">
+          ${e.image ? `<img src="${escapeHtml(e.image)}" alt="${escapeHtml(e.caption || '')}">` : ''}
+          ${e.caption ? `<div class="pl-caption">${escapeHtml(e.caption)}</div>` : ''}
+        </div>
+      </div>`;
+    },
+
+    'color-palette': (e) => {
+      const swatches = (e.swatches || []).map(s =>
+        `<div class="palette-swatch" style="background:${escapeHtml(s.color)}" title="${escapeHtml(s.label || '')}"></div>`
+      ).join('');
+      const labels = (e.swatches || []).map(s =>
+        `<div><div class="lbl">${escapeHtml(s.label || '')}</div><div class="hex">${escapeHtml(s.color)}</div></div>`
+      ).join('');
+      return `<div class="entry-color-palette">
+        <div class="palette-row">${swatches}</div>
+        <div class="palette-labels">${labels}</div>
+      </div>`;
+    },
+
+    'floor-plan': (e) => {
+      return `<div class="entry-floor-plan">
+        ${e.image ? `<img src="${escapeHtml(e.image)}" alt="${escapeHtml(e.caption || 'Floor plan')}">` : ''}
+        ${e.caption ? `<div class="fp-caption">${escapeHtml(e.caption)}</div>` : ''}
+      </div>`;
+    },
+
+    song: (e) => {
+      // e.embed is allowed to be raw HTML (iframe). Trust the JSON author (you).
+      return `<div class="entry-song">
+        ${e.embed ? `<div class="song-embed">${e.embed}</div>` : ''}
+        ${e.line ? `<div class="song-line">${escapeHtml(e.line)}</div>` : ''}
+      </div>`;
+    },
+
+    'found-poem': (e) => {
+      const rows = (e.lines || []).map(l =>
+        `<div class="fp-row">
+          <div class="fp-time">${escapeHtml(l.time || '')}</div>
+          <div class="fp-text">${escapeHtml(l.text || '')}</div>
+        </div>`
+      ).join('');
+      const attribution = e.attribution
+        ? `<div class="fp-attribution">— ${escapeHtml(e.attribution)}</div>`
+        : '';
+      return `<div class="entry-found-poem">${rows}${attribution}</div>`;
+    },
+
+    dial: (e) => {
+      const cx = 240, cy = 240, r = 200;
+      const duration = e.duration || 60;
+      const polar = (minutes, radius) => {
+        const θ = (minutes / duration) * 2 * Math.PI;
+        return { x: cx + radius * Math.sin(θ), y: cy - radius * Math.cos(θ) };
+      };
+
+      // Quarter ticks (every 15 minutes — at 0, 15, 30, 45)
+      const majorTicks = [];
+      const quarterLabels = [];
+      for (let m = 0; m < duration; m += 15) {
+        const inner = polar(m, r - 13);
+        const outer = polar(m, r);
+        majorTicks.push(`<line class="dial-major-tick" x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}"/>`);
+        const labelPos = polar(m, r - 26);
+        quarterLabels.push(`<text class="dial-quarter" x="${labelPos.x.toFixed(1)}" y="${labelPos.y.toFixed(1)}">${m}</text>`);
+      }
+
+      // Minor ticks (every 5 minutes)
+      const minorTicks = [];
+      for (let m = 0; m < duration; m += 5) {
+        if (m % 15 === 0) continue;
+        const inner = polar(m, r - 6);
+        const outer = polar(m, r);
+        minorTicks.push(`<line class="dial-minor-tick" x1="${inner.x.toFixed(1)}" y1="${inner.y.toFixed(1)}" x2="${outer.x.toFixed(1)}" y2="${outer.y.toFixed(1)}"/>`);
+      }
+
+      // Highlighted marks with leader lines to right-side labels.
+      // Stacking: each label prefers its tick's y; collisions push down by min spacing.
+      const marks = [...(e.marks || [])].sort((a, b) => (a.minutes || 0) - (b.minutes || 0));
+      const labelX = 500;
+      const minLabelSpacing = 60;
+      const labelMinY = 60;
+      const labelYs = [];
+      marks.forEach((mk, i) => {
+        const ideal = polar(mk.minutes, r + 4).y;
+        const floor = i === 0 ? labelMinY : labelYs[i - 1] + minLabelSpacing;
+        labelYs.push(Math.max(ideal, floor));
+      });
+
+      const markEls = marks.map((mk, i) => {
+        const tickIn = polar(mk.minutes, r - 13);
+        const tickOut = polar(mk.minutes, r + 4);
+        const leaderStart = polar(mk.minutes, r + 9);
+        const labelY = labelYs[i];
+        const midX = (leaderStart.x + labelX - 12) / 2;
+        return `
+          <circle class="dial-mark-halo" cx="${tickOut.x.toFixed(1)}" cy="${tickOut.y.toFixed(1)}" r="7"/>
+          <line class="dial-tick-mark" x1="${tickIn.x.toFixed(1)}" y1="${tickIn.y.toFixed(1)}" x2="${tickOut.x.toFixed(1)}" y2="${tickOut.y.toFixed(1)}"/>
+          <circle class="dial-mark-dot" cx="${tickOut.x.toFixed(1)}" cy="${tickOut.y.toFixed(1)}" r="2.8"/>
+          <path class="dial-leader" d="M ${leaderStart.x.toFixed(1)} ${leaderStart.y.toFixed(1)} Q ${midX.toFixed(1)} ${leaderStart.y.toFixed(1)} ${(labelX - 12).toFixed(1)} ${labelY.toFixed(1)} L ${labelX.toFixed(1)} ${labelY.toFixed(1)}"/>
+          <text class="dial-label-time" x="${labelX}" y="${(labelY - 6).toFixed(1)}">${escapeHtml(mk.time || '')}</text>
+          <text class="dial-label-text" x="${labelX}" y="${(labelY + 14).toFixed(1)}">${escapeHtml(mk.text || '')}</text>
+        `;
+      }).join('');
+
+      const caption = e.caption
+        ? `<div class="dial-caption">${escapeHtml(e.caption)}</div>`
+        : '';
+
+      return `<div class="entry-dial">
+        <svg class="dial-svg" viewBox="0 0 820 480" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Sixty-minute practice dial">
+          <circle class="dial-ring" cx="${cx}" cy="${cy}" r="${r}"/>
+          <circle class="dial-inner-ring" cx="${cx}" cy="${cy}" r="${(r - 6).toFixed(1)}"/>
+          ${minorTicks.join('')}
+          ${majorTicks.join('')}
+          ${quarterLabels.join('')}
+          <text class="dial-center-sub" x="${cx}" y="${(cy - 8).toFixed(1)}">DURATION</text>
+          <text class="dial-center-label" x="${cx}" y="${(cy + 12).toFixed(1)}">sixty minutes</text>
+          ${markEls}
+        </svg>
+        ${caption}
+      </div>`;
+    },
+  };
+
+  function videoRender(e, defaultCap) {
+    return `<div class="entry-video">
+      ${e.file ? `<video src="${escapeHtml(e.file)}" controls preload="metadata" playsinline></video>` : ''}
+      <div class="video-caption">${escapeHtml(e.caption || defaultCap)}</div>
+    </div>`;
+  }
+
+  function generateWaveform(seed, count = 44) {
+    const bars = [];
+    for (let i = 0; i < count; i++) {
+      const h = 8 + Math.sin(i * 0.38 + seed * 0.3) * 10 + Math.sin(i * 0.13 + seed * 0.9) * 8 + Math.abs(Math.sin(seed * 7 + i)) * 4;
+      const height = Math.min(28, Math.max(4, Math.abs(h)));
+      bars.push(`<div class="audio-bar" style="height:${height}px"></div>`);
+    }
+    return bars.join('');
+  }
+
+  function markdownLight(text) {
+    // *italic* and **bold** only. Then escape the rest.
+    let html = escapeHtml(text);
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    return html;
+  }
+
+  const FORMAT_LABELS = {
+    haiku: 'Haiku',
+    rigorous: 'Reflection',
+    pointers: 'Pointers',
+    letter: 'Letter',
+    recipe: 'Recipe',
+    'field-notes': 'Field notes',
+    footnote: 'Footnote',
+    'ai-art': 'AI art',
+    blackout: 'Blackout poem',
+    receipt: 'Receipt',
+    weather: 'Weather report',
+    mtg: 'Card',
+    'cd-audio': 'Audio',
+    'self-guided': 'Self-guided audio',
+    vine: 'Vine · 6 sec',
+    'static-take': 'Static take · 15 sec',
+    'sped-up': 'Sped-up · 60×',
+    handwritten: 'Handwritten',
+    polaroid: 'Polaroid',
+    'color-palette': 'Color palette',
+    'floor-plan': 'Floor plan',
+    song: 'Song',
+    'found-poem': 'Found poem',
+    dial: 'Practice dial'
+  };
+
+  // ============================================================
+  //   CALENDAR
+  // ============================================================
+  function positionRibbon() {
+    if (activeView !== 'entry') {
+      document.getElementById('ribbon').style.display = 'none';
+      return;
+    }
+    const selectedCell = document.querySelector('.day-cell.selected');
+    const ribbon = document.getElementById('ribbon');
+    const grid = document.getElementById('calendar-grid');
+    if (!selectedCell) { ribbon.style.display = 'none'; return; }
+    const cellRect = selectedCell.getBoundingClientRect();
+    const gridRect = grid.getBoundingClientRect();
+    const left = cellRect.left - gridRect.left + (cellRect.width / 2) - 11;
+    const cellBottomRelativeToGrid = cellRect.bottom - gridRect.top;
+    const height = cellBottomRelativeToGrid + 16;
+    ribbon.style.display = 'block';
+    ribbon.style.left = left + 'px';
+    ribbon.style.top = '0px';
+    ribbon.style.height = height + 'px';
+  }
+
+  function renderCalendar() {
+    document.getElementById('month-label').textContent = `${MONTH_NAMES[currentMonth]} ${currentYear}`;
+    const grid = document.getElementById('calendar-grid');
+    [...grid.children].forEach(child => { if (child.id !== 'ribbon') grid.removeChild(child); });
+
+    const firstDay = new Date(currentYear, currentMonth, 1);
+    const startWeekday = firstDay.getDay();
+    const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+    const fragment = document.createDocumentFragment();
+
+    for (let i = 0; i < startWeekday; i++) {
+      const empty = document.createElement('div');
+      empty.className = 'day-cell empty';
+      fragment.appendChild(empty);
+    }
+
+    for (let d = 1; d <= daysInMonth; d++) {
+      const date = new Date(currentYear, currentMonth, d);
+      const dayNum = dayNumberFor(date);
+      const cell = document.createElement('button');
+      cell.className = 'day-cell';
+      cell.textContent = d;
+
+      if (dayNum === null) {
+        cell.classList.add('out-of-range');
+      } else {
+        cell.dataset.day = dayNum;
+        if (ENTRIES[String(dayNum)]) cell.classList.add('completed');
+        if (sameDay(date, TODAY)) cell.classList.add('today');
+        if (activeView === 'entry' && dayNum === selectedDay) cell.classList.add('selected');
+        cell.addEventListener('click', () => {
+          selectedDay = dayNum;
+          activeView = 'entry';
+          renderCalendar();
+          renderEntry();
+          positionRibbon();
+          updateFooter();
+          if (window.matchMedia('(max-width: 960px)').matches) {
+            setTimeout(() => {
+              document.getElementById('entry-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 80);
+          }
+        });
+      }
+      fragment.appendChild(cell);
+    }
+    grid.appendChild(fragment);
+    requestAnimationFrame(positionRibbon);
+  }
+
+  // ============================================================
+  //   ENTRY PANEL
+  // ============================================================
+  function renderEntry() {
+    const panel = document.getElementById('entry-panel');
+
+    if (activeView === 'about') { renderAbout(); return; }
+
+    const entry = ENTRIES[String(selectedDay)];
+    const date = dateForDayNumber(selectedDay);
+    const dateString = `${WEEKDAY[date.getDay()]}, ${MONTH_SHORT[date.getMonth()]} ${date.getDate()}`;
+
+    if (!entry) {
+      const upcoming = date >= TODAY;
+      panel.innerHTML = `
+        <div class="entry-empty">
+          <div class="entry-empty-icon">${upcoming ? '❧' : '—'}</div>
+          <div class="entry-empty-text">${upcoming ? 'not yet written' : 'no entry'}</div>
+          <div class="entry-empty-sub">${dateString} · Day ${selectedDay} of 60</div>
+        </div>`;
+      return;
+    }
+
+    const renderer = renderers[entry.format];
+    let bodyHtml;
+    if (renderer) {
+      const augmented = Object.assign({}, entry, { __day: selectedDay });
+      bodyHtml = renderer(augmented, selectedDay);
+    } else {
+      bodyHtml = `<div class="entry-empty"><div class="entry-empty-text">unknown format: ${escapeHtml(entry.format || '')}</div></div>`;
+    }
+
+    const isToday = sameDay(date, TODAY);
+    const fmtLabel = FORMAT_LABELS[entry.format] || entry.format || 'Entry';
+
+    panel.innerHTML = `
+      <div class="entry">
+        <div class="entry-header">
+          <div class="entry-day-badge">
+            <span class="entry-day-num">Day ${selectedDay}</span>
+            <span class="entry-day-total">of 60</span>
+          </div>
+          <div class="entry-date">${dateString}</div>
+          <div class="entry-meta-line">
+            <span class="format-chip">${escapeHtml(fmtLabel)}</span>
+            ${isToday ? '<span class="today-pill">today</span>' : ''}
+          </div>
+        </div>
+        <div class="entry-body">${bodyHtml}</div>
+        <div class="entry-footer">
+          <div class="entry-nav">
+            <button class="nav-btn" id="prev-day" ${selectedDay === 1 ? 'disabled' : ''}>← previous</button>
+            <button class="nav-btn" id="next-day" ${selectedDay === TOTAL_DAYS ? 'disabled' : ''}>next →</button>
+          </div>
+          <div class="entry-timestamp">entry_${String(selectedDay).padStart(3,'0')}</div>
+        </div>
+      </div>`;
+
+    document.getElementById('prev-day')?.addEventListener('click', () => jumpDay(-1));
+    document.getElementById('next-day')?.addEventListener('click', () => jumpDay(1));
+
+    wireUpAudio(panel);
+  }
+
+  function wireUpAudio(panel) {
+    panel.querySelectorAll('.play-btn').forEach(btn => {
+      const audioEl = btn.closest('.entry-audio')?.querySelector('audio');
+      if (!audioEl) return;
+      btn.addEventListener('click', () => {
+        if (audioEl.paused) {
+          audioEl.play();
+          btn.textContent = '❚❚';
+          btn.classList.add('playing');
+        } else {
+          audioEl.pause();
+          btn.textContent = '▶';
+          btn.classList.remove('playing');
+        }
+      });
+      audioEl.addEventListener('ended', () => {
+        btn.textContent = '▶';
+        btn.classList.remove('playing');
+      });
+
+      // Self-guided transcript syncing
+      const transcript = btn.closest('.entry-audio')?.querySelector('.transcript');
+      if (transcript) {
+        const rows = [...transcript.querySelectorAll('.ts-row')];
+        const times = rows.map(r => parseTime(r.dataset.time));
+        audioEl.addEventListener('timeupdate', () => {
+          const t = audioEl.currentTime;
+          let activeIdx = -1;
+          for (let i = 0; i < times.length; i++) if (times[i] !== null && times[i] <= t) activeIdx = i;
+          rows.forEach((r, i) => r.classList.toggle('active', i === activeIdx));
+          if (activeIdx >= 0) rows[activeIdx].scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+        });
+      }
+    });
+  }
+
+  function parseTime(s) {
+    if (!s) return null;
+    const parts = String(s).split(':').map(Number);
+    if (parts.some(isNaN)) return null;
+    if (parts.length === 2) return parts[0] * 60 + parts[1];
+    if (parts.length === 3) return parts[0] * 3600 + parts[1] * 60 + parts[2];
+    return null;
+  }
+
+  function jumpDay(delta) {
+    const newDay = selectedDay + delta;
+    if (newDay < 1 || newDay > TOTAL_DAYS) return;
+    selectedDay = newDay;
+    activeView = 'entry';
+    const d = dateForDayNumber(selectedDay);
+    currentMonth = d.getMonth();
+    currentYear = d.getFullYear();
+    renderCalendar();
+    renderEntry();
+    positionRibbon();
+    updateFooter();
+  }
+
+  // ============================================================
+  //   ABOUT VIEW
+  // ============================================================
+  function renderAbout() {
+    const panel = document.getElementById('entry-panel');
+    const sections = (ABOUT.sections || []).map(s => `
+      <div class="about-section">
+        <h3>${escapeHtml(s.heading)}</h3>
+        <p>${escapeHtml(s.body)}</p>
+      </div>`).join('');
+    panel.innerHTML = `
+      <div class="entry about-view">
+        <div class="entry-header">
+          <div class="about-eyebrow">about this project</div>
+          <div class="about-title">${escapeHtml(ABOUT.title || '')}</div>
+          ${ABOUT.subtitle ? `<div class="about-subtitle">${escapeHtml(ABOUT.subtitle)}</div>` : ''}
+        </div>
+        <div class="entry-body">
+          ${sections}
+        </div>
+        <div class="about-back">
+          <button class="nav-btn" id="about-close">← back to journal</button>
+        </div>
+      </div>`;
+    document.getElementById('about-close').addEventListener('click', () => {
+      activeView = 'entry';
+      document.getElementById('about-link').classList.remove('active');
+      renderCalendar();
+      renderEntry();
+      positionRibbon();
+      updateFooter();
+    });
+  }
+
+  function showAbout() {
+    activeView = 'about';
+    document.getElementById('about-link').classList.add('active');
+    renderCalendar();
+    renderEntry();
+    positionRibbon();
+    document.getElementById('footer-page').textContent = '—';
+  }
+
+  function openRandom() {
+    const dayKeys = Object.keys(ENTRIES);
+    if (dayKeys.length === 0) return;
+    let pick = dayKeys[Math.floor(Math.random() * dayKeys.length)];
+    if (dayKeys.length > 1 && parseInt(pick, 10) === selectedDay && activeView === 'entry') {
+      // Avoid landing on the same day twice in a row
+      let tries = 0;
+      while (parseInt(pick, 10) === selectedDay && tries < 8) {
+        pick = dayKeys[Math.floor(Math.random() * dayKeys.length)];
+        tries++;
+      }
+    }
+    selectedDay = parseInt(pick, 10);
+    activeView = 'entry';
+    document.getElementById('about-link').classList.remove('active');
+    const d = dateForDayNumber(selectedDay);
+    currentMonth = d.getMonth();
+    currentYear = d.getFullYear();
+    renderCalendar();
+    renderEntry();
+    positionRibbon();
+    updateFooter();
+  }
+
+  function updateRandomButtonVisibility() {
+    const btn = document.getElementById('random-link');
+    if (!btn) return;
+    if (Object.keys(ENTRIES).length > 0) btn.classList.remove('hidden');
+    else btn.classList.add('hidden');
+  }
+
+  // ============================================================
+  //   FOOTER + PROGRESS
+  // ============================================================
+  function updateFooter() {
+    if (activeView === 'about') {
+      document.getElementById('footer-page').textContent = '—';
+    } else {
+      document.getElementById('footer-page').textContent = String(selectedDay).padStart(3, '0');
+    }
+  }
+
+  function updateProgress() {
+    const completed = Object.keys(ENTRIES).filter(k => !k.startsWith('_')).length;
+    const pct = (completed / TOTAL_DAYS) * 100;
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-count').textContent = completed;
+  }
+
+  function updateInfoDates() {
+    const end = new Date(START_DATE);
+    end.setDate(end.getDate() + TOTAL_DAYS - 1);
+    const startStr = `${MONTH_SHORT[START_DATE.getMonth()]} ${START_DATE.getDate()}`;
+    const endStr = `${MONTH_SHORT[end.getMonth()]} ${end.getDate()}`;
+    const el = document.getElementById('info-dates');
+    if (el) el.textContent = `${startStr} — ${endStr}`;
+  }
+
+  // ============================================================
+  //   WRITE-MODE PANEL (admin)
+  // ============================================================
+  function initWriteMode() {
+    document.body.classList.add('write-mode');
+    const todayDayNum = dayNumberFor(TODAY);
+    const dayLabel = todayDayNum && todayDayNum >= 1 && todayDayNum <= TOTAL_DAYS
+      ? `Day ${todayDayNum} of 60`
+      : 'Outside the challenge window';
+    document.getElementById('wp-day').textContent = dayLabel;
+
+    setTodaysPrompt();
+
+    document.getElementById('wp-shuffle').addEventListener('click', () => setTodaysPrompt('any'));
+    document.getElementById('wp-bound').addEventListener('click', () => setTodaysPrompt('format'));
+    document.getElementById('wp-constraint').addEventListener('click', () => setTodaysPrompt('constraint'));
+    document.getElementById('wp-pool-toggle').addEventListener('click', () => {
+      document.getElementById('write-panel').classList.toggle('show-pool');
+    });
+    document.getElementById('wp-close').addEventListener('click', () => {
+      document.body.classList.remove('write-mode');
+    });
+    renderPromptPool();
+  }
+
+  function setTodaysPrompt(mode = 'any') {
+    if (!PROMPTS) return;
+    const todayDayNum = dayNumberFor(TODAY);
+    const wk = todayDayNum ? weekFor(todayDayNum) : null;
+    let candidates = [];
+    if (mode === 'format') {
+      candidates = PROMPTS.formatBound.map(fb => ({ kind: 'format', text: fb.text, format: fb.format }));
+    } else if (mode === 'constraint') {
+      candidates = (PROMPTS.constraint || []).map(c => ({ kind: 'constraint', text: c }));
+    } else {
+      // any: pull weekly prompts for current week + bonuses
+      if (wk && PROMPTS.weekly[String(wk)]) {
+        candidates = candidates.concat(PROMPTS.weekly[String(wk)].prompts.map(p => ({ kind: 'week', text: p, week: wk })));
+      }
+      candidates = candidates.concat(PROMPTS.formatBound.map(fb => ({ kind: 'format', text: fb.text, format: fb.format })));
+      candidates = candidates.concat((PROMPTS.constraint || []).map(c => ({ kind: 'constraint', text: c })));
+    }
+    if (!candidates.length) return;
+    const pick = candidates[Math.floor(Math.random() * candidates.length)];
+    document.getElementById('wp-prompt').textContent = pick.text;
+    let meta = '';
+    if (pick.kind === 'week') meta = `from week ${pick.week} — ${PROMPTS.weekly[String(pick.week)].name}`;
+    else if (pick.kind === 'format') meta = `format-bound — ${pick.format}`;
+    else if (pick.kind === 'constraint') meta = `constraint`;
+    document.getElementById('wp-prompt-meta').textContent = meta;
+  }
+
+  function renderPromptPool() {
+    const pool = document.getElementById('wp-pool');
+    let html = '';
+    for (const wnum of Object.keys(PROMPTS.weekly)) {
+      const wk = PROMPTS.weekly[wnum];
+      html += `<div class="pool-section">Week ${wnum} — ${escapeHtml(wk.name)}</div>`;
+      for (const p of wk.prompts) html += `<div class="pool-item" data-text="${escapeHtml(p)}">${escapeHtml(p)}</div>`;
+    }
+    html += `<div class="pool-section">Format-bound</div>`;
+    for (const fb of PROMPTS.formatBound) {
+      html += `<div class="pool-item" data-text="${escapeHtml(fb.text)}"><span class="pi-fmt">${escapeHtml(fb.format)}</span>${escapeHtml(fb.text)}</div>`;
+    }
+    html += `<div class="pool-section">Constraint</div>`;
+    for (const c of PROMPTS.constraint || []) {
+      html += `<div class="pool-item" data-text="${escapeHtml(c)}">${escapeHtml(c)}</div>`;
+    }
+    pool.innerHTML = html;
+    pool.querySelectorAll('.pool-item').forEach(el => {
+      el.addEventListener('click', () => {
+        document.getElementById('wp-prompt').textContent = el.dataset.text;
+        document.getElementById('wp-prompt-meta').textContent = 'manually selected';
+      });
+    });
+  }
+
+  // ============================================================
+  //   INIT
+  // ============================================================
+  async function init() {
+    try {
+      const [eRes, pRes] = await Promise.all([
+        fetch('entries.json', { cache: 'no-store' }),
+        fetch('prompts.json', { cache: 'no-store' })
+      ]);
+      const entriesData = await eRes.json();
+      PROMPTS = await pRes.json();
+
+      CONFIG = entriesData.config;
+      ABOUT = entriesData._about;
+      // Filter out keys starting with underscore (examples, about, etc.)
+      ENTRIES = {};
+      for (const k of Object.keys(entriesData.entries || {})) {
+        if (!k.startsWith('_')) ENTRIES[k] = entriesData.entries[k];
+      }
+
+      const [yr, mo, dy] = CONFIG.startDate.split('-').map(Number);
+      START_DATE = new Date(yr, mo - 1, dy);
+      TOTAL_DAYS = CONFIG.totalDays || 60;
+      TODAY = new Date();
+      TODAY.setHours(0, 0, 0, 0);
+
+      // Default to today's day if in window, else day 1
+      const todayDayNum = dayNumberFor(TODAY);
+      selectedDay = todayDayNum || 1;
+      const sd = dateForDayNumber(selectedDay);
+      currentMonth = sd.getMonth();
+      currentYear = sd.getFullYear();
+
+      updateInfoDates();
+      updateProgress();
+      updateRandomButtonVisibility();
+      renderCalendar();
+      showAbout();        // default landing view
+      setTimeout(positionRibbon, 50);
+      setTimeout(positionRibbon, 300);
+
+      // Wire up about + random
+      document.getElementById('about-link').addEventListener('click', showAbout);
+      document.getElementById('random-link').addEventListener('click', openRandom);
+      document.getElementById('footer-about-link').addEventListener('click', (e) => {
+        e.preventDefault();
+        showAbout();
+      });
+
+      // Month navigation
+      document.getElementById('prev-month').addEventListener('click', () => {
+        if (currentMonth === 0) { currentMonth = 11; currentYear--; } else currentMonth--;
+        renderCalendar();
+        positionRibbon();
+      });
+      document.getElementById('next-month').addEventListener('click', () => {
+        if (currentMonth === 11) { currentMonth = 0; currentYear++; } else currentMonth++;
+        renderCalendar();
+        positionRibbon();
+      });
+
+      // ?write=1 enables admin view
+      const params = new URLSearchParams(window.location.search);
+      if (params.has('write')) initWriteMode();
+
+      window.addEventListener('resize', positionRibbon);
+    } catch (err) {
+      console.error('Failed to init journal', err);
+      document.getElementById('entry-panel').innerHTML = `
+        <div class="entry-empty">
+          <div class="entry-empty-icon">×</div>
+          <div class="entry-empty-text">failed to load journal data</div>
+          <div class="entry-empty-sub">check the console</div>
+        </div>`;
+    }
+  }
+
+  init();
+</script>
+</body>
+</html>

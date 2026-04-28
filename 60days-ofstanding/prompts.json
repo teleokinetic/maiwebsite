@@ -1,0 +1,130 @@
+{
+  "weekly": {
+    "1": {
+      "name": "Starting Conditions",
+      "prompts": [
+        "What is the starting atmosphere of this challenge?",
+        "What does standing ask of me today?",
+        "Where does the body already know how to practice — and where can I trust it to figure out the rest?",
+        "What assumptions am I running about how the body should feel?",
+        "What did I enjoy most today?"
+      ]
+    },
+    "2": {
+      "name": "Support",
+      "prompts": [
+        "What is the ground already giving?",
+        "Where am I resisting gravity?",
+        "What happens when I let support become more obvious?",
+        "What part of the body feels most trustworthy today? and what is it like to rest there?"
+      ]
+    },
+    "3": {
+      "name": "Small Dance",
+      "prompts": [
+        "Where is the small dance easiest to find?",
+        "Where is the small dance faint, and where could I spend more time looking?",
+        "What changes when more joints are included?",
+        "What does the small dance teach about posture today?"
+      ]
+    },
+    "4": {
+      "name": "Energy",
+      "prompts": [
+        "Describe the experience of moving energy",
+        "Where does sensation stream, pulse, spread, or gather?",
+        "What is the difference between sensation and interpretation today?",
+        "What happens when energy is allowed to move without being managed?"
+      ]
+    },
+    "5": {
+      "name": "Friction",
+      "prompts": [
+        "What is the main friction in practice today?",
+        "What does friction reveal that ease would hide?",
+        "What happens when I include my feelings about the practice?"
+      ]
+    },
+    "6": {
+      "name": "Enjoyment",
+      "prompts": [
+        "What was enjoyable, even slightly?",
+        "What conditions made practice more interesting?",
+        "Where did pleasure appear without being chased?",
+        "What does the body want more of?"
+      ]
+    },
+    "7": {
+      "name": "Precision",
+      "prompts": [
+        "What coordination demanded precision today?",
+        "What did precision teach me today?"
+      ]
+    },
+    "8": {
+      "name": "Standing",
+      "prompts": [
+        "Where do I hold myself up unnecessarily?",
+        "What does standing make available that sitting does not?"
+      ]
+    },
+    "9": {
+      "name": "Namkhor",
+      "prompts": [
+        "Which movement feels most alive right now?",
+        "What is the elemental quality of today's practice?",
+        "What does the movement reveal about space?",
+        "What remains after the movement stops?"
+      ]
+    },
+    "10": {
+      "name": "Daily Life Transfer",
+      "prompts": [
+        "Where did practice show up outside formal practice?",
+        "What ordinary activity became a practice context?",
+        "What changed in walking, sitting, working, or speaking?",
+        "What did I remember without prompting?",
+        "What does the body now know how to find?"
+      ]
+    },
+    "11": {
+      "name": "View",
+      "prompts": [
+        "What did practice show about effort and allowing?"
+      ]
+    },
+    "12": {
+      "name": "Integration",
+      "prompts": [
+        "What has changed since Day 1?",
+        "Which practice thread wants to continue?",
+        "What did this challenge teach me about discipline?"
+      ]
+    }
+  },
+  "formatBound": [
+    { "format": "letter",          "text": "A letter to your body on the morning of Day 1 — what you're asking it to do, and what you're asking it not to do." },
+    { "format": "floor-plan",      "text": "A floor plan of where you stood today. Mark the cardinal directions. X marks the spot." },
+    { "format": "polaroid",        "text": "One photo of where the small dance was loudest today. One sentence underneath." },
+    { "format": "weather",         "text": "Today's energy as a weather forecast — temperature, conditions, wind, the long-range outlook." },
+    { "format": "receipt",         "text": "An itemized receipt for today's practice. Line items, costs, total." },
+    { "format": "recipe",          "text": "A recipe for the part of practice that worked today. Ingredients and method." },
+    { "format": "field-notes",     "text": "Today's practice as field notes — clinical, third-person, no metaphor. Observe yourself like a stranger in a clearing." },
+    { "format": "mtg",             "text": "A creature, spell, or land that names what standing made possible today. Cost, type, text, flavor." },
+    { "format": "color-palette",   "text": "Three to five color swatches with tiny labels — the colors of today's namkhor. \"The tan of the carpet at minute 14.\"" },
+    { "format": "footnote",        "text": "Today's practice as a single footnote — citing the books, songs, places, people, or memories that showed up." },
+    { "format": "blackout",        "text": "Write a long reflection. Then black out everything except what is still true an hour later." },
+    { "format": "ai-art",          "text": "An AI image prompt that encapsulates the joys and difficulties of these sixty days. One image. One prompt." },
+    { "format": "vine",            "text": "Six seconds of video. The smallest unit of today's practice that still shows what it was." },
+    { "format": "static-take",     "text": "Fifteen seconds, locked camera, no cut. The shot of you not trying to be on camera." },
+    { "format": "sped-up",         "text": "Today at 60× speed. One minute of video for sixty minutes of practice." },
+    { "format": "self-guided",     "text": "Record yourself guiding yourself through the whole practice. Talk it through. The audio + transcript is the entry." },
+    { "format": "cd-audio",        "text": "After practice, sit with the recorder. Talk for as long as you have to. Stop when you stop." },
+    { "format": "handwritten",     "text": "Handwrite today's entry. Photograph the page. The handwriting is the entry." },
+    { "format": "song",            "text": "What song is this practice today? Embed it. One line about why." },
+    { "format": "pointers",        "text": "Today's practice referenced — knowingly or not — these things. Cite them like a syllabus." }
+  ],
+  "constraint": [
+    "Today: a single sentence. No semicolons."
+  ]
+}

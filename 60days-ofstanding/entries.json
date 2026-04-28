@@ -1,0 +1,68 @@
+{
+  "config": {
+    "startDate": "2026-04-27",
+    "totalDays": 60,
+    "title": "Sixty Days of Standing",
+    "description": "60 days of 60 minutes of standing meditation."
+  },
+
+  "entries": {
+    "1": {
+      "format": "dial",
+      "duration": 60,
+      "marks": [
+        { "time": "04:37", "minutes": 4.62, "text": "You have mass, probably." },
+        { "time": "05:02", "minutes": 5.03, "text": "Mass is never entirely still." },
+        { "time": "06:48", "minutes": 6.80, "text": "Nothing is lifting away from the ground." },
+        { "time": "17:09", "minutes": 17.15, "text": "Every part of you is listening to gravity." }
+      ],
+      "caption": "All four landed in the first seventeen minutes of an hour-long session."
+    }
+  },
+
+  "_about": {
+    "title": "About this project",
+    "subtitle": "",
+    "sections": [
+      {
+        "heading": "Intention",
+        "body": "This is part art project, part experiment, and part fun n games. I think this might be an interesting artifact for myself and others!"
+      },
+      {
+        "heading": "Finding my edge",
+        "body": "I typically do anywhere from 20 to 40 minutes of standing practice a day. This will definitely push my edge, and force me to prioritize more."
+      },
+      {
+        "heading": "What you'll find",
+        "body": "Each day has one journal entry, but the format varies widely!"
+      }
+    ]
+  },
+
+  "_examples": {
+    "haiku":         { "format": "haiku", "lines": ["first day on earth", "feet find the floor again", "hello, world"] },
+    "rigorous":      { "format": "rigorous", "body": "Long-form journal text. Paragraphs separated by blank lines. Markdown-light: *italic* and **bold** supported." },
+    "pointers":      { "format": "pointers", "intro": "Where today's practice sent me:", "items": [{ "title": "Steve Paxton, Material for the Spine", "note": "the chapter on weight" }, { "title": "Annie Dillard, The Writing Life", "link": "https://example.com" }] },
+    "letter":        { "format": "letter", "to": "Body", "body": "Dear body, …", "sign": "— T" },
+    "recipe":        { "format": "recipe", "title": "How to stand for sixty minutes", "ingredients": ["1 floor", "2 feet, slightly apart", "a willingness to be bored"], "method": ["Place feet.", "Wait.", "Continue."] },
+    "field-notes":   { "format": "field-notes", "subject": "Subject 14", "body": "Subject stood for the duration. Right knee released at 0:34:12. No further notable events." },
+    "footnote":      { "format": "footnote", "body": "Today's practice referenced¹ several recurring touchstones², and one new one³.", "citations": ["Paxton, S. \"Material for the Spine.\" 1986.", "The kitchen window at 7:14am.", "An overheard line from a podcast about geology."] },
+    "ai-art":        { "format": "ai-art", "prompt": "A figure standing in a sun-faded room, wuji posture, 35mm film, soft contrast, the air visible.", "image": "assets/images/day-12.png" },
+    "blackout":      { "format": "blackout", "body": "I {woke up} early {and tried} to {stand for an hour} but {my} {mind} {kept} {wandering} {to} {the} {coffee} {I had not yet made}." },
+    "receipt":       { "format": "receipt", "items": [{ "time": "0:00–0:03", "label": "Arrive / snapshot", "cost": "—" }, { "time": "0:03–0:18", "label": "Radical small dance", "cost": "—" }, { "time": "0:18–0:33", "label": "Wuji", "cost": "—" }, { "time": "0:33–1:00", "label": "Namkhor", "cost": "—" }], "total": "60 min" },
+    "weather":       { "format": "weather", "today": "Bright, with passing clouds of impatience. Steady from the south.", "high": "vivid", "low": "scattered", "wind": "intermittent", "outlook": "tomorrow: similar, perhaps with rain." },
+    "mtg":           { "format": "mtg", "name": "Standing Still", "cost": "{1}{W}", "type": "Creature — Human Meditator", "text": "When Standing Still enters the battlefield, take a breath.\n\nWhenever you would do something, consider not doing it.", "flavor": "The hardest move is the one you don't make.", "stats": "1/3" },
+    "cd-audio":      { "format": "cd-audio", "file": "assets/audio/day-3.mp3", "duration": "3:41", "notes": "kitchen · rain on the roof" },
+    "self-guided":   { "format": "self-guided", "file": "assets/audio/day-16-guided.mp3", "duration": "60:00", "transcript": [{ "time": "0:00", "text": "Alright. Beginning. Feet on the ground." }, { "time": "0:14", "text": "Already noticing the left knee wants to lock." }, { "time": "1:02", "text": "Settling. The shoulder blades are still arguing." }] },
+    "vine":          { "format": "vine", "file": "assets/video/day-7.mp4", "caption": "the smallest unit that still shows what it was" },
+    "static-take":   { "format": "static-take", "file": "assets/video/day-22.mp4", "caption": "fifteen seconds, locked camera" },
+    "sped-up":       { "format": "sped-up", "file": "assets/video/day-30.mp4", "caption": "60 minutes at 60×" },
+    "handwritten":   { "format": "handwritten", "image": "assets/images/day-5.jpg", "alt": "Photo of a handwritten journal page in cursive ink." },
+    "polaroid":      { "format": "polaroid", "image": "assets/images/day-11.jpg", "caption": "where the small dance was loudest", "style": "photo" },
+    "color-palette": { "format": "color-palette", "swatches": [{ "color": "#9c8260", "label": "the tan of the carpet at minute 14" }, { "color": "#5a4530", "label": "the umber of an old book under the lamp" }, { "color": "#c9b88a", "label": "the wheat-light from the window" }, { "color": "#3d2412", "label": "the chestnut of my own shadow" }] },
+    "floor-plan":    { "format": "floor-plan", "image": "assets/images/day-9.png", "caption": "kitchen, looking south. X = where I stood." },
+    "song":          { "format": "song", "embed": "<iframe style=\"border-radius:12px\" src=\"https://open.spotify.com/embed/track/example\" width=\"100%\" height=\"152\" frameBorder=\"0\" allow=\"autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture\" loading=\"lazy\"></iframe>", "line": "this song felt like the room felt." },
+    "found-poem":    { "format": "found-poem", "lines": [{ "time": "04:37", "text": "You have mass, probably." }, { "time": "05:02", "text": "Mass is never entirely still." }, { "time": "06:48", "text": "Nothing is lifting away from the ground." }, { "time": "17:09", "text": "Every part of you is listening to gravity." }], "attribution": "Day 1, first seventeen minutes." },
+    "dial":          { "format": "dial", "duration": 60, "marks": [{ "time": "04:37", "minutes": 4.62, "text": "You have mass, probably." }, { "time": "05:02", "minutes": 5.03, "text": "Mass is never entirely still." }, { "time": "06:48", "minutes": 6.80, "text": "Nothing is lifting away from the ground." }, { "time": "17:09", "minutes": 17.15, "text": "Every part of you is listening to gravity." }], "caption": "Insights cluster in the first seventeen minutes." }
+  }
+}
