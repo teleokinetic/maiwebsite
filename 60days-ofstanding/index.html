@@ -712,20 +712,198 @@
   }
 
   /* ===== FORMAT: BLACKOUT ===== */
+  .entry-blackout-art {
+    --marker: #130d08;
+    --marker-soft: #24170c;
+    --paper-edge: rgba(61, 36, 18, 0.28);
+    --highlight: #fff3a6;
+    --highlight-edge: #d9b744;
+    --blue-note: #2f6174;
+    --stamp-red: #b73a3a;
+    padding: 4px 0 18px;
+  }
+  .blackout-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: var(--chestnut);
+  }
+  .blackout-stamp {
+    color: var(--stamp-red);
+    border: 1px solid rgba(183, 58, 58, 0.45);
+    border-radius: 3px;
+    padding: 4px 7px 3px;
+    transform: rotate(-2deg);
+    box-shadow: 0 1px 0 rgba(183, 58, 58, 0.18);
+    white-space: nowrap;
+  }
+  .blackout-source {
+    color: var(--ink-muted);
+    text-align: right;
+  }
+  .blackout-sheet-wrap {
+    position: relative;
+    padding: 12px 8px 10px;
+  }
+  .blackout-sheet-wrap::before,
+  .blackout-sheet-wrap::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    height: 18px;
+    width: 74px;
+    background:
+      linear-gradient(90deg, rgba(255, 248, 202, 0.72), rgba(244, 222, 142, 0.55)),
+      repeating-linear-gradient(90deg, transparent 0 7px, rgba(107, 61, 28, 0.08) 7px 8px);
+    border: 1px solid rgba(107, 61, 28, 0.14);
+    box-shadow: 0 2px 5px rgba(80, 45, 18, 0.12);
+    opacity: 0.9;
+  }
+  .blackout-sheet-wrap::before {
+    top: 4px;
+    left: 22px;
+    transform: rotate(-5deg);
+  }
+  .blackout-sheet-wrap::after {
+    right: 26px;
+    bottom: 2px;
+    transform: rotate(4deg);
+  }
+  .blackout-sheet {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid var(--paper-edge);
+    border-radius: 3px;
+    background:
+      linear-gradient(90deg, rgba(183, 58, 58, 0.18) 0 1px, transparent 1px) 38px 0 / 1px 100% no-repeat,
+      repeating-linear-gradient(0deg, transparent 0 30px, rgba(47, 97, 116, 0.08) 30px 31px),
+      radial-gradient(circle at 18% 14%, rgba(255, 255, 255, 0.74), transparent 26%),
+      radial-gradient(circle at 85% 88%, rgba(74, 122, 31, 0.12), transparent 34%),
+      #fff8df;
+    box-shadow:
+      0 2px 0 rgba(255, 255, 255, 0.52) inset,
+      0 0 0 6px rgba(255, 248, 223, 0.34),
+      0 8px 22px rgba(70, 42, 16, 0.18);
+    padding: 28px 24px 30px 52px;
+    transform: rotate(-0.35deg);
+  }
+  .blackout-sheet::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image:
+      radial-gradient(circle, rgba(61, 36, 18, 0.13) 0 0.7px, transparent 0.8px),
+      linear-gradient(110deg, transparent 0 18%, rgba(255, 255, 255, 0.36) 21%, transparent 28% 100%);
+    background-size: 18px 18px, 100% 100%;
+    pointer-events: none;
+    mix-blend-mode: multiply;
+    opacity: 0.55;
+  }
+  .blackout-sheet::after {
+    content: '002';
+    position: absolute;
+    top: 11px;
+    right: 14px;
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    color: rgba(107, 61, 28, 0.38);
+  }
+  .blackout-title {
+    position: relative;
+    z-index: 1;
+    display: inline;
+    font-family: 'Special Elite', 'IBM Plex Mono', monospace;
+    font-size: 13px;
+    line-height: 1.4;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--blue-note);
+    background:
+      linear-gradient(transparent 55%, rgba(255, 243, 166, 0.95) 55%);
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+  }
   .entry-blackout {
-    font-family: 'EB Garamond', serif;
-    font-size: 17px;
-    line-height: 2;
+    position: relative;
+    z-index: 1;
+    margin-top: 18px;
+    font-family: 'Special Elite', 'EB Garamond', serif;
+    font-size: 14px;
+    line-height: 1.95;
     color: var(--ink);
-    padding: 20px 0;
-    word-spacing: 4px;
+    white-space: pre-wrap;
+    overflow-wrap: anywhere;
+    word-spacing: 2px;
   }
   .entry-blackout .redacted {
-    background: var(--redacted);
-    color: var(--redacted);
-    padding: 0 4px;
-    border-radius: 1px;
+    color: transparent;
+    background:
+      linear-gradient(180deg, rgba(255, 255, 255, 0.08), transparent 32%),
+      linear-gradient(90deg, var(--marker) 0%, var(--marker-soft) 48%, #090604 100%);
+    border-radius: 2px;
+    padding: 0.05em 0.22em 0;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    text-shadow: none;
     user-select: none;
+  }
+  .entry-blackout .redacted.r1 { background-color: #0f0905; filter: saturate(0.86); }
+  .entry-blackout .redacted.r2 { background-image: linear-gradient(180deg, rgba(255,255,255,0.1), transparent 30%), linear-gradient(88deg, #1b1008, #070402); }
+  .entry-blackout .redacted.r3 { padding-inline: 0.28em; }
+  .entry-blackout .redacted.r4 { background-image: linear-gradient(180deg, rgba(255,255,255,0.05), transparent 42%), linear-gradient(91deg, #080503, #201308 58%, #0f0905); }
+  .entry-blackout .redacted.r5 { border-radius: 3px 1px 2px 2px; }
+  .entry-blackout .redacted.r6 { padding-inline: 0.16em; }
+  .entry-blackout .kept {
+    position: relative;
+    z-index: 1;
+    color: #150d06;
+    font-weight: 600;
+    background:
+      linear-gradient(transparent 18%, rgba(255, 243, 166, 0.96) 18% 86%, rgba(255, 243, 166, 0.42) 86%);
+    border-bottom: 1px solid rgba(217, 183, 68, 0.9);
+    border-radius: 2px;
+    padding: 0.01em 0.08em 0;
+    box-decoration-break: clone;
+    -webkit-box-decoration-break: clone;
+    text-shadow: 0 1px 0 rgba(255, 252, 221, 0.8);
+  }
+  .blackout-extract {
+    margin: 20px 8px 0;
+    padding: 14px 16px;
+    border-left: 3px solid var(--leaf);
+    background:
+      linear-gradient(90deg, rgba(74, 122, 31, 0.10), transparent 65%),
+      rgba(255, 248, 223, 0.56);
+    font-family: 'EB Garamond', serif;
+    color: var(--ink);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.44);
+  }
+  .blackout-extract-label {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 9.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--chestnut);
+    margin-bottom: 8px;
+  }
+  .blackout-extract-line {
+    font-size: 18px;
+    line-height: 1.35;
+    font-style: italic;
+  }
+  .blackout-caption {
+    margin: 12px 8px 0;
+    font-family: 'Caveat', cursive;
+    font-size: 17px;
+    color: var(--chestnut);
+    line-height: 1.25;
   }
 
   /* ===== FORMAT: RECEIPT ===== */
@@ -1507,6 +1685,16 @@
     .day-cell { font-size: 15px; max-height: none; }
     .event-title { font-size: 26px; }
     .entry-date { font-size: 22px; }
+    .blackout-sheet {
+      padding: 26px 18px 28px 42px;
+    }
+    .entry-blackout {
+      font-size: 13px;
+      line-height: 1.9;
+    }
+    .blackout-extract-line {
+      font-size: 17px;
+    }
     .app-footer { padding: 16px 22px 28px; max-width: 480px; margin: 0 auto; }
     .write-panel {
       bottom: 12px;
@@ -1521,6 +1709,32 @@
     .palette-labels { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important; }
     .entry-receipt { font-size: 11px; padding: 18px 14px; }
     .entry-receipt .rc-row { grid-template-columns: 60px 1fr auto; gap: 6px; }
+    .blackout-meta {
+      align-items: flex-start;
+      flex-direction: column;
+      gap: 8px;
+    }
+    .blackout-source {
+      text-align: left;
+    }
+    .blackout-sheet-wrap {
+      padding-inline: 0;
+    }
+    .blackout-sheet {
+      padding: 24px 14px 26px 34px;
+      transform: none;
+    }
+    .blackout-sheet-wrap::before {
+      left: 14px;
+    }
+    .blackout-sheet-wrap::after {
+      right: 14px;
+    }
+    .entry-blackout {
+      font-size: 12.5px;
+      line-height: 1.85;
+      word-spacing: 1px;
+    }
   }
 </style>
 </head>
@@ -1766,15 +1980,40 @@
 
     blackout: (e) => {
       // Words wrapped in {curly braces} are visible. Everything else gets redacted.
-      // We'll process the body and render redactions as <span class="redacted">...</span>
-      const body = String(e.body || '');
+      // Body can be a string or an array of source paragraphs.
+      const body = Array.isArray(e.body) ? e.body.join('\n\n') : String(e.body || '');
+      let redactionIndex = 0;
       const html = body.replace(/(\{[^}]*\}|[^{}\s]+)/g, (match) => {
         if (match.startsWith('{') && match.endsWith('}')) {
-          return escapeHtml(match.slice(1, -1));
+          return `<span class="kept">${escapeHtml(match.slice(1, -1))}</span>`;
         }
-        return `<span class="redacted">${escapeHtml(match)}</span>`;
+        redactionIndex += 1;
+        return `<span class="redacted r${(redactionIndex % 6) + 1}" aria-hidden="true">${escapeHtml(match)}</span>`;
       });
-      return `<div class="entry-blackout">${html}</div>`;
+      const title = e.title ? `<div class="blackout-title">${escapeHtml(e.title)}</div>` : '';
+      const source = [e.source, e.sourceDetail].filter(Boolean).join(' · ');
+      const sourceHtml = source ? `<div class="blackout-source">${escapeHtml(source)}</div>` : '';
+      const poem = (e.poem || []).map(line => `<div class="blackout-extract-line">${escapeHtml(line)}</div>`).join('');
+      const poemHtml = poem ? `
+        <div class="blackout-extract" aria-label="Found poem">
+          <div class="blackout-extract-label">what remains</div>
+          ${poem}
+        </div>` : '';
+      const caption = e.caption ? `<div class="blackout-caption">${escapeHtml(e.caption)}</div>` : '';
+      return `<div class="entry-blackout-art">
+        <div class="blackout-meta">
+          <div class="blackout-stamp">redacted</div>
+          ${sourceHtml}
+        </div>
+        <div class="blackout-sheet-wrap">
+          <div class="blackout-sheet">
+            ${title}
+            <div class="entry-blackout">${html}</div>
+          </div>
+        </div>
+        ${poemHtml}
+        ${caption}
+      </div>`;
     },
 
     receipt: (e) => {
@@ -2438,6 +2677,7 @@
 
       CONFIG = entriesData.config;
       ABOUT = entriesData._about;
+      const params = new URLSearchParams(window.location.search);
       // Filter out keys starting with underscore (examples, about, etc.)
       ENTRIES = {};
       for (const k of Object.keys(entriesData.entries || {})) {
@@ -2452,7 +2692,10 @@
 
       // Default to today's day if in window, else day 1
       const todayDayNum = dayNumberFor(TODAY);
-      selectedDay = todayDayNum || 1;
+      const requestedDay = Number.parseInt(params.get('day'), 10);
+      selectedDay = Number.isInteger(requestedDay) && requestedDay >= 1 && requestedDay <= TOTAL_DAYS
+        ? requestedDay
+        : (todayDayNum || 1);
       const sd = dateForDayNumber(selectedDay);
       currentMonth = sd.getMonth();
       currentYear = sd.getFullYear();
@@ -2461,7 +2704,12 @@
       updateProgress();
       updateRandomButtonVisibility();
       renderCalendar();
-      showAbout();        // default landing view
+      if (params.has('day')) {
+        activeView = 'entry';
+        renderEntry();
+      } else {
+        showAbout();        // default landing view
+      }
       setTimeout(positionRibbon, 50);
       setTimeout(positionRibbon, 300);
 
@@ -2486,7 +2734,6 @@
       });
 
       // ?write=1 enables admin view
-      const params = new URLSearchParams(window.location.search);
       if (params.has('write')) initWriteMode();
 
       window.addEventListener('resize', positionRibbon);
