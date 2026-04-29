@@ -1916,11 +1916,15 @@
     },
 
     pointers: (e) => {
+      const inlineLinks = (s) => escapeHtml(s || '').replace(
+        /\[([^\]]+)\]\(([^)]+)\)/g,
+        '<a href="$2" target="_blank" rel="noopener">$1</a>'
+      );
       const items = (e.items || []).map(it => {
         const titleHtml = it.link
           ? `<a href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>`
-          : escapeHtml(it.title);
-        const note = it.note ? `<div class="pointer-note">${escapeHtml(it.note)}</div>` : '';
+          : inlineLinks(it.title);
+        const note = it.note ? `<div class="pointer-note">${inlineLinks(it.note)}</div>` : '';
         return `<li><div><div class="pointer-title">${titleHtml}</div>${note}</div></li>`;
       }).join('');
       return `<div class="entry-pointers">
