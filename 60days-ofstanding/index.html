@@ -2530,6 +2530,11 @@
     renderEntry();
     positionRibbon();
     document.getElementById('footer-page').textContent = '—';
+    if (window.matchMedia('(max-width: 960px)').matches) {
+      setTimeout(() => {
+        document.getElementById('entry-panel').scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }, 80);
+    }
   }
 
   function openRandom() {
