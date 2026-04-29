@@ -1921,7 +1921,7 @@
           ? `<a href="${escapeHtml(it.link)}" target="_blank" rel="noopener">${escapeHtml(it.title)}</a>`
           : escapeHtml(it.title);
         const note = it.note ? `<div class="pointer-note">${escapeHtml(it.note)}</div>` : '';
-        return `<li><div></div><div><div class="pointer-title">${titleHtml}</div>${note}</div></li>`;
+        return `<li><div><div class="pointer-title">${titleHtml}</div>${note}</div></li>`;
       }).join('');
       return `<div class="entry-pointers">
         ${e.intro ? `<div class="pointers-intro">${escapeHtml(e.intro)}</div>` : ''}
