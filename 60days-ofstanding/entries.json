@@ -98,6 +98,28 @@
         }
       ],
       "outlook": "Tomorrow: high chance of non-directed body movement, with clearer skies."
+    },
+    "5": {
+      "format": "timesheet",
+      "title": "Standing Practice Time Card",
+      "subtitle": "Day 5 payroll exception",
+      "employee": "Tanner Holman",
+      "department": "Standing Practice",
+      "supervisor": "the floor",
+      "status": "overtime approved",
+      "punches": [
+        { "label": "Clock in", "time": "0:00" },
+        { "label": "Required shift met", "time": "1:00" },
+        { "label": "Clock out", "time": "1:30" }
+      ],
+      "rows": [
+        { "code": "REG", "label": "Required standing shift", "minutes": "60", "rate": "1.0x", "credit": "60" },
+        { "code": "OT", "label": "Voluntary extra standing", "minutes": "30", "rate": "1.5x", "credit": "45" }
+      ],
+      "totals": [
+        { "label": "Actual minutes logged", "value": "90" },
+        { "label": "Compensated practice minutes", "value": "105" }
+      ]
     }
   },
 

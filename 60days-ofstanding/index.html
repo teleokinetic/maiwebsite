@@ -989,6 +989,187 @@
     letter-spacing: 0.06em;
   }
 
+  /* ===== FORMAT: TIMESHEET ===== */
+  .entry-timesheet {
+    max-width: 620px;
+    margin: 10px auto;
+    background:
+      linear-gradient(rgba(107, 61, 28, 0.055) 1px, transparent 1px) 0 0 / 100% 28px,
+      linear-gradient(90deg, rgba(107, 61, 28, 0.04) 1px, transparent 1px) 0 0 / 28px 100%,
+      #f8edcf;
+    border: 1px solid rgba(107, 61, 28, 0.32);
+    border-radius: var(--radius);
+    box-shadow: 0 10px 26px rgba(60, 30, 10, 0.12);
+    color: var(--ink);
+    font-family: 'IBM Plex Mono', monospace;
+    overflow: hidden;
+    position: relative;
+  }
+  .entry-timesheet::before,
+  .entry-timesheet::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 18px;
+    background:
+      radial-gradient(circle, rgba(107, 61, 28, 0.22) 0 2px, transparent 2.5px) center 15px / 18px 28px repeat-y;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  .entry-timesheet::before { left: 0; }
+  .entry-timesheet::after { right: 0; }
+  .ts-head {
+    padding: 22px 36px 18px;
+    border-bottom: 2px solid rgba(107, 61, 28, 0.2);
+    background: rgba(255, 250, 229, 0.62);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 16px;
+    align-items: start;
+  }
+  .ts-kicker {
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--chestnut);
+    font-weight: 600;
+    margin-bottom: 6px;
+  }
+  .ts-title {
+    font-family: 'EB Garamond', serif;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .ts-subtitle {
+    font-size: 10px;
+    color: var(--ink-muted);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .ts-stamp {
+    border: 2px solid var(--ribbon);
+    color: var(--ribbon);
+    border-radius: var(--radius);
+    padding: 8px 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 10px;
+    font-weight: 700;
+    transform: rotate(-4deg);
+    background: rgba(255, 255, 255, 0.34);
+    text-align: center;
+    max-width: 128px;
+  }
+  .ts-meta {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px 36px;
+    border-bottom: 1px dashed rgba(107, 61, 28, 0.26);
+  }
+  .ts-meta-item,
+  .ts-punch,
+  .ts-total-card {
+    background: rgba(255, 250, 229, 0.56);
+    border: 1px solid rgba(107, 61, 28, 0.16);
+    border-radius: var(--radius);
+    padding: 10px;
+  }
+  .ts-label {
+    display: block;
+    font-size: 8.5px;
+    color: var(--chestnut);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+  .ts-value {
+    font-size: 12px;
+    color: var(--ink);
+  }
+  .ts-punches {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 14px 36px;
+  }
+  .ts-punch-time {
+    font-family: 'EB Garamond', serif;
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 600;
+    letter-spacing: 0;
+  }
+  .ts-table {
+    margin: 0 36px 14px;
+    border: 1px solid rgba(107, 61, 28, 0.22);
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: rgba(255, 250, 229, 0.48);
+  }
+  .ts-row {
+    display: grid;
+    grid-template-columns: 56px 1fr 72px 64px 80px;
+    gap: 8px;
+    align-items: center;
+    padding: 10px 12px;
+    border-top: 1px solid rgba(107, 61, 28, 0.12);
+    font-size: 11px;
+  }
+  .ts-row:first-child { border-top: 0; }
+  .ts-row.is-head {
+    color: var(--chestnut);
+    font-size: 8.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 700;
+    background: rgba(107, 61, 28, 0.08);
+  }
+  .ts-code {
+    font-weight: 700;
+    color: var(--ribbon-dark);
+  }
+  .ts-num {
+    text-align: right;
+  }
+  .ts-totals {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    padding: 0 36px 14px;
+  }
+  .ts-total-card {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 8px;
+    align-items: end;
+  }
+  .ts-total-value {
+    font-family: 'EB Garamond', serif;
+    font-size: 34px;
+    line-height: 0.9;
+    font-weight: 600;
+    letter-spacing: 0;
+    color: var(--chestnut-dark);
+  }
+  .ts-memo {
+    margin: 0 36px 22px;
+    padding: 12px 14px;
+    border: 1px dashed rgba(107, 61, 28, 0.28);
+    border-radius: var(--radius);
+    background: rgba(255, 250, 229, 0.52);
+    font-family: 'EB Garamond', serif;
+    font-size: 15px;
+    line-height: 1.35;
+    font-style: italic;
+    color: var(--ink-muted);
+  }
+
   /* ===== FORMAT: WEATHER ===== */
   .entry-weather {
     background: linear-gradient(180deg, #d9efff 0%, #f4f9ff 42%, #fff3c7 100%);
@@ -1846,6 +2027,34 @@
     .day-cell { font-size: 15px; max-height: none; }
     .event-title { font-size: 26px; }
     .entry-date { font-size: 22px; }
+    .ts-head {
+      grid-template-columns: 1fr;
+      padding: 20px 28px 16px;
+    }
+    .ts-stamp {
+      justify-self: start;
+    }
+    .ts-meta,
+    .ts-punches,
+    .ts-totals {
+      grid-template-columns: 1fr;
+      padding-left: 28px;
+      padding-right: 28px;
+    }
+    .ts-table {
+      margin-left: 28px;
+      margin-right: 28px;
+    }
+    .ts-row {
+      grid-template-columns: 44px 1fr 48px 48px 58px;
+      gap: 6px;
+      padding: 9px 8px;
+      font-size: 10px;
+    }
+    .ts-memo {
+      margin-left: 28px;
+      margin-right: 28px;
+    }
     .entry-weather .wx-periods {
       grid-template-columns: 1fr;
     }
@@ -1882,6 +2091,16 @@
     .palette-labels { grid-template-columns: repeat(auto-fit, minmax(60px, 1fr)) !important; }
     .entry-receipt { font-size: 11px; padding: 18px 14px; }
     .entry-receipt .rc-row { grid-template-columns: 60px 1fr auto; gap: 6px; }
+    .ts-row {
+      grid-template-columns: 38px 1fr 40px 40px 48px;
+      font-size: 9px;
+    }
+    .ts-title {
+      font-size: 24px;
+    }
+    .ts-punch-time {
+      font-size: 26px;
+    }
     .entry-weather .wx-banner {
       flex-direction: column;
       gap: 4px;
@@ -2228,6 +2447,54 @@
       </div>`;
     },
 
+    timesheet: (e) => {
+      const punches = (e.punches || []).map(p => `
+        <div class="ts-punch">
+          <span class="ts-label">${escapeHtml(p.label || '')}</span>
+          <div class="ts-punch-time">${escapeHtml(p.time || '')}</div>
+        </div>`).join('');
+      const rows = (e.rows || []).map(row => `
+        <div class="ts-row">
+          <div class="ts-code">${escapeHtml(row.code || '')}</div>
+          <div>${escapeHtml(row.label || '')}</div>
+          <div class="ts-num">${escapeHtml(row.minutes || '')}</div>
+          <div class="ts-num">${escapeHtml(row.rate || '')}</div>
+          <div class="ts-num">${escapeHtml(row.credit || '')}</div>
+        </div>`).join('');
+      const totals = (e.totals || []).map(total => `
+        <div class="ts-total-card">
+          <div>
+            <span class="ts-label">${escapeHtml(total.label || '')}</span>
+            <span class="ts-value">minutes</span>
+          </div>
+          <div class="ts-total-value">${escapeHtml(total.value || '')}</div>
+        </div>`).join('');
+      return `<div class="entry-timesheet">
+        <div class="ts-head">
+          <div>
+            <div class="ts-kicker">Practice payroll</div>
+            <div class="ts-title">${escapeHtml(e.title || 'Timesheet')}</div>
+            ${e.subtitle ? `<div class="ts-subtitle">${escapeHtml(e.subtitle)}</div>` : ''}
+          </div>
+          ${e.status ? `<div class="ts-stamp">${escapeHtml(e.status)}</div>` : ''}
+        </div>
+        <div class="ts-meta">
+          <div class="ts-meta-item"><span class="ts-label">Employee</span><span class="ts-value">${escapeHtml(e.employee || '')}</span></div>
+          <div class="ts-meta-item"><span class="ts-label">Department</span><span class="ts-value">${escapeHtml(e.department || '')}</span></div>
+          <div class="ts-meta-item"><span class="ts-label">Supervisor</span><span class="ts-value">${escapeHtml(e.supervisor || '')}</span></div>
+        </div>
+        ${punches ? `<div class="ts-punches">${punches}</div>` : ''}
+        <div class="ts-table">
+          <div class="ts-row is-head">
+            <div>Code</div><div>Description</div><div class="ts-num">Min</div><div class="ts-num">Rate</div><div class="ts-num">Credit</div>
+          </div>
+          ${rows}
+        </div>
+        ${totals ? `<div class="ts-totals">${totals}</div>` : ''}
+        ${e.memo ? `<div class="ts-memo">${escapeHtml(e.memo)}</div>` : ''}
+      </div>`;
+    },
+
     weather: (e) => {
       const stats = [];
       if (e.high) stats.push(['High', e.high]);
@@ -2498,6 +2765,7 @@
     'ai-art': 'AI art',
     blackout: 'Blackout poem',
     receipt: 'Receipt',
+    timesheet: 'Timesheet',
     weather: 'Weather report',
     mtg: 'Card',
     'cd-audio': 'Audio',
