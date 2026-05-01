@@ -93,6 +93,37 @@
         { "title": "there's been a lot of grind-set energy lately, so it was lovely to let everything relax for a while." },
         { "title": "The [wuji style directions](https://www.youtube.com/watch?v=A94CfQvbbWM&t=225s) assume a direction and a model of opening and releasing. [Non-directed body movement](https://standing-awareness.com/standing-around) is doing something quite different: it relaxes interpretation, lets me notice that I'm interpreting a perception instead of being with it as it is." }
       ]
+    },
+    "4": {
+      "format": "weather",
+      "condition": "late clearing",
+      "today": "Cloud cover gathered across the first forty minutes before a bright blue, cloudless final third emerged.",
+      "high": "ease, enjoyment, clarity, spaciousness",
+      "low": "Fuzzy Attention",
+      "wind": "Light breezy",
+      "pressure": "body thickness, easing late",
+      "alert": "Low chance of interpretation.",
+      "periods": [
+        {
+          "time": "0-20",
+          "condition": "Partly cloudy",
+          "icon": "partly",
+          "detail": "A little bit of thought and a little thickness in the body. Nothing exceptional."
+        },
+        {
+          "time": "20-40",
+          "condition": "Cloudier",
+          "icon": "cloudy",
+          "detail": "Practice felt fuzzy. Mind busy. Not problematic."
+        },
+        {
+          "time": "40-60",
+          "condition": "Clear sunshine",
+          "icon": "sunny",
+          "detail": "Bright blue sky: ease and enjoyment, clarity, and spaciousness."
+        }
+      ],
+      "outlook": "Tomorrow: high chance of non-directed body movement, with clearer skies."
     }
   },
 
