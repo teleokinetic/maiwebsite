@@ -3,25 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Letter — three options</title>
+<title>Letter — typeface options</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Caveat:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 <style>
   :root{
     --paper:        #f3e8d2;
     --paper-warm:   #ead7b3;
-    --paper-deep:   #e2c895;
     --ink:          #1c160e;
     --ink-soft:     #3a2f22;
     --ink-mute:     #6b5d47;
     --red:          #8a3424;
-    --red-soft:     #b04a36;
-    --gold:         #ad8841;
-    --gold-soft:    #c9a25a;
-    --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
-    --body:  'EB Garamond', Georgia, serif;
-    --hand:  'Caveat', 'Bradley Hand', cursive;
+    --serif:    'Cormorant Garamond', Georgia, serif;
+    --body:     'EB Garamond', Georgia, serif;
+    --typewrite:'Courier Prime', 'Courier New', monospace;
   }
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body{ margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
@@ -45,16 +41,15 @@
     mix-blend-mode: multiply; opacity: .8;
   }
 
-  /* ---------- Page chrome ---------- */
   .intro{
-    text-align: center; padding: 56px 22px 36px; position: relative; z-index: 2;
+    text-align: center; padding: 56px 22px 28px; position: relative; z-index: 2;
     max-width: 540px; margin: 0 auto;
   }
   .intro h1{
     font-family: var(--serif); font-style: italic; font-weight: 500;
-    font-size: 42px; line-height: 1; margin: 0 0 14px;
+    font-size: 40px; line-height: 1; margin: 0 0 14px;
   }
-  .intro h1 em{ color: var(--red); font-style: italic; }
+  .intro h1 em{ color: var(--red); }
   .intro p{
     font-family: var(--serif); font-style: italic; color: var(--ink-mute);
     font-size: 18px; margin: 0;
@@ -62,7 +57,7 @@
 
   .option{
     min-height: 100svh;
-    padding: 40px 22px 60px;
+    padding: 32px 22px 50px;
     position: relative; z-index: 1;
     max-width: 540px; margin: 0 auto;
     display: flex; flex-direction: column; justify-content: center;
@@ -72,7 +67,7 @@
   .option-label{
     font-family: var(--serif); font-style: italic; font-weight: 600;
     color: var(--red); letter-spacing: .14em; text-transform: uppercase;
-    font-size: 14px; text-align: center; margin: 0 0 24px;
+    font-size: 14px; margin: 0 0 18px;
     display: flex; align-items: center; gap: 12px;
   }
   .option-label::before, .option-label::after{
@@ -80,190 +75,81 @@
   }
   .option-note{
     font-family: var(--serif); font-style: italic; color: var(--ink-mute);
-    font-size: 16px; text-align: center; margin: 24px auto 0; max-width: 320px;
+    font-size: 16px; text-align: center; margin: 22px auto 0; max-width: 320px;
     line-height: 1.4;
   }
 
-  /* ============================================== */
-  /* OPTION A — REFINED LETTER                      */
-  /* ============================================== */
-  .opt-a .letter-a{
+  /* ---------- shared letter card ---------- */
+  .letter{
     background:
       linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 30%),
       #f6ebcf;
     border: 1px solid rgba(60,30,0,.14);
     border-radius: 3px;
-    padding: 44px 32px 38px;
+    padding: 40px 30px 36px;
     position: relative;
     box-shadow:
       0 1px 0 rgba(255,255,255,.6) inset,
-      0 30px 60px -32px rgba(60,30,0,.5),
+      0 28px 56px -32px rgba(60,30,0,.5),
       0 2px 0 rgba(60,30,0,.05);
   }
-  .letter-a .letterhead{
+  .letter .letterhead{
     display: flex; align-items: center; justify-content: center; gap: 10px;
     color: var(--red); font-family: var(--serif); font-style: italic;
     font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
     margin-bottom: 22px;
   }
-  .letter-a .letterhead::before, .letter-a .letterhead::after{
+  .letter .letterhead::before, .letter .letterhead::after{
     content:""; flex: 1; height: 1px; background: currentColor; opacity: .5;
   }
-  .letter-a p{
-    font-family: var(--hand); font-size: 30px; line-height: 1.4;
-    color: var(--ink-soft); margin: 0 0 16px;
-  }
-  .letter-a p:first-of-type{ font-size: 34px; color: var(--ink); }
-  .letter-a p.parens{ font-size: 26px; font-style: italic; opacity: .82; }
-  .letter-a .signoff{
-    font-family: var(--hand); font-size: 32px; color: var(--red); margin-top: 16px;
-  }
-  .letter-a .pawprint{
+  .letter p{ margin: 0 0 14px; }
+  .letter .signoff{ margin-top: 18px; color: var(--red); }
+  .letter .pawprint{
     position: absolute; right: 22px; bottom: 16px; opacity: .42;
     width: 26px; height: 26px;
   }
 
-  /* ============================================== */
-  /* OPTION B — POSTCARD                            */
-  /* ============================================== */
-  .opt-b .postcard{
-    position: relative;
-    background:
-      repeating-linear-gradient(0deg, transparent 0 39px, rgba(60,30,0,.08) 39px 40px),
-      linear-gradient(180deg, #f8efd6, #ecdfba);
-    border: 1px solid rgba(60,30,0,.18);
-    border-radius: 4px;
-    padding: 30px 24px 22px;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.6) inset,
-      0 24px 50px -28px rgba(60,30,0,.5),
-      0 2px 0 rgba(60,30,0,.06);
-    transform: rotate(-1deg);
-    overflow: hidden;
+  /* ============== A — Italic Cormorant Garamond ============== */
+  .opt-a .letter p{
+    font-family: var(--serif); font-style: italic; font-weight: 400;
+    font-size: 26px; line-height: 1.4; color: var(--ink-soft);
   }
-  .opt-b .postcard::before{
-    content:""; position: absolute; top: 12px; right: 14px;
-    width: 60px; height: 70px;
-    background:
-      linear-gradient(135deg, #b04a36 0%, #8a3424 100%);
-    border: 4px solid #fbf6ea;
-    box-shadow: 0 2px 4px rgba(40,20,0,.3);
-    background-image:
-      radial-gradient(circle at 50% 35%, #f3e8d2 16%, transparent 17%),
-      linear-gradient(135deg, #b04a36 0%, #8a3424 100%);
-  }
-  .opt-b .postcard::after{
-    content: "MAY 9 · 2026";
-    position: absolute; top: 86px; right: 6px;
-    font-family: var(--serif); font-size: 9px; font-weight: 700;
-    color: rgba(60,30,0,.55); letter-spacing: .1em;
-    border: 1.5px solid rgba(60,30,0,.45);
-    border-radius: 50%;
-    width: 78px; height: 78px;
-    display: flex; align-items: center; justify-content: center; text-align: center;
-    transform: rotate(-12deg);
-    line-height: 1.2;
-  }
-  .postcard .pc-to{
-    font-family: var(--serif); font-style: italic; font-size: 11px;
-    color: var(--red); letter-spacing: .2em; text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-  .postcard p{
-    font-family: var(--hand); font-size: 26px; line-height: 1.35;
-    color: var(--ink-soft); margin: 0 0 10px;
-    max-width: 70%;
-  }
-  .postcard p:first-of-type{ font-size: 30px; color: var(--ink); margin-bottom: 12px; }
-  .postcard p.parens{ font-size: 22px; opacity: .78; }
-  .postcard .signoff{
-    font-family: var(--hand); font-size: 26px; color: var(--red); margin-top: 14px;
-  }
+  .opt-a .letter p:first-of-type{ font-size: 30px; color: var(--ink); font-weight: 500; }
+  .opt-a .letter p.parens{ font-size: 22px; opacity: .82; }
+  .opt-a .letter .signoff{ font-style: italic; font-weight: 500; font-size: 26px; }
 
-  /* ============================================== */
-  /* OPTION C — OPEN ENVELOPE WITH LETTER PEEKING   */
-  /* ============================================== */
-  .opt-c .envelope-stack{
-    position: relative;
-    padding-top: 26px;
+  /* ============== B — Roman EB Garamond ============== */
+  .opt-b .letter p{
+    font-family: var(--body); font-style: normal; font-weight: 400;
+    font-size: 22px; line-height: 1.5; color: var(--ink-soft);
   }
-  .envelope-stack .letter-c{
-    position: relative;
-    background:
-      linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 40%),
-      #faf1d6;
-    border: 1px solid rgba(60,30,0,.14);
-    border-radius: 2px;
-    padding: 32px 26px 28px;
-    margin: 0 14px;
-    box-shadow:
-      0 1px 0 rgba(255,255,255,.6) inset,
-      0 18px 36px -22px rgba(60,30,0,.4);
-    z-index: 2;
-    transform: translateY(-22px);
+  .opt-b .letter p:first-of-type{ font-size: 26px; color: var(--ink); font-weight: 500; }
+  .opt-b .letter p.parens{ font-size: 20px; font-style: italic; opacity: .82; }
+  .opt-b .letter .signoff{ font-style: italic; font-weight: 500; font-size: 22px; }
+
+  /* ============== C — Typewriter (Courier Prime) ============== */
+  .opt-c .letter p{
+    font-family: var(--typewrite); font-weight: 400;
+    font-size: 18px; line-height: 1.6; color: var(--ink-soft);
+    letter-spacing: -.005em;
   }
-  .envelope-stack .letter-c p{
-    font-family: var(--hand); font-size: 26px; line-height: 1.35;
-    color: var(--ink-soft); margin: 0 0 14px;
-  }
-  .envelope-stack .letter-c p:first-of-type{ font-size: 30px; color: var(--ink); }
-  .envelope-stack .letter-c p.parens{ font-size: 22px; opacity: .8; }
-  .envelope-stack .letter-c .signoff{
-    font-family: var(--hand); font-size: 28px; color: var(--red); margin-top: 12px;
-  }
-  .envelope-stack .envelope{
-    position: relative;
-    background: linear-gradient(180deg, #d9bf86, #c4a468);
-    border: 1px solid rgba(60,30,0,.28);
-    height: 130px;
-    margin-top: -90px;
-    box-shadow: 0 12px 24px -10px rgba(60,30,0,.4);
-    border-radius: 2px;
-    z-index: 1;
-  }
-  /* envelope flap (open, leaning back) */
-  .envelope::before{
-    content:""; position: absolute; top: -1px; left: -1px; right: -1px;
-    height: 60%;
-    background: linear-gradient(180deg, #c2a162, #ad8c4e);
-    clip-path: polygon(0 0, 100% 0, 50% 90%);
-    transform-origin: top center;
-    transform: rotateX(140deg) translateY(-4px);
-    border-bottom: 1px solid rgba(60,30,0,.3);
-  }
-  /* envelope front flap (lower triangle) */
-  .envelope::after{
-    content:""; position: absolute; bottom: 0; left: 0; right: 0; top: 30%;
-    background: linear-gradient(180deg, #d9bf86, #b89858);
-    clip-path: polygon(0 60%, 50% 0, 100% 60%, 100% 100%, 0 100%);
-    border-top: 1px solid rgba(60,30,0,.18);
-  }
-  .envelope-stack .wax{
-    position: absolute; left: 50%; bottom: 22px;
-    transform: translateX(-50%);
-    width: 38px; height: 38px;
-    background: radial-gradient(circle at 38% 32%, #c34a30, #6b1c10);
-    border-radius: 50%;
-    box-shadow: 0 2px 4px rgba(40,10,0,.4), inset -2px -2px 6px rgba(0,0,0,.3);
-    z-index: 3;
-    display: flex; align-items: center; justify-content: center;
-    color: rgba(255,235,200,.7); font-family: var(--serif); font-style: italic;
-    font-size: 18px; font-weight: 600;
-  }
+  .opt-c .letter p:first-of-type{ font-size: 19px; color: var(--ink); font-weight: 700; }
+  .opt-c .letter p.parens{ font-size: 17px; font-style: italic; opacity: .82; }
+  .opt-c .letter .signoff{ font-weight: 700; font-size: 19px; }
 
 </style>
 </head>
 <body>
 
   <header class="intro">
-    <h1>Three <em>letter</em> options.</h1>
-    <p>Scroll through. Tell me which one feels right.</p>
+    <h1>Three <em>typeface</em> options.</h1>
+    <p>Same card, different fonts. Pick the one that reads best.</p>
   </header>
 
-  <!-- =============== OPTION A =============== -->
+  <!-- =============== A =============== -->
   <section class="option opt-a">
-    <div class="option-label">A · Refined Letter</div>
-    <div class="letter-a">
+    <div class="option-label">A · Italic Garamond</div>
+    <div class="letter">
       <div class="letterhead">M. · Mother's Day · 2026</div>
       <p>Hey mom,</p>
       <p>thanks for being the best mom I've ever had.</p>
@@ -279,37 +165,51 @@
         </g>
       </svg>
     </div>
-    <p class="option-note">Cleaner stationery. Same words, no tape, less rotation. Most readable for Mom. Subtle initial header replaces the tape.</p>
+    <p class="option-note">Italic Cormorant Garamond — matches "For Mom" on the cover. Elegant, personal, but italic can be slightly harder to read.</p>
   </section>
 
-  <!-- =============== OPTION B =============== -->
+  <!-- =============== B =============== -->
   <section class="option opt-b">
-    <div class="option-label">B · Postcard</div>
-    <div class="postcard">
-      <div class="pc-to">To · Mom</div>
+    <div class="option-label">B · Roman Garamond</div>
+    <div class="letter">
+      <div class="letterhead">M. · Mother's Day · 2026</div>
       <p>Hey mom,</p>
       <p>thanks for being the best mom I've ever had.</p>
       <p class="parens">(and the best mom I know.)</p>
       <p class="signoff">happy Mother's Day. ♥</p>
+      <svg class="pawprint" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#6b5d47">
+          <ellipse cx="16" cy="22" rx="6" ry="5"/>
+          <ellipse cx="7"  cy="13" rx="2.5" ry="3.4"/>
+          <ellipse cx="13" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="19" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="25" cy="13" rx="2.5" ry="3.4"/>
+        </g>
+      </svg>
     </div>
-    <p class="option-note">Vintage postcard with a stamp + postmark. Faint horizontal lines underneath the handwriting. Different feel — more "sent from somewhere."</p>
+    <p class="option-note">Upright EB Garamond — like the page of a book. Most readable for Mom. Quietest, least "decorative."</p>
   </section>
 
-  <!-- =============== OPTION C =============== -->
+  <!-- =============== C =============== -->
   <section class="option opt-c">
-    <div class="option-label">C · Pulled From an Envelope</div>
-    <div class="envelope-stack">
-      <div class="letter-c">
-        <p>Hey mom,</p>
-        <p>thanks for being the best mom I've ever had.</p>
-        <p class="parens">(and the best mom I know.)</p>
-        <p class="signoff">happy Mother's Day. ♥</p>
-      </div>
-      <div class="envelope">
-        <div class="wax">M</div>
-      </div>
+    <div class="option-label">C · Typewriter</div>
+    <div class="letter">
+      <div class="letterhead">M. · Mother's Day · 2026</div>
+      <p>Hey mom,</p>
+      <p>thanks for being the best mom I've ever had.</p>
+      <p class="parens">(and the best mom I know.)</p>
+      <p class="signoff">happy Mother's Day. ♥</p>
+      <svg class="pawprint" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#6b5d47">
+          <ellipse cx="16" cy="22" rx="6" ry="5"/>
+          <ellipse cx="7"  cy="13" rx="2.5" ry="3.4"/>
+          <ellipse cx="13" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="19" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="25" cy="13" rx="2.5" ry="3.4"/>
+        </g>
+      </svg>
     </div>
-    <p class="option-note">Letter sliding out of an opened envelope, with a wax seal at the front. Adds a "she just opened it" feeling. Slightly more visual.</p>
+    <p class="option-note">Courier Prime — like a real typed personal letter. Has character without faking handwriting.</p>
   </section>
 
 </body>
