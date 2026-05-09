@@ -467,15 +467,15 @@
   <div class="passgate-card">
     <div class="ornament"><span class="line"></span><span>Mother's Day · 2026</span><span class="line"></span></div>
     <h2 class="passgate-title">Hi Mom.</h2>
-    <p class="passgate-sub">What does Tanner think you are?</p>
+    <p class="passgate-sub">According to Tanner, you are&hellip;</p>
     <form class="passgate-form" id="passgate-form" autocomplete="off" novalidate>
       <input class="passgate-input" id="passgate-input" type="text" inputmode="text"
              autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false"
              aria-label="Password">
-      <button class="passgate-btn" type="submit">open ↓</button>
+      <button class="passgate-btn" type="submit">open &darr;</button>
     </form>
-    <p class="passgate-hint">(two words, no spaces, all lowercase.)</p>
-    <p class="passgate-err" id="passgate-err">Hmm, not quite. Try again?</p>
+    <p class="passgate-hint">(three words. spaces are okay. all lowercase.)</p>
+    <p class="passgate-err" id="passgate-err"></p>
     <svg class="passgate-paw" viewBox="0 0 32 32" aria-hidden="true">
       <g fill="#6b5d47">
         <ellipse cx="16" cy="22" rx="6" ry="5"/>
@@ -564,7 +564,13 @@
   // -------- Password gate --------
   (function () {
     const KEY = 'md2026_unlocked';
-    const PASSWORD = 'bestmom';
+    const PASSWORD = 'thebestmom';
+    const HINTS = [
+      "Hmm, not quite. Try again?",
+      "Hint: it starts with &ldquo;the&rdquo;.",
+      "Hint: &ldquo;the best ___&rdquo;",
+      "It&rsquo;s &ldquo;the best mom.&rdquo; ♥"
+    ];
     const gate = document.getElementById('passgate');
     if (!gate) return;
     if (localStorage.getItem(KEY) === '1') {
@@ -575,6 +581,7 @@
     const form  = document.getElementById('passgate-form');
     const input = document.getElementById('passgate-input');
     const err   = document.getElementById('passgate-err');
+    let attempts = 0;
     setTimeout(() => input.focus(), 250);
     form.addEventListener('submit', (e) => {
       e.preventDefault();
@@ -585,10 +592,13 @@
         document.body.classList.remove('gate-locked');
         setTimeout(() => gate.remove(), 600);
       } else {
+        const idx = Math.min(attempts, HINTS.length - 1);
+        err.innerHTML = HINTS[idx];
         err.classList.remove('show');
         void err.offsetWidth; // restart animation
         err.classList.add('show');
         input.select();
+        attempts++;
       }
     });
   })();
