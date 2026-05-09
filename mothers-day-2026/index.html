@@ -1,0 +1,551 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<title>For Mom</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Caveat:wght@400;500;600;700&family=EB+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  /* ------- Tokens -------- */
+  :root{
+    --paper:        #f3e8d2;
+    --paper-warm:   #ead7b3;
+    --paper-deep:   #e2c895;
+    --ink:          #1c160e;
+    --ink-soft:     #3a2f22;
+    --ink-mute:     #6b5d47;
+    --red:          #8a3424;
+    --red-soft:     #b04a36;
+    --gold:         #ad8841;
+    --gold-soft:    #c9a25a;
+    --sage:         #6b7d5a;
+    --serif: 'Cormorant Garamond', 'EB Garamond', Georgia, serif;
+    --body:  'EB Garamond', Georgia, serif;
+    --hand:  'Caveat', 'Bradley Hand', cursive;
+  }
+
+  *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body{ margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
+  html{ overscroll-behavior-y: contain; }
+  body{
+    font-family: var(--body);
+    font-size: 18px;
+    line-height: 1.55;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,240,210,.7), transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(176,74,54,.07), transparent 55%),
+      var(--paper);
+    background-attachment: fixed;
+    min-height: 100svh;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* fine paper grain via repeating noise */
+  body::before{
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background-image:
+      radial-gradient(rgba(120,90,40,.06) 1px, transparent 1px),
+      radial-gradient(rgba(50,30,10,.04) 1px, transparent 1px);
+    background-size: 3px 3px, 7px 7px;
+    background-position: 0 0, 1px 2px;
+    mix-blend-mode: multiply;
+    opacity: .8;
+  }
+  body::after{
+    content:""; position: fixed; inset: 0; pointer-events: none; z-index: 0;
+    background:
+      radial-gradient(ellipse at center, transparent 55%, rgba(40,20,5,.15) 100%);
+  }
+
+  .stage{ position: relative; z-index: 1; max-width: 540px; margin: 0 auto; padding: 0 22px; }
+
+  /* ----- Section: Cover ----- */
+  .cover{
+    min-height: 100svh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    text-align: center; padding: 32px 22px 48px;
+    position: relative;
+  }
+  .ornament{
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    color: var(--red); letter-spacing: .08em;
+    font-size: 13px; text-transform: uppercase;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 28px;
+  }
+  .ornament .line{ width: 36px; height: 1px; background: var(--red); opacity: .5; }
+  .cover h1{
+    font-family: var(--serif); font-weight: 500; font-style: italic;
+    font-size: clamp(72px, 22vw, 128px);
+    line-height: .95; margin: 0;
+    color: var(--ink);
+    letter-spacing: -.01em;
+  }
+  .cover h1 .for{
+    display: block; font-size: .42em; font-style: italic; font-weight: 400;
+    color: var(--red); letter-spacing: .06em; text-transform: uppercase; margin-bottom: 6px;
+  }
+  .cover .booktower{
+    margin: 36px 0 28px;
+    width: 180px; height: 220px;
+    position: relative; perspective: 600px;
+  }
+  .cover .subtitle{
+    font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-soft);
+    max-width: 320px; margin: 4px auto 0;
+  }
+  .cover .meta{
+    margin-top: 36px;
+    font-family: var(--serif); font-size: 12px; letter-spacing: .25em; text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .cover .scrolldown{
+    position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
+    font-family: var(--serif); font-style: italic; font-size: 14px; color: var(--ink-mute);
+    display: flex; flex-direction: column; align-items: center; gap: 6px;
+    animation: float 2.4s ease-in-out infinite;
+  }
+  .cover .scrolldown svg{ width: 14px; height: 14px; }
+  @keyframes float{ 0%,100%{ transform: translateX(-50%) translateY(0);} 50%{ transform: translateX(-50%) translateY(6px);} }
+
+  /* tiny stacked book illustration */
+  .booktower .b{
+    position: absolute; left: 50%; border: 1px solid rgba(0,0,0,.15);
+    border-radius: 1px;
+    box-shadow: 0 6px 14px rgba(40,20,0,.12), inset 0 0 0 1px rgba(255,255,255,.18);
+  }
+  .booktower .b1{ width: 130px; height: 22px; bottom: 0;   transform: translateX(-50%) rotate(-1deg); background: linear-gradient(180deg, #8a3424, #6e2a1c); }
+  .booktower .b2{ width: 150px; height: 26px; bottom: 22px;transform: translateX(-50%) rotate(1deg);  background: linear-gradient(180deg, #1f3552, #16273e); }
+  .booktower .b3{ width: 120px; height: 22px; bottom: 50px;transform: translateX(-52%) rotate(-2deg); background: linear-gradient(180deg, #3d4f1d, #2c3a13); }
+  .booktower .b4{ width: 140px; height: 24px; bottom: 73px;transform: translateX(-49%) rotate(2deg);  background: linear-gradient(180deg, #ad8841, #876631); }
+  .booktower .b5{ width: 110px; height: 28px; bottom: 99px;transform: translateX(-50%) rotate(-1deg); background: linear-gradient(180deg, #4a3520, #2f2014); }
+  .booktower .b6{ width: 130px; height: 22px; bottom: 130px;transform: translateX(-51%) rotate(1deg); background: linear-gradient(180deg, #6b7140, #4d5328); }
+  .booktower .b .gold{
+    position: absolute; left: 12%; right: 12%; top: 50%; height: 1px; background: var(--gold-soft); opacity: .8;
+    transform: translateY(-2px);
+  }
+  .booktower .b .gold2{ transform: translateY(2px); }
+
+  /* ----- Section common ----- */
+  section{ padding: 64px 0; position: relative; }
+  section + section{ border-top: 1px solid rgba(40,20,0,.08); }
+
+  .eyebrow{
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    color: var(--red); letter-spacing: .12em; text-transform: uppercase;
+    font-size: 12px;
+    display: flex; align-items: center; gap: 12px;
+    margin: 0 0 14px;
+  }
+  .eyebrow::before, .eyebrow::after{
+    content:""; flex: 1; height: 1px; background: currentColor; opacity: .35;
+  }
+  h2.section-title{
+    font-family: var(--serif); font-weight: 500; font-style: italic;
+    font-size: 40px; line-height: 1.05; margin: 0 0 22px;
+    color: var(--ink);
+    text-align: center;
+  }
+  h2.section-title em{ color: var(--red); font-style: italic; }
+
+  /* ----- Letter ----- */
+  .letter{
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)),
+      var(--paper-warm);
+    border: 1px solid rgba(60,30,0,.12);
+    border-radius: 2px;
+    padding: 38px 28px 30px;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.5) inset,
+      0 24px 50px -30px rgba(60,30,0,.4),
+      0 2px 0 rgba(60,30,0,.04);
+    transform: rotate(-.6deg);
+    margin-top: 14px;
+  }
+  .letter::before{
+    content:""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg);
+    width: 90px; height: 22px;
+    background: linear-gradient(180deg, rgba(255,225,180,.65), rgba(220,180,120,.55));
+    border: 1px solid rgba(120,80,30,.25);
+    border-radius: 1px;
+    box-shadow: 0 4px 8px rgba(60,30,0,.15);
+  }
+  .letter p{
+    font-family: var(--hand); font-size: 26px; line-height: 1.35;
+    color: var(--ink-soft); margin: 0 0 14px;
+  }
+  .letter p:first-of-type{ font-size: 30px; color: var(--ink); }
+  .letter p.parens{ font-size: 22px; font-style: italic; }
+  .letter .signoff{
+    font-family: var(--hand); font-size: 30px; color: var(--red); margin-top: 14px;
+  }
+  .letter .pawprint{
+    position: absolute; right: 18px; bottom: 12px; opacity: .55;
+    width: 28px; height: 28px;
+  }
+
+  /* ----- Photo gallery ----- */
+  .gallery{ position: relative; }
+
+  /* polaroid stack */
+  .stack-area{
+    position: relative;
+    height: 540px;
+    display: flex; align-items: center; justify-content: center;
+    margin: 0 0 18px;
+    touch-action: none;
+  }
+  .polaroid{
+    position: absolute;
+    width: 78%; max-width: 360px;
+    background: #fbf6ea;
+    padding: 14px 14px 56px;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.7) inset,
+      0 18px 30px -12px rgba(40,20,0,.35),
+      0 2px 6px rgba(40,20,0,.18);
+    border-radius: 2px;
+    border: 1px solid rgba(60,30,0,.08);
+    will-change: transform;
+    user-select: none;
+    -webkit-user-drag: none;
+  }
+  .polaroid .frame{
+    aspect-ratio: 4/5;
+    background: #1a140d;
+    border-radius: 1px;
+    overflow: hidden;
+    position: relative;
+    box-shadow: inset 0 0 0 1px rgba(0,0,0,.25), inset 0 0 18px rgba(0,0,0,.4);
+  }
+  .polaroid img{
+    width: 100%; height: 100%; object-fit: cover;
+    display: block;
+    -webkit-user-drag: none;
+    pointer-events: none;
+    filter: contrast(1.02) saturate(.96) brightness(1.02);
+  }
+  .polaroid .caption{
+    position: absolute; left: 0; right: 0; bottom: 12px;
+    text-align: center;
+    font-family: var(--hand); font-size: 22px; color: var(--ink-soft);
+    line-height: 1;
+    padding: 0 10px;
+  }
+  .polaroid .corner{
+    position: absolute; width: 30px; height: 14px;
+    background: linear-gradient(180deg, rgba(255,225,180,.7), rgba(210,170,110,.55));
+    border: 1px solid rgba(120,80,30,.2);
+    box-shadow: 0 2px 4px rgba(60,30,0,.18);
+  }
+  .polaroid .corner.tl{ top: -6px; left: 18px; transform: rotate(-8deg); }
+  .polaroid .corner.tr{ top: -7px; right: 18px; transform: rotate(7deg); }
+
+  .stack-counter{
+    text-align: center;
+    font-family: var(--serif); font-style: italic;
+    color: var(--ink-mute); font-size: 14px;
+    margin-bottom: 14px;
+    letter-spacing: .04em;
+  }
+  .stack-counter b{ color: var(--ink); font-style: normal; font-weight: 500; }
+  .stack-instructions{
+    text-align: center;
+    font-family: var(--serif); font-style: italic; color: var(--ink-mute);
+    font-size: 14px; margin-top: 6px;
+  }
+  .stack-controls{
+    display: flex; justify-content: center; gap: 10px; margin-top: 14px;
+  }
+  .stack-controls button{
+    border: 1px solid rgba(60,30,0,.18); background: var(--paper-warm); color: var(--ink-soft);
+    font-family: var(--serif); font-size: 13px; letter-spacing: .12em; text-transform: uppercase; font-weight: 600;
+    padding: 9px 14px; border-radius: 999px; cursor: pointer;
+  }
+  .stack-controls button:active{ transform: scale(.97); }
+
+  /* ----- Closing ----- */
+  .closing{
+    text-align: center; padding: 64px 22px 100px;
+    position: relative;
+  }
+  .closing .ornament{ justify-content: center; }
+  .closing .lines{
+    font-family: var(--serif); font-style: italic; font-size: 22px; color: var(--ink-soft);
+    line-height: 1.5; margin: 22px auto 30px; max-width: 320px;
+  }
+  .closing .signlock{
+    display: inline-block; text-align: left;
+    font-family: var(--hand); font-size: 34px; color: var(--ink);
+    line-height: 1.1;
+  }
+  .closing .signlock .small{ font-size: 22px; color: var(--ink-soft); display: block; margin-top: 6px; line-height: 1.25; }
+  .closing .signlock em{ color: var(--red); font-style: italic; }
+  .bunny-area{
+    margin-top: 38px; height: 70px; position: relative;
+  }
+  .bunny{
+    position: absolute; left: 0; bottom: 0;
+    width: 64px; height: 64px;
+    animation: hop 5s cubic-bezier(.5,0,.5,1) infinite;
+  }
+  @keyframes hop{
+    0%   { transform: translateX(0)    translateY(0); }
+    8%   { transform: translateX(40px) translateY(-26px); }
+    16%  { transform: translateX(80px) translateY(0); }
+    22%  { transform: translateX(80px) translateY(0); }
+    30%  { transform: translateX(120px)translateY(-22px); }
+    38%  { transform: translateX(160px)translateY(0); }
+    44%  { transform: translateX(160px)translateY(0); }
+    52%  { transform: translateX(210px)translateY(-26px); }
+    60%  { transform: translateX(260px)translateY(0); }
+    100% { transform: translateX(calc(100vw + 80px)) translateY(0); }
+  }
+  .pawline{
+    position: absolute; left: 0; right: 0; bottom: 6px; height: 14px;
+    pointer-events: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 60 20'><g fill='%236b5d47' opacity='.5'><circle cx='8' cy='14' r='2.2'/><circle cx='14' cy='8' r='1.6'/><circle cx='4' cy='8' r='1.6'/><circle cx='16' cy='14' r='1.4'/><circle cx='6' cy='14' r='1.4'/></g></svg>");
+    background-repeat: repeat-x;
+    background-size: 60px 20px;
+    opacity: 0;
+    animation: trail 5s steps(20) infinite;
+  }
+  @keyframes trail{
+    0%,5% { opacity: 0; clip-path: inset(0 100% 0 0); }
+    10%   { opacity: .8; clip-path: inset(0 90% 0 0); }
+    60%   { opacity: .8; clip-path: inset(0 0 0 0); }
+    85%   { opacity: .5; clip-path: inset(0 0 0 0); }
+    100%  { opacity: 0;  clip-path: inset(0 0 0 100%); }
+  }
+
+  /* helpers */
+  .tap-target{ cursor: pointer; }
+  .sr-only{ position:absolute; width:1px; height:1px; overflow:hidden; clip:rect(0 0 0 0); }
+
+  /* ornaments */
+  .div-ornament{
+    display: flex; align-items: center; justify-content: center; gap: 12px;
+    color: var(--red); font-family: var(--serif); font-style: italic; font-size: 18px;
+    margin: 36px 0 8px;
+    opacity: .8;
+  }
+  .div-ornament .dot{ width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
+  .div-ornament .line{ width: 60px; height: 1px; background: currentColor; opacity: .5; }
+
+  /* mobile size tightenings */
+  @media (max-width: 380px){
+    body{ font-size: 17px; }
+    .cover h1{ font-size: 88px; }
+    .stack-area{ height: 480px; }
+  }
+  @media (min-width: 600px){
+    .stage{ max-width: 600px; }
+    .cover h1{ font-size: 132px; }
+  }
+</style>
+</head>
+<body>
+<div class="stage">
+
+  <!-- ============== COVER ============== -->
+  <section class="cover" data-screen-label="Cover">
+    <div class="ornament"><span class="line"></span><span>Mother's Day · 2026</span><span class="line"></span></div>
+    <h1>
+      <span class="for">For</span>
+      Mom
+    </h1>
+    <div class="booktower" aria-hidden="true">
+      <div class="b b6"><div class="gold"></div><div class="gold gold2"></div></div>
+      <div class="b b5"><div class="gold"></div></div>
+      <div class="b b4"><div class="gold"></div><div class="gold gold2"></div></div>
+      <div class="b b3"><div class="gold"></div></div>
+      <div class="b b2"><div class="gold"></div><div class="gold gold2"></div></div>
+      <div class="b b1"><div class="gold"></div></div>
+    </div>
+    <p class="subtitle">A small library, mostly photographs.</p>
+    <p class="meta">From your son · Tanner</p>
+    <div class="scrolldown">
+      <span>turn the page</span>
+      <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M2 4l4 4 4-4"/></svg>
+    </div>
+  </section>
+
+  <!-- ============== LETTER ============== -->
+  <section data-screen-label="Letter">
+    <div class="eyebrow">A note, first</div>
+    <div class="letter">
+      <p>Hey mom,</p>
+      <p>thanks for being the best mom I've ever had.</p>
+      <p class="parens">(and the best mom I know.)</p>
+      <p class="signoff">happy Mother's Day. ♥</p>
+      <svg class="pawprint" viewBox="0 0 32 32" aria-hidden="true">
+        <g fill="#6b5d47">
+          <ellipse cx="16" cy="22" rx="6" ry="5"/>
+          <ellipse cx="7"  cy="13" rx="2.5" ry="3.4"/>
+          <ellipse cx="13" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="19" cy="9"  rx="2.4" ry="3.2"/>
+          <ellipse cx="25" cy="13" rx="2.5" ry="3.4"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+  <!-- ============== GALLERY ============== -->
+  <section data-screen-label="Gallery" class="gallery">
+    <div class="eyebrow">A few favorites</div>
+    <h2 class="section-title">Some of <em>us</em>.</h2>
+
+    <div class="stack-counter" id="stack-counter"><b>1</b> &nbsp;·&nbsp; 14</div>
+    <div class="stack-area" id="stack-area"></div>
+    <div class="stack-controls">
+      <button id="stack-skip">↺ Restart</button>
+    </div>
+    <div class="stack-instructions">drag a polaroid to send it to the back.</div>
+  </section>
+
+  <!-- ============== CLOSING ============== -->
+  <section class="closing" data-screen-label="Closing">
+    <div class="ornament"><span class="line"></span><span>The last page</span><span class="line"></span></div>
+    <p class="lines">
+      Thank you for the reading light.<br>
+      For letting me read late at night.<br>
+      For all the little reading lights for the long car rides with audiobooks.
+    </p>
+    <div class="div-ornament"><span class="line"></span><span class="dot"></span><span>·</span><span class="dot"></span><span class="line"></span></div>
+    <div class="signlock">
+      Love,<br>
+      <em>Tanner</em>
+      <span class="small">(and Carolina wishes you a very<br>happy Mother's Day too. 🐰)</span>
+    </div>
+    <div class="bunny-area">
+      <div class="pawline"></div>
+      <svg class="bunny" viewBox="0 0 64 64" aria-hidden="true">
+        <g fill="#3a2f22">
+          <ellipse cx="22" cy="38" rx="3.5" ry="11" transform="rotate(-12 22 38)"/>
+          <ellipse cx="28" cy="34" rx="3.2" ry="10" transform="rotate(-6 28 34)"/>
+          <ellipse cx="34" cy="44" rx="14" ry="11"/>
+          <circle cx="46" cy="40" r="9"/>
+          <circle cx="50" cy="38" r="1.1" fill="#f3e8d2"/>
+          <ellipse cx="52" cy="43" rx="1.6" ry="1" fill="#8a3424"/>
+          <circle cx="22" cy="50" r="3" fill="#f3e8d2"/>
+        </g>
+      </svg>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  // -------- Photos data --------
+  const PHOTOS = [
+    { src: 'photos/01-mom-and-young-tanner.jpeg', caption: 'before I could read.' },
+    { src: 'photos/14-tanner-tiki.jpg',           caption: 'just us.' },
+    { src: 'photos/03-mom-young-friend.jpeg',     caption: 'before I existed at all.' },
+    { src: 'photos/04-mom-uncle-motorcycle.jpg',  caption: '"bicycle."' },
+    { src: 'photos/05-pine-forest-baby.jpeg',     caption: 'carrying me.' },
+    { src: 'photos/02-young-mom-gators.jpeg',     caption: 'gainesville. orange & blue.' },
+    { src: 'photos/06-nintendo-ds.jpeg',          caption: 'figuring it out together.' },
+    { src: 'photos/07-rock-band.jpeg',            caption: 'arms folded, mom-grin.' },
+    { src: 'photos/09-hardhats.jpg',              caption: 'hard hats. (still not sure why.)' },
+    { src: 'photos/08-gators-family.jpg',         caption: 'gameday.' },
+    { src: 'photos/10-retirement-balloons.jpg',   caption: 'after all those classrooms.' },
+    { src: 'photos/13-selby-gardens.jpeg',        caption: 'home for a minute.' },
+    { src: 'photos/11-iceland.jpeg',              caption: 'iceland.' },
+    { src: 'photos/12-redrocks-selfie.jpeg',      caption: 'all four of us.' },
+  ];
+
+  // -------- Polaroid stack --------
+  const stackArea = document.getElementById('stack-area');
+  const counter   = document.getElementById('stack-counter');
+  let order = PHOTOS.map((_,i)=>i);
+  let topIdx = 0; // index INTO order for the visible top
+
+  function renderStack(){
+    stackArea.innerHTML = '';
+    // render top 4 cards (top-most last in DOM = on top)
+    const visible = 4;
+    for (let i = visible - 1; i >= 0; i--){
+      const photoIdx = order[(topIdx + i) % order.length];
+      const p = PHOTOS[photoIdx];
+      const card = document.createElement('div');
+      card.className = 'polaroid';
+      // depth offset
+      const depth = i;
+      const rot = (photoIdx % 2 === 0 ? -1 : 1) * (1.5 + depth * 0.8);
+      card.style.transform = `translateY(${depth * 6}px) scale(${1 - depth * 0.04}) rotate(${rot}deg)`;
+      card.style.zIndex = 100 - depth;
+      card.innerHTML = `
+        <span class="corner tl"></span><span class="corner tr"></span>
+        <div class="frame"><img src="${p.src}" alt="" loading="${depth<2?'eager':'lazy'}"></div>
+        <div class="caption">${p.caption}</div>`;
+      if (i === 0) attachDrag(card, rot);
+      stackArea.appendChild(card);
+    }
+    counter.innerHTML = `<b>${(topIdx % order.length) + 1}</b> &nbsp;·&nbsp; ${PHOTOS.length}`;
+  }
+
+  function attachDrag(card, baseRot){
+    let startX=0, startY=0, dx=0, dy=0, dragging=false, pid=null;
+    const onDown = (e) => {
+      dragging = true;
+      pid = e.pointerId;
+      startX = e.clientX; startY = e.clientY;
+      card.setPointerCapture(pid);
+      card.style.transition = 'none';
+    };
+    const onMove = (e) => {
+      if (!dragging || e.pointerId !== pid) return;
+      dx = e.clientX - startX;
+      dy = e.clientY - startY;
+      const rot = baseRot + dx * 0.06;
+      card.style.transform = `translate(${dx}px, ${dy}px) rotate(${rot}deg)`;
+    };
+    const onUp = (e) => {
+      if (!dragging) return;
+      dragging = false;
+      card.style.transition = 'transform .45s cubic-bezier(.2,.7,.2,1)';
+      const w = window.innerWidth;
+      if (Math.abs(dx) > 90){
+        const dir = Math.sign(dx);
+        card.style.transform = `translate(${dir * (w + 200)}px, ${dy + 60}px) rotate(${baseRot + dir * 30}deg)`;
+        setTimeout(() => {
+          topIdx = (topIdx + 1) % order.length;
+          renderStack();
+        }, 320);
+      } else {
+        card.style.transform = `translateY(0) scale(1) rotate(${baseRot}deg)`;
+      }
+    };
+    card.addEventListener('pointerdown', onDown);
+    card.addEventListener('pointermove', onMove);
+    card.addEventListener('pointerup', onUp);
+    card.addEventListener('pointercancel', onUp);
+    // tap (no drag) → also advances
+    card.addEventListener('click', () => {
+      if (Math.abs(dx) < 4 && Math.abs(dy) < 4 && !dragging){
+        // small flick animation
+        card.style.transition = 'transform .55s cubic-bezier(.2,.7,.2,1)';
+        card.style.transform = `translate(${window.innerWidth * 0.7}px, 30px) rotate(${baseRot + 22}deg)`;
+        setTimeout(() => {
+          topIdx = (topIdx + 1) % order.length;
+          renderStack();
+        }, 380);
+      }
+    });
+  }
+
+  document.getElementById('stack-skip').addEventListener('click', () => {
+    topIdx = 0; renderStack();
+  });
+
+  // -------- Init --------
+  renderStack();
+</script>
+</body>
+</html>
