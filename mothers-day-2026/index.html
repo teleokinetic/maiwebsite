@@ -28,7 +28,7 @@
 
   *{ box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
   html, body{ margin: 0; padding: 0; background: var(--paper); color: var(--ink); }
-  html{ overscroll-behavior-y: contain; scroll-behavior: smooth; scroll-snap-type: y proximity; }
+  html{ overscroll-behavior-y: contain; scroll-behavior: smooth; }
   body{
     font-family: var(--body);
     font-size: 18px;
@@ -69,7 +69,6 @@
     display: flex; flex-direction: column; align-items: center; justify-content: center;
     text-align: center; padding: 32px 22px 110px;
     position: relative;
-    scroll-snap-align: start;
   }
   .ornament{
     font-family: var(--serif); font-style: italic; font-weight: 500;
@@ -112,11 +111,10 @@
 
   /* ----- Section common ----- */
   section{
-    padding: 56px 0 110px;
+    padding: 48px 0 100px;
     position: relative;
     min-height: 100svh;
     display: flex; flex-direction: column; justify-content: center;
-    scroll-snap-align: start;
   }
 
   /* ----- Next-page button (bottom of every section except closing) ----- */
@@ -176,39 +174,41 @@
   /* ----- Letter ----- */
   .letter{
     background:
-      linear-gradient(180deg, rgba(255,255,255,.4), rgba(255,255,255,0)),
-      var(--paper-warm);
-    border: 1px solid rgba(60,30,0,.12);
-    border-radius: 2px;
-    padding: 38px 28px 30px;
+      linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 30%),
+      #f6ebcf;
+    border: 1px solid rgba(60,30,0,.14);
+    border-radius: 3px;
+    padding: 40px 30px 36px;
     position: relative;
     box-shadow:
-      0 1px 0 rgba(255,255,255,.5) inset,
-      0 24px 50px -30px rgba(60,30,0,.4),
-      0 2px 0 rgba(60,30,0,.04);
-    transform: rotate(-.6deg);
+      0 1px 0 rgba(255,255,255,.6) inset,
+      0 28px 56px -32px rgba(60,30,0,.5),
+      0 2px 0 rgba(60,30,0,.05);
     margin-top: 14px;
   }
-  .letter::before{
-    content:""; position: absolute; top: -10px; left: 50%; transform: translateX(-50%) rotate(-2deg);
-    width: 90px; height: 22px;
-    background: linear-gradient(180deg, rgba(255,225,180,.65), rgba(220,180,120,.55));
-    border: 1px solid rgba(120,80,30,.25);
-    border-radius: 1px;
-    box-shadow: 0 4px 8px rgba(60,30,0,.15);
+  .letter .letterhead{
+    display: flex; align-items: center; justify-content: center; gap: 10px;
+    color: var(--red); font-family: var(--serif); font-style: italic;
+    font-size: 13px; letter-spacing: .14em; text-transform: uppercase;
+    margin-bottom: 22px;
+  }
+  .letter .letterhead::before, .letter .letterhead::after{
+    content:""; flex: 1; height: 1px; background: currentColor; opacity: .5;
   }
   .letter p{
-    font-family: var(--hand); font-size: 26px; line-height: 1.35;
+    font-family: var(--body); font-weight: 400;
+    font-size: 22px; line-height: 1.5;
     color: var(--ink-soft); margin: 0 0 14px;
   }
-  .letter p:first-of-type{ font-size: 30px; color: var(--ink); }
-  .letter p.parens{ font-size: 22px; font-style: italic; }
+  .letter p:first-of-type{ font-size: 26px; color: var(--ink); font-weight: 500; }
+  .letter p.parens{ font-size: 20px; font-style: italic; opacity: .82; }
   .letter .signoff{
-    font-family: var(--hand); font-size: 30px; color: var(--red); margin-top: 14px;
+    font-family: var(--body); font-style: italic; font-weight: 500;
+    font-size: 22px; color: var(--red); margin-top: 18px;
   }
   .letter .pawprint{
-    position: absolute; right: 18px; bottom: 12px; opacity: .55;
-    width: 28px; height: 28px;
+    position: absolute; right: 22px; bottom: 16px; opacity: .42;
+    width: 26px; height: 26px;
   }
 
   /* ----- Photo gallery ----- */
@@ -217,9 +217,9 @@
   /* polaroid stack */
   .stack-area{
     position: relative;
-    height: 460px;
+    height: 420px;
     display: flex; align-items: center; justify-content: center;
-    margin: 0 0 14px;
+    margin: 0 0 12px;
     touch-action: none;
   }
   .polaroid{
@@ -312,9 +312,10 @@
     margin-top: 38px; height: 70px; position: relative;
   }
   .bunny{
-    position: absolute; left: 0; bottom: 0;
-    width: 64px; height: 64px;
+    position: absolute; left: 0; bottom: -6px;
+    font-size: 44px; line-height: 1;
     animation: hop 5s cubic-bezier(.5,0,.5,1) infinite;
+    user-select: none;
   }
   @keyframes hop{
     0%   { transform: translateX(0)    translateY(0); }
@@ -359,11 +360,99 @@
   .div-ornament .dot{ width: 4px; height: 4px; border-radius: 50%; background: currentColor; }
   .div-ornament .line{ width: 60px; height: 1px; background: currentColor; opacity: .5; }
 
+  /* ----- Password gate ----- */
+  body.gate-locked{ overflow: hidden; }
+  .passgate{
+    position: fixed; inset: 0; z-index: 1000;
+    background:
+      radial-gradient(ellipse at 20% 10%, rgba(255,240,210,.7), transparent 60%),
+      radial-gradient(ellipse at 90% 80%, rgba(176,74,54,.07), transparent 55%),
+      var(--paper);
+    display: flex; align-items: center; justify-content: center;
+    padding: 28px 22px;
+    overflow-y: auto;
+    transition: opacity .55s ease;
+  }
+  .passgate.is-open{ opacity: 0; pointer-events: none; }
+  .passgate-card{
+    width: 100%; max-width: 380px;
+    text-align: center;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 30%),
+      #f6ebcf;
+    border: 1px solid rgba(60,30,0,.14);
+    border-radius: 4px;
+    padding: 32px 26px 28px;
+    position: relative;
+    box-shadow:
+      0 1px 0 rgba(255,255,255,.6) inset,
+      0 24px 50px -28px rgba(60,30,0,.5),
+      0 2px 0 rgba(60,30,0,.05);
+  }
+  .passgate-card .ornament{ justify-content: center; margin-bottom: 14px; }
+  .passgate-title{
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: 46px; line-height: 1; margin: 8px 0 18px;
+    color: var(--ink);
+  }
+  .passgate-sub{
+    font-family: var(--body); font-size: 18px; color: var(--ink-soft);
+    margin: 0 0 22px; line-height: 1.45;
+  }
+  .passgate-form{
+    display: flex; flex-direction: column; gap: 12px; align-items: stretch;
+  }
+  .passgate-input{
+    font-family: var(--body); font-size: 22px;
+    background: rgba(255,250,235,.7);
+    border: 1px solid rgba(60,30,0,.3);
+    border-radius: 999px;
+    padding: 12px 20px;
+    text-align: center;
+    color: var(--ink);
+    outline: none;
+    transition: border-color .2s, box-shadow .2s;
+    -webkit-appearance: none; appearance: none;
+  }
+  .passgate-input:focus{ border-color: var(--red); box-shadow: 0 0 0 3px rgba(138,52,36,.14); }
+  .passgate-btn{
+    font-family: var(--serif); font-style: italic; font-weight: 500;
+    font-size: 17px; letter-spacing: .04em;
+    background: var(--ink); color: var(--paper);
+    border: 0; border-radius: 999px;
+    padding: 12px 26px;
+    cursor: pointer;
+    align-self: center;
+    transition: transform .15s ease;
+  }
+  .passgate-btn:active{ transform: scale(.97); }
+  .passgate-hint{
+    font-family: var(--serif); font-style: italic; font-size: 14px;
+    color: var(--ink-mute); margin: 18px 0 0; line-height: 1.4;
+  }
+  .passgate-err{
+    font-family: var(--serif); font-style: italic; font-size: 15px;
+    color: var(--red); margin: 10px 0 0; min-height: 1.3em;
+    visibility: hidden;
+  }
+  .passgate-err.show{ visibility: visible; animation: shake .35s ease; }
+  @keyframes shake{
+    0% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
+    75% { transform: translateX(-3px); }
+    100% { transform: translateX(0); }
+  }
+  .passgate-paw{
+    position: absolute; right: 18px; bottom: 12px; opacity: .4;
+    width: 22px; height: 22px;
+  }
+
   /* mobile size tightenings */
   @media (max-width: 380px){
     body{ font-size: 17px; }
     .cover h1{ font-size: 88px; }
-    .stack-area{ height: 400px; }
+    .stack-area{ height: 360px; }
   }
   @media (min-width: 600px){
     .stage{ max-width: 600px; }
@@ -371,7 +460,34 @@
   }
 </style>
 </head>
-<body>
+<body class="gate-locked">
+
+<!-- ============== PASSWORD GATE ============== -->
+<div class="passgate" id="passgate">
+  <div class="passgate-card">
+    <div class="ornament"><span class="line"></span><span>Mother's Day · 2026</span><span class="line"></span></div>
+    <h2 class="passgate-title">Hi Mom.</h2>
+    <p class="passgate-sub">What does Tanner think you are?</p>
+    <form class="passgate-form" id="passgate-form" autocomplete="off" novalidate>
+      <input class="passgate-input" id="passgate-input" type="text" inputmode="text"
+             autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false"
+             aria-label="Password">
+      <button class="passgate-btn" type="submit">open ↓</button>
+    </form>
+    <p class="passgate-hint">(two words, no spaces, all lowercase.)</p>
+    <p class="passgate-err" id="passgate-err">Hmm, not quite. Try again?</p>
+    <svg class="passgate-paw" viewBox="0 0 32 32" aria-hidden="true">
+      <g fill="#6b5d47">
+        <ellipse cx="16" cy="22" rx="6" ry="5"/>
+        <ellipse cx="7"  cy="13" rx="2.5" ry="3.4"/>
+        <ellipse cx="13" cy="9"  rx="2.4" ry="3.2"/>
+        <ellipse cx="19" cy="9"  rx="2.4" ry="3.2"/>
+        <ellipse cx="25" cy="13" rx="2.5" ry="3.4"/>
+      </g>
+    </svg>
+  </div>
+</div>
+
 <div class="stage">
 
   <!-- ============== COVER ============== -->
@@ -391,10 +507,11 @@
   <section id="letter-page" data-screen-label="Letter">
     <div class="eyebrow">A note, first</div>
     <div class="letter">
-      <p>Hey mom,</p>
-      <p>thanks for being the best mom I've ever had.</p>
-      <p class="parens">(and the best mom I know.)</p>
-      <p class="signoff">happy Mother's Day. ♥</p>
+      <div class="letterhead">M. · Mother's Day · 2026</div>
+      <p>Hey Mom,</p>
+      <p>Thanks for being the best mom I've ever had.</p>
+      <p class="parens">(And the best mom I know.)</p>
+      <p class="signoff">Happy Mother's Day. ♥</p>
       <svg class="pawprint" viewBox="0 0 32 32" aria-hidden="true">
         <g fill="#6b5d47">
           <ellipse cx="16" cy="22" rx="6" ry="5"/>
@@ -411,7 +528,6 @@
   <!-- ============== GALLERY ============== -->
   <section id="gallery-page" data-screen-label="Gallery" class="gallery">
     <div class="eyebrow">A few favorites</div>
-    <h2 class="section-title">Some of <em>us</em>.</h2>
 
     <div class="stack-counter" id="stack-counter"><b>1</b> &nbsp;·&nbsp; 14</div>
     <div class="stack-area" id="stack-area"></div>
@@ -438,23 +554,45 @@
     </div>
     <div class="bunny-area">
       <div class="pawline"></div>
-      <svg class="bunny" viewBox="0 0 64 64" aria-hidden="true">
-        <g fill="#3a2f22">
-          <ellipse cx="22" cy="38" rx="3.5" ry="11" transform="rotate(-12 22 38)"/>
-          <ellipse cx="28" cy="34" rx="3.2" ry="10" transform="rotate(-6 28 34)"/>
-          <ellipse cx="34" cy="44" rx="14" ry="11"/>
-          <circle cx="46" cy="40" r="9"/>
-          <circle cx="50" cy="38" r="1.1" fill="#f3e8d2"/>
-          <ellipse cx="52" cy="43" rx="1.6" ry="1" fill="#8a3424"/>
-          <circle cx="22" cy="50" r="3" fill="#f3e8d2"/>
-        </g>
-      </svg>
+      <span class="bunny" aria-hidden="true">🐰</span>
     </div>
   </section>
 
 </div>
 
 <script>
+  // -------- Password gate --------
+  (function () {
+    const KEY = 'md2026_unlocked';
+    const PASSWORD = 'bestmom';
+    const gate = document.getElementById('passgate');
+    if (!gate) return;
+    if (localStorage.getItem(KEY) === '1') {
+      document.body.classList.remove('gate-locked');
+      gate.remove();
+      return;
+    }
+    const form  = document.getElementById('passgate-form');
+    const input = document.getElementById('passgate-input');
+    const err   = document.getElementById('passgate-err');
+    setTimeout(() => input.focus(), 250);
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const v = input.value.trim().toLowerCase().replace(/\s+/g, '');
+      if (v === PASSWORD) {
+        localStorage.setItem(KEY, '1');
+        gate.classList.add('is-open');
+        document.body.classList.remove('gate-locked');
+        setTimeout(() => gate.remove(), 600);
+      } else {
+        err.classList.remove('show');
+        void err.offsetWidth; // restart animation
+        err.classList.add('show');
+        input.select();
+      }
+    });
+  })();
+
   // -------- Photos data --------
   const PHOTOS = [
     { src: 'photos/01-mom-and-young-tanner.jpeg', caption: 'before I could read.' },
@@ -564,6 +702,9 @@
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
     });
   });
+
+  // -------- Preload all photos so they're cached before they're swiped to --------
+  PHOTOS.forEach(p => { const img = new Image(); img.src = p.src; });
 
   // -------- Init --------
   renderStack();
