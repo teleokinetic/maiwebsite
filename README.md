@@ -10,7 +10,7 @@ Static files, no build step. Deployed via GitHub Pages from `main`, served at [t
 index.html                  # the landing page: drawing, name, links (all inline)
 p5.min.js                   # p5 2.3.2, self-hosted
 p5.brush.js                 # p5.brush 2.2.2, self-hosted
-og.jpg                      # Open Graph image (a finished frame of the desktop composition)
+og-2.jpg                    # Open Graph image (a finished frame of the desktop composition; rename on change so link caches refresh)
 favicon.svg, favicon.ico    # an open ensō ring in slate on paper
 CNAME                       # tannerholman.space
 60days-ofstanding/          # standalone: 60 days of standing
