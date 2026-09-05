@@ -1291,5 +1291,21 @@
     setScale: (r) => { OVERRIDE_R = r == null ? null : Math.min(R_MAX, Math.max(1, r)); setScale(screenScale(), false); } };
 })();
 </script>
+<!-- GoatCounter: pageviews + which link gets clicked (cookieless; count.js skips localhost) -->
+<script>
+(function(){
+  // Count clicks on the two links; no-op if count.js is blocked or hasn't loaded.
+  // The page's 0.7 s dissolve before navigating gives the beacon time to send.
+  var links = document.getElementById("links");
+  if (!links) return;
+  links.addEventListener("click", function(e){
+    var a = e.target && e.target.closest ? e.target.closest("a") : null;
+    if (!a || !(window.goatcounter && window.goatcounter.count)) return;
+    window.goatcounter.count({ path: "click-" + a.id, title: a.textContent.trim(), event: true });
+  }, true);
+})();
+</script>
+<script data-goatcounter="https://tannerholman.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
