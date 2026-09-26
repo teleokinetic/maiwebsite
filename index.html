@@ -31,19 +31,25 @@
     #sheet { position: absolute; left: 0; top: 0; width: 100%; height: 100%; }
     #stage { position: absolute; inset: 0; isolation: isolate; background: #eef0ec; cursor: pointer; overflow: hidden; }
     #stage canvas { position: absolute; inset: 0; width: 100% !important; height: 100% !important; display: block; }
-    /* the sheet's edges feather into the surrounding paper, so the drawing sits on the page rather than in a frame;
-       the feather is measured in the design's own units (44 of 1440 across, 60 of 900 on the phone) and never
-       reaches the name, the ensō or the figure */
-    #stage::after { content: ""; position: absolute; inset: 0; z-index: 5; pointer-events: none;
-      --feather: calc(44px * var(--k));
+    /* layers, bottom to top: the poster (a soft hint of the finished sheet, shown before anything is drawn), the
+       landscape and its ghost, the veil (the last picture, dissolving when the drawing starts again), the feather,
+       then the ensō, the figure and the name. The feather sits over the landscape only: the land dissolves into the
+       surrounding paper at the sheet's edges, while he, the sun and the name stay crisp. Measured in the design's own
+       units (--k), so it scales with the sheet. */
+    #stage::after { content: ""; position: absolute; inset: 0; z-index: 3; pointer-events: none;
+      --fx: calc(130px * var(--k)); --fy: calc(64px * var(--k));
       background:
-        linear-gradient(to right,  #eef0ec 0, rgba(238,240,236,.55) calc(var(--feather) * .4), rgba(238,240,236,0) var(--feather),
-                                   rgba(238,240,236,0) calc(100% - var(--feather)), rgba(238,240,236,.55) calc(100% - var(--feather) * .4), #eef0ec 100%),
-        linear-gradient(to bottom, #eef0ec 0, rgba(238,240,236,.55) calc(var(--feather) * .4), rgba(238,240,236,0) var(--feather),
-                                   rgba(238,240,236,0) calc(100% - var(--feather)), rgba(238,240,236,.55) calc(100% - var(--feather) * .4), #eef0ec 100%); }
-    body[data-comp="phone"] #stage::after { --feather: calc(26px * var(--k)); }
-    #enso, #figure, #name { pointer-events: none; }
-    #enso { z-index: 1; mix-blend-mode: multiply; } #figure { z-index: 2; } #name { z-index: 3; mix-blend-mode: multiply; }
+        linear-gradient(to right,  #eef0ec 0, rgba(238,240,236,.82) calc(var(--fx) * .22), rgba(238,240,236,.42) calc(var(--fx) * .55), rgba(238,240,236,0) var(--fx),
+                                   rgba(238,240,236,0) calc(100% - var(--fx)), rgba(238,240,236,.42) calc(100% - var(--fx) * .55), rgba(238,240,236,.82) calc(100% - var(--fx) * .22), #eef0ec 100%),
+        linear-gradient(to bottom, #eef0ec 0, rgba(238,240,236,.6) calc(var(--fy) * .35), rgba(238,240,236,0) var(--fy),
+                                   rgba(238,240,236,0) calc(100% - var(--fy)), rgba(238,240,236,.6) calc(100% - var(--fy) * .35), #eef0ec 100%); }
+    body[data-comp="phone"] #stage::after { --fx: calc(26px * var(--k)); --fy: calc(22px * var(--k)); }
+    #enso, #figure, #name, #veil, #poster { pointer-events: none; }
+    #poster { z-index: 0; position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: blur(calc(6px * var(--k))) saturate(.8); transition: opacity 1.2s ease; }
+    #poster.on { opacity: .34; }
+    #stage canvas.land { z-index: 1; } #stage canvas.ghost { z-index: 1; }
+    #veil { z-index: 2; opacity: 0; }
+    #enso { z-index: 4; mix-blend-mode: multiply; } #figure { z-index: 5; } #name { z-index: 6; mix-blend-mode: multiply; }
     /* the sheet and the links dissolve together when a link is followed */
     #stage, #links a { transition: opacity .6s ease; }
     body.leaving #stage { opacity: 0; transition: opacity .7s ease-in-out; }
@@ -51,15 +57,15 @@
 
     /* ---- the links: EB Garamond small caps, in the design's own coordinate space (scaled by --k) ---- */
     #links a { font-family: 'EB Garamond', Garamond, 'Times New Roman', serif; font-weight: 500; font-variant-caps: small-caps; letter-spacing: .06em;
-      color: #45586c; text-decoration: none; white-space: nowrap; position: relative; opacity: 0; visibility: hidden;
+      color: #3f5165; text-decoration: none; white-space: nowrap; position: relative; opacity: 0; visibility: hidden;
       transition: color .3s ease, opacity .6s ease, visibility 0s linear .6s; }
-    #links.show a { opacity: 1; visibility: visible; transition: color .3s ease, opacity .6s ease, visibility 0s; }
+    #links.show a { opacity: 1; visibility: visible; transition: color .3s ease, opacity .9s ease, visibility 0s; }
     #links a:focus { outline: none; }
     #links a::after { content: ""; position: absolute; left: 0; right: 0; height: 1px; }
 
     /* desktop: one line under the handwritten name; the hairline draws in on hover */
-    #links { position: absolute; z-index: 10; left: calc(88px * var(--k)); top: calc(126px * var(--k)); display: flex; flex-direction: row; align-items: center; gap: calc(18px * var(--k)); }
-    #links a { display: inline-flex; align-items: center; padding: calc(6px * var(--k)) 0; font-size: calc(18px * var(--k)); line-height: calc(22px * var(--k)); }
+    #links { position: absolute; z-index: 10; left: calc(88px * var(--k)); top: calc(134px * var(--k)); display: flex; flex-direction: row; align-items: center; gap: calc(20px * var(--k)); }
+    #links a { display: inline-flex; align-items: center; padding: calc(6px * var(--k)) 0; font-size: calc(19.5px * var(--k)); line-height: calc(24px * var(--k)); }
     #links .dot { display: block; width: calc(3px * var(--k)); height: calc(3px * var(--k)); border-radius: 50%; background: #45586c; opacity: .6; }
     #links a::after { bottom: calc(3px * var(--k)); background: #262e38; opacity: .7; transform: scaleX(0); transform-origin: left center; transition: transform .32s cubic-bezier(.2, .7, .2, 1); }
     #links a:hover, #links a:focus-visible { color: #262e38; }
@@ -72,8 +78,31 @@
     body[data-comp="phone"] #links .dot { display: none; }
     body[data-comp="phone"] #links a { display: flex; align-items: center; padding: 0; z-index: 10; }
     body[data-comp="phone"] #links a::after { bottom: var(--ub); background: #45586c; opacity: .38; transform: none; transition: opacity .3s ease, background .3s ease; }
-    body[data-comp="phone"] #offer { position: absolute; left: calc(27px * var(--k)); top: calc(68px * var(--k)); --ub: calc(5px * var(--k)); height: calc(48px * var(--k)); font-size: calc(17px * var(--k)); line-height: calc(21px * var(--k)); }
-    body[data-comp="phone"] #writing { position: fixed; right: calc(var(--stage-right) + 27px * var(--k)); bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 12px)); --ub: calc(10px * var(--k)); height: calc(40px * var(--k)); font-size: calc(13px * var(--k)); line-height: calc(16px * var(--k)); transition-delay: .4s; }
+    body[data-comp="phone"] #offer { position: absolute; left: calc(27px * var(--k)); top: calc(74px * var(--k)); --ub: calc(6px * var(--k)); height: calc(44px * var(--k)); font-size: calc(20px * var(--k)); line-height: calc(24px * var(--k)); }
+    body[data-comp="phone"] #writing { position: absolute; left: calc(27px * var(--k)); top: calc(116px * var(--k)); --ub: calc(6px * var(--k)); height: calc(36px * var(--k)); font-size: calc(15px * var(--k)); line-height: calc(18px * var(--k)); transition-delay: .35s; }
+    /* phone link treatments (OPT.sub) — "under" is the plain stack above */
+    body[data-comp="phone"][data-sub="strong"] #links a { color: #262e38; }
+    body[data-comp="phone"][data-sub="strong"] #offer { top: calc(72px * var(--k)); font-size: calc(21px * var(--k)); line-height: calc(25px * var(--k)); --ub: calc(5px * var(--k)); }
+    body[data-comp="phone"][data-sub="strong"] #writing { top: calc(114px * var(--k)); height: calc(44px * var(--k)); font-size: calc(18px * var(--k)); line-height: calc(22px * var(--k)); --ub: calc(8px * var(--k)); }
+    body[data-comp="phone"][data-sub="strong"] #links a::after { height: 1.5px; background: #262e38; opacity: .5; }
+
+    body[data-comp="phone"][data-sub="wash"] #links a { color: #262e38; padding: 0 calc(12px * var(--k)); margin-left: calc(-12px * var(--k)); border-radius: 40% 55% 45% 50% / 60% 45% 55% 50%;
+      background: radial-gradient(60% 95% at 16% 58%, rgba(93,127,137,.24), rgba(93,127,137,0) 72%), radial-gradient(58% 85% at 58% 42%, rgba(69,88,108,.17), rgba(69,88,108,0) 74%), radial-gradient(45% 80% at 90% 62%, rgba(167,178,186,.3), rgba(167,178,186,0) 72%); }
+    body[data-comp="phone"][data-sub="wash"] #links a::after { display: none; }
+    body[data-comp="phone"][data-sub="wash"] #offer { top: calc(72px * var(--k)); font-size: calc(20px * var(--k)); }
+    body[data-comp="phone"][data-sub="wash"] #writing { top: calc(120px * var(--k)); font-size: calc(16px * var(--k)); height: calc(38px * var(--k)); }
+
+    body[data-comp="phone"][data-sub="arrows"] #links a { color: #262e38; font-variant-caps: normal; letter-spacing: .005em; }
+    body[data-comp="phone"][data-sub="arrows"] #links a::after { content: "→"; position: static; height: auto; background: none; opacity: .75; margin-left: .38em; transform: none; }
+    body[data-comp="phone"][data-sub="arrows"] #offer { top: calc(70px * var(--k)); font-size: calc(23px * var(--k)); line-height: calc(27px * var(--k)); }
+    body[data-comp="phone"][data-sub="arrows"] #writing { top: calc(114px * var(--k)); font-size: calc(18.5px * var(--k)); line-height: calc(22px * var(--k)); color: #45586c; }
+
+    body[data-comp="phone"][data-sub="foot"] #links a { color: #262e38; }
+    body[data-comp="phone"][data-sub="foot"] #offer { top: calc(752px * var(--k)); font-size: calc(20px * var(--k)); }
+    body[data-comp="phone"][data-sub="foot"] #writing { top: calc(794px * var(--k)); font-size: calc(16px * var(--k)); }
+    body[data-comp="phone"][data-sub="foot"] #links a::after { background: #262e38; opacity: .45; }
+
+    body[data-comp="phone"][data-sub="corner"] #writing { position: fixed; left: auto; top: auto; right: calc(var(--stage-right) + 27px * var(--k)); bottom: max(44px, calc(env(safe-area-inset-bottom, 0px) + 12px)); --ub: calc(10px * var(--k)); height: calc(40px * var(--k)); font-size: calc(14px * var(--k)); line-height: calc(17px * var(--k)); }
     body[data-comp="phone"] #links a:hover, body[data-comp="phone"] #links a:focus-visible { color: #45586c; }
     body[data-comp="phone"] #links a:hover::after, body[data-comp="phone"] #links a:focus-visible::after { opacity: .38; background: #45586c; transform: none; }
     body[data-comp="phone"] #links a:active, body[data-comp="phone"] #links a:focus-visible { color: #262e38; }
@@ -82,8 +111,11 @@
       body[data-comp="phone"] #links a:hover { color: #262e38; }
       body[data-comp="phone"] #links a:hover::after { opacity: .9; background: #262e38; }
     }
+    body[data-comp="phone"][data-sub="arrows"] #links a:hover::after, body[data-comp="phone"][data-sub="arrows"] #links a:focus-visible::after,
+    body[data-comp="phone"][data-sub="arrows"] #links a:active::after { background: none; opacity: 1; }
+    body[data-comp="phone"][data-sub="arrows"] #links a:active, body[data-comp="phone"][data-sub="arrows"] #links a:focus-visible { color: #141a22; }
     @media (prefers-reduced-motion: reduce) {
-      #links a, #links.show a, #stage, body.leaving #stage, body.leaving #links a { transition: none; }
+      #links a, #links.show a, #stage, body.leaving #stage, body.leaving #links a, #poster { transition: none; }
     }
 </style>
 <script defer src="/p5.min.js"></script>
@@ -93,6 +125,8 @@
 <div id="frame" aria-hidden="true"></div>
 <div id="sheet">
   <div id="stage" role="img" aria-label="Ink-and-wash drawing of Tanner Holman mid-lunge in a mountain meadow, a pale ensō sun over the far ridges, with his handwritten name">
+    <img id="poster" alt="" aria-hidden="true">
+    <canvas id="veil"></canvas>
     <canvas id="enso"></canvas>
     <canvas id="figure"></canvas>
     <canvas id="name"></canvas>
@@ -116,6 +150,12 @@
 (function () {
   const DATA = window.__ARRIVAL__;
   const REDUCED = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // options (the preview compares them side by side; the defaults are the proposal)
+  //   start: "paper" — bare paper, the name signs at once;  "ghost" — a soft hint of the finished sheet under it
+  //   enso:  on the phone, "off" or "small";  sub: on the phone, the Substack line "under" the offer or in the "corner"
+  const Q = new URLSearchParams(location.search + "&" + location.hash.slice(1));
+  const OPT = { start: Q.get("start") || "paper", enso: Q.get("enso") || "off", sub: Q.get("sub") || "under" };
+  const PAGE_T0 = performance.now();
 
   // ---------------------------------------------------------------------------
   // Compositions. The same drawing on two sheets: the desktop artifact (1440×900) and the phone
@@ -130,10 +170,11 @@
       // choreography (seconds): the name lands first; figure strokes and landscape marks converge on DRAW;
       // then a beat of stillness, and the ensō goes down as the last gesture, finishing at END
       DRAW: 4.0, END: 6.4,
-      TL: { washStart: 0.0, washDur: 1.2, figStart: 0.3, figDur: 4.0 - 0.3, nameStart: 0.45, nameDur: 1.75, ensoStart: 4.8, ensoDur: 1.6, ensoRest: 0.31, landStart: 0.05, landEnd: 4.0 },
+      TL: { washStart: 0.0, washDur: 1.2, figStart: 0.3, figDur: 4.0 - 0.3, ensoStart: 4.8, ensoDur: 1.6, ensoRest: 0.31, landStart: 0.05, landEnd: 4.0 },
+      NAME: { start: 0.25, dur: 1.7 },                            // seconds from the page's first moment, not the drawing's
       enso: { cx: 0.795, cy: 0.235, r: 0.14, rOf: "H" },
       fig: { hMax: 0.76, wMax: 0.5, cx: 0.64, bottom: 0.92 },
-      name: (W, H, nameW) => { const nw = clamp(W * 0.22, 200, 340); return { s: nw / nameW, x: Math.max(W * 0.06, 28), y: Math.max(H * 0.075, 28) }; },
+      name: (W, H, nameW) => { const nw = clamp(W * 0.26, 230, 400); return { s: nw / nameW, x: Math.max(W * 0.06, 28), y: Math.max(H * 0.072, 28) }; },
       horizon: 0.56, lakeBottom: 0.68,
       ridges: (PAL) => [
         { top: 0.22, amp: 0.28, freq: 0.0016, color: PAL.mist,  alpha: 190, shade: { col: PAL.fog,   brush: "2H", n: 90,  w: 0.8, depth: 0.5 } },
@@ -141,36 +182,40 @@
         { top: 0.40, amp: 0.14, freq: 0.0030, color: PAL.teal,  alpha: 100, shade: { col: PAL.slate, brush: "HB", n: 200, w: 0.9, depth: 0.7 } },
         { top: 0.48, amp: 0.07, freq: 0.0045, color: PAL.slate, alpha: 110, shade: { col: PAL.ink,   brush: "2B", n: 150, w: 0.9, depth: 0.8 } },
       ],
-      ripples: { n: 34, len: [60, 420] }, tufts: 22,
-      drifts: { n: 12, xMax: 0.6, len: [200, 700] }, skyFloor: 0.05, ceilingPad: 80,
-      ambient: { reach: 600, rippleLen: [60, 300] },
-      linksAt: (TL, DRAW) => DRAW,                              // the links come up as the drawing converges
+      ripples: { n: 30, len: [60, 420] }, tufts: 26, tuftClusters: 6,
+      drifts: { n: 9, xMax: 0.75, len: [220, 600] }, skyFloor: 0.05, ceilingPad: 80,
+      ambient: { reach: 520, rippleLen: [60, 300] },
     },
     phone: {
       kind: "phone", W: 900, H: 1950,                           // a tall sheet: phone proportions at 2×
-      DRAW: 4.0, END: 7.8,                                      // the phone: the name is signed after the ensō
-      TL: { washStart: 0.0, washDur: 1.2, figStart: 0.3, figDur: 4.0 - 0.3, nameStart: 6.3, nameDur: 1.4, ensoStart: 4.8, ensoDur: 1.6, ensoRest: 0.31, landStart: 0.05, landEnd: 4.0 },
-      enso: { cx: 0.73, cy: 0.26, r: 0.135, rOf: "W" },
-      fig: { hMax: 0.9, wMax: 0.80, cx: 0.54, bottom: 0.815 },
-      name: (W, H, nameW) => { const nw = W * 0.56; return { s: nw / nameW, x: W * 0.07, y: H * 0.045 }; },
-      horizon: 0.51, lakeBottom: 0.57,
+      // the sky is short and he fills the width; the name and the offer are larger. The ensō is optional here
+      // (OPT.enso): without it the drawing finishes as the figure does.
+      DRAW: 4.0, END: OPT.enso === "small" ? 6.4 : 4.4,
+      TL: { washStart: 0.0, washDur: 1.2, figStart: 0.3, figDur: 4.0 - 0.3, ensoStart: 4.8, ensoDur: 1.6, ensoRest: 0.31, landStart: 0.05, landEnd: 4.0 },
+      NAME: { start: 0.25, dur: 1.5 },
+      enso: OPT.enso === "small" ? { cx: 0.815, cy: 0.215, r: 0.082, rOf: "W" } : null,
+      fig: { hMax: 0.95, wMax: 0.9, cx: 0.5, bottom: 0.875 },
+      name: (W, H, nameW) => { const nw = W * 0.74; return { s: nw / nameW, x: W * 0.068, y: H * 0.036 }; },
+      horizon: 0.405, lakeBottom: 0.465,
       ridges: (PAL) => [
-        { top: 0.335, amp: 0.081, freq: 0.0016, color: PAL.mist,  alpha: 190, shade: { col: PAL.fog,   brush: "2H", n: 70,  w: 0.8, depth: 0.5 } },
-        { top: 0.360, amp: 0.064, freq: 0.0022, color: PAL.fog,   alpha: 150, shade: { col: PAL.slate, brush: "2H", n: 100, w: 0.8, depth: 0.55 } },
-        { top: 0.385, amp: 0.041, freq: 0.0030, color: PAL.teal,  alpha: 100, shade: { col: PAL.slate, brush: "HB", n: 140, w: 0.9, depth: 0.7 } },
-        { top: 0.410, amp: 0.021, freq: 0.0045, color: PAL.slate, alpha: 110, shade: { col: PAL.ink,   brush: "2B", n: 110, w: 0.9, depth: 0.8 } },
+        { top: 0.236, amp: 0.070, freq: 0.0016, color: PAL.mist,  alpha: 190, shade: { col: PAL.fog,   brush: "2H", n: 60,  w: 0.8, depth: 0.5 } },
+        { top: 0.262, amp: 0.056, freq: 0.0022, color: PAL.fog,   alpha: 150, shade: { col: PAL.slate, brush: "2H", n: 90,  w: 0.8, depth: 0.55 } },
+        { top: 0.288, amp: 0.038, freq: 0.0030, color: PAL.teal,  alpha: 100, shade: { col: PAL.slate, brush: "HB", n: 120, w: 0.9, depth: 0.7 } },
+        { top: 0.312, amp: 0.020, freq: 0.0045, color: PAL.slate, alpha: 110, shade: { col: PAL.ink,   brush: "2B", n: 100, w: 0.9, depth: 0.8 } },
       ],
-      ripples: { n: 18, len: [40, 260] }, tufts: 20,
-      drifts: { n: 4, xMax: 0.5, len: [120, 360] }, skyFloor: 0.22, ceilingPad: 60,   // the sky under the name and links stays clear
-      ambient: { reach: 400, rippleLen: [40, 220] },
-      linksAt: (TL, DRAW) => TL.nameStart + TL.nameDur,         // the offer comes up as soon as the name is signed
+      ripples: { n: 14, len: [40, 260] }, tufts: 24, tuftClusters: 5,
+      drifts: { n: 3, xMax: 0.5, len: [140, 360] }, skyFloor: 0.19, ceilingPad: 50,   // the sky under the name and links stays clear
+      ambient: { reach: 380, rippleLen: [40, 220] },
     },
   };
   let C = COMPS.desktop, W = C.W, H = C.H, DRAW = C.DRAW, END = C.END, TL = C.TL;
   function applyComposition(kind) {
     C = COMPS[kind]; W = C.W; H = C.H; DRAW = C.DRAW; END = C.END; TL = C.TL;
     document.body.dataset.comp = kind;
-    enso.cx = W * C.enso.cx; enso.cy = H * C.enso.cy; enso.r = (C.enso.rOf === "H" ? H : W) * C.enso.r;
+    document.body.dataset.sub = OPT.sub;
+    enso.on = !!C.enso;
+    if (enso.on) { enso.cx = W * C.enso.cx; enso.cy = H * C.enso.cy; enso.r = (C.enso.rOf === "H" ? H : W) * C.enso.r; }
+    else { enso.cx = W * 2; enso.cy = -H; enso.r = 1; }         // no sun: the sky drifts are free to run anywhere
   }
   const frame = document.getElementById("frame"), sheet = document.getElementById("sheet");
   function pickComposition() {
@@ -386,7 +431,7 @@
     for (let y = 0; y < JH; y++) for (let x = 0; x < JW; x++) {
       const i = y * JW + x, a = A[i], dark = TN[i];
       if (a === 0) continue;                             // bare paper: every term below is zero
-      let wa = a * (0.06 + 0.55 * Math.pow(dark, 1.5 - 0.3 * SK[i]));
+      let wa = a * (0.06 + 0.55 * Math.pow(dark, 1.5 - 0.3 * SK[i])) * (1 - 0.22 * SK[i]);
       wa *= 0.74 + 0.5 * gran(x / ws, y / ws);
       wa += 0.07 * BM[i] * a;                            // pigment pools where the wash meets dry paper
       washA[i] = wa;
@@ -397,7 +442,7 @@
     washImg = document.createElement("canvas"); washImg.width = JW; washImg.height = JH;
     const wc = washImg.getContext("2d"), wd = wc.createImageData(JW, JH);
     for (let i = 0; i < n; i++) {
-      const t = clamp(dA[i] * 1.6, 0, 1);              // slate → ink in the deep darks
+      const t = clamp(dA[i] * 1.3, 0, 1);              // slate → ink in the deep darks
       wd.data[i * 4] = INK.wash[0] + (INK.ink[0] - INK.wash[0]) * t;
       wd.data[i * 4 + 1] = INK.wash[1] + (INK.ink[1] - INK.wash[1]) * t;
       wd.data[i * 4 + 2] = INK.wash[2] + (INK.ink[2] - INK.wash[2]) * t;
@@ -415,7 +460,7 @@
     const mc = matte.getContext("2d"), md = mc.createImageData(JW, JH);
     for (let y = 0; y < JH; y++) for (let x = 0; x < JW; x++) {
       const i = y * JW + x;
-      let a = smooth((mA[i] - 0.25) / 0.6);
+      let a = smooth((mA[i] - 0.32) / 0.55);
       const feet = (y - JH * 0.9) / (JH * 0.1); if (feet > 0) a *= 1 - 0.75 * smooth(feet);
       md.data[i * 4] = INK.paper[0]; md.data[i * 4 + 1] = INK.paper[1]; md.data[i * 4 + 2] = INK.paper[2]; md.data[i * 4 + 3] = Math.round(255 * a);
     }
@@ -461,7 +506,7 @@
     const rimNudge = (x, y) => { const i = idx(x, y), g = Math.hypot(bgx[i], bgy[i]) || 1, d = (0.5 - alp[i]) * 1.6; return [bgx[i] / g * d, bgy[i] / g * d]; };
     const inkMix = (t) => [INK.slate[0] + (INK.ink[0] - INK.slate[0]) * t, INK.slate[1] + (INK.ink[1] - INK.slate[1]) * t, INK.slate[2] + (INK.ink[2] - INK.slate[2]) * t];
 
-    const qt = Math.round(target * 0.66), qx = Math.round(target * 0.08), qe = Math.round(target * 0.12), qc = target - qt - qx - qe;
+    const qt = Math.round(target * 0.68), qx = Math.round(target * 0.08), qe = Math.round(target * 0.13), qc = target - qt - qx - qe;
     const got = { t: 0, x: 0, e: 0, c: 0 };
     let tries = 0;
     while ((got.t < qt || got.x < qx || got.e < qe || got.c < qc) && tries < target * 120) {
@@ -510,12 +555,13 @@
         // the contour: long, broken brush lines that ride the silhouette with pressure
         if (got.c >= qc || amag[i] < 0.2 || a < 0.2 || a > 0.9) continue;
         if (!free(occC, x, y, 2)) continue;
-        const pts = trace(x, y, rimDir, (qx, qy) => bamag[idx(qx, qy)] < 0.05, Math.round(P.random(10, 26)), rimNudge);
+        const pts = trace(x, y, rimDir, (qx, qy) => bamag[idx(qx, qy)] < 0.05, Math.round(P.random(7, 20)), rimNudge);
         if (pts.length < 8) continue;
         mark(occC, pts, 1);
         const gl = Math.hypot(agx[i], agy[i]) || 1, xi = clamp(Math.floor(x + agx[i] / gl * 5), 0, IW - 1), yi = clamp(Math.floor(y + agy[i] / gl * 5), 0, IH - 1);
         const din = tone[yi * IW + xi];
-        s = { k: 2, pts, w: 0.9 + 0.9 * P.random() + 0.5 * din, al: 0.26 + 0.3 * din + 0.1 * P.random(), c: inkMix(0.85 + 0.15 * din), key: kn + 0.1 + 0.3 * P.random(), env: 1, peak: 0.3 + 0.4 * P.random() };
+        const pr = P.random();
+        s = { k: 2, pts, w: 0.7 + 1.3 * pr * pr + 0.5 * din, al: 0.16 + 0.34 * din + 0.2 * P.random(), c: inkMix(0.85 + 0.15 * din), key: kn + 0.1 + 0.3 * P.random(), env: 1, peak: 0.2 + 0.6 * P.random() };
         got.c++;
       }
       // the paddle keeps its vermilion, but quietly — the flat wash does the work
@@ -756,8 +802,8 @@
     // (the gradient opens a little before the landing and closes a little after the tail, so neither cap is sliced)
     const lead = 14 / 360, g = bc.createConicGradient((enso.start - 14) * Math.PI / 180, enso.cx, enso.cy);
     const span = enso.sweep / 360;
-    g.addColorStop(0, "rgba(58,74,92,0.52)");
-    for (const [u, al] of [[0, 0.52], [0.06, 0.48], [0.3, 0.36], [0.55, 0.31], [0.78, 0.22], [0.92, 0.15], [1, 0.08]]) g.addColorStop(Math.min(0.999, lead + u * span), `rgba(58,74,92,${al})`);
+    g.addColorStop(0, "rgba(58,74,92,0.46)");
+    for (const [u, al] of [[0, 0.46], [0.06, 0.44], [0.3, 0.36], [0.55, 0.31], [0.78, 0.22], [0.92, 0.15], [1, 0.08]]) g.addColorStop(Math.min(0.999, lead + u * span), `rgba(58,74,92,${al})`);
     g.addColorStop(Math.min(0.9995, lead + span + 12 / 360), "rgba(58,74,92,0.06)"); g.addColorStop(1, "rgba(58,74,92,0)");
     bc.globalCompositeOperation = "destination-in";
     bc.fillStyle = g; bc.fillRect(0, 0, W, H);
@@ -774,12 +820,13 @@
       const cx = (q.x + q2.x) / 2, cy = (q.y + q2.y) / 2;
       ctx.fillStyle = "rgb(58,74,92)";
       const settle = smooth(landing);
-      for (const [mul, al] of [[1.5 * (0.55 + 0.45 * settle), 0.07 * settle], [1.0 * (0.3 + 0.7 * settle), 0.22 * settle]]) {
+      for (let L = 0; L < 7; L++) {
+        const mul = (1.32 - L * 0.12) * (0.45 + 0.55 * settle), al = (0.016 + L * 0.0085) * settle;
         if (al <= 0.001) continue;
         ctx.globalAlpha = al; ctx.beginPath();
-        for (let j = 0; j < 28; j++) {
-          const a = j / 28 * Math.PI * 2, rr = r0 * mul * (1 + (p.noise(300 + j * 0.45, mul * 3) - 0.5) * (mul > 1.2 ? 0.9 : 0.5));
-          const ax = Math.cos(a) * rr * 1.35, by = Math.sin(a) * rr * 0.95;
+        for (let j = 0; j < 36; j++) {
+          const a = j / 36 * Math.PI * 2, rr = r0 * mul * (1 + (p.noise(300 + j * 0.4, L * 0.7) - 0.5) * (0.25 + 0.07 * (6 - L)));
+          const ax = Math.cos(a) * rr * 1.3, by = Math.sin(a) * rr * 0.9;
           const x = cx + tx * ax + q.nx * by, y = cy + ty * ax + q.ny * by;
           j ? ctx.lineTo(x, y) : ctx.moveTo(x, y);
         }
@@ -805,13 +852,28 @@
     return smooth(clamp((t - TL.ensoStart) / (TL.ensoDur * TL.ensoRest), 0, 1));
   }
 
-  function drawName(t) {
-    const pr = REDUCED ? 1 : (t - TL.nameStart) / TL.nameDur;
-    const ctx = nameCtx;
+  function drawEnso(t) {
+    if (!enso.on) return;
     const ep = ensoProgress(t);
     if (ep > 0) drawEnsoUpTo(Math.max(1, Math.floor(ep * (enso.pts.length - 1))), ensoLanding(t));
-    if (pr <= 0) return;
+  }
+  // the name signs on its own clock, from the page's first moment — it needs neither p5 nor the figure, so the
+  // page never opens on bare paper; the drawing joins it when the libraries are in. A replay leaves it alone.
+  const nameNow = () => REDUCED ? 1e9 : (performance.now() - PAGE_T0) / 1000;
+  let nameShown = -1, nameRAF = 0;
+  function layoutName() { const nl = C.name(W, H, name.w); name.s = nl.s; name.x = nl.x; name.y = nl.y; if (glyphs.length) renderName(); }
+  function nameTick() {
+    nameRAF = 0;
+    const t = nameNow(), pr = clamp((t - C.NAME.start) / C.NAME.dur, 0, 1);
+    if (pr !== nameShown) { drawName(pr); nameShown = pr; }
+    if (!linksShown && t >= C.NAME.start + C.NAME.dur * 0.8) showLinks();
+    if (pr < 1) nameRAF = requestAnimationFrame(nameTick);
+  }
+  function renderName() { nameShown = -1; if (!nameRAF) nameTick(); }
+  function drawName(pr) {
+    const ctx = nameCtx;
     ctx.clearRect(0, 0, W, H);
+    if (pr <= 0) return;
     ctx.save();
     ctx.translate(name.x, name.y); ctx.scale(name.s, name.s);
     ctx.fillStyle = `rgba(${INK.name[0]},${INK.name[1]},${INK.name[2]},0.88)`;
@@ -839,8 +901,7 @@
     fig.h = Math.min(C.fig.hMax * H, C.fig.wMax * W / aspect);
     const cx = W * C.fig.cx, bottom = H * C.fig.bottom;
     fig.s = fig.h / IH; fig.w = IW * fig.s; fig.x = cx - fig.w / 2; fig.y = bottom - fig.h;
-    const nl = C.name(W, H, name.w);
-    name.s = nl.s; name.x = nl.x; name.y = nl.y;
+    layoutName();
     buf = document.createElement("canvas"); bufCtx = sizeCanvas(buf, R);
     const target = Math.round(4600 * Math.pow(fig.h / 700, 2));
     buildStrokes(clamp(target, 1800, 12000));
@@ -876,7 +937,8 @@
   // 2.6 s while the new marks begin — the old world melts into the new one and the paper never shows bare.
   const ghost = document.createElement("canvas");                       // sized for RP, the landscape's own scale
   ghost.setAttribute("aria-hidden", "true");
-  ghost.style.cssText = "position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none;z-index:0;";
+  ghost.className = "ghost";
+  ghost.style.cssText = "position:absolute;inset:0;width:100%;height:100%;opacity:0;pointer-events:none;";
   const ghostCtx = ghost.getContext("2d");
   function ghostTake() {
     const src = P.canvas || (P._renderer && P._renderer.canvas);
@@ -889,6 +951,24 @@
     requestAnimationFrame(() => { ghost.style.transition = "opacity 2.6s ease-in-out"; ghost.style.opacity = "0"; });
   }
 
+  // The veil: when the drawing starts again (a click, or skipping ahead) the picture on screen is copied onto a
+  // layer under the feather and dissolved while the new drawing goes down beneath it — the sheet never goes bare.
+  const veil = document.getElementById("veil"), veilCtx = veil.getContext("2d");
+  function veilTake() {
+    veilCtx.clearRect(0, 0, W, H);
+    const src = P && (P.canvas || (P._renderer && P._renderer.canvas));
+    if (src) veilCtx.drawImage(src, 0, 0, W, H);
+    const go = parseFloat(ghost.style.opacity) || 0;
+    if (go > 0.01) { veilCtx.globalAlpha = go; veilCtx.drawImage(ghost, 0, 0, W, H); veilCtx.globalAlpha = 1; }
+    veilCtx.globalCompositeOperation = "multiply"; veilCtx.drawImage(ensoCanvas, 0, 0, W, H);
+    veilCtx.globalCompositeOperation = "source-over"; veilCtx.drawImage(figCanvas, 0, 0, W, H);
+    veil.style.transition = "none"; veil.style.opacity = "1";
+  }
+  function veilRelease(sec) {
+    if (REDUCED) { veil.style.opacity = "0"; return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => { veil.style.transition = `opacity ${sec}s cubic-bezier(.45,0,.3,1)`; veil.style.opacity = "0"; }));
+  }
+
   function boot() {
     applyComposition(pickComposition());
     fitStage();
@@ -899,10 +979,11 @@
         const c = p.createCanvas(W, H, p.WEBGL);
         c.parent("stage");
         c.elt.setAttribute("aria-hidden", "true");
+        c.elt.classList.add("land");
+        if (!REDUCED) c.elt.style.opacity = "0";             // the first washes bloom in rather than landing in one frame
         stage.appendChild(ghost);                         // above the landscape canvas, below everything else
         p.angleMode(p.DEGREES);
         brush.scaleBrushes(2.2);
-        buildGlyphs();
         applyScale2D(screenScale());
         RP = landscapeScale(); sizeCanvas(ghost, RP);
         p.pixelDensity(RP);                               // after createCanvas: p5 2.x discards it before
@@ -912,7 +993,7 @@
         stage.addEventListener("click", onStageClick);
         window.addEventListener("keydown", (e) => {
           if (e.target && e.target.closest && e.target.closest("a, button, input")) return;
-          if (e.key === "r" || e.key === "R" || e.key === " ") { e.preventDefault(); replay(); }
+          if (e.key === "r" || e.key === "R" || e.key === " ") { e.preventDefault(); restart(); }
         });
         let resizeTimer = 0;
         const onViewport = () => { fitStage(); clearTimeout(resizeTimer); resizeTimer = setTimeout(onResize, 200); };
@@ -935,14 +1016,16 @@
           }
           if (land.resumeT != null) landT0 = p.millis() - land.resumeT * 1000 / SETTINGS.tempo;   // a re-laid landscape keeps its clock
           else { landT0 = p.millis(); if (land.opening) t0 = landT0; }
+          const le = p.canvas || (p._renderer && p._renderer.canvas);
+          if (le && le.style.opacity === "0") requestAnimationFrame(() => { le.style.transition = "opacity 1.3s cubic-bezier(.3,0,.2,1)"; le.style.opacity = "1"; });
+          if (land.veiled) { land.veiled = false; veilRelease(2.4); }   // the last picture melts into the new washes
           if (land.ghosted) ghostRelease();                 // the old landscape dissolves over the new washes
         }
         const t = now(), lt = landNow();
-        if (!linksShown && t >= C.linksAt(TL, DRAW)) showLinks();
         // figure + name layers
         const c = countAt(t);
         if (c > drawn) drawUpTo(c);
-        if (!figDone) { composeFigure(t); drawName(t); if (t > END + 0.3) figDone = true; }
+        if (!figDone) { composeFigure(t); drawEnso(t); if (t > END + 0.3) figDone = true; }
         // landscape layer
         stepLandscape(lt, p.millis());
         lastT = t;
@@ -956,7 +1039,7 @@
     drawn = 0; figDone = false;
     buildEnso();
     bufCtx.clearRect(0, 0, W, H);
-    figCtx.clearRect(0, 0, W, H); nameCtx.clearRect(0, 0, W, H);
+    figCtx.clearRect(0, 0, W, H); enso.ctx.clearRect(0, 0, W, H);
     t0 = landT0 = P.millis();
     ghost.style.transition = "none"; ghost.style.opacity = "0";
     land = { timeline: buildLandscape(true), cursor: 0, phase: "drawing", holdUntil: 0, fadeStart: 0, nextAmbient: 0, establish: true, opening: true, ghosted: false, resumeT: null };
@@ -981,13 +1064,14 @@
   // and ensō layers recompose to their current moment on the next frame.
   function applyScale2D(r) {
     R = r;
-    for (const c of [figCanvas, nameCanvas, ensoCanvas, ensoBody, ensoHair]) sizeCanvas(c, R);
+    for (const c of [figCanvas, nameCanvas, ensoCanvas, ensoBody, ensoHair, veil]) sizeCanvas(c, R);
     ensoGrain = buildEnsoGrain(R);
     buildWashImages(R > 1 ? 2 : 1);
     if (buf) { buf = document.createElement("canvas"); bufCtx = sizeCanvas(buf, R); const d = drawn; drawn = 0; drawUpTo(d); }
     if (blades.length) rasterGrass();
     enso.drawn = 0; enso.landing = 0;
     figDone = false;
+    if (glyphs.length) renderName();
   }
   // lay the same landscape again on a re-sized sheet: same seed, same sequence, same marks — it keeps its
   // clock, so the marks already due go down as fast as the frame budget allows, and the old raster
@@ -1057,7 +1141,11 @@
     showLinks();
     P.loop();
   }
-  function onStageClick() { if (!P) return; if (finished()) replay(); else skip(); }
+  // a click while it draws brings it to the finished state (the drawing so far dissolves into it); a click on the
+  // finished sheet draws it again, the old picture melting into the new one — the name and links stay put
+  function restart() { if (!P) return; if (!REDUCED) veilTake(); replay(); land.veiled = true; }
+  function skipSmooth() { if (!P || REDUCED) return; veilTake(); skip(); setTimeout(() => veilRelease(0.9), 160); }
+  function onStageClick() { if (!P) return; if (finished()) restart(); else skipSmooth(); }
 
   const links = document.getElementById("links");
   let linksShown = false;
@@ -1132,6 +1220,7 @@
     // big washes: meadow, lake, ridges (by distance)
     const bank = [];
     for (let x = -30; x <= W + 30; x += 40) bank.push([x, lakeBottom + noise(x * 0.004, 5) * 40 - 10]);
+    const lake = [[-30, horizon], [W + 30, horizon]].concat(bank.slice().reverse().map(([x, y]) => [x, y + 16]));
     bank.push([W + 30, H + 30], [-30, H + 30]);
     T.push({ t: B, fn: () => {
       brush.noField(); brush.noStroke(); brush.noHatch(); brush.noMass();
@@ -1139,7 +1228,7 @@
     }});
     T.push({ t: B, fn: () => {
       brush.noField(); brush.noStroke(); brush.noHatch();
-      brush.wash(PAL.mist, 110); brush.rect(-30, horizon, W + 60, lakeBottom - horizon + 12); brush.noWash();
+      brush.wash(PAL.mist, 104); brush.polygon(lake); brush.noWash();
     }});
     const ridges = C.ridges(PAL);
     const ridgeTops = [];
@@ -1163,11 +1252,22 @@
     // re-lay the lake and meadow over any ridge overflow
     T.push({ t: B + 0.12, fn: () => {
       brush.noField(); brush.noStroke(); brush.noHatch();
-      brush.wash(PAL.paper, 190); brush.rect(-30, horizon, W + 60, lakeBottom - horizon + 12);
-      brush.wash(PAL.mist, 110); brush.rect(-30, horizon, W + 60, lakeBottom - horizon + 12);
+      brush.wash(PAL.paper, 190); brush.polygon(lake);
+      brush.wash(PAL.mist, 104); brush.polygon(lake);
       brush.wash(PAL.paper, 210); brush.polygon(bank);
       brush.wash(PAL.sage, 55); brush.polygon(bank);
       brush.noWash();
+    }});
+    T.push({ t: B + 0.13, fn: () => {
+      brush.noField(); brush.noStroke(); brush.noHatch(); brush.noMass();
+      for (const [h0, h1, al] of [[-26, 10, 70], [-12, 16, 90]]) {
+        const band = [];
+        for (let x = -30; x <= W + 30; x += 30) band.push([x, horizon + h0 + (noise(x * 0.006, 41 + h0) - 0.5) * 22]);
+        for (let x = W + 30; x >= -30; x -= 30) band.push([x, horizon + h1 + (noise(x * 0.006, 57 + h1) - 0.5) * 10]);
+        brush.fillBleed(0.3, "out"); brush.fillTexture(0.4, 0.5);
+        brush.fill(PAL.paper, al); brush.polygon(band);
+      }
+      brush.noFill();
     }});
 
     // marks radiate outward from him
@@ -1177,23 +1277,25 @@
       for (let b = 0; b < sh.n; b += 12) {
         const [rx, ry] = top[Math.floor(random(2, top.length - 2))];
         T.push({ t: when(rx, ry, B2, S2), fn: () => {
-          brush.wiggle(1.5); brush.noFill(); brush.noHatch(); brush.noMass();
+          brush.wiggle(1.2); brush.noFill(); brush.noHatch(); brush.noMass();
           brush.set(sh.brush, sh.col, sh.w);
-          for (let k = 0; k < 12; k++) {
+          for (let k = 0; k < 6; k++) {
             const idx = Math.floor(random(2, top.length - 2));
             const [x, y] = top[idx];
-            if (y > horizon - 6) continue;
+            if (y > horizon - 10) continue;
             const slope = (top[idx + 1][1] - top[idx - 1][1]) / (top[idx + 1][0] - top[idx - 1][0]);
             const steep = Math.min(Math.abs(slope), 1.2);
-            if (random() > (0.25 + steep) * (slope > 0 ? 1 : 1.15)) continue;
+            if (random() > (0.12 + steep) * (slope > 0 ? 0.85 : 1)) continue;
             const lit = slope > 0;                                    // this flank faces the sun, top-right
-            if (lit && random() > 0.35) continue;
-            const ang = (slope > 0 ? 62 : 118) + random(-10, 10);
+            if (lit && random() > 0.25) continue;
+            // down the face: the fall line of the slope, pulled toward the vertical
+            const sg = slope > 0 ? 1 : -1, fx = sg * 0.7, fy = Math.abs(slope) * 0.7 + 0.75, fl = Math.hypot(fx, fy);
+            const ang = Math.atan2(fy / fl, fx / fl) * 180 / Math.PI + random(-7, 7);
             const room = horizon - y;
-            const sy = y + 3 + Math.pow(random(), 1.6) * room * sh.depth;
-            const len = random(12, 30 + room * 0.18) * (lit ? 0.7 : 1);
-            brush.strokeWeight(sh.w * random(0.7, 1.3) * (lit ? 0.85 : 1));
-            brush.line(x, sy, x + cos(ang) * len, sy + sin(ang) * len);
+            const sy = y + 2 + Math.pow(random(), 2.2) * room * sh.depth * 0.7;
+            const len = random(8, 16 + room * 0.12) * (lit ? 0.6 : 1) * (1 - 0.5 * (sy - y) / Math.max(1, room));
+            brush.strokeWeight(sh.w * random(0.6, 1.1) * (lit ? 0.8 : 1));
+            brush.line(x + random(-3, 3), sy, x + cos(ang) * len, sy + sin(ang) * len);
           }
           brush.noField();
         }});
@@ -1204,7 +1306,7 @@
         const [mx, my] = seg[Math.floor(seg.length / 2)];
         T.push({ t: when(mx, my, B2, S2, 0.3), fn: () => {
           brush.wiggle(2); brush.noFill(); brush.noHatch();
-          brush.set(i < 2 ? "HB" : "2B", i < 2 ? PAL.fog : PAL.ink, i < 2 ? 0.9 : 1.1);
+          brush.set(i < 2 ? "HB" : "2B", i < 2 ? PAL.fog : (i < 3 ? PAL.slate : PAL.ink), i < 2 ? 0.85 : 0.95);
           brush.spline(seg, 0.15);
           brush.noField();
         }});
@@ -1222,8 +1324,11 @@
       }});
     }
     const wind = random(-14, 14);                                      // one weather for the whole meadow
+    const clumps = [];
+    for (let i = 0; i < C.tuftClusters; i++) clumps.push([random(-10, W + 10), lakeBottom + 30 + Math.pow(random(), 0.7) * (H - lakeBottom - 30)]);
     for (let i = 0; i < C.tufts; i++) {
-      const cx = random(-10, W + 10), cy = random(lakeBottom + 14, H + 6);
+      const [kx, ky] = clumps[Math.floor(random(clumps.length))];
+      const cx = kx + (random() + random() - 1) * W * 0.07, cy = clamp(ky + (random() + random() - 1) * (H - lakeBottom) * 0.12, lakeBottom + 14, H + 6);
       T.push({ t: when(cx, cy, B2, S2), fn: () => {
         brush.wiggle(3); brush.noFill(); brush.noHatch();
         const scale = 0.55 + 0.75 * (cy - lakeBottom) / (H - lakeBottom);
@@ -1244,19 +1349,33 @@
       const ceiling = ridgeCeiling(x, x + len);
       if (ceiling < H * C.skyFloor + 30) continue;
       const y = random(H * C.skyFloor, ceiling);
+      if (inTitle(x, y, len)) continue;
       T.push({ t: when(x + len / 2, y, B2, S2), fn: () => {
-        brush.field("waves"); brush.noFill(); brush.noHatch();
         const room = (y < enso.cy + enso.r * 1.1) ? enso.cx - enso.r * 1.15 - x : len;
-        if (room < 60) { brush.noField(); return; }
-        brush.set("2H", random() < 0.35 ? PAL.fog : PAL.mist, random(0.8, 1.6));
-        brush.flowLine(x, y, Math.min(len, room), random(-4, 4));
-        brush.noField();
+        if (room < 60) return;
+        brush.set("2H", random() < 0.3 ? PAL.fog : PAL.mist, random(0.8, 1.4));
+        drift(x, y, Math.min(len, room));
       }});
     }
 
     return T;
   }
 
+  // the name and links own the top-left of the sky; no drift crosses them
+  function inTitle(x, y, len) {
+    if (C.kind === "phone") return y < H * C.skyFloor;
+    return y < H * 0.215 && x < W * 0.48;
+  }
+  // a drift of cloud: one long, gently sagging line that thins at both ends
+  function drift(x, y, len) {
+    const p = P, n = 6, tilt = p.random(-6, 6), ph = p.random(1000), pts = [];
+    for (let j = 0; j <= n; j++) {
+      const u = j / n;
+      pts.push([x + len * u, y + tilt * u + (p.noise(ph + u * 1.7) - 0.5) * 26 - Math.sin(Math.PI * u) * p.random(4, 10), 0.3 + 0.7 * Math.sin(Math.PI * u)]);
+    }
+    brush.noField(); brush.noFill(); brush.noHatch(); brush.wiggle(0.6);
+    brush.spline(pts, 0.7);
+  }
   // the lowest a sky drift may run over a stretch of the far ridge (with room for the waves field to wander)
   function ridgeCeiling(x0, x1) {
     if (!ridge0) return H * C.horizon - C.ceilingPad;
@@ -1269,14 +1388,13 @@
     const p = P;
     const horizon = H * C.horizon, lakeBottom = H * C.lakeBottom;
     brush.noFill(); brush.noHatch(); brush.noMass(); brush.noWash();
-    if (p.random() < 0.5) {
-      brush.field("waves");
-      brush.set("2H", PAL.mist, p.random(0.8, 1.3));
+    if (p.random() < 0.4) {
+      brush.set("2H", PAL.mist, p.random(0.8, 1.2));
       const x = p.random(-40, W * 0.5), ceiling = ridgeCeiling(x, x + C.ambient.reach);
       if (ceiling < H * C.skyFloor + 30) { brush.noField(); return; }
       const y = p.random(H * C.skyFloor, ceiling);
       const room = (y < enso.cy + enso.r * 1.1) ? enso.cx - enso.r * 1.15 - x : 600;
-      if (room >= 60) brush.flowLine(x, y, Math.min(p.random(200, 600), room), p.random(-4, 4));
+      if (room >= 60 && !inTitle(x, y, room)) drift(x, y, Math.min(p.random(200, 560), room));
     } else {
       brush.wiggle(1);
       const y = p.random(horizon + 6, lakeBottom - 6), len = p.random(C.ambient.rippleLen[0], C.ambient.rippleLen[1]), x = p.random(-20, W - len);
@@ -1286,9 +1404,28 @@
     brush.noField();
   }
 
-  window.__arrival = { replay, skip, SETTINGS, get comp() { return C.kind; }, get finished() { return finished(); }, get land() { return land; }, get t() { return P ? now() : 0; }, get frameT() { return lastT; },
+  window.__arrival = { replay: restart, skip: skipSmooth, SETTINGS, get comp() { return C.kind; }, get finished() { return finished(); }, get land() { return land; }, get t() { return P ? now() : 0; }, get frameT() { return lastT; },
     get R() { return R; }, get RP() { return RP; }, get establishMs() { return establishMs; },
     setScale: (r) => { OVERRIDE_R = r == null ? null : Math.min(R_MAX, Math.max(1, r)); setScale(screenScale(), false); } };
+
+  // ---------------------------------------------------------------------------
+  // The first moment: before the libraries and the figure are in, the sheet is sized, the name starts signing
+  // and (under start=ghost) a soft hint of the finished sheet shows through the paper.
+  // ---------------------------------------------------------------------------
+  function early() {
+    applyComposition(pickComposition());
+    fitStage();
+    R = screenScale(); sizeCanvas(nameCanvas, R);
+    layoutName();
+  }
+  buildGlyphs();
+  early();
+  if (OPT.start === "ghost" && !REDUCED) {
+    const poster = document.getElementById("poster");
+    poster.onload = () => poster.classList.add("on");
+    poster.src = C.kind === "phone" ? "poster-phone.jpg" : "poster-desktop.jpg";
+  }
+  window.addEventListener("resize", () => { if (!booted) early(); });
 })();
 </script>
 <!-- GoatCounter: pageviews + which link gets clicked (cookieless; count.js skips localhost) -->
