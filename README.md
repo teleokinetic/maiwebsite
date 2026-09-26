@@ -19,6 +19,8 @@ mothers-day-2026/           # standalone: Mother's Day 2026
 
 The drawing runs two compositions of the same sketch: 1440×900 on landscape viewports, 900×1950 on portrait ones (viewport width / height < 0.8). Click or tap the drawing to skip to the finished state while it is drawing, or to replay it once finished; Space and R replay too. `prefers-reduced-motion` shows the finished drawing without animation.
 
+Preview switches (query string): `pal=slate|dawn|aspen` picks the palette direction, `seed=<number>` fixes the first drawing's seed so palettes can be compared on one composition, and `enso=off|small`, `sub=wash|arrows|washarrows` pick the phone options.
+
 ## Local development
 
 Serve the folder over HTTP (for example `python3 -m http.server`) and open `index.html`; the page loads its libraries from `/p5.min.js` and `/p5.brush.js` at the site root.
