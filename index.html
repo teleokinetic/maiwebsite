@@ -38,10 +38,13 @@ window.PRINT = {"slow":1.7,"mode":"plate","reveal":"blocks","straddle":"lift","d
 </script>
 <style>
   :root { color-scheme: light; --u: 1px; --paper: #efe3cb; }
-  html { height: 100%; background: var(--paper); overflow: hidden; overscroll-behavior: none; -webkit-text-size-adjust: 100%; }
-  body { margin: 0; background: var(--paper); overflow: hidden; height: 100vh; height: 100dvh; height: 100svh;
+  /* The page is exactly one screen tall and never scrolls, but it can still be pulled: Safari's pull-to-refresh
+     needs the page to overscroll, so nothing here turns that off (no overflow: hidden on the page, no
+     overscroll-behavior), and the stage rides along with the pull, showing paper above it */
+  html { height: 100%; background: var(--paper); -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); height: 100vh; height: 100dvh; height: 100svh; position: relative;
     touch-action: manipulation; -webkit-tap-highlight-color: transparent; }
-  #stage { position: fixed; inset: 0; overflow: hidden; background: var(--paper); }
+  #stage { position: absolute; inset: 0; overflow: hidden; background: var(--paper); }
   /* the sheet: the print's own coordinate space (1440 × 900 on desktop, 900 × 1950 on the phone), scaled by --u
      (CSS px per sheet px) and moved so the screen shows the right part of it */
   #sheet { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
