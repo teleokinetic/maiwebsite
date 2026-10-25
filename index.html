@@ -92,14 +92,16 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
     var u, uS, xo, groundY, nameY, nameW, linksTop;
     if (phone) {
       // the phone design is 900 × 1950: a wider portrait screen (an iPad) keeps its proportions and gets more desert at the sides
-      u = Math.min(W / 900, Hs / 1950); uS = u; xo = (W - 900 * u) / 2;
+      u = Math.min(W / 900, Hs / 1950); uS = Math.min(W / 900, u * 1.3); xo = (W - 900 * u) / 2;
       groundY = Hs - Math.max(46, safeB + 54);
       nameY = Hs * 0.35; nameW = Math.min(W * 0.76, 684 * u * 1.25); linksTop = safeT + 17;
     } else {
-      u = Math.min(Hs / 900, W / 1440) * 0.62; uS = u * 1.15;
+      u = Math.min(Hs / 900, W / 1440) * 0.62;
+      // the cloud banks are sized to the screen, so they still frame the name on a wide one
+      uS = Math.min(W * 0.27 / 463, Hs * 0.2 / 198);
       xo = W * 0.62 - FIGX * u;
       groundY = Hs - Math.max(40, Hs * 0.08);
-      nameY = Hs * 0.33; nameW = Math.max(340, Math.min(620, W * 0.36)); linksTop = safeT + 26;
+      nameY = Hs * 0.33; nameW = Math.max(340, Math.min(820, W * 0.34, Hs * 0.62)); linksTop = safeT + 26;
     }
     var landTop = groundY - GROUND * u;
     // land tiles: only the ones on screen load
@@ -112,7 +114,10 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
     });
     // sky: bankL from the top-left, bankR and the sun from the right edge and the name, the small cloud over the mesa
     var b = A.bankL.box; px($('bankL'), b[0] * uS, linksTop + (b[1] - LINKY) * uS, b[2] * uS, b[3] * uS);
-    ['bankR', 'sun'].forEach(function (k) { var b = A[k].box; px($(k), W - (900 - b[0]) * uS, nameY + (b[1] - NAMEY) * uS, b[2] * uS, b[3] * uS); });
+    // bankR and the sun: off the right edge, below the line; on a wide screen kept clear of the mesas
+    var rb = A.bankR.box, dyR = 0, horizonY = landTop + 216 * u;
+    if (!phone) dyR = Math.min(0, (horizonY - 70 * u / 0.62) - (nameY + (rb[1] + rb[3] - NAMEY) * uS));
+    ['bankR', 'sun'].forEach(function (k) { var b = A[k].box; px($(k), W - (900 - b[0]) * uS, nameY + (b[1] - NAMEY) * uS + dyR, b[2] * uS, b[3] * uS); });
     b = A.small.box; px($('small'), xo + b[0] * u, landTop + b[1] * u, b[2] * u, b[3] * u);
     // the figure: drawn in the old print's sheet units, shown at 0.9 about its ground point
     var f = $('fig'), k = 0.9 * u;
@@ -126,6 +131,7 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
     px(nm, (W - nameW) / 2, nameY - nh / 2, nameW, nh);
     nm.setAttribute('viewBox', sigBox.x + ' ' + sigBox.y + ' ' + sigBox.width + ' ' + sigBox.height);
     document.getElementById('signature').setAttribute('stroke-width', (phone ? 1.9 : 2.2) / sc);
+    if (!phone) { var fs = Math.max(15.5, Math.min(22, nameW * 0.033)); $('line').style.fontSize = fs + 'px'; Array.prototype.forEach.call(document.querySelectorAll('#links a'), function (a) { a.style.fontSize = Math.max(16, Math.min(19, fs * 1.02)) + 'px'; }); }
     $('line').style.top = (nameY + nh / 2 + (phone ? 10 : 14)) + 'px';
     $('links').style.top = linksTop + 'px';
     window.LAYOUT = { W: W, Hs: Hs, Hl: Hl, u: u, uS: uS, xo: xo, landTop: landTop, groundY: groundY, nameY: nameY, phone: phone };
