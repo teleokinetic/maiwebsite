@@ -11,12 +11,11 @@
 <meta property="og:url" content="https://tannerholman.space/">
 <meta property="og:title" content="Tanner Holman">
 <meta property="og:description" content="Helping meditators feel good in their bodies. Personal training, writing, and more.">
-<meta property="og:image" content="https://tannerholman.space/og-5.jpg">
-<meta property="og:image:alt" content="Ink drawing of Tanner Holman in a straddle handstand, in full colour, on a quiet high desert drawn in brown ink, with a honey sun behind clouds and his handwritten name above">
+<meta property="og:image" content="https://tannerholman.space/og-4.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="1200">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://tannerholman.space/og-5-wide.jpg">
+<meta name="twitter:image" content="https://tannerholman.space/og-4-wide.jpg">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="icon" href="/favicon.ico" sizes="32x32">
 <link rel="preload" href="/fonts/questrial-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -35,7 +34,17 @@
   #art .layer { visibility: hidden; }
   #art.ready .layer { visibility: visible; }
   #fig { position: absolute; left: 0; top: 0; transform-origin: 0 0; pointer-events: none; }
-  #fig img, #fig svg { position: absolute; }
+  #fig img, #fig svg, #fig canvas { position: absolute; }
+  /* the moving body and its ghosts: ink laid over the drawing (multiply), so the land shows through like a wash */
+  #bodycv { position: absolute; display: none; mix-blend-mode: multiply; pointer-events: none; }
+  #rvcv { display: none; }
+  body.anim #hero, body.anim #shadow { opacity: 0; }
+  /* after the cartwheel, the clouds drift a few pixels over a long cycle */
+  @keyframes drift { from { translate: 0 0; } to { translate: var(--dx) 0; } }
+  body.drift #bankL { --dx: 9px; animation: drift 47s ease-in-out infinite alternate; }
+  body.drift #bankR { --dx: -7px; animation: drift 61s ease-in-out infinite alternate; }
+  body.drift #small { --dx: 6px; animation: drift 39s ease-in-out infinite alternate; }
+  @media (prefers-reduced-motion: reduce) { body.drift #bankL, body.drift #bankR, body.drift #small { animation: none; } }
   #name { position: absolute; pointer-events: none; overflow: visible; }
   #line { position: absolute; left: 0; right: 0; margin: 0; text-align: center; font-family: Questrial, system-ui, sans-serif;
     font-size: 15.5px; letter-spacing: .03em; color: var(--line); white-space: nowrap; }
@@ -59,9 +68,11 @@
 <main id="art" role="img" aria-label="Ink drawing of Tanner Holman in a straddle handstand, full colour, on a quiet high desert drawn in brown ink, with clouds and a honey-coloured sun">
   <img class="layer" id="land0" alt=""><img class="layer" id="land1" alt=""><img class="layer" id="land2" alt="">
   <img class="layer" id="sun" alt=""><img class="layer" id="bankR" alt=""><img class="layer" id="bankL" alt=""><img class="layer" id="small" alt="">
+  <canvas id="bodycv" aria-hidden="true"></canvas>
   <div id="fig" class="layer">
     <svg id="shadow" viewBox="0 0 220 24" aria-hidden="true"><ellipse cx="110" cy="12" rx="102" ry="7" fill="#8C6A58" opacity=".35"/></svg>
     <img id="hero" alt="">
+    <canvas id="rvcv" width="735" height="933" aria-hidden="true"></canvas>
   </div>
   <svg id="name" aria-hidden="true"><defs><g id="signature" fill="#33281F" stroke="#33281F" stroke-linejoin="round"><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M263.0 38.7 C254.2 32.7 240.0 20.7 226.5 8.1 C200.6 -16.1 199.8 -17.0 193.0 -29.6 C191.3 -32.8 188.3 -38.2 186.5 -41.5 C184.6 -44.8 183.0 -48.5 183.0 -49.7 C183.0 -51.0 182.0 -54.3 180.9 -57.2 C179.1 -61.7 178.6 -65.6 178.0 -83.0 C177.2 -102.7 175.2 -117.9 172.9 -120.6 C171.6 -122.2 154.2 -122.4 146.8 -120.9 C143.9 -120.4 123.3 -119.7 101.0 -119.4 C78.7 -119.1 56.2 -118.5 51.0 -118.0 C45.8 -117.4 36.1 -116.5 29.5 -115.8 L17.5 -114.7 L13.9 -110.8 C11.9 -108.7 9.6 -107.0 8.8 -107.0 C6.4 -107.0 3.4 -111.1 1.5 -116.8 C-0.1 -121.7 -0.1 -122.2 1.5 -124.6 C2.4 -126.0 5.3 -128.1 7.8 -129.3 C12.1 -131.2 15.6 -131.5 52.0 -132.6 C73.7 -133.3 117.1 -134.1 148.5 -134.5 C179.9 -134.8 212.2 -135.5 220.5 -136.1 C228.8 -136.6 245.4 -137.0 257.5 -137.0 C280.1 -137.0 312.2 -137.6 347.5 -138.6 C370.9 -139.3 447.3 -139.2 451.0 -138.5 C452.4 -138.2 461.3 -137.6 470.9 -137.0 C480.4 -136.4 491.3 -135.3 495.0 -134.5 C498.7 -133.7 504.8 -132.8 508.6 -132.4 C513.3 -131.9 516.9 -130.8 520.0 -129.0 C522.6 -127.5 526.3 -125.5 528.3 -124.5 C532.1 -122.7 533.9 -119.5 532.2 -117.8 C530.3 -115.9 523.2 -116.8 515.3 -120.0 C509.5 -122.4 506.5 -123.0 503.5 -122.7 C501.3 -122.4 493.9 -122.6 487.0 -123.0 C446.3 -125.8 421.7 -127.0 416.0 -126.5 C412.4 -126.2 391.9 -125.8 370.5 -125.5 C349.1 -125.2 323.6 -124.5 314.0 -124.0 C304.4 -123.5 279.0 -123.2 257.5 -123.4 C236.1 -123.6 214.8 -123.5 210.2 -123.2 C202.1 -122.7 202.0 -122.7 199.8 -119.2 C197.8 -115.9 197.7 -114.5 197.7 -95.6 C197.8 -73.3 199.3 -58.6 202.1 -52.4 C203.2 -50.2 204.0 -47.7 204.0 -46.9 C204.0 -46.1 205.1 -43.9 206.5 -42.0 C207.9 -40.1 209.0 -37.6 209.0 -36.3 C209.0 -35.0 210.0 -32.0 211.1 -29.7 C213.6 -24.8 234.5 -3.8 244.0 3.4 C247.6 6.1 251.8 9.9 253.3 11.7 C254.9 13.5 257.4 15.7 258.8 16.4 C260.3 17.2 264.6 20.8 268.4 24.5 L275.3 31.1 L274.6 35.6 C274.3 38.1 273.8 40.6 273.4 41.1 C272.3 42.9 267.4 41.8 263.0 38.7"/><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M482.8 14.5 C481.9 13.6 458.8 8.0 456.0 8.0 C451.1 8.0 437.6 4.9 433.0 2.7 C427.8 0.3 422.7 0.1 406.0 1.9 C381.2 4.7 365.1 0.9 359.2 -8.9 C353.9 -17.8 352.8 -21.0 353.5 -25.8 C354.3 -31.4 359.5 -37.7 364.4 -39.1 C366.2 -39.6 370.6 -41.8 374.2 -43.9 C379.7 -47.3 382.1 -48.1 389.5 -49.0 C394.3 -49.6 398.5 -50.2 398.9 -50.3 C401.9 -51.1 408.5 -48.4 413.7 -44.3 C420.4 -38.8 436.1 -23.2 440.3 -17.7 C443.8 -13.1 450.5 -9.6 459.6 -7.7 C481.9 -2.9 491.0 1.5 491.0 7.6 C491.0 11.8 485.1 16.8 482.8 14.5 M413.4 -8.5 C415.9 -8.9 418.3 -9.7 418.6 -10.2 C419.8 -12.1 417.9 -15.9 413.8 -20.2 C406.0 -28.1 402.9 -29.9 393.0 -32.0 C377.1 -35.4 374.6 -34.7 373.6 -26.5 C372.9 -20.4 373.8 -19.1 381.7 -14.3 C392.3 -7.7 399.4 -6.4 413.4 -8.5"/><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M624.4 31.6 C618.9 29.0 615.0 24.9 615.0 21.6 C615.0 20.5 614.1 16.4 613.0 12.5 C611.9 8.6 610.8 0.8 610.5 -5.0 C609.6 -20.3 608.6 -23.4 603.2 -27.6 C596.3 -32.8 593.1 -33.5 578.8 -32.2 C562.4 -30.8 546.4 -26.8 541.6 -22.9 C534.6 -17.0 535.8 -10.2 546.2 2.3 C552.5 9.8 553.6 12.2 552.6 17.5 C551.8 21.8 549.5 23.1 542.6 23.3 C537.9 23.5 536.8 23.1 532.5 19.8 C526.7 15.3 523.4 10.6 522.5 5.7 C522.1 3.7 520.4 -0.1 518.7 -2.7 C515.4 -7.8 514.6 -13.9 516.8 -18.3 C517.4 -19.5 518.3 -21.8 518.7 -23.5 C520.2 -28.4 530.4 -35.3 539.2 -37.5 C543.2 -38.4 548.3 -40.0 550.5 -41.0 C552.8 -42.0 557.5 -43.6 561.0 -44.5 C564.6 -45.4 569.1 -46.5 571.0 -47.0 C582.3 -49.9 600.4 -48.7 609.5 -44.4 C620.8 -39.1 628.6 -21.6 630.5 2.8 C631.1 10.1 631.7 12.3 635.6 19.7 C640.9 29.9 641.0 31.4 636.9 32.9 C632.3 34.5 630.1 34.3 624.4 31.6"/><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M755.8 32.3 C752.6 30.3 747.0 20.1 747.0 16.2 C747.0 14.6 746.0 12.1 744.9 10.6 C743.4 8.7 742.5 5.5 741.9 -0.3 C740.4 -14.0 733.8 -22.1 721.5 -25.7 C705.2 -30.5 697.5 -31.7 693.1 -30.4 C690.8 -29.7 688.1 -29.4 687.2 -29.7 C686.2 -29.9 683.6 -29.1 681.5 -27.9 L677.7 -25.6 L678.2 -17.6 C678.8 -8.4 680.5 -3.7 685.3 2.3 C689.7 7.8 695.0 18.6 695.0 22.1 C695.0 25.3 691.5 28.5 687.0 29.5 C682.4 30.5 674.1 26.0 667.3 18.7 C655.5 6.0 652.7 -6.5 657.6 -23.7 C658.5 -26.6 658.9 -29.4 658.6 -29.9 C658.2 -30.4 658.4 -32.0 659.0 -33.4 C660.1 -36.4 663.2 -36.8 669.5 -34.6 C673.2 -33.3 673.7 -33.3 675.7 -35.2 C679.1 -38.4 689.2 -40.1 717.0 -41.9 C731.0 -42.9 731.5 -42.8 734.9 -40.7 C736.9 -39.5 739.4 -38.0 740.5 -37.5 C742.7 -36.4 756.9 -15.8 759.8 -9.5 C760.9 -7.2 762.2 -0.9 762.8 5.3 C763.6 12.1 764.7 17.4 766.0 20.0 C768.4 24.7 768.6 30.3 766.4 32.4 C764.4 34.5 759.2 34.4 755.8 32.3"/><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M851.0 38.5 C848.5 37.7 842.6 36.6 837.9 36.1 C819.1 34.0 791.4 15.8 789.5 4.4 C789.2 2.2 788.5 -0.3 787.9 -1.2 C785.3 -6.0 788.1 -13.9 794.7 -20.2 C799.8 -25.1 818.2 -31.5 833.0 -33.5 C838.8 -34.3 844.9 -35.2 846.6 -35.6 C854.6 -37.2 858.3 -25.8 852.0 -18.7 C847.8 -13.9 842.5 -12.3 826.5 -11.0 C813.9 -10.0 812.3 -9.7 810.1 -7.6 C808.3 -5.8 807.9 -4.6 808.4 -2.6 C809.4 1.4 815.6 7.6 822.4 11.6 C825.8 13.6 831.3 17.2 834.8 19.6 C840.2 23.4 842.0 24.1 846.8 24.4 C850.2 24.6 855.1 25.8 858.9 27.5 C866.3 30.6 871.5 30.5 876.3 27.0 C880.1 24.1 899.9 21.9 902.5 24.0 C905.0 26.1 904.3 30.3 901.0 33.5 C898.4 36.0 896.5 36.7 888.7 37.8 C874.7 39.9 856.4 40.2 851.0 38.5"/><path transform="translate(6.618 189.962) rotate(-2.7089) scale(1.00000)" d="M953.9 42.6 C946.4 38.6 940.9 32.3 935.2 21.5 C932.3 16.0 929.1 9.9 928.0 8.0 C925.5 3.5 923.6 -8.9 924.3 -16.3 C924.9 -22.7 928.3 -28.4 932.7 -30.1 C934.1 -30.6 943.6 -32.0 953.9 -33.1 C970.6 -35.0 974.1 -35.1 988.0 -34.1 C996.5 -33.5 1005.3 -32.5 1007.5 -32.0 C1009.7 -31.5 1013.2 -31.0 1015.4 -31.0 C1017.5 -31.0 1020.9 -30.6 1022.9 -30.1 C1024.9 -29.5 1030.6 -28.2 1035.6 -27.1 C1051.4 -23.6 1060.0 -18.7 1060.0 -13.4 C1060.0 -11.9 1059.0 -11.8 1050.8 -12.3 C1045.7 -12.6 1035.4 -13.6 1028.0 -14.5 C987.9 -19.4 948.6 -21.0 942.8 -17.9 C939.9 -16.3 940.7 -13.8 947.3 -3.7 C952.1 3.5 955.7 7.6 962.3 13.1 C971.7 21.0 973.8 24.5 974.7 33.6 C975.2 37.9 974.9 39.0 972.8 41.5 C969.2 45.6 960.5 46.1 953.9 42.6"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M36.7 -3.6 C32.2 -8.3 24.3 -17.2 16.1 -26.8 C12.2 -31.4 7.5 -41.2 5.0 -50.3 C4.6 -52.0 3.9 -59.2 3.6 -66.3 C3.3 -73.5 2.3 -81.9 1.5 -85.1 C-1.2 -95.5 -0.6 -96.8 6.9 -96.8 C9.9 -96.8 11.3 -96.0 14.8 -92.5 C20.0 -87.2 21.2 -82.2 21.4 -64.3 C21.4 -56.8 22.0 -50.2 22.7 -48.7 L23.9 -46.1 L51.6 -46.4 C66.9 -46.6 79.8 -47.2 80.3 -47.7 C80.8 -48.2 80.8 -49.3 80.2 -50.4 C79.7 -51.5 79.5 -53.7 79.7 -55.4 C80.0 -57.1 79.5 -59.8 78.7 -61.4 C77.9 -63.0 77.0 -68.9 76.6 -74.8 C76.0 -84.2 76.2 -85.6 77.9 -88.5 C80.6 -92.8 84.4 -95.2 87.5 -94.4 C90.8 -93.6 92.2 -90.7 93.1 -82.3 C95.0 -64.8 97.2 -57.8 103.7 -48.2 C105.6 -45.3 107.7 -40.4 108.6 -36.8 C109.6 -32.3 111.1 -29.2 113.9 -25.9 C116.0 -23.4 119.2 -18.8 121.0 -15.8 C122.8 -12.8 125.3 -9.0 126.7 -7.4 C129.8 -3.7 129.5 0.6 126.2 1.0 C123.6 1.4 110.8 -10.8 103.2 -20.8 C88.3 -40.6 88.6 -40.4 84.3 -38.7 C82.8 -38.1 75.4 -36.7 68.0 -35.6 C45.8 -32.4 43.6 -32.0 41.5 -31.3 C35.6 -29.0 34.3 -24.1 38.6 -20.5 C44.1 -15.9 45.6 -13.8 46.9 -8.8 C49.7 2.3 44.8 4.9 36.7 -3.6"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M196.7 6.2 C195.1 5.7 190.8 5.3 187.1 5.3 C178.1 5.3 175.8 4.7 167.5 -0.1 C155.1 -7.2 142.7 -19.9 141.6 -26.6 C141.3 -28.9 139.9 -33.2 138.5 -36.2 C135.0 -43.9 135.2 -45.2 141.6 -51.8 C146.6 -57.0 147.8 -57.8 154.0 -59.3 C161.7 -61.2 167.5 -60.8 177.5 -57.7 C180.8 -56.7 184.6 -55.8 185.8 -55.8 C190.3 -55.8 205.0 -48.6 210.8 -43.5 C213.4 -41.3 218.2 -37.7 221.4 -35.6 C229.6 -30.3 232.0 -26.7 232.3 -19.2 C232.5 -13.7 232.2 -12.9 228.6 -8.1 C223.4 -1.3 218.1 2.4 209.6 5.1 C202.1 7.4 201.0 7.5 196.7 6.2 M203.5 -7.5 C209.3 -8.8 211.1 -9.7 213.8 -12.7 C216.9 -16.1 217.0 -16.6 216.4 -22.3 C215.6 -30.2 215.0 -31.2 209.3 -33.3 C205.1 -34.9 203.7 -35.0 196.5 -34.0 L188.5 -32.8 L182.5 -35.9 C171.5 -41.7 156.3 -41.0 152.9 -34.7 C152.0 -32.9 152.2 -32.1 153.9 -29.9 C155.1 -28.5 156.8 -26.0 157.8 -24.4 C158.7 -22.8 161.3 -19.5 163.4 -17.1 C174.1 -5.2 183.5 -3.0 203.5 -7.5"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M256.8 -16.9 C253.6 -20.4 249.6 -25.3 248.0 -27.8 C246.4 -30.3 243.4 -34.5 241.3 -37.1 C235.8 -44.2 231.6 -51.6 222.8 -70.3 C221.8 -72.5 220.3 -75.4 219.5 -76.8 C216.8 -81.7 214.0 -87.9 214.0 -89.2 C214.0 -91.3 217.4 -93.8 220.2 -93.8 C224.9 -93.8 229.7 -91.1 230.9 -87.8 C231.5 -86.1 233.3 -82.7 235.0 -80.2 C236.6 -77.7 238.0 -75.5 238.0 -75.2 C238.0 -74.6 246.1 -58.3 251.3 -48.3 C253.1 -45.0 256.0 -40.2 257.8 -37.6 C264.5 -27.9 268.2 -12.4 264.1 -11.0 C263.4 -10.8 260.1 -13.4 256.8 -16.9"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M329.5 -7.2 C327.9 -7.9 324.6 -10.9 322.3 -13.8 C315.6 -22.0 312.9 -28.5 308.3 -46.7 C307.2 -51.0 312.4 -51.7 319.4 -48.1 C322.1 -46.7 322.4 -46.8 325.4 -49.6 C335.3 -58.8 351.9 -61.3 361.0 -54.8 C362.5 -53.8 365.1 -50.2 366.8 -46.9 C369.6 -41.8 369.9 -40.6 368.9 -38.4 C365.6 -31.3 371.6 -31.2 380.8 -38.3 C384.1 -40.8 387.1 -42.8 387.4 -42.8 C387.7 -42.8 391.2 -45.3 395.2 -48.3 C400.2 -52.1 403.2 -53.8 405.3 -53.8 C407.0 -53.8 409.2 -54.6 410.2 -55.5 C411.5 -56.7 414.3 -57.3 419.4 -57.5 C426.7 -57.9 426.8 -57.9 431.3 -54.0 C433.8 -51.8 438.0 -47.6 440.6 -44.7 C443.2 -41.7 446.6 -38.8 448.2 -38.1 C449.7 -37.4 451.0 -36.5 451.0 -35.9 C451.0 -33.0 469.3 -25.8 476.6 -25.8 C484.8 -25.8 491.5 -20.6 489.1 -16.1 C486.8 -11.7 469.9 -10.3 457.2 -13.5 C444.7 -16.5 438.4 -20.6 424.4 -34.5 C419.4 -39.5 418.8 -39.8 414.3 -39.6 C410.0 -39.5 409.0 -38.9 404.5 -34.6 C398.6 -28.9 382.8 -17.0 379.3 -15.7 C378.0 -15.2 373.8 -14.8 370.0 -14.8 L363.2 -14.8 L359.2 -19.6 C353.7 -26.2 350.0 -33.4 350.0 -37.7 C350.0 -45.3 344.7 -48.0 339.3 -43.4 C336.0 -40.5 335.7 -35.1 338.6 -27.8 C341.1 -21.5 341.1 -10.7 338.6 -7.9 C336.4 -5.5 333.8 -5.3 329.5 -7.2"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M545.4 -13.2 C543.1 -14.0 540.2 -15.2 538.9 -15.9 C537.4 -16.6 533.1 -17.1 527.5 -17.0 C517.9 -16.8 517.8 -16.9 509.3 -23.3 C500.2 -30.3 497.2 -33.5 495.0 -38.7 C492.8 -43.7 492.7 -44.2 494.2 -48.2 C496.7 -55.0 501.0 -56.8 514.5 -56.7 L525.5 -56.5 L532.1 -52.1 C539.5 -47.3 543.5 -42.2 544.5 -36.5 C545.2 -32.9 548.9 -28.8 551.5 -28.8 C553.8 -28.8 565.6 -24.7 569.5 -22.5 C574.3 -19.8 575.5 -15.7 571.9 -13.8 C568.5 -11.9 550.3 -11.6 545.4 -13.2 M520.8 -34.0 C521.3 -36.5 514.5 -39.7 512.7 -37.9 C511.7 -36.9 512.1 -36.2 514.5 -34.2 C517.8 -31.5 520.3 -31.4 520.8 -34.0"/><path transform="translate(1135.918 189.962) rotate(-0.1293) scale(1.25381)" d="M699.0 13.3 C690.5 11.5 679.9 2.9 659.3 -19.1 L652.1 -26.8 L646.5 -26.8 C639.7 -26.8 635.9 -25.0 633.0 -20.3 C631.0 -17.1 630.9 -16.0 631.5 -7.3 C632.4 4.4 631.8 5.4 625.2 4.5 C622.6 4.2 619.3 3.3 617.8 2.6 C614.3 0.8 603.0 -13.4 596.0 -24.8 C594.1 -28.0 591.7 -31.7 590.6 -33.2 C589.6 -34.6 588.7 -37.2 588.6 -39.0 C588.5 -41.9 589.0 -42.5 592.3 -44.2 C596.1 -46.0 596.3 -46.0 600.3 -44.2 C602.5 -43.2 606.1 -40.9 608.3 -39.1 C613.1 -35.0 614.5 -35.0 624.5 -38.9 C645.5 -47.1 659.9 -45.5 670.4 -33.9 C679.0 -24.3 689.1 -15.0 698.3 -8.1 C705.6 -2.5 707.4 -0.6 709.6 4.1 C713.8 13.3 711.0 15.7 699.0 13.3"/></g></defs><use href="#signature"/></svg>
   <p id="line">Helping meditators feel good in their bodies.</p>
@@ -135,7 +146,10 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
     if (!phone) { var fs = Math.max(15.5, Math.min(22, nameW * 0.033)); $('line').style.fontSize = fs + 'px'; Array.prototype.forEach.call(document.querySelectorAll('#links a'), function (a) { a.style.fontSize = Math.max(16, Math.min(19, fs * 1.02)) + 'px'; }); }
     $('line').style.top = (nameY + nh / 2 + (phone ? 10 : 14)) + 'px';
     $('links').style.top = linksTop + 'px';
-    window.LAYOUT = { W: W, Hs: Hs, Hl: Hl, u: u, uS: uS, xo: xo, landTop: landTop, groundY: groundY, nameY: nameY, phone: phone };
+    var fk = 0.9 * u, ftx = xo + (452 - 452 * 0.9) * u, fty = landTop + (GROUND - 1150 * 0.9) * u;
+    window.LAYOUT = { W: W, Hs: Hs, Hl: Hl, u: u, uS: uS, xo: xo, landTop: landTop, groundY: groundY, nameY: nameY, phone: phone, fk: fk, ftx: ftx, fty: fty };
+    var rv = $('rvcv'); px(rv, H.x, H.y, H.w, H.h);
+    if (window.ANIM_LAYOUT) window.ANIM_LAYOUT();
   }
   ['bankL', 'bankR', 'small', 'sun'].forEach(function (k) { $(k).src = dir + k + '.webp'; });
   $('hero').src = dir + 'hero.webp';
@@ -144,7 +158,7 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
   addEventListener('resize', function () { if (!raf) raf = requestAnimationFrame(function () { raf = 0; layout(); }); });
   // show it all at once, once the visible layers have loaded (never bare paper with pieces popping in)
   var imgs = Array.prototype.slice.call(art.querySelectorAll('img')).filter(function (im) { return im.getAttribute('src') && im.style.display !== 'none'; });
-  Promise.all(imgs.map(function (im) { return im.decode().catch(function () {}); })).then(function () { art.classList.add('ready'); document.title = document.title; window.READY = true; });
+  window.SHOWN = Promise.all(imgs.map(function (im) { return im.decode().catch(function () {}); })).then(function () { art.classList.add('ready'); window.READY = true; });
 
   // following a link: the page dissolves to paper, then goes (which also gives GoatCounter time to count the click)
   document.getElementById('links').addEventListener('click', function (e) {
@@ -156,6 +170,166 @@ window.ART = {"land": {"box": [-2400, 0, 5000, 1000], "ref": "land"}, "bankL": {
   });
   // coming back with the browser's back button shows the page again
   addEventListener('pageshow', function (e) { if (e.persisted) document.body.classList.remove('leaving'); });
+})();
+</script>
+<script>
+// ---------------------------------------------------------------------------
+// The cartwheel. The page opens on the finished drawing without the figure; then his body cartwheels across the
+// plain as a soft ink silhouette with a short trail (the clip's 38 poses with 3 in-betweens each, as vector shapes,
+// 1.7 times slower than life), leaving a pale ghost at three poses; the ghosts drift back along the ground into their
+// places, as if the paper moved under them, and fade as he lands; then the colour is sketched in, hatching first,
+// from the hands up. Then only the clouds drift. The last frame is the still. Reduced motion shows the still.
+// ---------------------------------------------------------------------------
+(function () {
+  var q = new URLSearchParams(location.search), $ = function (id) { return document.getElementById(id); };
+  var REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches || q.get('still') === '1';
+  var body = document.body;
+  function finish() { $('shadow').style.opacity = ''; body.classList.remove('anim'); $('bodycv').style.display = 'none'; $('rvcv').style.display = 'none'; body.classList.add('drift'); window.ANIM_DONE = true; }
+  if (REDUCED) { window.SHOWN.then(finish); return; }
+  body.classList.add('anim');
+  var clamp = function (v, a, b) { return Math.max(a, Math.min(b, v)); };
+  var smooth = function (u) { u = clamp(u, 0, 1); return u * u * (3 - 2 * u); };
+
+  // ---- timing (seconds from the start) ----
+  var M = { lead: 0.7, slow: 1.7, first: 8, last: 45, rampIn: 4, keys: [12, 25, 34], inkIn: 0.35, settle: 0.35, easeFrom: 38, easeBy: 1.3 };
+  var TF = {}, t = M.lead;
+  for (var f = M.first; f <= M.last + 1; f++) { TF[f] = t; t += M.slow / 30 * (1 + M.easeBy * smooth((f - M.easeFrom) / (M.last - M.easeFrom))); }
+  var tf = function (f) { return TF[clamp(f, M.first, M.last + 1)]; };
+  var frameAt = function (t) { var f = M.first; while (f < M.last && TF[f + 1] <= t) f++; return f; };
+  var t45 = tf(M.last), plateEnd = t45 + M.settle, tk = M.keys.map(tf);
+  var ramp = function (f) { return f < M.first + M.rampIn ? (f - M.first + 1) / (M.rampIn + 1) : 1; };
+  var TRAIL = [[0, 1]]; for (var j = 1; j <= 16; j++) TRAIL.push([j * 0.01, 0.5 * Math.exp(-j * 0.01 / 0.055)]);
+  var RV = { t0: t45 + 0.1, D: 1.9, soft: 0.03 }, rvEnd = RV.t0 + RV.D * (1 + RV.soft) + 0.05;
+  var gOutAt = plateEnd + 0.1, gOutDur = Math.max(0.6, RV.t0 + RV.D - gOutAt + 0.25);
+  var END = Math.max(rvEnd, gOutAt + gOutDur);
+
+  var B = null, paths = [], D = null;
+  var INK = [0x8C, 0x6A, 0x58], PAPER = [0xF9, 0xF5, 0xEC];
+  // a strength k of ink, as the colour that multiplies the drawing (darken keeps the strongest where poses overlap)
+  var mulColor = function (k) { return 'rgb(' + [0, 1, 2].map(function (c) { return Math.round(255 * (1 - k * (1 - INK[c] / PAPER[c]))); }).join(',') + ')'; };
+  function pathOf(i) {
+    i = clamp(Math.round(i), 0, B.frames.length - 1);
+    if (paths[i]) return paths[i];
+    var p = new Path2D();
+    B.frames[i].split(';').forEach(function (ring) {
+      var v = ring.split(','), x = 0, y = 0;
+      for (var n = 0; n < v.length; n += 2) { x += +v[n]; y += +v[n + 1]; if (n === 0) p.moveTo(x / 2, y / 2); else p.lineTo(x / 2, y / 2); }
+      p.closePath();
+    });
+    return (paths[i] = p);
+  }
+  var posAt = function (t) { var f = frameAt(t), u = clamp((t - tf(f)) / (tf(f + 1) - tf(f)), 0, 1); return Math.min(B.frames.length - 1, (f - M.first) * B.K + (f === M.last ? 0 : u * B.K)); };
+  var travel = function (t) {
+    var knots = [[tk[0], 0], [tk[1], D[0] - D[1]], [tk[2], D[0] - D[2]]];
+    if (t <= knots[0][0]) return 0;
+    for (var i = 0; i < 2; i++) if (t <= knots[i + 1][0]) return knots[i][1] + (knots[i + 1][1] - knots[i][1]) * (t - knots[i][0]) / (knots[i + 1][0] - knots[i][0]);
+    var u = clamp((t - knots[2][0]) / (plateEnd - knots[2][0]), 0, 1); return knots[2][1] + (D[0] - knots[2][1]) * (1 - (1 - u) * (1 - u));
+  };
+
+  // ---- the body canvas: sheet units [X0, X1] × [Y0, Y1] (the figure's own coordinates) ----
+  var X0 = -10, X1 = 900, Y0 = 500, Y1 = 1175, bcv = $('bodycv'), bx = bcv.getContext('2d'), dpr = Math.min(2, devicePixelRatio || 1), BS = 1;
+  window.ANIM_LAYOUT = function () {
+    var L = window.LAYOUT; if (!L) return;
+    BS = L.fk;
+    bcv.style.left = (L.ftx + X0 * BS) + 'px'; bcv.style.top = (L.fty + Y0 * BS) + 'px';
+    bcv.style.width = ((X1 - X0) * BS) + 'px'; bcv.style.height = ((Y1 - Y0) * BS) + 'px';
+    bcv.width = Math.round((X1 - X0) * BS * dpr); bcv.height = Math.round((Y1 - Y0) * BS * dpr);
+    if (lastT >= 0) draw(lastT);
+  };
+  window.ANIM_LAYOUT();
+  function drawBody(t) {
+    bx.setTransform(1, 0, 0, 1, 0, 0); bx.globalCompositeOperation = 'source-over'; bx.fillStyle = '#fff'; bx.fillRect(0, 0, bcv.width, bcv.height);
+    var sc = BS * dpr; bx.setTransform(sc, 0, 0, sc, -X0 * sc, -Y0 * sc); bx.globalCompositeOperation = 'darken';
+    // ghosts: printed where the body was at each key pose, then carried back along the ground to their places
+    var P = travel(t);
+    for (var i = 0; i < 3; i++) {
+      if (t < tk[i]) continue;
+      var op = smooth((t - tk[i]) / M.inkIn) * (1 - smooth((t - gOutAt) / gOutDur));
+      if (op < 0.01) continue;
+      bx.save(); bx.translate((D[0] - P) - D[i], 0); bx.fillStyle = mulColor(0.11 * op); bx.fill(pathOf((M.keys[i] - M.first) * B.K)); bx.restore();
+    }
+    // the body and its trail
+    if (t >= M.lead) for (var j = TRAIL.length - 1; j >= 0; j--) {
+      var ts = t - TRAIL[j][0]; if (ts < M.lead) continue;
+      var a = TRAIL[j][1] * ramp(frameAt(ts));
+      if (j === 0 && t >= t45) a *= 1 - smooth((t - t45) / 0.1);
+      if (j > 0 && t > t45) a *= Math.exp(-(t - t45) / 0.08);
+      if (a < 0.01) continue;
+      bx.fillStyle = mulColor(0.5 * a); bx.fill(pathOf(posAt(ts)));
+    }
+  }
+
+  // ---- the colour, sketched in from the hands up: per-pixel times worked out once from the figure itself ----
+  var R = null, rcv = $('rvcv'), rx = rcv.getContext('2d', { willReadFrequently: true });
+  function prepReveal(heroIm) {
+    var w = rcv.width, h = rcv.height; rx.clearRect(0, 0, w, h); rx.drawImage(heroIm, 0, 0, w, h);
+    var src = rx.getImageData(0, 0, w, h).data; rx.clearRect(0, 0, w, h);
+    var idx = [], ymin = 1e9, ymax = -1e9;
+    for (var i = 0; i < w * h; i++) if (src[i * 4 + 3] > 5) { idx.push(i); var y = (i / w) | 0; if (y < ymin) ymin = y; if (y > ymax) ymax = y; }
+    // smooth value noise
+    var hash = function (x, y) { var n = Math.sin(x * 127.1 + y * 311.7) * 43758.5453; return (n - Math.floor(n)) * 2 - 1; };
+    var vnoise = function (x, y) { var xi = Math.floor(x), yi = Math.floor(y), fx = x - xi, fy = y - yi, ux = fx * fx * (3 - 2 * fx), uy = fy * fy * (3 - 2 * fy);
+      var a = hash(xi, yi), b = hash(xi + 1, yi), c = hash(xi, yi + 1), d = hash(xi + 1, yi + 1); return a + (b - a) * ux + (c - a) * uy + (a - b - c + d) * ux * uy; };
+    var ang = 58 * Math.PI / 180, ca = Math.cos(ang), sa = Math.sin(ang), n = idx.length;
+    var C = new Float32Array(n), K = new Float32Array(n), S = new Float32Array(n), HA = new Float32Array(n);
+    for (var m = 0; m < n; m++) {
+      var i2 = idx[m], x = i2 % w, y2 = (i2 / w) | 0, p = i2 * 4, A = src[p + 3] / 255;
+      var front = (ymax - y2) / (ymax - ymin), along = ((x * ca + y2 * sa) / 34) % 1;
+      var s = clamp(0.62 * front + 0.07 * along + 0.04 * vnoise(x / 9, y2 / 9), 0, 0.75);
+      S[m] = s; C[m] = clamp(s + 0.2 + 0.05 * vnoise(x / 6 + 40, y2 / 6), 0, 1);
+      var lum = (0.3 * src[p] + 0.59 * src[p + 1] + 0.11 * src[p + 2]) / 255;
+      K[m] = lum < 0.28 && A > 0.5 ? s + 0.01 : 2;
+      var vv = (-x * sa + y2 * ca) / 6.5, line = Math.abs(vv - Math.round(vv)) * 6.5;
+      HA[m] = clamp(1.4 - line, 0, 1) * A * 0.9;
+    }
+    var out = rx.createImageData(w, h);
+    R = { idx: idx, C: C, K: K, S: S, HA: HA, src: src, out: out };
+  }
+  function drawReveal(t) {
+    var sil0 = smooth((t - t45) / 0.1), rt = (t - RV.t0) / RV.D, soft = RV.soft, od = R.out.data, src = R.src;
+    for (var m = 0, n = R.idx.length; m < n; m++) {
+      var p = R.idx[m] * 4, A = src[p + 3] / 255;
+      var fc = smooth((rt - R.C[m]) / soft), fk = R.K[m] < 2 ? smooth((rt - R.K[m]) / 0.02) : 0, v = fc > fk ? fc : fk;
+      var fs = smooth((rt - R.S[m]) / 0.02);
+      var r = INK[0], g = INK[1], b = INK[2], al = A * 0.5 * (1 - fs) * sil0, a2, ao;
+      a2 = R.HA[m] * fs * (1 - v);
+      if (a2 > 0) { ao = a2 + al * (1 - a2); r = (0x6E * a2 + r * al * (1 - a2)) / ao; g = (0x52 * a2 + g * al * (1 - a2)) / ao; b = (0x44 * a2 + b * al * (1 - a2)) / ao; al = ao; }
+      a2 = A * v;
+      if (a2 > 0) { ao = a2 + al * (1 - a2); r = (src[p] * a2 + r * al * (1 - a2)) / ao; g = (src[p + 1] * a2 + g * al * (1 - a2)) / ao; b = (src[p + 2] * a2 + b * al * (1 - a2)) / ao; al = ao; }
+      od[p] = r; od[p + 1] = g; od[p + 2] = b; od[p + 3] = al * 255;
+    }
+    rx.putImageData(R.out, 0, 0);
+  }
+
+  var lastT = -1, sh = $('shadow');
+  function draw(t) {
+    lastT = t;
+    if (t >= END) { finish(); return; }
+    drawBody(t);
+    if (t >= t45) drawReveal(t);
+    sh.style.opacity = smooth((t - t45 - 0.14) / 0.6);
+  }
+  window.ANIM = { end: END, seek: function (t) { if (B && R) { if (t >= END) { finish(); } else { body.classList.add('anim'); body.classList.remove('drift'); bcv.style.display = 'block'; rcv.style.display = 'block'; draw(t); } } } };
+
+  // ---- go: once the land is up and the figure's pieces are in. If they come more than 5 s after the land, open
+  // on the still instead of starting late ----
+  var heroIm = $('hero');
+  var shownAt = 0; window.SHOWN.then(function () { shownAt = performance.now(); });
+  var need = Promise.all([fetch('/art/body.json').then(function (r) { return r.json(); }), heroIm.decode()]);
+  Promise.all([window.SHOWN, need]).then(function (res) {
+    B = res[1][0]; D = B.D; prepReveal(heroIm);
+    if (performance.now() - shownAt > 5000) { finish(); return; }
+    bcv.style.display = 'block'; rcv.style.display = 'block'; window.ANIM_LAYOUT();
+    window.ANIM_READY = true;
+    if (q.get('pause') === '1') { draw(0); return; }
+    var t0 = 0;
+    var frame = function (now) {
+      if (!t0) t0 = now;
+      var t = (now - t0) / 1000; draw(t);
+      if (t < END) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  }).catch(function () { finish(); });
 })();
 </script>
 <script data-goatcounter="https://tannerholman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
