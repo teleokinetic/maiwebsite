@@ -414,8 +414,15 @@ html.js .ec.sn{animation:drop .7s cubic-bezier(.2,.8,.2,1) both}
 .cv.an .tt{left:20px;right:auto;top:20px;bottom:auto;gap:12px;z-index:3}
 .cv.an .tt b{font-weight:800;font-size:clamp(44px,13.5vw,60px);line-height:.86;letter-spacing:-.055em}
 .cv.an .tt b em{display:block;font:italic 400 .9em/1 Georgia,"Times New Roman",serif;letter-spacing:-.03em;margin-top:.05em}
-.cv.an .tt .mono{color:rgba(246,239,228,.92);font-size:11px;line-height:1.5;max-width:15em;text-transform:lowercase}
-.cv.an .ca{color:rgba(246,239,228,.9)}
+.cv.an .tt .mono{color:rgba(246,239,228,.92);font-size:11px;line-height:1.5;max-width:17em}
+.cv.an .ca{color:rgba(246,239,228,.95)}
+/* the card opens something on this page, so its mark is an expansion, not an arrow out; under a pointer the card grows and the mark opens */
+.ca.ex svg{display:block;width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.ca.ex path{transition:transform .45s cubic-bezier(.2,.8,.2,1)}
+.cv.an{transition:transform .55s cubic-bezier(.2,.8,.2,1)}
+.cv.an .anp{transition:transform .7s cubic-bezier(.2,.8,.2,1);transform-origin:50% 100%}
+@media (hover:hover){.cv.an:hover{transform:scale(1.035)}.cv.an:hover .anp{transform:scale(1.045)}.cv.an:hover .e1{transform:translate(1.5px,-1.5px)}.cv.an:hover .e2{transform:translate(-1.5px,1.5px)}}
+.cv.an:active{transform:scale(.985)}
 .cv.an .anp{position:absolute;right:-10%;bottom:0;height:80%;z-index:2;pointer-events:none}
 @media (min-width:1000px){
   .cv.an{aspect-ratio:820/330}
@@ -533,11 +540,11 @@ body.preview #pv{display:block}
 <section class="reels" id="reels" aria-label="Reels">
  <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
  <div class="rail" id="rail">
-  <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 1</span><b>How can something so error-prone be so dangerous?</b></span><span class="chip"><i></i>Watch</span></span></button>
-  <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
-  <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 9</span><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
+  <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>How can something so error-prone be so dangerous?</b></span><span class="chip"><i></i>Watch</span></span></button>
+  <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
+  <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
  </div>
- <div class="wide ana" id="ana"><button class="cv an" id="acard" aria-haspopup="dialog" aria-label="Anatomy of a Reel: 20 seconds of the Question 9 reel, layer by layer"><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>Anatomy<em>of a reel</em></b><span class="mono">20 seconds of the Question 9 reel, layer by layer</span></span><img class="anp" src="write-up/media/nate_a.webp" alt=""></button></div>
+ <div class="wide ana" id="ana"><button class="cv an" id="acard" aria-haspopup="dialog" aria-label="Anatomy of a Reel. 20 seconds can take a lot of work. Take a look!"><span class="ca ex" aria-hidden="true"><svg viewBox="0 0 18 18"><path class="e1" d="M10.5 3h4.5v4.5"/><path class="e2" d="M7.5 15H3v-4.5"/></svg></span><span class="tt"><b>Anatomy<em>of a reel</em></b><span class="mono">20 seconds can take a lot of work. Take a look!</span></span><img class="anp" src="write-up/media/nate_a.webp" alt=""></button></div>
  <div class="wide wallh" id="gfx"><h2>Graphics and motion</h2><p class="g" style="margin:0">From the film and the reels. Tap one to see it larger.</p></div>
  <div class="wall" id="wall"></div>
 </section>
@@ -713,6 +720,7 @@ sheet($('#sheetv'), $('#acard'));
   function aim(){ const r = box.getBoundingClientRect(), vh = innerHeight; const p = clamp((vh * .92 - r.top) / (vh * .75));
     target = RM ? 1 : ease(clamp(p / .5)); const h = p < .5 ? -1 : Math.min(pls.length - 1, Math.floor((p - .5) / .5 * pls.length));
     if(h !== hi){ hi = h; lis.forEach((l, j) => l.classList.toggle('hl', j === h)); pls.forEach((pl, j) => pl.classList.toggle('hl', j === h)); }
+    if(p >= 1 && !box.dataset.filled){ box.dataset.filled = 1; dispatchEvent(new Event('rolefilled')); }
     if(!run){ run = true; requestAnimationFrame(step); } }
   function step(){ v += (target - x) * .045; v *= .80; x += v; apply(x); if(Math.abs(target - x) > .0005 || Math.abs(v) > .0005) requestAnimationFrame(step); else { x = target; apply(x); run = false; } }
   addEventListener('scroll', aim, {passive: true}); addEventListener('resize', aim); aim();
@@ -832,15 +840,17 @@ const LY = {
   const C = HD.segs.map(s => { const e = mk('k', rows[2].r, 'span'); e.style.width = `max(1px,${pc(s[2] / R)})`; return e; });
   const Fm = HD.segs.map(s => { const e = mk('k', rows[3].r, 'span'); e.style.left = pc(s[1] / F); e.style.width = `max(1px,${pc(s[2] / F)})`; e.style.background = s[4] ? (s[4] % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; return e; });
   const GM = HD.gfx.map(g => { const e = mk('gm', rows[3].r, 'span'); e.style.left = pc(g[0] / F); e.style.width = `max(2px,${pc((g[1] - g[0]) / F)})`; return e; });
-  const D = 7600, ease = t => 1 - Math.pow(1 - clamp(t), 3); let t0 = null, on = false;
-  function draw(t){ hb.style.opacity = t > 6.8 ? 1 - (t - 6.8) / .8 : 1;
+  const END = 6, ease = t => 1 - Math.pow(1 - clamp(t), 3); let t0 = null, seen = false, played = false;
+  function draw(t){
     const show = (k, at) => { rows[k].l.style.opacity = rows[k].r.style.opacity = ease((t - at) / .35); };
     show(0, 0); bg0.style.transform = `scaleX(${ease(t / .9)})`;
     show(1, .9); K.forEach((k, i) => k.style.opacity = t > .9 + HD.segs[i][0] / R ? 1 : 0);
     show(2, 2.1); const p = ease((t - 2.3) / 1.3); C.forEach((c, i) => { const s = HD.segs[i]; c.style.left = pc(s[0] / R + (s[1] - s[0]) / R * p); c.style.opacity = t > 2.1 ? 1 : 0; });
     show(3, 3.8); Fm.forEach((f, i) => f.style.opacity = t > 3.8 + HD.segs[i][1] / F * .8 ? 1 : 0); GM.forEach((g, i) => g.style.opacity = t > 4.7 + HD.gfx[i][0] / F * .6 ? 1 : 0); }
-  function frame(now){ if(!on) return; if(t0 == null) t0 = now; draw(((now - t0) % D) / 1000); requestAnimationFrame(frame); }
-  if(RM) draw(6); else onView($('#hcard'), () => { if(!on){ on = true; t0 = null; requestAnimationFrame(frame); } }, () => on = false, .4);
+  /* it plays once: when the role list above has finished filling in and the card is on screen. Then it stays as drawn */
+  function frame(now){ if(t0 == null) t0 = now; const t = (now - t0) / 1000; draw(Math.min(t, END)); if(t < END) requestAnimationFrame(frame); }
+  const play = () => { if(played || !seen || !$('#role').dataset.filled) return; played = true; requestAnimationFrame(frame); };
+  if(RM) draw(END); else { draw(0); addEventListener('rolefilled', play); onView($('#hcard'), () => { seen = true; play(); }, () => { seen = false; }, .25); }
 }
 
 /* ---------- the sheet lifts off the dark Reels band, once ---------- */
@@ -893,7 +903,7 @@ const Focus = (() => {
   rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead);
   cards.forEach((c, i) => { c.onmouseenter = () => { hover = i; lead(); }; c.onmouseleave = () => { hover = -1; lead(); }; });
   const io = new IntersectionObserver(es => es.forEach(e => { seen = e.isIntersecting; lead(); }), {threshold: .3}); io.observe(rail);
-  const REELS = cards.map(c => ({src: `media/q${c.dataset.q}-full.mp4`, poster: `media/q${c.dataset.q}-poster.jpg`, ar: 9 / 16, sound: true, title: $('.rt b', c).textContent, sub: 'Question ' + c.dataset.q + ' · reel for Nate\'s accounts'}));
+  const REELS = cards.map(c => ({src: `media/q${c.dataset.q}-full.mp4`, poster: `media/q${c.dataset.q}-poster.jpg`, ar: 9 / 16, sound: true, title: $('.rt b', c).textContent, sub: 'Reel for Nate\'s accounts'}));
   cards.forEach((c, i) => c.onclick = () => Focus.open(REELS, i, $('.rv', c)));
   addEventListener('focusclosed', lead);
 }
