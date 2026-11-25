@@ -247,13 +247,38 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 
+/* preview only: comment mode */
+.pvbar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:52;display:flex;gap:8px}
+.pvbar .pvb{position:static}
+.cmb{border:0;border-radius:999px;background:#1c1c1e;color:#fff;padding:10px 16px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+body.cmode .cmb{background:#2b7a3d}
+.cbanner{position:fixed;left:10px;right:10px;top:calc(10px + env(safe-area-inset-top));z-index:55;max-width:520px;margin:0 auto;background:#1c1c1e;color:#fff;border-radius:14px;padding:10px 14px;font-size:14px;line-height:1.35;box-shadow:0 10px 30px rgba(0,0,0,.25);display:none}
+body.cmode .cbanner{display:block}
+body.cmode .sheet,body.cmode .reels,body.cmode .sheetv{cursor:crosshair}
+body.cmode .hov{outline:2px dashed #2b7a3d;outline-offset:2px}
+.pin{position:fixed;z-index:51;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50% 50% 50% 4px;background:#2b7a3d;color:#fff;font:600 12px/26px -apple-system,system-ui,sans-serif;text-align:center;border:2px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,.3);cursor:pointer;padding:0}
+.pin.done{background:#9a9a9f}
+.cpop{position:fixed;left:10px;right:10px;bottom:calc(10px + env(safe-area-inset-bottom));z-index:60;max-width:480px;margin:0 auto;background:#fff;border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.35);padding:14px;font-size:14px;display:none}
+.cpop.open{display:block}
+.cpop .on{color:var(--grey);font-size:13px;margin:0 0 8px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cpop textarea{width:100%;min-height:76px;border:1px solid var(--line);border-radius:12px;padding:9px 11px;font:16px/1.4 -apple-system,system-ui,sans-serif;resize:vertical}
+.cpop .row{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px;align-items:center}
+.cpop .row button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:8px 14px;font-size:14px;cursor:pointer}
+.cpop .row .sv{background:#2b7a3d;border-color:#2b7a3d;color:#fff}
+.cpop .row .dl{margin-left:auto;color:#b3261e}
+.cpop .ed{font-size:13px;color:#2b7a3d;margin-top:8px}
+[contenteditable=true]{outline:2px solid #2b7a3d!important;outline-offset:3px;background:#f2faf4;border-radius:4px}
+.pinlist{margin:0;padding:0;list-style:none}
+.pinlist li{border-top:1px solid var(--line);padding:9px 0;display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;cursor:pointer;font-size:14px}
+.pinlist .n{width:22px;height:22px;border-radius:50% 50% 50% 4px;background:#2b7a3d;color:#fff;font:600 11px/22px -apple-system,system-ui,sans-serif;text-align:center}
+.pinlist small{display:block;color:var(--grey)}
 /* preview only: placeholders and the notes drawer (hidden on tannerholman.space) */
 .tbd{background:none}
 body.preview .tbd{background:#fff1e6;box-shadow:0 0 0 2px #fff1e6;border-radius:3px;color:#b44a0e}
 #pv{display:none}
 body.preview #pv{display:block}
-.pvb{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:50;border:0;border-radius:999px;background:#b44a0e;color:#fff;padding:10px 16px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
-.pvp{position:fixed;right:10px;left:10px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:50;max-width:460px;margin-left:auto;max-height:72svh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:16px;font-size:15px;display:none}
+.pvb{border:0;border-radius:999px;background:#b44a0e;color:#fff;padding:10px 16px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+.pvp{position:fixed;right:10px;left:10px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:54;max-width:460px;margin-left:auto;max-height:72svh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:16px;font-size:15px;display:none}
 .pvp.open{display:block}
 .pvp h4{margin:0 0 4px;font-size:15px;font-weight:600}
 .pvp .sub{color:var(--grey);font-size:13px;margin:0 0 12px}
@@ -408,10 +433,18 @@ body.preview #pv{display:block}
 </div>
 
 <div id="pv">
- <button class="pvb" id="pvb" aria-expanded="false">Preview notes</button>
+ <div class="pvbar"><button class="cmb" id="cmb" aria-pressed="false">Comment</button><button class="pvb" id="pvb" aria-expanded="false">Preview notes</button></div>
+ <div class="cbanner" id="cbanner"><b>Comment mode.</b> Tap anything to pin a note to it. On text, you can also edit the words in place. <button id="cdone" style="float:right;border:0;background:#fff;color:#1c1c1e;border-radius:999px;padding:3px 10px;font-size:13px;margin-left:8px;cursor:pointer">Done</button></div>
+ <div class="cpop" id="cpop" role="dialog" aria-label="Pin a note">
+  <p class="on" id="con"></p>
+  <textarea id="cta" placeholder="What should change here?"></textarea>
+  <div class="ed" id="ced" hidden></div>
+  <div class="row"><button class="sv" id="csv">Save</button><button id="cedit">Edit the text</button><button id="ccl">Cancel</button><button class="dl" id="cdl" hidden>Delete</button></div>
+ </div>
  <div class="pvp" id="pvp" role="dialog" aria-label="Preview notes">
   <h4>Preview notes</h4>
   <p class="sub">Only on this preview, never on tannerholman.space. Orange text on the page is still to fill in. Notes save here, so I can read them.</p>
+  <h4 style="margin-top:14px">Your pins</h4><p class="sub" id="pinsub">None yet. Tap Comment, then tap anything on the page.</p><ul class="pinlist" id="pinlist"></ul>
   <div id="pvlist"></div>
  </div>
 </div>
@@ -555,13 +588,13 @@ const LY = {
       else if(n === 2){ const m = LY.marks.find(m => t >= m.t && t < m.end); key = 'm' + (m ? m.t : ''); if(key !== lastKey){ bov.innerHTML = ''; if(m){ const d = mk('note', bov); mk('', d, 'b').textContent = m.beat; mk('', d, 'div').textContent = m.idea; mk('q', d, 'div').textContent = '“' + m.note + '”'; } } bcap.textContent = m ? m.beat.toLowerCase() + ' · marked for a graphic' : 'unmarked: Nate carries it'; }
       else if(n === 3){ const r = LY.research.find(r => t >= r.a && t < r.b); key = 'r' + (r ? r.a : ''); if(key !== lastKey){ bov.innerHTML = ''; if(r){ const d = mk('card', bov); const im = mk('', d, 'img'); im.src = r.img; im.alt = ''; mk('', d, 'b').textContent = r.title; mk('', d, 'p').textContent = r.line; } } bcap.textContent = r ? 'source · ' + r.title : 'nothing to source here'; }
       else { const on = LY.fin.filter(f => t >= f[1] && t < f[2] && f[1] > .01).map(f => f[3]); bcap.textContent = on.length ? on.join(' · ') : 'captions'; } }
-    lastKey = key; raf = requestAnimationFrame(tick); }
+    lastKey = key; window.HOW = {step: cur, t: t}; raf = requestAnimationFrame(tick); }
   /* sound */
   { const b = $('#snd'); let on = false; b.onclick = () => { on = !on; VS.forEach(v => v.muted = !on); b.textContent = on ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', on); }; }
   /* which step is under the reading line */
   const phone = matchMedia('(max-width:760px)');
   let cur = -1;
-  function pick(){ const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s === cur) return; cur = s;
+  function pick(){ const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s === cur) return; cur = s; window.HOW = {step: s};
     const b = s >= 5; how.classList.toggle('b', b);
     if(!b){ A = Math.min(s, 4); drawA(); if(inB){ inB = false; VS.forEach(v => v.pause()); cancelAnimationFrame(raf); } }
     else { if(!inB){ inB = true; raf = requestAnimationFrame(tick); } setB(s - 5); active().play().catch(() => {}); } }
@@ -648,7 +681,62 @@ if(PREVIEW){
   function fill(id, b){ const u = ui[id]; if(!u || !b) return; if(document.activeElement !== u.ta) u.ta.value = b.note || ''; if(u.seg && b.choice){ setInk(b.choice); $$('button', u.seg).forEach(x => x.setAttribute('aria-pressed', x.dataset.k === b.choice)); } }
   Object.keys(local).forEach(k => fill(k, local[k]));
   (async () => { try{ if(!window.claude || !window.claude.use) return; db = await window.claude.use('db');
-    db.collection('page').onSnapshot(snap => snap.docs.forEach(d => fill(d.id, d.data() || {}))); }catch(e){ db = null; } })();
+    db.collection('page').onSnapshot(snap => snap.docs.forEach(d => fill(d.id, d.data() || {})));
+    db.collection('pins').onSnapshot(snap => { snap.docs.forEach(d => { PINS[d.id] = Object.assign({id: d.id}, d.data() || {}); }); renderPins(); }); }catch(e){ db = null; } })();
+
+  /* ---------- comment mode: pin a note to anything, or edit text in place ---------- */
+  const PINS = window.PINS = {}; const LSP = 'pf-pins';
+  try{ Object.assign(PINS, JSON.parse(localStorage.getItem(LSP) || '{}')); }catch(e){}
+  const cmb = $('#cmb'), pop = $('#cpop'), cta = $('#cta'), con = $('#con'), ced = $('#ced'), pvui = $('#pv');
+  let cm = false, draft = null, editing = null, hov = null;
+  const setCM = on => { cm = on; document.body.classList.toggle('cmode', on); cmb.setAttribute('aria-pressed', on); cmb.textContent = on ? 'Commenting' : 'Comment'; if(!on && hov){ hov.classList.remove('hov'); hov = null; } };
+  cmb.onclick = () => setCM(!cm); $('#cdone').onclick = () => setCM(false);
+  const sel = el => { const parts = []; while(el && el !== document.body){ if(el.id){ parts.unshift('#' + el.id); break; } const tag = el.tagName.toLowerCase(); const sib = [...el.parentElement.children].filter(c => c.tagName === el.tagName); parts.unshift(sib.length > 1 ? `${tag}:nth-of-type(${sib.indexOf(el) + 1})` : tag); el = el.parentElement; } return parts.join(' > '); };
+  const find = s => { try{ return document.querySelector(s); }catch(e){ return null; } };
+  const TEXT = 'P,H1,H2,H3,LI,BLOCKQUOTE,CITE,B,SPAN,A,DIV';
+  const textEl = el => { let e = el; while(e && e !== document.body){ if(e.matches && e.matches(TEXT) && e.innerText && e.innerText.trim() && !e.querySelector('video,img,svg,canvas,button') && e.children.length <= 3 && e.innerText.length < 700) return e; e = e.parentElement; } return null; };
+  const where = el => { const sec = el.closest('header,section,.sheetv'); const name = !sec ? '' : sec.tagName === 'HEADER' ? 'First screen' : (sec.getAttribute('aria-label') || sec.id || '');
+    const ctx = {section: name, scrollY: Math.round(scrollY), width: innerWidth};
+    if(el.closest('#how')){ ctx.howStep = (window.HOW || {}).step; if(window.HOW && window.HOW.t != null) ctx.videoTime = +window.HOW.t.toFixed(2); const st = $$('.step')[ctx.howStep]; if(st) ctx.stepTitle = $('h3', st).textContent; }
+    if(el.closest('#player')) ctx.loopTime = +($('#floop').currentTime || 0).toFixed(2);
+    const rc = el.closest('.rc'); if(rc){ ctx.reel = 'Question ' + rc.dataset.q; const v = $('video', rc); ctx.loopTime = +(v.currentTime || 0).toFixed(2); }
+    if(el.closest('#sheetv')) ctx.inWriteup = true;
+    return ctx; };
+  const snip = el => (el.tagName === 'VIDEO' ? 'the video' : el.tagName === 'IMG' ? (el.alt || 'the picture') : (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().replace(/\s+/g, ' ')).slice(0, 90);
+  addEventListener('mousemove', e => { if(!cm || pvui.contains(e.target)) return; if(hov) hov.classList.remove('hov'); hov = e.target.closest('.pin') ? null : e.target; if(hov) hov.classList.add('hov'); }, {passive: true});
+  addEventListener('click', e => { if(!cm || pvui.contains(e.target) || e.target.closest('.pin') || editing) return; e.preventDefault(); e.stopPropagation();
+    const el = e.target, r = el.getBoundingClientRect();
+    draft = {sel: sel(el), snippet: snip(el), fx: r.width ? (e.clientX - r.left) / r.width : .5, fy: r.height ? (e.clientY - r.top) / r.height : .5, ctx: where(el), note: '', created: new Date().toISOString(), done: false};
+    openPop(draft, el); }, true);
+  function openPop(p, el){ pop.classList.add('open'); con.textContent = 'On: “' + (p.snippet || '') + '”' + (p.ctx && p.ctx.stepTitle ? ' · step: ' + p.ctx.stepTitle : '') + (p.ctx && p.ctx.loopTime != null ? ' · at ' + p.ctx.loopTime + ' s' : '');
+    cta.value = p.note || ''; ced.hidden = !p.edit; if(p.edit) ced.textContent = 'Text edit saved: “' + p.edit.to.slice(0, 80) + '”';
+    $('#cdl').hidden = !p.id; const te = el && textEl(el); $('#cedit').hidden = !te; pop._el = te; pop._p = p; setTimeout(() => cta.focus(), 30); }
+  const closePop = () => { pop.classList.remove('open'); if(editing){ editing.contentEditable = 'false'; editing = null; } draft = null; $('#cedit').textContent = 'Edit the text'; };
+  $('#ccl').onclick = () => { if(editing && pop._orig != null) editing.innerText = pop._orig; closePop(); };
+  $('#cedit').onclick = () => { const te = pop._el; if(!te) return; if(editing){ editing.contentEditable = 'false'; editing = null; $('#cedit').textContent = 'Edit the text'; return; }
+    editing = te; pop._orig = pop._p.edit ? pop._p.edit.from : te.innerText; te.contentEditable = 'true'; te.focus(); $('#cedit').textContent = 'Stop editing';
+    const rg = document.createRange(); rg.selectNodeContents(te); const s2 = getSelection(); s2.removeAllRanges(); s2.addRange(rg); };
+  $('#csv').onclick = () => { const p = pop._p; p.note = cta.value.trim();
+    if(editing){ const to = editing.innerText.trim(); if(to !== (pop._orig || '').trim()){ p.edit = {from: (pop._orig || '').trim(), to}; p.sel = sel(editing); } }
+    if(!p.note && !p.edit){ closePop(); return; }
+    if(!p.id){ p.id = 'p' + Date.now().toString(36); p.n = Object.keys(PINS).length + 1; }
+    p.updated = new Date().toISOString(); PINS[p.id] = p; persist(p); closePop(); renderPins(); };
+  $('#cdl').onclick = () => { const p = pop._p; if(!p.id) return; p.deleted = true; PINS[p.id] = p; persist(p); closePop(); renderPins(); };
+  function persist(p){ try{ localStorage.setItem(LSP, JSON.stringify(PINS)); }catch(e){} if(db){ const b = Object.assign({}, p); delete b.id; db.collection('pins').doc(p.id).set(b).catch(() => {}); } }
+  const dots = {};
+  function renderPins(){ const live = Object.values(PINS).filter(p => !p.deleted).sort((a, b) => (a.n || 0) - (b.n || 0));
+    Object.keys(dots).forEach(k => { if(!live.find(p => p.id === k)){ dots[k].remove(); delete dots[k]; } });
+    live.forEach(p => { if(p.edit){ const el = find(p.sel); if(el && el.innerText.trim() === p.edit.from && el.contentEditable !== 'true') el.innerText = p.edit.to; }
+      if(!dots[p.id]){ const d = document.createElement('button'); d.className = 'pin'; d.setAttribute('aria-label', 'Pin ' + p.n); d.onclick = ev => { ev.stopPropagation(); openPop(PINS[p.id], find(PINS[p.id].sel)); }; document.body.appendChild(d); dots[p.id] = d; }
+      dots[p.id].textContent = p.n; dots[p.id].classList.toggle('done', !!p.done); });
+    const ul = $('#pinlist'); ul.innerHTML = ''; $('#pinsub').textContent = live.length ? live.length + ' saved. Tap one to go to it.' : 'None yet. Tap Comment, then tap anything on the page.';
+    live.forEach(p => { const li = mk('', ul, 'li'); mk('n', li).textContent = p.n; const t = mk('', li); t.textContent = p.note || (p.edit ? 'Edited text' : ''); const sm = mk('', t, 'small'); sm.textContent = (p.ctx && p.ctx.section ? p.ctx.section + ' · ' : '') + '“' + (p.edit ? p.edit.to : p.snippet || '').slice(0, 60) + '”';
+      li.onclick = () => { const el = find(p.sel); if(p.ctx && p.ctx.scrollY != null && (!el || el.closest('#how'))) scrollTo({top: p.ctx.scrollY, behavior: 'smooth'}); else if(el) el.scrollIntoView({behavior: 'smooth', block: 'center'}); }; });
+    place(); }
+  function place(){ Object.values(PINS).forEach(p => { const d = dots[p.id]; if(!d) return; const el = find(p.sel); if(!el){ d.style.display = 'none'; return; } const r = el.getBoundingClientRect(); const vis = r.width || r.height;
+    d.style.display = vis && r.bottom > -20 && r.top < innerHeight + 20 && getComputedStyle(el).visibility !== 'hidden' ? '' : 'none'; d.style.left = (r.left + r.width * p.fx) + 'px'; d.style.top = (r.top + r.height * p.fy) + 'px'; }); }
+  const loopPlace = () => { place(); requestAnimationFrame(loopPlace); }; requestAnimationFrame(loopPlace);
+  renderPins();
 }
 </script>
 <script data-goatcounter="https://tannerholman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
