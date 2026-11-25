@@ -310,6 +310,101 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 
+/* ===== pass 4 ===== */
+#player,#role,#hcard,#reels,#gfx,#how,#about,#contact{scroll-margin-top:72px}
+
+/* the hour card gets room before the dark band */
+.sheet.one{padding-bottom:64px}
+@media (max-width:760px){.sheet.one{padding-bottom:44px}}
+/* the reels line up with their heading on wide screens */
+@media (min-width:1000px){.rail{padding-left:max(var(--pad),calc(50% - 410px));padding-right:max(var(--pad),calc(50% - 410px));scroll-padding-left:max(var(--pad),calc(50% - 410px))}}
+
+/* desktop: three widths, as on Marvin's and Molly's desktop pages. Text keeps its narrow column,
+   pictures step outside it, and the wall runs wider still */
+@media (min-width:1000px){
+  .film{margin:0 -90px}
+  .halo{inset:8% 6% -3%;filter:blur(60px)}
+  .player{border-radius:24px}
+  .player .chip{left:20px;bottom:20px}
+  .role{margin:120px -90px 0;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:36px}
+  .stage3d{height:380px}
+  .planes{width:min(100%,440px)}
+  .crows{margin-top:56px}
+  /* the hour cover: the four bars grow to fill the card instead of sitting in its top corner */
+  .hb{left:28px;right:72px;top:30px;bottom:104px;gap:0;grid-template-rows:repeat(4,auto minmax(0,1fr));align-content:stretch}
+  .hb .hl{font-size:12px;margin-bottom:13px;align-self:end}
+  .hb .hr{height:18px;align-self:start}
+  .hb .gm{top:-8px;height:5px}
+  .cv .tt{left:28px;right:28px;bottom:24px}
+  .cv .ca{right:24px;top:20px}
+  #hcard::after{height:40%}
+  .top{padding-top:44px}
+  .rc{width:260px}
+}
+@media (min-width:1140px){
+  .wall{columns:4;column-gap:14px;max-width:calc(1040px + 2*var(--pad))}
+}
+
+/* index (after human-md's index): one small pill; it opens the page as a spread of tilted cards, tap one to go there */
+.ixb{display:flex;position:fixed;right:max(14px,env(safe-area-inset-right));top:calc(12px + env(safe-area-inset-top));z-index:72;align-items:center;gap:9px;height:38px;padding:0 14px 0 16px;border:0;border-radius:999px;
+  background:rgba(255,255,255,.88);-webkit-backdrop-filter:blur(14px) saturate(1.4);backdrop-filter:blur(14px) saturate(1.4);
+  box-shadow:0 10px 28px rgba(35,61,56,.14),0 2px 7px rgba(35,61,56,.09),inset 0 0 0 1px rgba(0,0,0,.05);font-size:14px;font-weight:500;color:var(--ink);cursor:pointer;
+  transition:transform .3s cubic-bezier(.2,.9,.3,1.2),opacity .3s}
+.ixb:active{transform:scale(.95)}
+.ixb i{position:relative;width:14px;height:10px}
+.ixb i::before,.ixb i::after{content:"";position:absolute;left:0;right:0;height:1.5px;border-radius:1px;background:currentColor;transition:transform .35s cubic-bezier(.2,.9,.3,1.2),top .35s}
+.ixb i::before{top:1px}.ixb i::after{top:7px}
+.ixb[aria-expanded=true] i::before{top:4px;transform:rotate(45deg)}
+.ixb[aria-expanded=true] i::after{top:4px;transform:rotate(-45deg)}
+body.sheet-open .ixb{opacity:0;pointer-events:none}
+.ixb.away{transform:translateY(-70px);opacity:0;pointer-events:none}
+html.js body:not(.in) .ixb{opacity:0}
+.ix{position:fixed;inset:0;z-index:71;visibility:hidden;overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;background:rgba(245,245,246,0);transition:background .3s,visibility 0s .45s}
+.ix.open{visibility:visible;background:rgba(245,245,246,.94);-webkit-backdrop-filter:blur(26px) saturate(1.2);backdrop-filter:blur(26px) saturate(1.2);transition:background .35s}
+.ixg{box-sizing:border-box;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px 14px;align-content:center;min-height:100%;max-width:1080px;margin:0 auto;
+  padding:calc(78px + env(safe-area-inset-top)) 20px calc(36px + env(safe-area-inset-bottom))}
+.ixc{display:block;border:0;margin:0;padding:8px 8px 13px;border-radius:14px;background:#fff;text-align:left;cursor:pointer;color:inherit;font:inherit;
+  box-shadow:0 16px 38px rgba(35,61,56,.13),0 3px 10px rgba(35,61,56,.08);
+  opacity:0;transform:translateY(46px) rotate(calc(var(--r)*2.4)) scale(.9);transition:transform .32s cubic-bezier(.4,0,.2,1),opacity .22s}
+.ix.open .ixc{opacity:1;transform:rotate(var(--r));transition:transform .75s cubic-bezier(.2,.9,.25,1.12) var(--dl),opacity .35s var(--dl)}
+.ix.open .ixc:active{transform:rotate(0deg) scale(.97);transition:transform .15s}
+@media (hover:hover){.ix.open .ixc:hover{transform:rotate(0deg) translateY(-5px) scale(1.025);transition:transform .35s cubic-bezier(.2,.9,.3,1.3)}}
+.ixc .im{display:grid;position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;background:#eeeef0 center/cover no-repeat}
+.ixc .im.sp{grid-auto-flow:column;grid-auto-columns:minmax(0,1fr);gap:3px;background:var(--dark);padding:3px}
+.ixc .im.sp.q{grid-auto-flow:row;grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+.ixc .im.sp span{border-radius:5px;background:center/cover no-repeat;min-height:0}
+.ixc .im.tx{place-items:center;background:var(--wash);font:500 13px "Geist Mono",ui-monospace,monospace;color:var(--ink)}
+.ixc .im .dbar{display:flex;gap:2px;width:70%;height:10px;margin-top:8px}
+.ixc .im .dbar u{border-radius:2px}
+.ixc .im .mc{padding:9px 14px;border-radius:16px;background:#fff;box-shadow:0 10px 26px rgba(35,61,56,.14),0 3px 9px rgba(35,61,56,.09);font:500 13px -apple-system,BlinkMacSystemFont,system-ui,Inter,sans-serif}
+.ixc .n{display:flex;justify-content:space-between;gap:8px;margin:10px 4px 2px;font:500 11px "Geist Mono",ui-monospace,monospace;color:var(--soft)}
+.ixc .n em{font-style:normal;color:var(--ink);opacity:0}
+.ixc.here .n em{opacity:1}
+.ixc b{display:block;margin:0 4px;font-weight:500;font-size:15px;line-height:1.25}
+body.ix-open{overflow:hidden}
+@media (min-width:760px){
+  .ixg{grid-template-columns:repeat(4,minmax(0,1fr));gap:34px 26px;padding:96px 40px 60px}
+  .ixc{padding:10px 10px 16px;border-radius:16px}
+  .ixc .im{border-radius:9px}
+  .ixc b{font-size:16px}
+}
+@media (max-height:520px) and (min-width:760px){.ixg{grid-template-columns:repeat(8,minmax(0,1fr));gap:14px}}
+
+/* the ending: the page closes with the same floating card it opens with; the address is on it, tap copies it */
+.contact{padding-top:96px}
+blockquote{margin-bottom:34px}
+.ec.nums{margin:0;max-width:380px}
+.ec .n1 b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+html.js .ec{opacity:0}
+html.js .ec.sn{animation:drop .7s cubic-bezier(.2,.8,.2,1) both}
+.endl{margin:30px 0 0}
+.upd{margin:56px 0 0;color:var(--soft)}
+
+/* the wash, as an invitation to scroll: the film's colour pools below the first screen and is gone after a short scroll */
+.wash{position:absolute;left:0;right:0;top:0;height:min(150vh,1200px);z-index:0;pointer-events:none;transition:background 1.2s linear;
+  -webkit-mask-image:linear-gradient(transparent 0,#000 35%,#000 70%,transparent 100%);mask-image:linear-gradient(transparent 0,#000 35%,#000 70%,transparent 100%)}
+.sheet.one > *:not(.wash){position:relative;z-index:1}
+
 /* preview only: comment mode */
 .pvbar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:52;display:flex;gap:8px}
 .pvbar .pvb{position:static}
@@ -334,7 +429,9 @@ body.cmode .hov{outline:2px dashed #2b7a3d;outline-offset:2px}
 .pinlist{margin:0;padding:0;list-style:none}
 .pinlist li{border-top:1px solid var(--line);padding:9px 0;display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;cursor:pointer;font-size:14px}
 .pinlist .n{width:22px;height:22px;border-radius:50% 50% 50% 4px;background:#2b7a3d;color:#fff;font:600 11px/22px -apple-system,system-ui,sans-serif;text-align:center}
-.pinlist small{display:block;color:var(--grey)}
+.pinlist small{display:block;color:var(--grey)}body.ix-open .pin{z-index:73}body.ix-open .pvbar,body.ix-open .cbanner{z-index:74}body.ix-open .cpop{z-index:76}
+body.cmode .ixb{top:calc(84px + env(safe-area-inset-top))}
+
 /* preview only: placeholders and the notes drawer (hidden on tannerholman.space) */
 .tbd{background:none}
 body.preview .tbd{background:#fff1e6;box-shadow:0 0 0 2px #fff1e6;border-radius:3px;color:#b44a0e}
@@ -358,6 +455,7 @@ body.preview #pv{display:block}
 <body>
 
 <div class="sheet one" id="sheet1">
+ <div class="wash" id="wash" aria-hidden="true"></div>
  <header class="top wrap">
   <h1 class="ar">Tanner Holman</h1>
   <p class="ar" style="--d:.12s">Editing, motion graphics and research for AI-safety video. Helping with Nate Soares's videos since October 2026.</p>
@@ -417,7 +515,7 @@ body.preview #pv{display:block}
   <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
   <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 9</span><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
  </div>
- <div class="wide wallh"><h2>Graphics and motion</h2><p class="g" style="margin:0">From the film and the reels. Tap one to see it larger.</p></div>
+ <div class="wide wallh" id="gfx"><h2>Graphics and motion</h2><p class="g" style="margin:0">From the film and the reels. Tap one to see it larger.</p></div>
  <div class="wall" id="wall"></div>
 </section>
 <div class="fv" id="fv" role="dialog" aria-modal="true" aria-label="Focus view"><div class="fs"></div><div class="fct"></div><div class="fb"><div class="fm"></div><p class="fc"></p></div><button class="fx" aria-label="Close">✕</button><button class="fp" aria-label="Previous">←</button><button class="fn" aria-label="Next">→</button></div>
@@ -444,7 +542,7 @@ body.preview #pv{display:block}
   </div>
   <div class="wrap"><button class="cv dark" id="acard" aria-haspopup="dialog" aria-label="The write-up: how one stretch of the Question 9 reel was made"><video src="media/final.mp4" poster="media/l_film.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>The write-up</b><span>How one stretch of the Question 9 reel was made</span></span></button></div>
  </section>
- <section class="about wrap" aria-label="About">
+ <section class="about wrap" id="about" aria-label="About">
   <h2 style="margin-bottom:12px">About</h2>
   <div class="story" id="story">
    <p>I trained as an actor at Florida State and spent my spare time working on film-school sets. Then I spent years teaching movement, a job that is mostly about noticing small things.</p>
@@ -457,9 +555,16 @@ body.preview #pv{display:block}
    <ul class="dlist" id="dlist"></ul>
   </div>
  </section>
- <section class="contact wrap" aria-label="Contact">
+ <section class="contact wrap" id="contact" aria-label="Contact">
   <blockquote><span class="tbd">“[Elwyn's quote]”</span><cite>Elwyn Foote, producer</cite></blockquote>
-  <p>Reach me by <a class="mail" href="mailto:tannerholman97@gmail.com">email</a> or visit my <a class="mail" href="/">main site</a>. <span class="g">References on request.</span></p>
+  <div class="endc">
+   <div class="nums ec" id="mailc">
+    <a class="nc n2" href="mailto:tannerholman97@gmail.com" tabindex="-1"><b>Write to me <span class="arr">↗</span></b><span>Opens your mail app</span></a>
+    <button class="nc n1" id="mailb" aria-expanded="false" aria-label="Copy my email address: tannerholman97@gmail.com"><b>tannerholman97@gmail.com</b><span id="mails" aria-live="polite">Tap to copy · References on request</span></button>
+   </div>
+   <p class="endl g">Or visit my <a class="mail" href="/">main site</a>.</p>
+   <p class="upd mono">Updated Nov 25, 2026</p>
+  </div>
  </section>
 </div>
 
@@ -510,6 +615,9 @@ body.preview #pv{display:block}
  </div>
 </div>
 
+<button class="ixb" id="ixb" aria-expanded="false" aria-controls="ix"><span id="ixl">Index</span><i aria-hidden="true"></i></button>
+<div class="ix" id="ix" role="dialog" aria-modal="true" aria-label="Index"><div class="ixg" id="ixg"></div></div>
+
 <div id="pv">
  <div class="pvbar"><button class="cmb" id="cmb" aria-pressed="false">Comment</button><button class="pvb" id="pvb" aria-expanded="false">Preview notes</button></div>
  <div class="cbanner" id="cbanner"><b>Comment mode.</b> Tap anything to pin a note to it. On text, you can also edit the words in place. <button id="cdone" style="float:right;border:0;background:#fff;color:#1c1c1e;border-radius:999px;padding:3px 10px;font-size:13px;margin-left:8px;cursor:pointer">Done</button></div>
@@ -545,7 +653,10 @@ if(PREVIEW) document.body.classList.add('preview');
 /* ---------- the film: muted loop on the poster, glow takes its colour, tap loads YouTube ---------- */
 {
   const p = $('#player'), v = $('#floop'), halo = $('#halo'), G = JSON.parse($('#glow').textContent);
-  const paint = () => { const c = G[Math.min(G.length - 1, Math.floor((v.currentTime || 0) * 4))] || G[0]; halo.style.background = `linear-gradient(90deg,${c[0]},${c[1]})`; };
+  const wash = $('#wash'), hex = (h, a) => { const n = parseInt(h.slice(1), 16); return `rgba(${n >> 16},${n >> 8 & 255},${n & 255},${a})`; };
+  const paint = () => { const c = G[Math.min(G.length - 1, Math.floor((v.currentTime || 0) * 4))] || G[0]; halo.style.background = `linear-gradient(90deg,${c[0]},${c[1]})`;
+    if(wash) wash.style.background = `radial-gradient(90% 34% at 50% 62%,${hex(c[0], .30)},transparent 70%),radial-gradient(70% 30% at 70% 74%,${hex(c[1], .22)},transparent 72%)`; };
+  if(wash){ const f = () => wash.style.opacity = Math.max(0, 1 - scrollY / (innerHeight * .9)); addEventListener('scroll', f, {passive: true}); f(); }
   paint(); v.addEventListener('timeupdate', paint);
   if(RM){ v.removeAttribute('autoplay'); v.pause(); }
   onView(p, () => { if(!RM && !p.dataset.yt) v.play().catch(() => {}); }, () => v.pause());
@@ -836,6 +947,47 @@ setInk(INK);
   onView($('#dates'), () => { if(RM || done) return; done = true; const t0 = performance.now(); const go = now => { const p = Math.min(1, (now - t0) / 4200); show(N * (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2)); if(p < 1) raf = requestAnimationFrame(go); }; raf = requestAnimationFrame(go); }, null, .6);
 }
 
+/* ---------- index: the page as a spread of tilted cards; tap one to go there ---------- */
+{
+  const b = $('#ixb'), ix = $('#ix'), g = $('#ixg'), lab = $('#ixl');
+  const im = u => `<span class="im" style="background-image:url(media/${u})"></span>`;
+  const sp = (us, q) => `<span class="im sp${q ? ' q' : ''}">${us.map(u => `<span style="background-image:url(media/${u})"></span>`).join('')}</span>`;
+  const C = [
+    ['The film', '#player', im('film-poster.jpg')],
+    ['My role, layer by layer', '#role', `<span class="im" style="background-image:url(media/l_graphics.png),url(media/l_raw.jpg);background-size:215%,cover;background-position:97% 8%,center"></span>`],
+    ['An hour into 16 minutes', '#hcard', `<span class="im" style="background-image:url(media/hour-thumb.jpg);background-size:150%;background-position:0 100%;background-color:#fff"></span>`],
+    ['Reels', '#reels', sp(['q1-poster.jpg', 'q4-poster.jpg', 'q9-poster.jpg'])],
+    ['Graphics and motion', '#gfx', sp(['gfx/g79.jpg', 'gfx/g05.jpg', 'gfx/g30.jpg', 'gfx/g74.jpg'], 1)],
+    ['20 seconds, layer by layer', '#how', sp(['raw-still.jpg', 'q9-poster.jpg'])],
+    ['About', '#about', `<span class="im tx"><span>Day 1 → Day 84<span class="dbar"><u style="flex:38;background:#cfcfd3"></u><u style="flex:17;background:var(--qb)"></u><u style="flex:28;background:var(--q0)"></u></span></span></span>`],
+    ['Contact', '#contact', `<span class="im tx"><span class="mc">Email ↗</span></span>`]
+  ];
+  const tilt = [-2.2, 1.6, 1.1, -1.5, -1.2, 2.1, 1.7, -1.9];
+  g.innerHTML = C.map(([t, , pic], i) => `<button class="ixc" data-i="${i}" style="--r:${tilt[i]}deg;--dl:${(.05 + i * .045).toFixed(3)}s">${pic}<span class="n"><span>${String(i + 1).padStart(2, '0')}</span><em>You are here</em></span><b>${t}</b></button>`).join('');
+  const cards = $$('.ixc', g), tg = C.map(c => $(c[1]));
+  const here = () => { let k = 0; tg.forEach((el, i) => { if(el && el.getBoundingClientRect().top < innerHeight * .5) k = i; }); return k; };
+  const open = () => { const k = here(); cards.forEach((c, i) => c.classList.toggle('here', i === k)); ix.classList.add('open'); ix.scrollTop = 0; document.body.classList.add('ix-open'); b.setAttribute('aria-expanded', true); lab.textContent = 'Close'; $$('video').forEach(v => v.pause()); };
+  const close = to => { ix.classList.remove('open'); document.body.classList.remove('ix-open'); b.setAttribute('aria-expanded', false); lab.textContent = 'Index'; dispatchEvent(new Event('scroll'));
+    if(to){ to.scrollIntoView({behavior: RM ? 'auto' : 'smooth', block: 'start'}); } else b.focus({preventScroll: true}); };
+  b.onclick = () => ix.classList.contains('open') ? close() : open();
+  cards.forEach((c, i) => c.onclick = () => close(tg[i]));
+  ix.addEventListener('click', e => { if(e.target === ix || e.target === g) close(); });
+  addEventListener('keydown', e => { if(e.key === 'Escape' && ix.classList.contains('open')) close(); });
+  /* on a phone the pill steps aside while you read down the page, and returns the moment you scroll back up */
+  const small = matchMedia('(max-width:760px)'); let ly = scrollY;
+  addEventListener('scroll', () => { const y = scrollY, d = y - ly; if(Math.abs(d) < 6) return; ly = y;
+    b.classList.toggle('away', small.matches && d > 0 && y > 240 && !ix.classList.contains('open')); }, {passive: true});
+}
+
+/* ---------- the ending: the address card drops in as the page's first card did; tap copies the address and offers the mail link ---------- */
+{
+  const n = $('#mailc'), b = $('#mailb'), a = $('.n2', n), st = $('#mails'), ADDR = 'tannerholman97@gmail.com'; let REST = st.textContent, busy = false;
+  if(RM) n.classList.add('sn'); else onView(n, () => n.classList.add('sn'), null, .6);
+  let tm; const said = t => { if(!busy) REST = st.textContent; busy = true; st.textContent = t; clearTimeout(tm); tm = setTimeout(() => { st.textContent = REST; busy = false; }, 2600); };
+  b.onclick = () => { n.classList.add('fan'); b.setAttribute('aria-expanded', true); a.tabIndex = 0;
+    try{ navigator.clipboard.writeText(ADDR).then(() => said('Copied'), () => said('Press and hold to copy')); }catch(e){ said('Press and hold to copy'); } };
+}
+
 /* ---------- preview notes (not shown on tannerholman.space) ---------- */
 if(PREVIEW){
   const Q = [
@@ -850,6 +1002,8 @@ if(PREVIEW){
     {id: 'article', t: 'The write-up that opens from How it’s made', pick: 'My draft, built from your beat-board notes and the reel’s records, in Marvin’s article style. Rewrite it in your voice.'},
     {id: 'taste', t: 'Taste paragraph', pick: 'Still my draft from your Dec 2024 notes. Paste your own words if you have better ones.'},
     {id: 'quote', t: 'Elwyn’s quote', pick: 'Still to come; the space is held at the bottom.'},
+    {id: 'index', t: 'Index cards: titles, order, pictures', pick: 'Yours to edit. Open the index, tap Comment, then tap a title to change its words in place. For order or a different picture, pin a note on the card.'},
+    {id: 'ending', t: 'Ending card wording', pick: '“Tap to copy”, “Write to me” and “Updated Nov 25, 2026” are my words. Tap Comment, then tap any of them to edit in place.'},
     {id: 'numbers', t: 'Numbers card', pick: 'Read from YouTube on Nov 24: 129,846 views, 516 comments. Refresh before going live.'}
   ];
   const btn = $('#pvb'), pane = $('#pvp'), list = $('#pvlist');
@@ -892,7 +1046,7 @@ if(PREVIEW){
     return ctx; };
   const snip = el => (el.tagName === 'VIDEO' ? 'the video' : el.tagName === 'IMG' ? (el.alt || 'the picture') : (el.innerText || el.getAttribute('aria-label') || el.tagName).trim().replace(/\s+/g, ' ')).slice(0, 90);
   addEventListener('mousemove', e => { if(!cm || pvui.contains(e.target)) return; if(hov) hov.classList.remove('hov'); hov = e.target.closest('.pin') ? null : e.target; if(hov) hov.classList.add('hov'); }, {passive: true});
-  addEventListener('click', e => { if(!cm || pvui.contains(e.target) || e.target.closest('.pin') || editing) return; e.preventDefault(); e.stopPropagation();
+  addEventListener('click', e => { if(!cm || pvui.contains(e.target) || e.target.closest('.pin') || e.target.closest('#ixb') || editing) return; e.preventDefault(); e.stopPropagation();
     const el = e.target, r = el.getBoundingClientRect();
     draft = {sel: sel(el), snippet: snip(el), fx: r.width ? (e.clientX - r.left) / r.width : .5, fy: r.height ? (e.clientY - r.top) / r.height : .5, ctx: where(el), note: '', created: new Date().toISOString(), done: false};
     openPop(draft, el); }, true);
