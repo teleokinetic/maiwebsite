@@ -232,16 +232,21 @@ body.sheet-open{overflow:hidden}
 .rt .mono{color:rgba(255,255,255,.7)}.rt b{font-weight:400;font-size:17px;line-height:1.3;color:#fff}
 /* graphics wall (after his Experiments & Lab): two columns of short loops on the dark band */
 .wallh{margin-top:84px}
-.wall{columns:2;column-gap:10px;max-width:calc(var(--wide) + 2*var(--pad));margin:22px auto 0;padding:0 var(--pad)}
-.wt{display:block;width:100%;break-inside:avoid;margin:0 0 10px;padding:0;border:0;background:none;cursor:pointer}
+/* the wall: equal columns, one gap in both directions, 12px corners, each next tile set under the shortest column so the
+   columns end together, wide tiles first and tall ones after (the rules measured on Marvin's Lab). One rule of ours:
+   nothing taller than 4:5, so a reel tile shows its graphic and not a full phone screen */
+.wall{display:flex;align-items:flex-start;gap:10px;max-width:calc(var(--wide) + 2*var(--pad));margin:22px auto 0;padding:0 var(--pad)}
+.wc{flex:1 1 0;min-width:0;display:grid;gap:10px}
+.wt{display:block;width:100%;margin:0;padding:0;border:0;background:none;cursor:pointer}
 .wm{position:relative;display:block;border-radius:12px;overflow:hidden;background:#2c2c2c;transition:transform .25s cubic-bezier(.2,.9,.3,1.2)}
 .wm::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);pointer-events:none}
 .wm img,.wm video{display:block;width:100%;height:100%;object-fit:cover}
 .wm video{position:absolute;inset:0;opacity:0;transition:opacity .4s}.wm video.on{opacity:1}
 .wt:active .wm{transform:scale(.97)}
 @media (hover:hover){.wt:hover .wm{transform:scale(1.015)}}
-.wt.wd .wm{aspect-ratio:16/9}.wt.sq .wm{aspect-ratio:1}.wt.tl .wm{aspect-ratio:9/16}
-@media (min-width:900px){.wall{columns:3;column-gap:14px}.wt{margin-bottom:14px}}
+.wt.wd .wm{aspect-ratio:16/9}.wt.w4 .wm{aspect-ratio:540/410}.wt.sq .wm{aspect-ratio:1}.wt.tl .wm{aspect-ratio:4/5}
+.wt.rl .wm img,.wt.rl .wm video{object-position:50% 0}
+@media (min-width:900px){.wall,.wc{gap:12px}}
 /* focus view (after his Lab detail): page blurs, the piece grows out of its tile, its name under it */
 .fv{position:fixed;inset:0;z-index:80;visibility:hidden}
 .fv.open{visibility:visible}
@@ -311,7 +316,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 
 /* ===== pass 4 ===== */
-#player,#role,#hcard,#reels,#gfx,#how,#about,#contact{scroll-margin-top:72px}
+#player,#role,#hcard,#reels,#ana,#gfx,#about,#contact{scroll-margin-top:72px}
 
 /* the hour card gets room before the dark band */
 .sheet.one{padding-bottom:64px}
@@ -342,7 +347,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
   .rc{width:260px}
 }
 @media (min-width:1140px){
-  .wall{columns:4;column-gap:14px;max-width:calc(1040px + 2*var(--pad))}
+  .wall{max-width:calc(1040px + 2*var(--pad))}
 }
 
 /* index (after human-md's index): one small pill; it opens the page as a spread of tilted cards, tap one to go there */
@@ -400,6 +405,28 @@ html.js .ec.sn{animation:drop .7s cubic-bezier(.2,.8,.2,1) both}
 .endl{margin:30px 0 0}
 .upd{margin:56px 0 0;color:var(--soft)}
 
+
+/* "Anatomy of a Reel" sits on the dark band between the reels and the graphics, in the story's own colours,
+   so the card growing into the story is one continuous move */
+.ana{margin-top:72px}
+.cv.an{margin:0;background:#cf6a32;color:#f6efe4;aspect-ratio:16/10}
+.cv.an::after{display:none}
+.cv.an .tt{left:20px;right:auto;top:20px;bottom:auto;gap:12px;z-index:3}
+.cv.an .tt b{font-weight:800;font-size:clamp(44px,13.5vw,60px);line-height:.86;letter-spacing:-.055em}
+.cv.an .tt b em{display:block;font:italic 400 .9em/1 Georgia,"Times New Roman",serif;letter-spacing:-.03em;margin-top:.05em}
+.cv.an .tt .mono{color:rgba(246,239,228,.92);font-size:11px;line-height:1.5;max-width:15em;text-transform:lowercase}
+.cv.an .ca{color:rgba(246,239,228,.9)}
+.cv.an .anp{position:absolute;right:-10%;bottom:0;height:80%;z-index:2;pointer-events:none}
+@media (min-width:1000px){
+  .cv.an{aspect-ratio:820/330}
+  .cv.an .tt{left:34px;top:30px;gap:16px}
+  .cv.an .tt b{font-size:100px}
+  .cv.an .tt .mono{font-size:12px;max-width:none}
+  .cv.an .anp{right:5%;height:100%}
+}
+/* the "20 seconds, layer by layer" section is off the page: the story behind the Anatomy card tells it now */
+#how{display:none}
+.sheet.two > .about{padding-top:44px}
 
 /* preview only: comment mode */
 .pvbar{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:52;display:flex;gap:8px}
@@ -468,7 +495,7 @@ body.preview #pv{display:block}
   <a class="fcap ar" style="--d:.45s" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener"><b>Unfortunately, We Can't Just Unplug It</b><i aria-hidden="true">↗</i><span class="g">Nate Soares answers the ten most common questions about AI risk.</span></a>
   <div class="nums ar dr" style="--d:.9s" id="nums">
    <a class="nc n2" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener" tabindex="-1"><b>Watch on YouTube <span class="arr">↗</span></b><span>Nate Soares · posted Nov 16, 2026</span></a>
-   <button class="nc n1" id="numsb" aria-expanded="false" aria-label="130K views, 516 comments in the first 8 days. Tap for the link"><b>130K views · 516 comments</b><span>in the first 8d</span></button>
+   <button class="nc n1" id="numsb" aria-expanded="false" aria-label="135K views, 523 comments in the first 8 days. Tap for the link"><b>135K views · 523 comments</b><span>in the first 8d</span></button>
   </div>
 
   <div class="role" id="role">
@@ -510,6 +537,7 @@ body.preview #pv{display:block}
   <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
   <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 9</span><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
  </div>
+ <div class="wide ana" id="ana"><button class="cv an" id="acard" aria-haspopup="dialog" aria-label="Anatomy of a Reel: 20 seconds of the Question 9 reel, layer by layer"><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>Anatomy<em>of a reel</em></b><span class="mono">20 seconds of the Question 9 reel, layer by layer</span></span><img class="anp" src="write-up/media/nate_a.webp" alt=""></button></div>
  <div class="wide wallh" id="gfx"><h2>Graphics and motion</h2><p class="g" style="margin:0">From the film and the reels. Tap one to see it larger.</p></div>
  <div class="wall" id="wall"></div>
 </section>
@@ -535,7 +563,6 @@ body.preview #pv{display:block}
     <li class="step" data-s="4"><div><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
    </ol>
   </div>
-  <div class="wrap"><button class="cv dark" id="acard" aria-haspopup="dialog" aria-label="The write-up: how one stretch of the Question 9 reel was made"><video src="media/final.mp4" poster="media/l_film.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>The write-up</b><span>How one stretch of the Question 9 reel was made</span></span></button></div>
  </section>
  <section class="about wrap" id="about" aria-label="About">
   <h2 style="margin-bottom:12px">About</h2>
@@ -814,7 +841,6 @@ const LY = {
     show(3, 3.8); Fm.forEach((f, i) => f.style.opacity = t > 3.8 + HD.segs[i][1] / F * .8 ? 1 : 0); GM.forEach((g, i) => g.style.opacity = t > 4.7 + HD.gfx[i][0] / F * .6 ? 1 : 0); }
   function frame(now){ if(!on) return; if(t0 == null) t0 = now; draw(((now - t0) % D) / 1000); requestAnimationFrame(frame); }
   if(RM) draw(6); else onView($('#hcard'), () => { if(!on){ on = true; t0 = null; requestAnimationFrame(frame); } }, () => on = false, .4);
-  const v = $('#acard video'); onView($('#acard'), () => { if(!RM){ v.preload = 'auto'; v.play().catch(() => {}); } }, () => v.pause(), .4);
 }
 
 /* ---------- the sheet lifts off the dark Reels band, once ---------- */
@@ -874,41 +900,52 @@ const Focus = (() => {
 
 /* ---------- graphics wall: short loops from the film and the reels; each plays only while on screen ---------- */
 {
+  /* id, shape (wd 16:9, w4 a little taller, sq square, tl a 9:16 reel clip shown 4:5 from its top), title, where it is from */
   const G = [
-    ['r4a', 'tl', 'Hide, pretend, wait', 'Question 4 reel'],
     ['g00', 'wd', 'The ten questions, opening card', 'The film · 0:00'],
-    ['h1a', 'tl', 'Can a submarine really swim?', 'Reel · Do AIs need consciousness to be dangerous?'],
-    ['g15', 'sq', 'METR quote card', 'The film · Question 2 · 2:48'],
-    ['r1a', 'tl', 'The forecast against what happened', 'Question 1 reel'],
-    ['g05', 'wd', 'Semafor headline, full screen', 'The film · Question 1 · 0:37'],
-    ['oba', 'tl', 'Lab employees’ own odds, stacked', 'Reel · How likely are we to die from AI?'],
-    ['g79', 'sq', '“Stupid”: kinetic type', 'The film · Question 10 · 14:53'],
-    ['r9a', 'tl', 'The two most-cited AI scientists', 'Question 9 reel'],
-    ['g57', 'wd', 'Four lab heads', 'The film · Question 8 · 10:56'],
-    ['q5a', 'tl', 'Four ways into the physical world', 'Reel · How does an AI wind up affecting the physical world?'],
-    ['g30', 'sq', 'TechCrunch card with highlight', 'The film · Question 4 · 6:33'],
-    ['h1b', 'tl', 'Just put “artificial” in front', 'Reel · Do AIs need consciousness to be dangerous?'],
     ['g06', 'wd', 'Hinton on CNN, highlighted', 'The film · Question 1 · 0:46'],
-    ['r4b', 'tl', 'rentahuman.ai card', 'Question 4 reel'],
-    ['g74', 'sq', '$89 billion', 'The film · Question 9 · 14:16'],
-    ['m2a', 'tl', 'Musk on Google, over the building', 'Reel · Why keep building it if it’s dangerous?'],
-    ['g64', 'wd', 'Three founders, three valuations', 'The film · Question 8 · 11:55'],
+    ['g57', 'wd', 'Four lab heads', 'The film · Question 8 · 10:56'],
+    ['gm1', 'w4', 'A viewer’s comment, on its own', 'Question 1 reel'],
+    ['g79', 'sq', '“Stupid”: kinetic type', 'The film · Question 10 · 14:53'],
+    ['g30', 'sq', 'TechCrunch card with highlight', 'The film · Question 4 · 6:33'],
+    ['g78', 'sq', 'Chip stocks on Sep 14', 'The film · Question 10 · 14:49'],
+    ['q1s', 'sq', 'Since then: the next jump', 'Question 1 reel'],
+    ['s4c', 'sq', 'Forge to Trinity', 'Question 4 reel · stock footage'],
+    ['s4d', 'sq', 'The modern world', 'Question 4 reel · stock footage'],
+    ['oba', 'tl', 'Lab employees’ own odds, stacked', 'Reel · How likely are we to die from AI?'],
+    ['q5a', 'tl', 'Four ways into the physical world', 'Reel · How does an AI wind up affecting the physical world?'],
+    ['r1a', 'tl', 'The forecast against what happened', 'Question 1 reel'],
     ['r1b', 'tl', 'A viewer’s comment, highlighted', 'Question 1 reel'],
-    ['g45', 'sq', 'Escape, kill, convince', 'The film · Question 6 · 8:27'],
-    ['obb', 'tl', '“Don’t panic hard enough to shut down my company”', 'Reel · How likely are we to die from AI?'],
-    ['g32', 'wd', 'Fedorov headline', 'The film · Question 4 · 6:36'],
-    ['r9b', 'tl', 'a16z essay, highlighted', 'Question 9 reel'],
-    ['g78', 'sq', 'Chip stocks on Sep 14', 'The film · Question 10 · 14:49']
+    ['q3a', 'tl', 'Really thinking? Really choosing?', 'Question 3 reel'],
+    ['obc', 'tl', 'Fortune, typed highlight', 'Reel · How likely are we to die from AI?'],
+    ['b1a', 'tl', 'TIME, “Strategically Lying”', 'Three ways reel']
   ];
+  /* a reel tile is 4:5 by default; these two are square */
+  const SQ = {oba: 1, q5a: 1};
+  /* each loop plays only the stretch where its graphic is on screen (seconds into the clip) */
+  const WIN = {g00: [1.5, 4.5], g06: [.5, 3], g57: [.9, 4.5], g79: [.5, 3.7], g30: [.5, 3], g78: [.5, 4.5], r1a: [1, 4.7], q5a: [0, 4], q3a: [.4, 3.8], obc: [.3, 1.9], b1a: [0, 4.2]};
+  const shape = (id, k) => k === 'tl' && SQ[id] ? 'sq' : k;
   const wall = $('#wall');
-  wall.innerHTML = G.map(([id, k, t], i) => `<button class="wt ${k}" data-i="${i}" aria-label="${t}"><span class="wm"><img src="media/gfx/${id}.jpg" alt="" loading="lazy"><video data-src="media/gfx/${id}.mp4" muted loop playsinline preload="none"></video></span></button>`).join('');
-  const AR = {wd: 16 / 9, sq: 1, tl: 9 / 16};
+  wall.innerHTML = G.map(([id, k, t], i) => `<button class="wt ${shape(id, k)}${k === 'tl' ? ' rl' : ''}" data-i="${i}" data-k="${shape(id, k)}" data-id="${id}" aria-label="${t}"><span class="wm"><img src="media/gfx/${id}.jpg" alt="" loading="lazy"><video data-src="media/gfx/${id}.mp4" muted loop playsinline preload="none"></video></span></button>`).join('');
+  const AR = {wd: 16 / 9, w4: 540 / 410, sq: 1, tl: 9 / 16};
   const ITEMS = G.map(([id, k, t, sub]) => ({src: `media/gfx/${id}.mp4`, poster: `media/gfx/${id}.jpg`, ar: AR[k], title: t, sub}));
   const tiles = $$('.wt', wall), vis = new Set();
   const playIn = t => { const v = $('video', t); if(RM || $('#fv').classList.contains('open')) return; if(!v.src) v.src = v.dataset.src; v.play().then(() => v.classList.add('on')).catch(() => {}); };
   const wio = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ vis.add(e.target); playIn(e.target); } else { vis.delete(e.target); $('video', e.target).pause(); } }), {threshold: .5});
   tiles.forEach(t => { wio.observe(t); t.onclick = () => Focus.open(ITEMS, +t.dataset.i, $('.wm', t)); });
   addEventListener('focusclosed', () => vis.forEach(playIn));
+  /* set the tiles into columns. To make the columns end together, the tallest tiles are dealt first, each to the
+     shortest column; then every column is put in order, wide tiles on top, then square, then tall */
+  const H = {wd: 9 / 16, w4: 410 / 540, sq: 1, tl: 5 / 4}; let nc = 0;
+  const lay = () => { const n = innerWidth >= 1000 ? 4 : innerWidth >= 700 ? 3 : 2; if(n === nc) return; nc = n;
+    const cols = [...Array(n)].map(() => []), hs = Array(n).fill(0), h = t => H[t.dataset.k];
+    [...tiles].sort((a, b) => h(b) - h(a)).forEach(t => { const k = hs.indexOf(Math.min(...hs)); cols[k].push(t); hs[k] += h(t) + .06; });
+    wall.replaceChildren(...cols.map(c => { const el = mk('wc', wall); c.sort((a, b) => h(a) - h(b) || a.dataset.i - b.dataset.i).forEach(t => el.appendChild(t)); return el; })); };
+  lay(); addEventListener('resize', lay);
+  tiles.forEach(t => { const w = WIN[t.dataset.id], v = $('video', t); if(!w) return; v.loop = false;
+    const back = () => { v.currentTime = w[0]; v.play().catch(() => {}); };
+    v.addEventListener('loadedmetadata', () => { v.currentTime = w[0]; }); v.addEventListener('ended', back);
+    v.addEventListener('timeupdate', () => { if(v.currentTime >= w[1] - .04 || v.currentTime < w[0] - .3) back(); }); });
 }
 
 /* ---------- about: ink emphasis (one phrase, or darkens as you scroll) ---------- */
@@ -949,8 +986,8 @@ setInk(INK);
     ['My role, layer by layer', '#role', `<span class="im" style="background-image:url(media/l_graphics.png),url(media/l_raw.jpg);background-size:215%,cover;background-position:97% 8%,center"></span>`],
     ['An hour into 16 minutes', '#hcard', `<span class="im" style="background-image:url(media/hour-thumb.jpg);background-size:150%;background-position:0 100%;background-color:#fff"></span>`],
     ['Reels', '#reels', sp(['q1-poster.jpg', 'q4-poster.jpg', 'q9-poster.jpg'])],
-    ['Graphics and motion', '#gfx', sp(['gfx/g79.jpg', 'gfx/g05.jpg', 'gfx/g30.jpg', 'gfx/g74.jpg'], 1)],
-    ['20 seconds, layer by layer', '#how', sp(['raw-still.jpg', 'q9-poster.jpg'])],
+    ['Anatomy of a Reel', '#ana', `<span class="im" style="background:#cf6a32 url(write-up/media/nate_a.webp) 130% 100%/72% no-repeat"></span>`],
+    ['Graphics and motion', '#gfx', sp(['gfx/g79.jpg', 'gfx/g06.jpg', 'gfx/g30.jpg', 'gfx/g78.jpg'], 1)],
     ['About', '#about', `<span class="im tx"><span>Day 1 → Day 84<span class="dbar"><u style="flex:38;background:#cfcfd3"></u><u style="flex:17;background:var(--qb)"></u><u style="flex:28;background:var(--q0)"></u></span></span></span>`],
     ['Contact', '#contact', `<span class="im tx"><span class="mc">Email ↗</span></span>`]
   ];
@@ -996,7 +1033,7 @@ if(PREVIEW){
     {id: 'quote', t: 'Elwyn’s quote', pick: 'Still to come; the space is held at the bottom.'},
     {id: 'index', t: 'Index cards: titles, order, pictures', pick: 'Yours to edit. Open the index, tap Comment, then tap a title to change its words in place. For order or a different picture, pin a note on the card.'},
     {id: 'ending', t: 'Ending card wording', pick: '“Tap to copy”, “Write to me” and “Updated Nov 25, 2026” are my words. Tap Comment, then tap any of them to edit in place.'},
-    {id: 'numbers', t: 'Numbers card', pick: 'Read from YouTube on Nov 24: 129,846 views, 516 comments. Refresh before going live.'}
+    {id: 'numbers', t: 'Numbers card', pick: 'Your read of YouTube on Nov 25: 135K views, 523 comments, eight days in. Refresh before going live.'}
   ];
   const btn = $('#pvb'), pane = $('#pvp'), list = $('#pvlist');
   btn.onclick = () => { const o = pane.classList.toggle('open'); btn.setAttribute('aria-expanded', o); };
