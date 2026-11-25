@@ -78,19 +78,53 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .nums.fan .n2{transform:translateY(74px)}
 
 /* my role, exploded */
-.role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:96px 0 0}
-.stage3d{height:280px;perspective:1000px;display:grid;place-items:center}
-.planes{position:relative;width:min(100%,330px);aspect-ratio:16/9;transform-style:preserve-3d}
-.pl{position:absolute;inset:0;border-radius:8px;transition:outline-color .3s,background-color .3s;outline:2px solid transparent;outline-offset:-1px}
-.pl.base{background:#222 center/cover}
-.pl svg{display:block;width:100%;height:100%}
-.pl:not(.base){background:center/cover no-repeat}
-.role.exp .pl:not(.base){background-color:rgba(255,255,255,.16);box-shadow:0 0 0 1px rgba(0,0,0,.14)}
-.pl.hl{outline-color:var(--ink)}
-.rlist{list-style:none;margin:0;padding:0}
-.rlist li{display:flex;gap:10px;align-items:baseline;padding:5px 8px;margin:0 -8px;border-radius:10px;transition:background .3s}
-.rlist li.hl{background:var(--wash)}
-.rlist i{flex:none;width:9px;height:9px;border-radius:3px;transform:translateY(-1px)}
+/* my role: a card that opens the dark band. The final video's first frame comes apart into its real layers, says each line of the role inside the card, then folds back */
+.rband{margin-bottom:104px}
+.role{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;margin:0}
+.rstage{position:relative;border-radius:16px;overflow:hidden;background:#161618;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07)}
+.rstage::after{content:"";position:absolute;inset:auto 0 0;height:44%;background:linear-gradient(transparent,rgba(0,0,0,.66));pointer-events:none}
+.stage3d{height:400px;perspective:1000px;display:grid;place-items:center}
+.planes{position:relative;width:min(66%,360px);aspect-ratio:16/9;margin-top:-52px;transform-style:preserve-3d}
+.pl{position:absolute;inset:0;border-radius:5px;outline:1px solid transparent;outline-offset:-1px;transition:outline-color .35s,background-color .35s,opacity .35s}
+.pl.base{background:#222}
+.pl img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
+.pl .it{position:absolute;display:block;height:auto}
+.role.exp .pl:not(.base){background-color:rgba(255,255,255,.05);box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+.role.lit .pl:not(.hl){opacity:.34}
+.role.lit .pl.base:not(.hl){opacity:.6}
+.pl.hl{outline-color:rgba(255,255,255,.95)}
+.role.exp .pl.hl:not(.base){background-color:rgba(255,255,255,.1)}
+.rpill,.rco{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;font-style:normal;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:3px 5px;white-space:nowrap}
+.rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
+.rco{margin-left:8px;vertical-align:2px}
+.rcap{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;margin:0;color:#fff;pointer-events:none}
+.rcl{display:block;font-size:17px;line-height:1.3;max-width:24em;text-wrap:pretty}
+.rcl .rch{opacity:.7}
+@keyframes rsay{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.rcl.in{animation:rsay .32s cubic-bezier(.215,.61,.355,1) both}
+@keyframes rland{from{opacity:0;transform:translateY(14%) scale(.92)}to{opacity:1;transform:none}}
+.role.go .pl .it{animation:rland .5s cubic-bezier(.2,1.5,.4,1) both;animation-delay:var(--d,0s)}
+.rpm{margin:0;font-size:15px}
+/* the lines as a list: for screen readers always, and on screen when motion is turned off (nothing plays then) */
+.rlist{list-style:none;margin:0;padding:0;position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.rlist li{padding:3px 0}
+.rlist li .g{margin-left:6px}
+@media (min-width:640px){
+  .stage3d{height:420px}
+  .planes{width:min(56%,400px)}
+}
+@media (min-width:1000px){
+  .role{gap:16px}
+  .stage3d{height:500px}
+  .planes{width:min(47%,390px)}
+  .rcap{left:22px;right:22px;bottom:20px}
+  .rpill{left:20px;top:20px}
+}
+@media (prefers-reduced-motion:reduce){
+  .role.go .pl .it{animation:none}
+  .rcap{display:none}
+  .rlist{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
+}
 .crows{list-style:none;margin:40px 0 0;padding:0}
 .crows > li{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line);padding:11px 0}
 .crows > li:not(.srcrow){grid-template-columns:120px minmax(0,1fr);gap:10px}
@@ -298,10 +332,6 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 /* phone */
 @media (max-width:760px){
   :root{--pad:18px}
-  .role{grid-template-columns:minmax(0,1fr);gap:8px}
-  .role{margin-top:80px}
-  .stage3d{height:210px}
-  .planes{width:min(100%,250px)}
   .hgrid{grid-template-columns:minmax(0,1fr);gap:0;padding:0}
   .viz{top:0;height:62svh;z-index:3;background:#fff;padding:14px var(--pad) 10px;box-shadow:0 10px 16px -14px rgba(0,0,0,.2)}
   .vbox{height:100%}
@@ -332,9 +362,6 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
   .halo{inset:8% 6% -3%;filter:blur(60px)}
   .player{border-radius:24px}
   .player .chip{left:20px;bottom:20px}
-  .role{margin:120px -90px 0;grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr);gap:36px}
-  .stage3d{height:380px}
-  .planes{width:min(100%,440px)}
   .crows{margin-top:56px}
   /* the hour cover: the four bars grow to fill the card instead of sitting in its top corner */
   .hb{left:28px;right:72px;top:30px;bottom:104px;gap:0;grid-template-rows:repeat(4,auto minmax(0,1fr));align-content:stretch}
@@ -506,25 +533,6 @@ body.preview #pv{display:block}
    <button class="nc n1" id="numsb" aria-expanded="false" aria-label="135K views, 523 comments in the first 8 days. Tap for the link"><b>135K views · 523 comments</b><span>in the first 8d</span></button>
   </div>
 
-  <div class="role" id="role">
-   <div class="stage3d"><div class="planes" id="planes">
-    <div class="pl base" style="background-image:url(media/l_raw.jpg)"></div>
-    <div class="pl" style="background-image:url(media/l_cuts.png)"></div>
-    <div class="pl" style="background-image:url(media/l_research.png)"></div>
-    <div class="pl" style="background-image:url(media/l_graphics.png)"></div>
-    <div class="pl" style="background-image:url(media/l_highlight.png)"></div>
-   </div></div>
-   <div>
-    <ul class="rlist" id="rlist">
-     <li><i style="background:#555"></i><span>Footage of Nate <span class="g">· the team</span></span></li>
-     <li><i style="background:var(--q0)"></i><span>Editing and pacing on <span class="tbd">[two or three]</span> sections</span></li>
-     <li><i style="background:var(--res)"></i><span>Supporting research</span></li>
-     <li><i style="background:#e5322d"></i><span>All graphics <span class="g">· like this TIME card</span></span></li>
-     <li><i style="background:#ffd633"></i><span>All motion <span class="g">· like its highlight stroke</span></span></li>
-    </ul>
-    <p class="g" style="margin:12px 0 0;font-size:15px">And project manager for parts of the production.</p>
-   </div>
-  </div>
   <ul class="crows">
    <li class="srcrow"><button id="srcb" aria-expanded="false" aria-controls="srcl"><span><span class="badge">3 credits</span>Who made it</span><span class="g">From the film's YouTube description</span><i aria-hidden="true">+</i></button>
     <ul class="srcl" id="srcl" hidden>
@@ -539,6 +547,30 @@ body.preview #pv{display:block}
 </div>
 
 <section class="reels" id="reels" aria-label="Reels">
+ <div class="wide rband">
+  <div class="role" id="role">
+   <div class="rstage"><span class="rpill">My role</span>
+    <div class="stage3d"><div class="planes" id="planes">
+    <div class="pl base" data-g="0"><img class="bg" src="media/role/plate.jpg" alt="The first frame of the film: Nate Soares at his desk, the title and the ten questions around him"></div>
+    <div class="pl x" data-g="1"><img class="bg" src="media/role/cuts.png" alt=""></div>
+    <div class="pl x" data-g="2"><img class="bg" src="media/role/research.png" alt=""></div>
+    <div class="pl" data-g="3 4"><img class="it" src="media/role/name.png" alt="" style="left:2.917%;top:7.037%;width:11.146%;--d:0.000s"><img class="it" src="media/role/t_most.png" alt="" style="left:25.312%;top:5.926%;width:11.458%;--d:0.000s"><img class="it" src="media/role/t_asked.png" alt="" style="left:36.979%;top:5.741%;width:14.479%;--d:0.417s"><img class="it" src="media/role/t_questions.png" alt="" style="left:51.667%;top:5.741%;width:23.125%;--d:0.709s"><img class="it" src="media/role/t_about.png" alt="" style="left:52.812%;top:13.519%;width:9.062%;--d:0.709s"><img class="it" src="media/role/t_ai.png" alt="" style="left:61.771%;top:13.519%;width:3.854%;--d:0.709s"><img class="it" src="media/role/t_doom.png" alt="" style="left:65.521%;top:13.333%;width:9.375%;--d:0.709s"></div>
+    <div class="pl" data-g="3 4"><img class="it" src="media/role/q03.png" alt="" style="left:1.979%;top:17.222%;width:20.729%;--d:0.959s"><img class="it" src="media/role/q01.png" alt="" style="left:81.667%;top:21.296%;width:15.208%;--d:1.084s"><img class="it" src="media/role/q02.png" alt="" style="left:3.125%;top:32.778%;width:19.896%;--d:1.168s"></div>
+    <div class="pl" data-g="3 4"><img class="it" src="media/role/q09.png" alt="" style="left:77.604%;top:36.481%;width:20.417%;--d:1.251s"><img class="it" src="media/role/q07.png" alt="" style="left:1.979%;top:48.148%;width:25.417%;--d:1.376s"><img class="it" src="media/role/q10.png" alt="" style="left:81.146%;top:51.852%;width:15.729%;--d:1.418s"></div>
+    <div class="pl" data-g="3 4"><img class="it" src="media/role/q04.png" alt="" style="left:3.125%;top:63.148%;width:30.938%;--d:1.460s"><img class="it" src="media/role/q08.png" alt="" style="left:71.667%;top:67.222%;width:26.354%;--d:1.543s"><img class="it" src="media/role/q06.png" alt="" style="left:1.979%;top:78.889%;width:23.229%;--d:1.585s"><img class="it" src="media/role/q05.png" alt="" style="left:78.646%;top:82.593%;width:18.229%;--d:1.627s"></div>
+    </div></div>
+    <p class="rcap" aria-hidden="true"><span class="rcl">Unfortunately, We Can’t Just Unplug It</span></p>
+   </div>
+   <ul class="rlist">
+    <li>Footage of Nate <span class="g">the team</span></li>
+    <li>Editing and pacing on <span class="tbd">[two or three]</span> sections <span class="g">me</span></li>
+    <li>Supporting research <span class="g">me</span></li>
+    <li>All graphics <span class="g">me</span></li>
+    <li>All motion <span class="g">me</span></li>
+   </ul>
+   <p class="g rpm">And project manager for parts of the production.</p>
+  </div>
+ </div>
  <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
  <div class="rail" id="rail">
   <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>How can something so error-prone be so dangerous?</b></span><span class="chip"><i></i>Watch</span></span></button>
@@ -713,19 +745,41 @@ sheet($('#sheetv'), $('#acard'));
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
-  /* scroll sets a target; a heavy spring follows it, so the layers lag, swing and settle */
-  const box = $('#role'), planes = $('#planes'), pls = $$('#planes .pl'), lis = $$('#rlist li');
-  let x = 0, v = 0, target = 0, hi = -1, run = false;
+  /* The final video's first frame (0:05), in its real layers. As you scroll past, the frame tilts and comes apart on a heavy
+     spring. The lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up.
+     On "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
+     project file). After that the sheets fold back into the finished frame as you scroll on.
+     The hour figure above used to wait for this block to finish. It comes first on the page now, so it is told straight away. */
+  const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
+  const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
+    ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
+  const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), n = pls.length, END = LINES.length;
+  const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
+  let x = 0, v = 0, target = 0, run = false, cur = -1, want = -1, last = 0;
+  const bump = pls.map(() => ({x: 0, v: 0}));
   const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
-  function apply(e){ planes.style.transform = `rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`; pls.forEach((p, i) => p.style.transform = `translateZ(${i * 42 * e}px)`); box.classList.toggle('exp', e > .02); }
-  function aim(){ const r = box.getBoundingClientRect(), vh = innerHeight; const p = clamp((vh * .92 - r.top) / (vh * .75));
-    target = RM ? 1 : ease(clamp(p / .5)); const h = p < .5 ? -1 : Math.min(pls.length - 1, Math.floor((p - .5) / .5 * pls.length));
-    if(h !== hi){ hi = h; lis.forEach((l, j) => l.classList.toggle('hl', j === h)); pls.forEach((pl, j) => pl.classList.toggle('hl', j === h)); }
-    if(p >= 1 && !box.dataset.filled){ box.dataset.filled = 1; dispatchEvent(new Event('rolefilled')); }
+  function say(h){ const on = h >= 0 && h < END;
+    line.innerHTML = on ? LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
+    if(!RM){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
+  function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
+    if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go'); } }
+  function apply(){ const e = x, sp = planes.offsetWidth * .56, gap = sp / (n - 1);
+    planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - clamp(e))}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
+    pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * e + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
+      if(p.classList.contains('x')) p.style.opacity = e < .34 ? clamp(e * 3) : ''; });   /* the cuts and the sources are not part of the picture: they fade as it closes */
+    box.classList.toggle('exp', e > .02); }
+  /* progress: the card's centre, from the bottom edge of the screen (0) to a third of the way down (1) */
+  function aim(){ const r = stage.getBoundingClientRect(), vh = innerHeight, p = clamp((vh - (r.top + r.height / 2)) / (vh * .66));
+    want = RM ? END : p < .34 ? -1 : p >= .76 ? END : Math.floor((p - .34) / .42 * END);
+    target = RM ? 1 : p > .78 && cur >= END ? 1 - ease(clamp((p - .78) / .2)) : ease(clamp(p / .3));
     if(!run){ run = true; requestAnimationFrame(step); } }
-  function step(){ v += (target - x) * .045; v *= .80; x += v; apply(x); if(Math.abs(target - x) > .0005 || Math.abs(v) > .0005) requestAnimationFrame(step); else { x = target; apply(x); run = false; } }
+  function step(t){ v += (target - x) * .045; v *= .80; x += v;
+    const dwell = cur === 4 && want > 4 ? 2300 : 420;   /* one line at a time, however fast the scroll; the landing on "All motion" plays out before the fold */
+    if(want !== cur && (t - last > dwell || RM)){ cur += Math.sign(want - cur); last = t; light(cur); if(cur >= END) aim(); }
+    let moving = Math.abs(target - x) > .0005 || Math.abs(v) > .0005 || want !== cur;
+    pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) moving = true; });
+    apply(); if(moving) requestAnimationFrame(step); else run = false; }
   addEventListener('scroll', aim, {passive: true}); addEventListener('resize', aim); aim();
-  lis.forEach((l, i) => l.onmouseenter = () => { if(box.classList.contains('exp')) pls.forEach((p, j) => p.classList.toggle('hl', j === i)); });
 }
 
 /* ---------- how it's made ---------- */
