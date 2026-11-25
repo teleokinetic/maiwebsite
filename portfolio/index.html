@@ -1,0 +1,566 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Tanner Holman · Video work</title>
+<meta name="description" content="Editing, motion graphics and research for AI-safety video. Helping with Nate Soares's videos since October 2026.">
+<meta name="theme-color" content="#ffffff">
+<link rel="canonical" href="https://tannerholman.space/portfolio/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://tannerholman.space/portfolio/">
+<meta property="og:title" content="Tanner Holman · Video work">
+<meta property="og:description" content="Editing, motion graphics and research for AI-safety video.">
+<meta property="og:image" content="https://tannerholman.space/portfolio/media/film-poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+@font-face{font-family:Inter;src:url(fonts/inter.woff2) format('woff2');font-weight:100 900;font-display:swap}
+@font-face{font-family:"Geist Mono";src:url(fonts/geist-mono-500.woff2) format('woff2');font-weight:500;font-display:swap}
+:root{color-scheme:light;--ink:#1c1c1e;--grey:#8b8b8f;--soft:#b9b9bd;--line:#ececee;--wash:#f5f5f6;--dark:#0d0d0e;
+  --q0:#1f47e0;--qb:#6f8cf2;--gfx:#ff7a2f;--mot:#7b6cf6;--snd:#c8407a;--res:#2bb3a3;--mark:#e8c93a;--red:#e5322d;
+  --col:640px;--wide:820px;--pad:22px}
+*{box-sizing:border-box}
+html{background:#fff;-webkit-text-size-adjust:100%;overflow-x:clip}
+body{overflow-x:clip}
+body{margin:0;font:400 17px/1.5 Inter,system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+a{color:inherit}
+.g{color:var(--grey)}
+.mono{font:500 12px/1.3 "Geist Mono",ui-monospace,monospace;letter-spacing:.01em}
+.wrap{max-width:calc(var(--col) + 2*var(--pad));margin:0 auto;padding:0 var(--pad)}
+.wide{max-width:calc(var(--wide) + 2*var(--pad));margin:0 auto;padding:0 var(--pad)}
+h2,h3{font-size:inherit;font-weight:500;margin:0}
+p{margin:0 0 1em}
+button{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--q0);outline-offset:3px;border-radius:6px}
+
+/* sheets: the page is a white sheet that lifts off the dark Reels band */
+.sheet{position:relative;z-index:2;background:#fff}
+.sheet.one{border-radius:0 0 var(--r,0) var(--r,0);box-shadow:0 calc(var(--r,0) * 1.4) calc(var(--r,0) * 3) rgba(0,0,0,calc(var(--r,0) / 30px * .5))}
+.sheet.two{border-radius:14px 14px 0 0;margin-top:-14px}
+
+/* first screen */
+.top{padding:max(56px,calc(env(safe-area-inset-top) + 40px)) 0 26px}
+.top h1{font-size:inherit;font-weight:500;margin:0}
+.top p{margin:0;color:var(--grey);max-width:30em}
+
+/* the film */
+.film{position:relative}
+.halo{position:absolute;inset:6% 4% -2%;border-radius:30px;filter:blur(48px);opacity:.55;transform:scale(1.06);transition:background 1.2s linear;pointer-events:none}
+.player{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:14px;overflow:hidden;background:#111;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.04),0 16px 40px -18px rgba(0,0,0,.45)}
+.player img,.player video,.player iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
+.chip{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border-radius:999px;background:rgba(255,255,255,.94);color:var(--ink);font-size:14px;font-weight:500;transition:transform .25s}
+.chip i{width:28px;height:28px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
+.chip i::after{content:"";border-left:9px solid #fff;border-top:6px solid transparent;border-bottom:6px solid transparent;margin-left:2px}
+.player:hover .chip{transform:translateY(-2px)}
+.ftitle{margin:18px 0 0}
+.ftitle .g a{color:inherit;text-decoration-color:var(--soft);text-underline-offset:3px}
+.nums{position:relative;margin:16px 0 0;width:100%;max-width:340px;height:66px;border:0;padding:0;background:none;text-align:left;cursor:pointer;transition:height .45s}
+.nums.fan{height:128px}
+.nc{position:absolute;left:0;right:0;top:0;padding:10px 14px;border-radius:14px;background:#fff;border:1px solid var(--line);transition:transform .55s cubic-bezier(.2,.9,.3,1.1)}
+.nc b{display:block;font-weight:500}
+.nc span{font-size:14px;color:var(--grey)}
+.nc.n2{transform:translateY(8px) scale(.95);background:var(--wash)}
+.nums.fan .n2{transform:translateY(62px)}
+
+/* my role, exploded */
+.role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:56px 0 0}
+.stage3d{height:260px;perspective:1000px;display:grid;place-items:center}
+.planes{position:relative;width:min(100%,300px);aspect-ratio:16/9;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.6,0,.2,1)}
+.pl{position:absolute;inset:0;border-radius:8px;transition:transform 1.1s cubic-bezier(.6,0,.2,1),outline-color .3s;outline:2px solid transparent;outline-offset:-1px}
+.pl.base{background:#222 center/cover}
+.pl svg{display:block;width:100%;height:100%}
+.role.exp .planes{transform:rotateX(55deg) rotateZ(-34deg)}
+.role.exp .pl:not(.base){background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.pl.hl{outline-color:var(--ink)}
+.rlist{list-style:none;margin:0;padding:0}
+.rlist li{display:flex;gap:10px;align-items:baseline;padding:5px 8px;margin:0 -8px;border-radius:10px;transition:background .3s}
+.rlist li.hl{background:var(--wash)}
+.rlist i{flex:none;width:9px;height:9px;border-radius:3px;transform:translateY(-1px)}
+.credits{margin:28px 0 0;font-size:14px;color:var(--grey)}
+.credits b{font-weight:500;color:var(--ink)}
+
+/* how it's made: a sticky picture, steps scroll past it */
+.how{margin:88px 0 0}
+.hgrid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);gap:40px;max-width:calc(1040px + 2*var(--pad));margin:0 auto;padding:0 var(--pad)}
+.viz{position:sticky;top:10vh;height:80vh;align-self:start;display:grid;align-items:center}
+.vbox{position:relative;width:100%;height:min(100%,560px)}
+.va,.vb{position:absolute;inset:0;transition:opacity .5s}
+.va{display:grid;align-content:center;gap:16px}
+.vb{opacity:0;pointer-events:none}
+.how.b .va{opacity:0;pointer-events:none}.how.b .vb{opacity:1;pointer-events:auto}
+.arow{opacity:.12;transition:opacity .45s}
+.arow.on{opacity:1}
+.arow .lab{display:flex;justify-content:space-between;gap:10px;color:var(--grey);margin-bottom:6px}
+.atr{position:relative;height:16px}
+.abar{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:#e3e3e6;width:100%}
+.abar.dim{background:#f0f0f2}
+.am{position:absolute;top:0;bottom:0;background:var(--ink);transition:transform 1s cubic-bezier(.6,0,.2,1),left .5s,width .5s}
+.agm{position:absolute;top:-6px;height:4px;border-radius:1px;background:var(--gfx)}
+.aql{position:absolute;top:22px;color:var(--grey)}
+.zoom{position:absolute;top:-10px;bottom:-10px;border:1.5px solid var(--red);border-radius:4px;opacity:0;transition:opacity .4s}
+.zoom.on{opacity:1}
+.zoom span{position:absolute;right:0;top:-20px;color:var(--red);white-space:nowrap}
+.vbin{position:absolute;inset:0;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:10px;justify-items:center}
+.bst{position:relative;height:100%;aspect-ratio:9/16;max-width:100%;border-radius:12px;overflow:hidden;background:#000;transition:aspect-ratio .6s}
+.bst.wide{aspect-ratio:16/9;height:auto;width:100%;align-self:center}
+.bst video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s}
+.bst video.on{opacity:1}
+.bov{position:absolute;inset:0;pointer-events:none;z-index:2}
+.note{position:absolute;left:7%;right:7%;bottom:7%;background:#fff6b8;color:#2b2610;border-radius:10px;padding:9px 11px;box-shadow:0 8px 20px rgba(0,0,0,.25);transform:rotate(-1.2deg);font-size:13px;line-height:1.35;animation:pop .35s both}
+.note b{display:block;font:500 11px "Geist Mono",monospace;margin-bottom:2px}
+.note .q{margin-top:5px;font-style:italic;color:#6b6230}
+.card{position:absolute;left:6%;right:6%;bottom:7%;background:rgba(255,255,255,.97);border-radius:12px;padding:8px;box-shadow:0 8px 24px rgba(0,0,0,.3);display:grid;grid-template-columns:58px 1fr;gap:3px 9px;font-size:12px;line-height:1.35;animation:pop .35s both}
+.card img{grid-row:span 2;width:58px;height:58px;object-fit:cover;border-radius:6px}
+.card b{font-weight:600;font-size:13px}.card p{margin:0;color:#4a4a4e}
+@keyframes pop{from{opacity:0;transform:translateY(8px)}}
+.bcap{color:var(--grey);min-height:16px;text-align:center}
+.bcap.out{color:var(--red)}
+.lanes{--lab:96px;position:relative;width:100%;display:grid;gap:5px}
+.ln{display:grid;grid-template-columns:var(--lab) minmax(0,1fr);align-items:center;opacity:.15;transition:opacity .4s}
+.ln.on{opacity:1}
+.ln span{font-size:12px;color:var(--grey);line-height:1.1}
+.lt{position:relative;height:11px;border-radius:2px;background:#f0f0f2}
+.lt .bg{position:absolute;inset:0;background:#dcdce0;border-radius:2px}
+.lk{position:absolute;top:0;bottom:0;background:var(--ink);z-index:1}
+.lk.c{background:var(--q0)}.lk.i{background:transparent;border:1px dashed var(--grey)}
+.lm{position:absolute;top:-2px;bottom:-2px;width:7px;margin-left:-3px;border-radius:2px;background:var(--mark)}
+.lr{position:absolute;top:0;bottom:0;border-radius:2px;background:var(--res)}
+.lf{position:absolute;height:3px;border-radius:1px}
+.lf.g{top:0;background:var(--gfx)}.lf.m{top:4px;background:var(--mot)}.lf.s{top:8px;background:var(--snd)}
+.lph{position:absolute;width:2px;background:var(--red);pointer-events:none;z-index:3}
+.vctl{position:absolute;right:0;top:0;z-index:3}
+.pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
+.steps{list-style:none;margin:0;padding:12vh 0 30vh}
+.step{min-height:78vh;display:flex;align-items:center}
+.step > div{max-width:24em}
+.step h3{margin:0 0 4px}
+.step p{color:var(--grey);margin:0}
+.step .k{display:block;color:var(--soft);margin-bottom:8px}
+.step.part{min-height:60vh}
+.step.part h3{font-size:22px;line-height:1.25;font-weight:500}
+
+/* reels: the dark band */
+.reels{background:var(--dark);color:#ececec;padding:86px 0 110px;position:relative;z-index:1;margin-top:-1px}
+.reels .g{color:#8e8e93}
+.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scrollbar-width:none}
+.rail::-webkit-scrollbar{display:none}
+.rc{flex:none;width:min(62vw,250px);scroll-snap-align:center;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit}
+.rv{display:block;position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#1a1a1c}
+.rv img,.rv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.rv .chip{left:10px;bottom:10px;font-size:13px;padding:5px 11px 5px 6px}.rv .chip i{width:22px;height:22px}
+.rc .mono{display:block;margin:12px 0 2px;color:#8e8e93}
+.rc b{font-weight:500}
+dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}
+dialog::backdrop{background:rgba(0,0,0,.86)}
+.lb{position:relative;height:min(86svh,860px);aspect-ratio:9/16;max-width:94vw}
+.lb video{width:100%;height:100%;border-radius:14px;background:#000;object-fit:contain}
+.lbx{position:absolute;right:-6px;top:-46px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer}
+
+/* about */
+.about{padding-top:80px}
+.story p{color:var(--grey)}
+.story .em{color:var(--ink)}
+.story.scrollink .em{color:inherit}
+.story.scrollink span{transition:color .25s}
+.dates{margin:44px 0 0}
+.dhead{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:10px}
+.dday{font:500 24px "Geist Mono",monospace;font-variant-numeric:tabular-nums}
+.dtrack{position:relative;height:38px}
+.dweeks{position:absolute;inset:0 0 auto;height:7px;display:flex;justify-content:space-between}
+.dweeks i{width:1px;height:7px;background:#d9d9dc}
+.dph{position:absolute;top:13px;height:16px;border-radius:3px;clip-path:inset(0 100% 0 0)}
+.dphd{position:absolute;top:2px;bottom:0;width:2px;background:var(--ink);margin-left:-1px}
+.dflag{position:absolute;top:5px;width:2px;height:32px;background:var(--red);margin-left:-1px;opacity:0;transition:opacity .4s}
+.dflag::after{content:"";position:absolute;left:2px;top:0;border-left:11px solid var(--red);border-top:6px solid transparent;border-bottom:6px solid transparent}
+.dflag.on{opacity:1}
+.dlist{list-style:none;margin:14px 0 0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.dlist li{font-size:14px;line-height:1.3;opacity:.3;transition:opacity .4s}
+.dlist li.on{opacity:1}
+.dlist b{display:block;font:500 12px "Geist Mono",monospace;margin-bottom:2px}
+.dlist i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:6px}
+.contact{padding-top:84px;padding-bottom:calc(70px + env(safe-area-inset-bottom))}
+blockquote{margin:0 0 26px;font-size:20px;line-height:1.4}
+blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;color:var(--grey)}
+.mail{font-weight:500;text-decoration-color:var(--soft);text-underline-offset:4px}
+.foot{margin-top:56px;font-size:14px;color:var(--grey)}
+.foot a{text-decoration:none}
+
+/* phone */
+@media (max-width:760px){
+  :root{--pad:18px}
+  .role{grid-template-columns:minmax(0,1fr);gap:8px}
+  .role{margin-top:80px}
+  .stage3d{height:210px}
+  .planes{width:min(100%,250px)}
+  .hgrid{grid-template-columns:minmax(0,1fr);gap:0;padding:0}
+  .viz{top:0;height:62svh;z-index:3;background:#fff;padding:14px var(--pad) 10px;box-shadow:0 10px 16px -14px rgba(0,0,0,.2)}
+  .vbox{height:100%}
+  .steps{padding:4svh var(--pad) 26svh}
+  .step{min-height:56svh;align-items:flex-start}
+  .step.part{min-height:44svh}
+  .lanes{--lab:70px;gap:3px}
+  .lt{height:8px}.lf{height:2px}.lf.m{top:3px}.lf.s{top:6px}
+  .dlist{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+}
+@media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
+
+/* preview only: placeholders and the notes drawer (hidden on tannerholman.space) */
+.tbd{background:none}
+body.preview .tbd{background:#fff1e6;box-shadow:0 0 0 2px #fff1e6;border-radius:3px;color:#b44a0e}
+#pv{display:none}
+body.preview #pv{display:block}
+.pvb{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:50;border:0;border-radius:999px;background:#b44a0e;color:#fff;padding:10px 16px;font-size:14px;font-weight:500;box-shadow:0 8px 24px rgba(0,0,0,.25);cursor:pointer}
+.pvp{position:fixed;right:10px;left:10px;bottom:calc(64px + env(safe-area-inset-bottom));z-index:50;max-width:460px;margin-left:auto;max-height:72svh;overflow:auto;background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.3);padding:16px;font-size:15px;display:none}
+.pvp.open{display:block}
+.pvp h4{margin:0 0 4px;font-size:15px;font-weight:600}
+.pvp .sub{color:var(--grey);font-size:13px;margin:0 0 12px}
+.pvi{border-top:1px solid var(--line);padding:12px 0}
+.pvi b{font-weight:600}
+.pvi .pk{margin:4px 0 6px;font-size:14px;color:#1f6b3a}
+.pvi textarea{width:100%;min-height:52px;border:1px solid var(--line);border-radius:10px;padding:8px 10px;font:16px/1.4 Inter,sans-serif;resize:vertical}
+.pvi .seg{display:flex;gap:6px;margin:6px 0}
+.pvi .seg button{border:1px solid var(--line);background:#fff;border-radius:999px;padding:5px 11px;font-size:13px;cursor:pointer}
+.pvi .seg button[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.pvst{font-size:12px;color:var(--grey);min-height:14px}
+</style>
+</head>
+<body>
+
+<div class="sheet one" id="sheet1">
+ <header class="top wrap">
+  <h1>Tanner Holman</h1>
+  <p>Editing, motion graphics and research for AI-safety video. Helping with Nate Soares's videos since October 2026.</p>
+ </header>
+
+ <section class="wrap" aria-label="The long-form film">
+  <div class="film">
+   <div class="halo" id="halo"></div>
+   <button class="player" id="player" aria-label="Play the film on YouTube">
+    <img src="media/film-poster.jpg" alt="" width="1280" height="720">
+    <video id="floop" src="media/film-loop.mp4" muted loop playsinline autoplay preload="auto" aria-hidden="true"></video>
+    <span class="chip"><i></i>Watch · 15:53</span>
+   </button>
+  </div>
+  <p class="ftitle">Unfortunately, We Can't Just Unplug It<br><span class="g">Nate Soares answers the ten most common questions about AI risk. <a href="https://www.youtube.com/watch?v=9U-FdOWTxPw">YouTube</a></span></p>
+  <button class="nums" id="nums" aria-expanded="false" aria-label="Views and comments; tap for where it was posted">
+   <span class="nc n2"><b>Nate Soares · YouTube</b><span>Posted Nov 16, 2026</span></span>
+   <span class="nc n1"><b>130K views · 516 comments</b><span>First eight days · as of Nov 24, 2026</span></span>
+  </button>
+
+  <div class="role" id="role">
+   <div class="stage3d"><div class="planes" id="planes">
+    <div class="pl base" style="background-image:url(media/raw-still.jpg)"></div>
+    <div class="pl"><svg viewBox="0 0 160 90"><g stroke="#1f47e0" stroke-width="1.6" stroke-dasharray="3 3"><line x1="44" y1="0" x2="44" y2="90"/><line x1="98" y1="0" x2="98" y2="90"/></g></svg></div>
+    <div class="pl"><svg viewBox="0 0 160 90"><rect x="96" y="12" width="52" height="30" rx="3" fill="#fff" stroke="#2bb3a3" stroke-width="1.4"/><rect x="101" y="18" width="30" height="3" rx="1.5" fill="#2bb3a3"/><rect x="101" y="25" width="40" height="2" rx="1" fill="#9ad9d0"/><rect x="101" y="30" width="34" height="2" rx="1" fill="#9ad9d0"/></svg></div>
+    <div class="pl"><svg viewBox="0 0 160 90"><rect x="96" y="12" width="52" height="30" rx="3" fill="#fff"/><rect x="100" y="27" width="34" height="5" fill="#ffe14a" opacity=".9"/><rect x="40" y="72" width="80" height="7" rx="2" fill="#fff"/></svg></div>
+    <div class="pl"><svg viewBox="0 0 160 90"><path d="M20 70 C50 40 80 58 120 26" fill="none" stroke="#ff7a2f" stroke-width="1.8" stroke-dasharray="1 4" stroke-linecap="round"/><path d="M114 24 l7 1 -2 7" fill="none" stroke="#ff7a2f" stroke-width="1.8"/></svg></div>
+   </div></div>
+   <div>
+    <ul class="rlist" id="rlist">
+     <li><i style="background:#555"></i><span>Footage of Nate <span class="g">· the team</span></span></li>
+     <li><i style="background:var(--q0)"></i><span>Editing and pacing on <span class="tbd">[two or three]</span> sections</span></li>
+     <li><i style="background:var(--res)"></i><span>Supporting research</span></li>
+     <li><i style="background:#ffc93a"></i><span>All graphics</span></li>
+     <li><i style="background:var(--gfx)"></i><span>All motion</span></li>
+    </ul>
+    <p class="g" style="margin:12px 0 0;font-size:15px">And project manager for parts of the production.</p>
+   </div>
+  </div>
+  <p class="credits">From the video's credits: produced by Elwyn Foote · edited by Elwyn Foote and <b>Tanner Holman</b> · graphics by <b>Tanner Holman</b>.</p>
+ </section>
+
+ <section class="how" id="how" aria-label="How it's made">
+  <div class="wrap" style="margin-bottom:8px"><h2>How it's made</h2><p class="g">Helped turn an hour of raw footage into a 16-minute film.</p></div>
+  <div class="hgrid">
+   <div class="viz"><div class="vbox">
+    <div class="va" id="va">
+     <div class="arow"><div class="lab mono"><span>Raw footage</span><span>1:09:45</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>Kept</span><span>15:19 of it</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>The film, same scale</span><span>15:53</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>The film, full width</span><span>10 answers · 81 graphics</span></div><div class="atr" style="margin-bottom:22px"></div></div>
+    </div>
+    <div class="vb" id="vb"><div class="vbin">
+     <div class="bst" id="bst"><div class="bov" id="bov"></div></div>
+     <div class="bcap mono" id="bcap"></div>
+     <div class="lanes" id="lanes"></div>
+     <div class="vctl"><button class="pill" id="snd" aria-pressed="false">Sound off</button></div>
+    </div></div>
+   </div></div>
+   <ol class="steps" id="steps">
+    <li class="step" data-s="0"><div><span class="k mono">The whole film</span><h3>Raw footage: 1 hour 10 minutes</h3><p>Everything the camera recorded on Sep 28, across three files.</p></div></li>
+    <li class="step" data-s="1"><div><h3>Keep</h3><p>Each dark mark is a moment of Nate that made the film. The grey is what was cut.</p></div></li>
+    <li class="step" data-s="2"><div><h3>Condense</h3><p>The kept shots slide together in film order, at the same scale as the raw, so you can see how much shorter it got.</p></div></li>
+    <li class="step" data-s="3"><div><h3>Ten answers, 81 graphics</h3><p>The finished film at full width. Blue bands are Nate's ten answers; orange marks are the graphics, at their real lengths.</p></div></li>
+    <li class="step part" data-s="4"><div><span class="k mono">20 seconds, layer by layer</span><h3>From raw footage to finished cut.</h3><p>One stretch of Question 9, as it became a reel.</p></div></li>
+    <li class="step" data-s="5"><div><span class="k mono">1</span><h3>Raw footage</h3><p>26 seconds of the camera file, as recorded.</p></div></li>
+    <li class="step" data-s="6"><div><span class="k mono">2</span><h3>Cuts</h3><p>Pauses, ums and a restart taken out: 26 seconds becomes 16.9 seconds of Nate, with a gap left for a clip.</p></div></li>
+    <li class="step" data-s="7"><div><span class="k mono">3</span><h3>Mark up for graphics</h3><p>The cut, marked beat by beat for possible graphics, with my notes.</p></div></li>
+    <li class="step" data-s="8"><div><span class="k mono">4</span><h3>Research</h3><p>Finding and checking what goes on screen: his own footage, TIME's figure, the host's exact words.</p></div></li>
+    <li class="step" data-s="9"><div><span class="k mono">5</span><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
+   </ol>
+  </div>
+ </section>
+</div>
+
+<section class="reels" id="reels" aria-label="Reels">
+ <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
+ <div class="rail" id="rail">
+  <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 1</span><b>How can something so error-prone be so dangerous?</b></button>
+  <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></button>
+  <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 9</span><b>Who can we trust about AI?</b></button>
+ </div>
+</section>
+<dialog id="lb" aria-label="Reel"><div class="lb"><video id="lbv" controls playsinline></video><button class="lbx" id="lbx" aria-label="Close">✕</button></div></dialog>
+
+<div class="sheet two">
+ <section class="about wrap" aria-label="About">
+  <h2 style="margin-bottom:12px">About</h2>
+  <div class="story" id="story">
+   <p>I trained as an actor at Florida State and spent my spare time working on film-school sets. Then I spent years teaching movement, a job that is mostly about noticing small things.</p>
+   <p>In August 2026 I started weekly calls with my friend Elwyn to learn how to make good videos. I had never opened DaVinci Resolve. <span class="em">I learned editing, graphics and motion from zero</span>, delivered my first paid edit in October, and my first long-form project in November.</p>
+   <p>Taste, for me, grows out of appreciation: curiosity and interest that make the invisible visible, through distinctions and felt resonance. It isn't inherited; it's cultivated through engagement. My habit is simple: notice when I like something, then make it explicit. Why does this cut land? Why does that graphic feel right?</p>
+  </div>
+  <div class="dates" id="dates">
+   <div class="dhead"><span id="ddate">Aug 25, 2026</span><span class="dday" id="dday">Day 1</span></div>
+   <div class="dtrack" id="dtrack"><div class="dweeks" id="dweeks"></div><div class="dphd" id="dphd"></div></div>
+   <ul class="dlist" id="dlist"></ul>
+  </div>
+ </section>
+ <section class="contact wrap" aria-label="Contact">
+  <blockquote><span class="tbd">“[Elwyn's quote]”</span><cite>Elwyn Foote, producer</cite></blockquote>
+  <p class="g" style="margin-bottom:6px">References on request.</p>
+  <p><a class="mail" href="mailto:tannerholman97@gmail.com">tannerholman97@gmail.com</a></p>
+  <p class="foot"><a href="/">← tannerholman.space</a></p>
+ </section>
+</div>
+
+<div id="pv">
+ <button class="pvb" id="pvb" aria-expanded="false">Preview notes</button>
+ <div class="pvp" id="pvp" role="dialog" aria-label="Preview notes">
+  <h4>Preview notes</h4>
+  <p class="sub">Only on this preview, never on tannerholman.space. Orange text on the page is still to fill in. Notes save here, so I can read them.</p>
+  <div id="pvlist"></div>
+ </div>
+</div>
+
+<script type="application/json" id="hourdata">{"raw":4184.9,"film":953.536,"used":918.58,"files":[{"id":1,"label":"Recording 1","a":0,"d":2341.91},{"id":2,"label":"Recording 2","a":2341.91,"d":1830.4},{"id":3,"label":"Recording 3","a":4172.31,"d":12.59}],"qs":[[0,"intro (title)",0.0,6.34],[1,"How can something so error-prone be so dangerous?",6.34,114.28],[2,"Don't AIs just do what they're told?",114.28,264.6],[3,"Do AIs need consciousness to be dangerous?",264.6,318.4],[4,"How does AI kill us if it's an online thing?",318.4,426.72],[5,"How could an AI wind up affecting the physical world?",426.72,475.31],[6,"Why can't we just unplug it?",475.31,541.08],[7,"Where do the probability estimates come from?",541.08,643.6],[8,"Why keep building it if it is dangerous?",643.6,734.78],[9,"Who can we trust about AI?",734.78,878.42],[10,"Is AI doom a warning or a sales pitch?",878.42,946.61],[0,"outro",946.61,953.54]],"segs":[[3482.3,0.0,6.34,1,0],[1340.55,6.34,3.21,2,1],[1344.55,9.55,0.33,3,1],[1360.48,9.88,2.25,4,1],[1363.07,12.14,2.21,5,1],[1365.7,14.35,2.08,6,1],[1368.53,16.43,2.46,7,1],[1372.7,18.89,1.08,8,1],[1374.58,19.98,3.84,9,1],[1378.84,23.82,1.88,10,1],[1381.01,25.69,1.67,11,1],[1382.96,27.36,1.59,12,1],[1385.72,28.95,1.63,13,1],[1388.85,30.57,3.8,14,1],[1392.97,34.37,5.38,15,1],[1399.44,39.75,3.38,16,1],[1402.98,43.13,0.38,17,1],[1403.69,43.5,2.09,18,1],[1406.65,45.59,0.46,19,1],[1408.57,46.05,2.96,20,1],[1435.31,49.01,2.88,21,1],[1438.44,51.88,0.88,22,1],[1440.48,52.76,1.25,23,1],[1441.98,54.01,0.5,24,1],[1444.65,54.51,4.59,25,1],[1451.16,59.1,5.05,26,1],[1456.87,64.15,6.05,27,1],[1465.21,70.19,1.96,28,1],[1467.84,72.16,1.79,29,1],[1470.51,73.95,0.92,30,1],[1473.81,74.87,1.84,31,1],[1476.27,76.7,0.88,32,1],[1477.43,77.58,1.0,33,1],[1478.73,78.58,2.92,34,1],[1502.17,81.5,3.84,35,1],[1506.51,85.33,2.42,36,1],[1509.34,87.75,0.83,37,1],[1510.63,88.59,0.71,38,1],[1512.05,89.3,2.42,39,1],[1515.43,91.72,1.29,40,1],[1517.31,93.01,0.96,41,1],[1518.52,93.97,2.17,42,1],[1575.87,96.14,0.96,43,1],[1577.74,97.1,1.59,44,1],[1579.7,98.68,2.0,45,1],[1583.41,100.68,1.88,46,1],[1585.88,102.56,3.0,47,1],[1590.63,105.56,1.25,48,1],[1592.8,106.81,3.42,49,1],[1596.8,110.23,4.05,50,1],[1667.0,114.28,2.96,51,2],[1670.21,117.24,5.8,52,2],[1678.13,123.04,0.5,53,2],[1681.18,123.54,2.92,54,2],[1685.52,126.46,0.58,55,2],[1686.68,127.04,1.54,56,2],[1689.35,128.59,0.54,57,2],[1692.61,129.13,2.54,58,2],[1696.03,131.67,6.63,59,2],[1707.41,138.31,5.38,60,2],[1717.76,143.69,4.21,61,2],[1722.26,147.9,1.71,62,2],[1724.18,149.61,1.0,63,2],[1725.43,150.61,2.08,64,2],[1737.28,152.69,4.25,65,2],[1741.95,156.95,2.0,66,2],[1758.21,158.95,1.38,67,2],[1761.38,160.33,2.04,68,2],[1764.39,162.37,4.13,69,2],[1769.35,166.5,4.71,70,2],[1774.23,171.21,0.79,71,2],[1776.65,172.0,1.79,72,2],[1779.15,173.8,1.96,73,2],[1781.45,175.76,3.17,74,2],[1785.37,178.93,2.38,75,2],[1788.08,181.31,0.38,76,2],[1788.66,181.68,1.0,77,2],[1818.36,182.68,3.04,78,2],[1821.82,185.73,2.38,79,2],[1824.87,188.1,1.75,80,2],[1827.37,189.86,1.25,81,2],[1831.58,191.11,1.75,82,2],[1834.62,192.86,1.25,83,2],[1841.09,194.11,1.96,84,2],[1843.84,196.07,0.75,85,2],[1844.8,196.82,1.59,86,2],[1846.76,198.41,3.17,87,2],[1850.39,201.58,2.29,88,2],[1853.98,203.87,2.79,89,2],[1857.06,206.66,0.79,90,2],[1858.65,207.46,0.79,91,2],[1859.78,208.25,1.04,92,2],[1861.15,209.29,1.42,93,2],[1862.78,210.71,0.83,94,2],[1863.86,211.54,1.54,95,2],[1865.65,213.09,3.71,96,2],[1873.79,216.8,2.34,97,2],[1876.83,219.14,3.42,98,2],[1881.21,222.56,0.54,99,2],[1882.05,223.1,1.58,100,2],[1884.17,224.68,0.46,101,2],[1885.3,225.14,1.58,102,2],[1887.47,226.73,4.3,103,2],[1892.22,231.02,0.58,104,2],[1892.97,231.61,1.09,105,2],[1894.43,232.69,1.33,106,2],[1896.19,234.03,3.71,107,2],[1901.86,237.74,1.92,108,2],[1904.11,239.66,4.42,109,2],[1909.45,244.08,3.05,110,2],[1923.76,247.12,3.79,111,2],[1929.09,250.92,3.0,112,2],[1932.56,253.92,5.46,113,2],[1981.56,259.38,2.88,114,2],[1985.65,262.26,2.34,115,2],[2769.96,264.6,4.0,116,3],[2774.17,268.6,1.67,117,3],[2786.81,270.27,1.67,118,3],[2791.82,271.94,1.5,119,3],[2812.21,273.44,0.75,120,3],[2813.3,274.19,3.55,121,3],[2817.3,277.74,1.79,122,3],[2820.22,279.53,1.0,123,3],[2821.35,280.53,0.83,124,3],[2823.06,281.36,1.21,125,3],[2824.81,282.57,1.13,126,3],[2829.65,283.7,1.71,127,3],[2832.9,285.41,3.54,128,3],[2840.37,288.95,2.63,129,3],[2849.37,291.58,3.09,130,3],[2859.05,294.67,3.05,131,3],[2964.53,297.71,3.67,132,3],[2968.37,301.38,1.33,133,3],[2982.67,302.72,2.17,134,3],[3009.12,304.89,4.09,135,3],[3013.41,308.98,1.5,136,3],[3015.37,310.48,3.13,137,3],[3019.17,313.61,3.67,138,3],[3052.49,317.27,1.13,139,3],[805.68,318.4,3.09,140,4],[812.56,321.49,1.25,141,4],[814.86,322.74,1.63,142,4],[817.57,324.37,0.88,143,4],[825.24,329.58,2.5,144,4],[828.12,332.08,2.88,145,4],[878.04,334.96,2.38,146,4],[880.63,337.34,0.12,147,4],[871.33,349.39,1.5,148,4],[873.16,350.89,2.63,149,4],[906.2,354.98,2.08,150,4],[909.24,357.06,2.63,151,4],[912.37,359.69,1.04,152,4],[913.83,360.74,0.38,153,4],[914.54,361.11,1.88,154,4],[917.29,362.99,1.29,155,4],[919.21,364.28,3.42,156,4],[923.17,367.7,3.5,157,4],[980.1,371.2,3.38,158,4],[983.61,374.58,1.75,159,4],[943.99,376.33,3.55,160,4],[1035.66,379.88,0.33,161,4],[1036.58,380.21,0.75,162,4],[1040.87,380.96,4.84,163,4],[1047.38,385.8,0.88,164,4],[1050.8,386.68,3.09,165,4],[1055.6,389.76,3.34,166,4],[1247.62,393.1,2.84,167,4],[1255.34,395.94,3.05,168,4],[1251.92,398.98,2.25,169,4],[1159.37,401.23,1.96,170,4],[1161.62,403.19,0.54,171,4],[1162.49,403.74,2.67,172,4],[1166.25,406.41,3.63,173,4],[1170.29,410.04,4.59,174,4],[1175.3,414.62,2.63,175,4],[1183.89,417.25,0.83,176,4],[1185.6,418.08,1.96,177,4],[1218.47,420.05,1.88,178,4],[1220.68,421.92,1.67,179,4],[1223.01,423.59,3.13,180,4],[3101.54,426.72,5.0,181,5],[3107.01,431.72,4.34,182,5],[3250.57,436.06,1.75,183,5],[3254.07,437.81,1.5,184,5],[3256.16,439.31,1.88,185,5],[3259.74,441.19,1.21,186,5],[3269.92,442.4,2.5,187,5],[3272.59,444.9,2.08,188,5],[3278.93,446.99,1.25,189,5],[3291.82,448.24,0.58,190,5],[3293.28,448.82,5.26,191,5],[3422.41,454.08,2.21,192,5],[3425.57,456.29,2.13,193,5],[3431.5,462.21,2.09,194,5],[3434.67,464.3,4.09,195,5],[3439.05,468.38,1.75,196,5],[3441.59,470.14,1.04,197,5],[3443.59,471.18,1.42,198,5],[3447.26,472.6,2.71,199,5],[148.69,475.31,2.09,200,6],[288.08,477.39,2.5,201,6],[291.21,479.9,1.67,202,6],[296.71,484.02,8.38,203,6],[306.56,492.41,0.79,204,6],[308.48,493.2,0.54,205,6],[309.43,493.74,6.01,206,6],[315.94,499.75,0.5,207,6],[317.57,500.25,0.88,208,6],[318.74,501.13,1.75,209,6],[320.9,502.88,3.67,210,6],[325.28,506.55,0.46,211,6],[326.2,507.01,4.09,212,6],[348.06,511.09,0.71,213,6],[350.89,511.8,2.13,214,6],[353.64,513.93,3.63,215,6],[358.77,517.56,5.5,216,6],[364.7,523.06,3.88,217,6],[368.87,526.94,1.17,218,6],[370.37,528.11,3.29,219,6],[374.88,531.41,1.25,220,6],[377.17,532.66,3.54,221,6],[381.63,536.2,4.88,222,6],[2012.05,541.08,4.17,223,7],[2046.54,545.25,0.88,224,7],[2047.8,546.13,6.21,225,7],[2054.97,552.34,0.54,226,7],[2056.26,552.89,0.92,227,7],[2057.3,553.8,0.75,228,7],[2058.56,554.55,1.54,229,7],[2060.43,556.1,1.5,230,7],[2562.76,557.6,2.17,231,7],[2566.97,559.77,3.42,232,7],[2576.35,563.19,2.46,233,7],[2064.23,565.65,2.09,234,7],[2066.65,567.73,2.29,235,7],[2070.28,570.03,4.71,236,7],[2075.49,574.74,1.17,237,7],[2077.32,575.91,0.58,238,7],[2078.2,576.49,1.92,239,7],[2084.29,578.41,0.58,240,7],[2086.46,579.0,2.42,241,7],[2099.22,581.41,2.92,242,7],[2102.47,584.33,2.79,243,7],[2106.48,587.13,3.96,244,7],[2110.73,591.09,2.46,245,7],[2113.53,593.55,1.96,246,7],[2117.41,595.51,3.04,247,7],[2127.42,598.56,1.44,248,7],[2128.86,600.0,0.1,248,7],[2129.71,600.1,5.96,249,7],[2137.26,606.06,2.34,250,7],[2139.89,608.4,0.84,251,7],[2141.43,609.23,4.34,252,7],[2146.19,613.57,1.71,253,7],[2149.94,615.28,1.42,254,7],[2153.03,616.7,0.71,255,7],[2155.03,617.41,1.96,256,7],[2162.12,619.37,3.96,257,7],[2166.5,623.33,3.34,258,7],[2214.71,626.67,0.5,259,7],[2230.81,627.17,7.01,260,7],[2240.07,634.17,1.67,261,7],[2242.61,635.84,1.17,262,7],[2256.88,637.01,6.59,263,7],[399.06,643.6,2.25,264,8],[401.86,645.85,1.88,265,8],[404.49,647.73,4.13,266,8],[432.72,651.86,3.75,267,8],[436.81,655.61,5.21,268,8],[442.52,660.83,5.67,269,8],[449.24,666.5,3.75,270,8],[453.29,670.25,1.0,271,8],[455.25,671.25,3.84,272,8],[459.63,679.1,1.67,273,8],[462.0,680.76,1.67,274,8],[463.92,682.43,2.46,275,8],[553.55,684.89,2.63,276,8],[557.22,687.52,4.38,277,8],[563.15,691.9,1.21,278,8],[565.57,693.11,4.13,279,8],[674.22,697.24,1.71,280,8],[676.22,698.95,6.05,281,8],[781.07,705.0,4.71,282,8],[786.41,709.71,0.92,283,8],[642.27,710.63,3.96,284,8],[646.73,714.59,5.42,285,8],[652.61,720.01,10.3,286,8],[663.66,730.31,4.46,287,8],[3745.1,734.78,2.09,288,9],[3750.9,736.86,3.13,289,9],[3778.14,739.99,0.88,290,9],[3779.35,740.87,0.83,291,9],[3780.68,741.7,1.67,292,9],[3782.85,743.37,0.58,293,9],[3783.77,743.95,1.17,294,9],[3785.73,745.12,1.5,295,9],[3789.02,746.62,2.25,296,9],[3794.44,748.87,0.04,297,9],[3801.16,748.91,3.46,298,9],[3805.33,752.38,1.75,299,9],[3807.37,754.13,5.8,300,9],[3822.05,759.93,4.09,301,9],[3826.48,764.01,2.0,302,9],[3829.77,766.01,2.34,303,9],[3838.74,768.35,2.13,304,9],[3841.16,770.48,3.25,305,9],[3867.18,773.73,4.05,306,9],[3872.61,777.78,0.92,307,9],[3874.32,778.7,1.5,308,9],[3876.32,780.2,3.8,309,9],[3880.45,783.99,1.38,310,9],[3882.11,785.37,1.63,311,9],[3884.45,787.0,1.63,312,9],[3886.33,788.62,0.79,313,9],[3887.62,789.41,1.67,314,9],[3890.25,791.08,1.04,315,9],[3891.62,792.12,2.09,316,9],[3895.75,794.21,1.79,317,9],[3897.8,796.0,1.88,318,9],[3900.63,797.88,2.34,319,9],[3903.26,800.22,3.46,320,9],[3907.01,803.68,0.88,321,9],[3915.98,807.35,1.79,322,9],[3952.56,809.14,1.29,323,9],[3954.44,810.43,1.25,324,9],[3956.15,811.69,2.34,325,9],[3960.36,814.02,4.17,326,9],[3967.99,818.19,1.21,327,9],[3969.62,819.4,3.04,328,9],[3976.33,822.45,0.96,329,9],[3979.25,823.41,3.46,330,9],[3984.22,826.87,4.71,331,9],[3989.26,831.58,2.09,332,9],[4044.44,833.67,2.0,333,9],[4046.65,835.67,2.25,334,9],[4051.57,837.92,2.46,335,9],[4055.5,840.38,2.8,336,9],[4059.58,843.18,1.46,337,9],[4062.21,844.63,2.63,338,9],[4065.17,847.26,5.25,339,9],[4070.89,852.52,1.38,340,9],[4079.6,853.89,1.71,341,9],[4083.61,855.61,1.59,342,9],[4086.07,857.19,1.04,343,9],[4088.45,858.23,1.38,344,9],[4090.45,859.61,1.08,345,9],[4091.87,860.69,1.67,346,9],[4093.95,862.36,2.09,347,9],[4096.95,864.45,2.88,348,9],[4100.16,867.33,6.42,349,9],[3794.49,873.75,1.38,350,9],[3796.36,875.12,3.29,351,9],[3495.44,878.42,2.75,352,10],[3500.15,881.17,4.3,353,10],[3505.2,885.47,0.71,354,10],[3506.2,886.18,0.92,355,10],[3507.61,887.1,0.92,356,10],[3522.05,888.01,0.67,357,10],[3524.55,888.68,1.25,358,10],[3526.26,889.93,1.46,359,10],[3528.14,891.39,1.21,360,10],[3530.64,892.6,2.59,361,10],[3546.28,895.19,2.25,362,10],[3549.95,897.44,2.25,363,10],[3553.04,899.69,3.21,364,10],[3567.63,902.9,2.71,365,10],[3571.01,905.61,0.96,366,10],[3572.31,906.57,1.04,367,10],[3574.18,907.62,0.5,368,10],[3581.94,908.12,1.42,369,10],[3584.86,909.53,1.42,370,10],[3586.49,910.95,1.21,371,10],[3608.59,913.37,3.13,372,10],[3612.01,916.5,3.42,373,10],[3675.2,919.92,2.63,374,10],[3680.95,922.55,0.96,375,10],[3684.17,923.51,1.38,376,10],[3685.79,924.88,0.71,377,10],[3686.84,925.59,3.55,378,10],[3700.64,929.14,3.13,379,10],[3705.19,932.26,0.96,380,10],[3708.57,933.22,1.08,381,10],[3711.11,934.31,5.38,382,10],[3717.91,939.69,1.88,383,10],[3720.49,941.57,2.29,384,10],[3724.16,943.86,0.62,385,10],[4173.39,946.61,6.09,386,0]],"gfx":[[0.21,6.34],[6.34,18.89],[12.97,16.35],[19.44,29.15],[29.07,34.37],[37.16,42.33],[46.34,49.01],[54.47,71.78],[81.37,89.3],[97.06,105.56],[114.28,120.87],[120.87,123.04],[120.87,131.63],[133.13,138.31],[160.66,166.96],[168.42,182.68],[238.28,243.74],[260.01,264.6],[264.6,279.53],[279.61,284.49],[294.67,298.55],[301.51,304.93],[317.19,318.4],[318.4,325.28],[325.24,329.58],[329.58,334.96],[337.46,349.39],[353.52,354.98],[371.2,376.33],[386.68,393.1],[393.18,395.94],[395.35,395.94],[395.94,398.98],[426.72,433.81],[433.81,436.06],[433.81,436.06],[436.06,440.4],[440.4,456.29],[458.42,462.21],[462.25,464.25],[464.25,475.14],[475.31,477.39],[477.48,506.55],[481.56,484.02],[490.07,493.62],[506.96,512.18],[521.6,532.87],[541.08,545.25],[545.25,557.6],[557.56,565.23],[557.56,565.23],[571.65,581.29],[593.59,598.97],[619.41,626.67],[627.25,636.89],[639.97,643.6],[643.6,655.95],[655.95,666.5],[671.25,675.09],[675.09,679.1],[675.09,679.1],[681.76,687.48],[693.82,698.36],[711.21,714.67],[714.67,718.55],[730.27,734.78],[734.78,748.87],[738.28,739.95],[769.39,776.73],[786.12,792.67],[793.17,804.55],[826.78,833.67],[840.51,852.77],[840.51,855.44],[855.61,865.7],[875.17,878.42],[878.42,884.13],[882.97,886.55],[888.72,898.02],[892.89,896.31],[946.61,950.78]]}</script>
+<script type="application/json" id="lywords">[[0.02, 0.04, "Or"], [0.04, 0.1, "you"], [0.1, 0.14, "could"], [0.14, 0.3, "look"], [0.3, 0.4, "at"], [0.4, 0.92, "whistleblowers"], [0.92, 1.13, "like"], [1.13, 1.39, "Daniel"], [1.39, 1.88, "Kokotajlo"], [2.44, 2.76, "[uh]"], [2.76, 3.0, "who"], [3.78, 4.16, "[um]"], [4.56, 4.68, "left"], [5.02, 5.32, "OpenAI"], [5.32, 5.72, "and"], [6.18, 6.56, "they"], [6.56, 6.86, "said"], [6.86, 6.96, "that"], [6.96, 7.1, "they"], [7.1, 7.22, "were"], [7.22, 7.48, "going"], [7.6, 7.86, "to"], [8.16, 8.5, "[uh]"], [9.0, 9.16, "take"], [9.16, 9.48, "away"], [9.48, 9.72, "his"], [9.72, 10.18, "millions"], [10.18, 10.26, "of"], [10.26, 10.48, "dollars"], [10.48, 10.68, "worth"], [10.68, 10.74, "of"], [10.74, 11.16, "equity"], [11.62, 11.78, "if"], [11.78, 11.94, "he"], [11.94, 12.22, "didn't"], [12.42, 12.82, "sign"], [12.82, 12.92, "a"], [12.92, 13.46, "non-disparagement"], [13.46, 13.84, "agreement"], [13.84, 13.92, "that"], [13.92, 14.04, "said"], [14.06, 14.12, "he"], [14.12, 14.35, "couldn't"], [14.35, 14.73, "criticize"], [14.73, 15.06, "them."], [15.4, 15.54, "And"], [15.54, 15.68, "he"], [15.68, 16.08, "said"], [16.56, 16.96, "[uh]"], [17.58, 17.88, "like,"], [18.64, 18.74, "wh-"], [18.74, 18.8, "how"], [18.8, 18.94, "do"], [18.94, 19.06, "I"], [19.06, 19.14, "say"], [19.14, 19.26, "it"], [19.26, 19.3, "on"], [19.3, 19.36, "this"], [19.36, 19.62, "platform?"], [21.04, 21.42, "[uh]"], [21.94, 22.28, "Go"], [23.52, 23.72, "away."], [23.82, 23.82, "Is"], [24.84, 24.98, "what"], [24.98, 25.2, "he"], [25.2, 25.58, "said."], [25.92, 26.14, "[laughter]"]]</script>
+<script type="application/json" id="glow">[["#7e5142", "#7d5244"], ["#7e5142", "#7d5244"], ["#7e5142", "#7d5244"], ["#7e5142", "#7d5244"], ["#7e5142", "#7d5244"], ["#84593d", "#84593d"], ["#84593d", "#84593d"], ["#84593d", "#84593d"], ["#84593d", "#84593d"], ["#84593d", "#84593d"], ["#84593d", "#84593d"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#835a3e", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"], ["#82603f", "#835a3e"]]</script>
+<script>
+const $ = (s, r = document) => r.querySelector(s), $$ = (s, r = document) => [...r.querySelectorAll(s)];
+const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const mk = (c, p, tag) => { const e = document.createElement(tag || 'div'); if(c) e.className = c; p.appendChild(e); return e; };
+const wait = ms => new Promise(r => setTimeout(r, ms));
+const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
+function onView(el, on, off, th = .3){ new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? on() : off && off()), {threshold: th}).observe(el); }
+const PREVIEW = location.hostname !== 'tannerholman.space' || /[?&]notes/.test(location.search);
+if(PREVIEW) document.body.classList.add('preview');
+
+/* ---------- the film: muted loop on the poster, glow takes its colour, tap loads YouTube ---------- */
+{
+  const p = $('#player'), v = $('#floop'), halo = $('#halo'), G = JSON.parse($('#glow').textContent);
+  const paint = () => { const c = G[Math.min(G.length - 1, Math.floor((v.currentTime || 0) * 4))] || G[0]; halo.style.background = `linear-gradient(90deg,${c[0]},${c[1]})`; };
+  paint(); v.addEventListener('timeupdate', paint);
+  if(RM){ v.removeAttribute('autoplay'); v.pause(); }
+  onView(p, () => { if(!RM && !p.dataset.yt) v.play().catch(() => {}); }, () => v.pause());
+  p.onclick = () => { if(p.dataset.yt) return; p.dataset.yt = 1;
+    const f = document.createElement('iframe'); f.src = 'https://www.youtube-nocookie.com/embed/9U-FdOWTxPw?autoplay=1&rel=0&playsinline=1';
+    f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true; f.title = 'Unfortunately, We Can\'t Just Unplug It';
+    p.innerHTML = ''; p.appendChild(f); p.style.cursor = 'default'; };
+}
+/* numbers card: tap shows where and when */
+{ const n = $('#nums'); n.onclick = () => { const on = n.classList.toggle('fan'); n.setAttribute('aria-expanded', on); }; }
+
+/* ---------- my role: the frame comes apart into its layers ---------- */
+{
+  const box = $('#role'), pls = $$('#planes .pl'), lis = $$('#rlist li'); let alive = false;
+  const z = on => pls.forEach((p, i) => p.style.transform = `translateZ(${on ? i * 40 : 0}px)`);
+  async function loop(){ while(alive){ box.classList.remove('exp'); z(false); lis.forEach(l => l.classList.remove('hl')); pls.forEach(p => p.classList.remove('hl'));
+    await wait(1600); if(!alive) break; box.classList.add('exp'); z(true); await wait(1200);
+    for(let i = 0; i < pls.length && alive; i++){ lis.forEach((l, j) => l.classList.toggle('hl', j === i)); pls.forEach((p, j) => p.classList.toggle('hl', j === i)); await wait(1000); }
+    await wait(1400); } }
+  if(RM){ box.classList.add('exp'); z(true); }
+  onView(box, () => { if(RM || alive) return; alive = true; loop(); }, () => { alive = false; });
+  lis.forEach((l, i) => l.onmouseenter = () => { if(box.classList.contains('exp')) pls.forEach((p, j) => p.classList.toggle('hl', j === i)); });
+}
+
+/* ---------- how it's made ---------- */
+const HD = JSON.parse($('#hourdata').textContent);
+const LY = {
+  dur: 19.98, rawDur: 26.04,
+  segs: [[0,1.91,0.000],[1.91,2.29,2.703],[2.29,3.81,4.292],[3.81,5.66,6.104],[5.66,8.01,8.914],[8.01,11.54,11.555],[11.54,12.31,15.377],[12.31,13.55,18.692],[13.55,14.35,21.934],[14.35,16.89,23.484]],
+  insert: [16.89, 19.98],
+  words: JSON.parse($('#lywords').textContent),
+  marks: [
+    {t: 1.10, end: 3.77, beat: 'Beat 6', idea: 'Real footage of Kokotajlo, silent, under Nate’s voice, with his name on it.', note: 'not sure what the best way to intro a new character would be. will want to look at a ref i think.'},
+    {t: 5.70, end: 9.98, beat: 'Beat 7', idea: 'One thing on screen: TIME’s own line, “$2 million in equity”.', note: 'how have other references shown this kind of info?'},
+    {t: 12.31, end: 13.55, beat: 'Beat 8', idea: 'Keep the film’s punch-in on “how do I say it”.', note: 'leaning toward bare'},
+    {t: 13.55, end: 16.89, beat: 'Beat 9', idea: 'Hold the close shot through the silence after “away”.', note: 'likely bare'},
+    {t: 16.89, end: 19.98, beat: 'Beat 10', idea: 'After “said.”, let the people in the story speak for themselves.', note: 'nice to have the host say something about the $2 million'}
+  ],
+  research: [
+    {a: 1.10, b: 3.77, img: 'media/doac_daniel.jpg', title: 'Kokotajlo’s own footage', line: 'The Diary Of A CEO’s official upload, found after the first copy’s picture and sound proved too poor.'},
+    {a: 6.48, b: 9.98, img: 'media/film_time.jpg', title: 'TIME100 AI 2024', line: 'His profile: refusing to sign would have cost him about $2 million in equity. Rebuilt full screen.'},
+    {a: 12.31, b: 16.89, img: 'media/dwarkesh.jpg', title: 'Two tellings in the raw', line: 'Nate tells it twice. Kept “go away”, as in the film.'},
+    {a: 16.89, b: 19.98, img: 'media/doac_host.jpg', title: 'The host’s line, checked', line: 'Steven Bartlett’s words checked against the captions and the waveform.'}
+  ],
+  fin: [
+    ['g',0,19.98,'Captions'],['g',1.10,3.77,'Kokotajlo footage, name beside his head'],['g',6.48,9.98,'TIME page, full screen'],['g',6.55,7.88,'Highlight: “$2 million in equity”'],['g',8.80,9.97,'Highlight: “refusing to sign”'],['g',16.89,19.98,'Host clip, name tag'],
+    ['m',1.10,1.35,'Quick push on the cut'],['m',6.48,9.98,'Slow push on the page'],['m',12.36,13.53,'Punch-in'],['m',13.53,14.32,'Closer'],['m',14.32,15.20,'Closer still'],['m',16.89,17.14,'Quick push on the host'],
+    ['s',1.10,1.30,'Flick'],['s',6.48,6.68,'Web click'],['s',6.51,7.84,'Brush with the stroke'],['s',8.80,9.93,'Brush with the stroke'],['s',16.89,17.09,'Flick']
+  ]
+};
+{
+  const how = $('#how'), steps = $$('.step', how), rows = $$('#va .arow'), tr = rows.map(r => $('.atr', r));
+  const RAW = HD.raw, FILM = HD.film, QS = HD.qs.filter(q => q[0] > 0);
+  /* part A: the hour */
+  mk('abar', tr[0]); mk('abar dim', tr[1]);
+  const keep = HD.segs.map(s => ({e: mk('am', tr[1]), r: s[0], l: s[2]}));
+  const fly = HD.segs.map(s => ({e: mk('am', tr[2]), r: s[0], f: s[1], l: s[2]}));
+  const fin = HD.segs.map(s => ({e: mk('am', tr[3]), f: s[1], l: s[2], q: s[4]}));
+  const gm = HD.gfx.map(g => ({e: mk('agm', tr[3]), a: g[0], b: g[1]}));
+  const ql = QS.map(q => { const e = mk('aql mono', tr[3]); e.textContent = q[0]; return {e, t: q[2]}; });
+  const zoom = mk('zoom', tr[3]); const zl = mk('mono', zoom, 'span'); zl.textContent = '20 seconds of Question 9';
+  const ZA = 792.1, ZB = 812.1;
+  let A = 0;
+  function drawA(){ const W = tr[0].clientWidth;
+    rows.forEach((r, i) => r.classList.toggle('on', i <= A));
+    keep.forEach(m => { m.e.style.left = (m.r / RAW * W) + 'px'; m.e.style.width = Math.max(1, m.l / RAW * W) + 'px'; });
+    fly.forEach(m => { const x = A >= 2 ? m.f / RAW * W : m.r / RAW * W; m.e.style.transform = `translateX(${x}px)`; m.e.style.width = Math.max(1, m.l / RAW * W) + 'px'; m.e.style.transitionDelay = A >= 2 ? (m.f / FILM * 600) + 'ms' : '0ms'; });
+    fin.forEach(m => { m.e.style.left = (m.f / FILM * W) + 'px'; m.e.style.width = Math.max(1, m.l / FILM * W) + 'px'; m.e.style.background = m.q ? (m.q % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; });
+    gm.forEach(g => { g.e.style.left = (g.a / FILM * W) + 'px'; g.e.style.width = Math.max(2, (g.b - g.a) / FILM * W) + 'px'; });
+    let last = -99; ql.forEach(q => { const x = Math.min(q.t / FILM * W, W - 14); const show = x - last >= 16; q.e.style.left = x + 'px'; q.e.style.display = show ? '' : 'none'; if(show) last = x; });
+    zoom.style.left = (ZA / FILM * W - 4) + 'px'; zoom.style.width = ((ZB - ZA) / FILM * W + 8) + 'px'; zoom.classList.toggle('on', A >= 4); }
+  new ResizeObserver(drawA).observe(tr[0]);
+
+  /* part B: the 20 seconds */
+  const rawToS = r => { for(const [a, b, ra] of LY.segs) if(r >= ra && r < ra + (b - a)) return a + (r - ra); return null; };
+  const sToRaw = t => { for(const [a, b, ra] of LY.segs) if(t >= a && t < b) return ra + (t - a); return null; };
+  const fmt = s => { s = Math.max(0, s); const m = Math.floor(s / 60); return m + ':' + (s - m * 60).toFixed(1).padStart(4, '0'); };
+  const bst = $('#bst'), bov = $('#bov'), bcap = $('#bcap'), lanes = $('#lanes');
+  const vid = src => { const v = document.createElement('video'); v.src = src; v.muted = true; v.loop = true; v.playsInline = true; v.setAttribute('playsinline', ''); v.preload = 'none'; bst.insertBefore(v, bov); return v; };
+  const vRaw = vid('media/raw.mp4'), vCut = vid('media/cuts.mp4'), vFin = vid('media/final.mp4'), VS = [vRaw, vCut, vFin];
+  const lane = label => { const r = mk('ln', lanes); const s = mk('', r, 'span'); s.textContent = label; return mk('lt', r); };
+  const lRaw = lane('Raw'), lCut = lane('Cuts'), lMark = lane('Markup'), lRes = lane('Research'), lFin = lane('Graphics, motion, sound');
+  const L = $$('.ln', lanes), rS = 100 / LY.rawDur, sS = 100 / LY.dur;
+  mk('bg', lRaw); LY.segs.forEach(([a, b, ra]) => { const k = mk('lk', lRaw); k.style.left = ra * rS + '%'; k.style.width = (b - a) * rS + '%'; });
+  LY.segs.forEach(([a, b]) => { const k = mk('lk c', lCut); k.style.left = a * sS + '%'; k.style.width = (b - a) * sS + '%'; });
+  { const k = mk('lk i', lCut); k.style.left = LY.insert[0] * sS + '%'; k.style.width = (LY.insert[1] - LY.insert[0]) * sS + '%'; }
+  LY.marks.forEach(m => { const k = mk('lm', lMark); k.style.left = m.t * sS + '%'; });
+  LY.research.forEach(r => { const k = mk('lr', lRes); k.style.left = r.a * sS + '%'; k.style.width = (r.b - r.a) * sS + '%'; });
+  LY.fin.forEach(([k, a, b]) => { const e = mk('lf ' + k, lFin); e.style.left = a * sS + '%'; e.style.width = Math.max(.8, (b - a) * sS) + '%'; });
+  const ph = mk('lph', lanes);
+  let B = -1, inB = false, raf = 0, lastKey = '';
+  const active = () => B === 0 ? vRaw : B === 4 ? vFin : vCut;
+  function setB(n){ if(n === B) return; B = n; lastKey = ''; bov.innerHTML = '';
+    L.forEach((r, i) => r.classList.toggle('on', i <= n));
+    const a = active(); VS.forEach(v => { const on = v === a; v.classList.toggle('on', on); if(on){ if(v.preload === 'none') v.preload = 'auto'; v.currentTime = 0; if(inB && !RM) v.play().catch(() => {}); } else v.pause(); });
+    bst.classList.toggle('wide', n === 0); }
+  function tick(){ const v = active(), t = v.currentTime || 0, n = B; const lw = parseFloat(getComputedStyle(lanes).getPropertyValue('--lab')) || 0;
+    const row = n === 0 ? L[0] : L[1], rowN = n === 0 ? L[0] : L[n];
+    ph.style.top = row.offsetTop - 2 + 'px'; ph.style.height = (rowN.offsetTop + rowN.offsetHeight - row.offsetTop + 4) + 'px';
+    ph.style.left = `calc(${lw}px + (100% - ${lw}px) * ${clamp(t / (n === 0 ? LY.rawDur : LY.dur))})`;
+    let key = '';
+    if(n === 0){ const st = rawToS(t); bcap.textContent = st == null ? `raw ${fmt(t)} · cut` : `raw ${fmt(t)} · kept`; bcap.classList.toggle('out', st == null); }
+    else { bcap.classList.remove('out');
+      if(n === 1){ const i = LY.segs.findIndex(([a, b]) => t >= a && t < b); bcap.textContent = t >= LY.insert[0] ? 'gap left for a clip' : `piece ${i + 1} of ${LY.segs.length} · from raw ${fmt(sToRaw(t) || 0)}`; }
+      else if(n === 2){ const m = LY.marks.find(m => t >= m.t && t < m.end); key = 'm' + (m ? m.t : ''); if(key !== lastKey){ bov.innerHTML = ''; if(m){ const d = mk('note', bov); mk('', d, 'b').textContent = m.beat; mk('', d, 'div').textContent = m.idea; mk('q', d, 'div').textContent = '“' + m.note + '”'; } } bcap.textContent = m ? m.beat.toLowerCase() + ' · marked for a graphic' : 'unmarked: Nate carries it'; }
+      else if(n === 3){ const r = LY.research.find(r => t >= r.a && t < r.b); key = 'r' + (r ? r.a : ''); if(key !== lastKey){ bov.innerHTML = ''; if(r){ const d = mk('card', bov); const im = mk('', d, 'img'); im.src = r.img; im.alt = ''; mk('', d, 'b').textContent = r.title; mk('', d, 'p').textContent = r.line; } } bcap.textContent = r ? 'source · ' + r.title : 'nothing to source here'; }
+      else { const on = LY.fin.filter(f => t >= f[1] && t < f[2] && f[1] > .01).map(f => f[3]); bcap.textContent = on.length ? on.join(' · ') : 'captions'; } }
+    lastKey = key; raf = requestAnimationFrame(tick); }
+  /* sound */
+  { const b = $('#snd'); let on = false; b.onclick = () => { on = !on; VS.forEach(v => v.muted = !on); b.textContent = on ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', on); }; }
+  /* which step is under the reading line */
+  const phone = matchMedia('(max-width:760px)');
+  let cur = -1;
+  function pick(){ const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s === cur) return; cur = s;
+    const b = s >= 5; how.classList.toggle('b', b);
+    if(!b){ A = Math.min(s, 4); drawA(); if(inB){ inB = false; VS.forEach(v => v.pause()); cancelAnimationFrame(raf); } }
+    else { if(!inB){ inB = true; raf = requestAnimationFrame(tick); } setB(s - 5); active().play().catch(() => {}); } }
+  addEventListener('scroll', () => requestAnimationFrame(pick), {passive: true}); addEventListener('resize', pick);
+  onView(how, () => {}, () => { VS.forEach(v => v.pause()); }, 0);
+  pick();
+}
+
+/* ---------- the sheet lifts off the dark Reels band, once ---------- */
+{
+  const s = $('#sheet1'), reels = $('#reels');
+  const upd = () => { const top = reels.getBoundingClientRect().top; const p = clamp((innerHeight - top) / (innerHeight * .4)); s.style.setProperty('--r', (p * 14).toFixed(2) + 'px'); };
+  addEventListener('scroll', () => requestAnimationFrame(upd), {passive: true}); upd();
+}
+
+/* ---------- reels: loops play while on screen, tap plays the full reel with sound ---------- */
+{
+  const cards = $$('.rc'), lb = $('#lb'), lbv = $('#lbv');
+  const io = new IntersectionObserver(es => es.forEach(e => { const v = $('video', e.target); if(e.isIntersecting && !RM){ if(!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause(); }), {threshold: .6});
+  cards.forEach(c => { io.observe(c); c.onclick = () => { $$('.rc video').forEach(v => v.pause()); lbv.src = `media/q${c.dataset.q}-full.mp4`; lbv.muted = false; lb.showModal(); lbv.play().catch(() => {}); }; });
+  const close = () => { lbv.pause(); lbv.removeAttribute('src'); lbv.load(); lb.close(); };
+  $('#lbx').onclick = close; lb.addEventListener('click', e => { if(e.target === lb) close(); }); lb.addEventListener('cancel', () => { lbv.pause(); });
+}
+
+/* ---------- about: ink emphasis (one phrase, or darkens as you scroll) ---------- */
+let INK = (location.search.match(/ink=(\w+)/) || [])[1] || 'phrase';
+function setInk(mode){ INK = mode; const st = $('#story'); st.classList.toggle('scrollink', mode === 'scroll');
+  if(mode === 'scroll' && !st.dataset.split){ st.dataset.split = 1; $$('p', st).forEach(p => { const walk = n => { [...n.childNodes].forEach(c => { if(c.nodeType === 3){ const f = document.createDocumentFragment(); c.textContent.split(/(\s+)/).forEach(w => { if(w.trim()){ const s = document.createElement('span'); s.className = 'w'; s.textContent = w; f.appendChild(s); } else f.appendChild(document.createTextNode(w)); }); c.replaceWith(f); } else if(c.nodeType === 1 && !c.classList.contains('w')) walk(c); }); }; walk(p); }); }
+  inkScroll(); }
+function inkScroll(){ const ws = $$('#story .w'); const line = innerHeight * .62; ws.forEach(w => w.style.color = INK === 'scroll' && w.getBoundingClientRect().top < line ? 'var(--ink)' : ''); }
+addEventListener('scroll', () => { if(INK === 'scroll') requestAnimationFrame(inkScroll); }, {passive: true});
+setInk(INK);
+
+/* ---------- about: the dates, day 1 to launch ---------- */
+{
+  const START = new Date(2026, 7, 25), N = 83;
+  const PH = [[0, 38, '#cfcfd3'], [38, 55, 'var(--qb)'], [55, 83, 'var(--q0)']];
+  const MS = [['Aug 25', 'Start learning the video creation with Elwyn', 0, '#cfcfd3'], ['Oct 2', 'First paid edit', 38, 'var(--qb)'], ['Oct 19', 'Contractor and project manager', 55, 'var(--q0)'], ['Nov 16', 'Launch', 83, 'var(--red)']];
+  const tr = $('#dtrack'), wk = $('#dweeks'), phd = $('#dphd'), list = $('#dlist');
+  for(let i = 0; i <= 12; i++) mk('', wk, 'i');
+  const bars = PH.map(([a, b, c]) => { const e = document.createElement('div'); e.className = 'dph'; e.style.left = (a / N * 100) + '%'; e.style.width = `calc(${(b - a) / N * 100}% - 2px)`; e.style.background = c; tr.insertBefore(e, phd); return {e, a, b}; });
+  const flag = mk('dflag', tr); flag.style.left = '100%';
+  const lis = MS.map(([d, l, x, c]) => { const li = mk('', list, 'li'); const b = mk('', li, 'b'); const sw = mk('', b, 'i'); sw.style.background = c; b.appendChild(document.createTextNode(d)); li.appendChild(document.createTextNode(l)); return {li, x}; });
+  const fmtD = d => { const dt = new Date(START); dt.setDate(dt.getDate() + Math.round(d)); return dt.toLocaleDateString('en-US', {month: 'short', day: 'numeric', year: 'numeric'}); };
+  function show(d){ phd.style.left = (d / N * 100) + '%'; $('#dday').textContent = 'Day ' + (Math.round(d) + 1); $('#ddate').textContent = fmtD(d);
+    bars.forEach(b => { const p = clamp((d - b.a) / (b.b - b.a)); b.e.style.clipPath = `inset(0 ${100 - p * 100}% 0 0)`; });
+    lis.forEach(l => l.li.classList.toggle('on', d >= l.x - .01)); flag.classList.toggle('on', d >= N - .01); }
+  let raf, done = false;
+  show(RM ? N : 0);
+  onView($('#dates'), () => { if(RM || done) return; done = true; const t0 = performance.now(); const go = now => { const p = Math.min(1, (now - t0) / 4200); show(N * (p < .5 ? 2 * p * p : 1 - Math.pow(-2 * p + 2, 2) / 2)); if(p < 1) raf = requestAnimationFrame(go); }; raf = requestAnimationFrame(go); }, null, .6);
+}
+
+/* ---------- preview notes (not shown on tannerholman.space) ---------- */
+if(PREVIEW){
+  const Q = [
+    {id: 'ink', t: 'Ink emphasis in About', pick: 'One phrase. It works for someone skimming.', seg: ['phrase:One phrase', 'scroll:Darkens as you scroll']},
+    {id: 'poster', t: 'What the film poster shows', pick: 'Keep the forecast chart from Question 1 (1:37 in the film): it reads with the sound off and shows the graphics first. The other way is a frame of Nate.'},
+    {id: 'ftitle', t: 'Film title: YouTube’s title or “Most Asked Questions”', pick: 'YouTube’s title, so it matches what a hirer sees when they tap.'},
+    {id: 'sections', t: 'Editing and pacing on how many sections', pick: '“two, and two more with Elwyn”. Your meeting notes showed two pace cuts of your own and two cut together on Oct 7.'},
+    {id: 'raw', t: 'Raw footage on the page', pick: 'The 26-second camera clip in How it’s made is raw. You said you’d clear it with Elwyn and Nate before this goes live.'},
+    {id: 'notes', t: 'Your beat-board notes, shown in Markup', pick: 'Keep them close to how you wrote them (I fixed one typo and shortened two). They show real thinking.'},
+    {id: 'reels', t: 'Tapping a reel', pick: 'Plays the full reel here, with sound. Add links to Nate’s posts once you have them.'},
+    {id: 'taste', t: 'Taste paragraph', pick: 'Still my draft from your Dec 2024 notes. Paste your own words if you have better ones.'},
+    {id: 'quote', t: 'Elwyn’s quote', pick: 'Still to come; the space is held at the bottom.'},
+    {id: 'numbers', t: 'Numbers card', pick: 'Read from YouTube on Nov 24: 129,846 views, 516 comments. Refresh before going live.'}
+  ];
+  const btn = $('#pvb'), pane = $('#pvp'), list = $('#pvlist');
+  btn.onclick = () => { const o = pane.classList.toggle('open'); btn.setAttribute('aria-expanded', o); };
+  let db = null; const LS = 'pf-notes';
+  const local = JSON.parse(localStorage.getItem(LS) || '{}');
+  const ui = {};
+  Q.forEach(q => { const d = mk('pvi', list); mk('', d, 'b').textContent = q.t; mk('pk', d).textContent = 'My pick: ' + q.pick;
+    let seg; if(q.seg){ seg = mk('seg', d); q.seg.forEach(s => { const [k, l] = s.split(':'); const b = mk('', seg, 'button'); b.textContent = l; b.dataset.k = k; b.setAttribute('aria-pressed', k === INK); b.onclick = () => { setInk(k); $$('button', seg).forEach(x => x.setAttribute('aria-pressed', x === b)); save(q.id); }; }); }
+    const ta = mk('', d, 'textarea'); ta.placeholder = 'Note to me (optional)'; ta.setAttribute('aria-label', 'Note: ' + q.t);
+    const st = mk('pvst', d); let tm; ta.oninput = () => { clearTimeout(tm); st.textContent = '…'; tm = setTimeout(() => save(q.id), 700); };
+    ui[q.id] = {ta, st, seg}; });
+  function body(id){ const u = ui[id]; const b = {item: id, note: u.ta.value, updated: new Date().toISOString()}; if(u.seg) b.choice = INK; return b; }
+  function save(id){ const b = body(id); local[id] = b; try{ localStorage.setItem(LS, JSON.stringify(local)); }catch(e){}
+    if(db) db.collection('page').doc(id).set(b).then(() => ui[id].st.textContent = 'Saved').catch(() => ui[id].st.textContent = 'Saved in this browser only'); else ui[id].st.textContent = 'Saved in this browser only'; }
+  function fill(id, b){ const u = ui[id]; if(!u || !b) return; if(document.activeElement !== u.ta) u.ta.value = b.note || ''; if(u.seg && b.choice){ setInk(b.choice); $$('button', u.seg).forEach(x => x.setAttribute('aria-pressed', x.dataset.k === b.choice)); } }
+  Object.keys(local).forEach(k => fill(k, local[k]));
+  (async () => { try{ if(!window.claude || !window.claude.use) return; db = await window.claude.use('db');
+    db.collection('page').onSnapshot(snap => snap.docs.forEach(d => fill(d.id, d.data() || {}))); }catch(e){ db = null; } })();
+}
+</script>
+<script data-goatcounter="https://tannerholman.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
