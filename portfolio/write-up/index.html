@@ -57,7 +57,7 @@ button{font:inherit;color:inherit}
 #cv .mono{margin:14px 0 0;opacity:.92}
 #cv .mono span{display:block}
 .fig{position:absolute;z-index:7;will-change:transform}
-#nate{left:50%;bottom:11.4svh;height:47svh;aspect-ratio:858/780;margin-left:calc(47svh * -.55)}
+#nate{--nh:min(47svh,87vw);left:50%;bottom:11.4svh;height:var(--nh);aspect-ratio:912/780;margin-left:calc(var(--nh) * -.605)}
 #nate img{position:absolute;inset:0;width:100%;height:100%;opacity:0}
 #nate img.on{opacity:1}
 #globe{left:-3vw;bottom:12.2svh;height:19svh;z-index:9}
@@ -195,7 +195,7 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
   #cv h1 em{font-size:.62em;margin-top:.06em}
   #cv .mono{font-size:15px;line-height:1.6;margin-top:3.2svh}
   .mono{font-size:12.5px}
-  #nate{left:74%;height:70svh;margin-left:calc(70svh * -.55)}
+  #nate{--nh:min(70svh,41vw);left:72.5%;margin-left:calc(var(--nh) * -.55)}
   #globe{left:30vw;height:27svh}
   #koko{right:6vw;top:16svh;width:auto;height:50svh}
   #bw2m{font-size:17vw;top:60svh}
@@ -263,7 +263,7 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
  <section class="sc" id="sa">
   <div class="bw num" id="bw26">26</div>
   <div class="bw num" id="bw20">20</div>
-  <div class="fig" id="nate"><img src="media/nate_a.webp" alt="" class="on"><img src="media/nate_b.webp" alt=""><img src="media/nate_c.webp" alt=""><img src="media/nate_d.webp" alt=""></div>
+  <div class="fig" id="nate"><img src="media/nate2_a.webp" alt="" class="on"><img src="media/nate2_b.webp" alt=""><img src="media/nate2_c.webp" alt=""><img src="media/nate2_d.webp" alt=""></div>
   <div class="desk"></div>
   <img class="fig" id="globe" src="media/globe.webp" alt="">
   <div id="cv"><h1>Anatomy<em>of a reel</em></h1><p class="mono"><span>20 seconds of the Question 9 reel, layer by layer</span><span>Tanner Holman · November 2026</span></p></div>
@@ -409,7 +409,7 @@ const SC = [{id:'sa',len:8.2,ink:0},{id:'sb',len:6.2,ink:0},{id:'sc',len:6.4,ink
 { let s = 0; SC.forEach(c => { c.el = $('#' + c.id); c.s = s; s += c.len; c.e = s; c.last = -1; }); }
 const TOTAL = SC[SC.length - 1].e;
 const CH = [
- {u:0, n:'00', t:'Anatomy of a reel', s:'The cover', c:'var(--terra)', img:'media/nate_a.webp'},
+ {u:0, n:'00', t:'Anatomy of a reel', s:'The cover', c:'var(--terra)', img:'media/nate2_a.webp'},
  {u:SC[0].s + 1.25, n:'01', t:'The stretch', s:'Nate, Kokotajlo and the $2 million', c:'#b9532a', img:'media/koko.jpg', k:'fr'},
  {u:SC[1].s, n:'02', t:'Cuts', s:'26 seconds become 16.9', c:'var(--blue)', img:'media/k5.jpg', k:'cov'},
  {u:SC[2].s, n:'03', t:'Markup', s:'Beat by beat, two left bare', c:'var(--hl)', note:1},
