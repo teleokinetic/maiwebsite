@@ -915,7 +915,6 @@ const Focus = (() => {
     ['oba', 'tl', 'Lab employees’ own odds, stacked', 'Reel · How likely are we to die from AI?'],
     ['q5a', 'tl', 'Four ways into the physical world', 'Reel · How does an AI wind up affecting the physical world?'],
     ['r1a', 'tl', 'The forecast against what happened', 'Question 1 reel'],
-    ['r1b', 'tl', 'A viewer’s comment, highlighted', 'Question 1 reel'],
     ['q3a', 'tl', 'Really thinking? Really choosing?', 'Question 3 reel'],
     ['obc', 'tl', 'Fortune, typed highlight', 'Reel · How likely are we to die from AI?'],
     ['b1a', 'tl', 'TIME, “Strategically Lying”', 'Three ways reel']
@@ -925,6 +924,8 @@ const Focus = (() => {
   /* each loop plays only the stretch where its graphic is on screen (seconds into the clip) */
   const WIN = {g00: [1.5, 4.5], g06: [.5, 3], g57: [.9, 4.5], g79: [.5, 3.7], g30: [.5, 3], g78: [.5, 4.5], r1a: [1, 4.7], q5a: [0, 4], q3a: [.4, 3.8], obc: [.3, 1.9], b1a: [0, 4.2]};
   const shape = (id, k) => k === 'tl' && SQ[id] ? 'sq' : k;
+  /* where a reel tile's crop sits, top to bottom in percent (0 is the top of the clip) */
+  const POS = {r1a: 22, q3a: 36};
   const wall = $('#wall');
   wall.innerHTML = G.map(([id, k, t], i) => `<button class="wt ${shape(id, k)}${k === 'tl' ? ' rl' : ''}" data-i="${i}" data-k="${shape(id, k)}" data-id="${id}" aria-label="${t}"><span class="wm"><img src="media/gfx/${id}.jpg" alt="" loading="lazy"><video data-src="media/gfx/${id}.mp4" muted loop playsinline preload="none"></video></span></button>`).join('');
   const AR = {wd: 16 / 9, w4: 540 / 410, sq: 1, tl: 9 / 16};
@@ -934,14 +935,25 @@ const Focus = (() => {
   const wio = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ vis.add(e.target); playIn(e.target); } else { vis.delete(e.target); $('video', e.target).pause(); } }), {threshold: .5});
   tiles.forEach(t => { wio.observe(t); t.onclick = () => Focus.open(ITEMS, +t.dataset.i, $('.wm', t)); });
   addEventListener('focusclosed', () => vis.forEach(playIn));
-  /* set the tiles into columns. To make the columns end together, the tallest tiles are dealt first, each to the
-     shortest column; then every column is put in order, wide tiles on top, then square, then tall */
-  const H = {wd: 9 / 16, w4: 410 / 540, sq: 1, tl: 5 / 4}; let nc = 0;
+  /* set the tiles into columns. Tiles of one shape are interchangeable, so every way of sharing out each shape among
+     the columns is tried, and the one whose columns end closest together wins (with a small pull toward giving every
+     column a like mix). Then each column runs wide tiles first, then square, then tall. A very large set falls back
+     to dealing the tallest tiles to the shortest column */
+  const H = {wd: 9 / 16, w4: 410 / 540, sq: 1, tl: 5 / 4}, GAP = .05; let nc = 0;
+  const splits = (c, n) => n === 1 ? [[c]] : [...Array(c + 1).keys()].flatMap(i => splits(c - i, n - 1).map(r => [i, ...r]));
   const lay = () => { const n = innerWidth >= 1000 ? 4 : innerWidth >= 700 ? 3 : 2; if(n === nc) return; nc = n;
-    const cols = [...Array(n)].map(() => []), hs = Array(n).fill(0), h = t => H[t.dataset.k];
-    [...tiles].sort((a, b) => h(b) - h(a)).forEach(t => { const k = hs.indexOf(Math.min(...hs)); cols[k].push(t); hs[k] += h(t) + .06; });
-    wall.replaceChildren(...cols.map(c => { const el = mk('wc', wall); c.sort((a, b) => h(a) - h(b) || a.dataset.i - b.dataset.i).forEach(t => el.appendChild(t)); return el; })); };
+    const by = {}; tiles.forEach(t => (by[t.dataset.k] = by[t.dataset.k] || []).push(t));
+    const ks = Object.keys(by).sort((a, b) => H[a] - H[b]), S = ks.map(k => splits(by[k].length, n)), cols = [...Array(n)].map(() => []);
+    if(S.reduce((m, x) => m * x.length, 1) < 2e6){ let best = null; const cur = [];
+      const go = (i, hs, even) => { if(i === ks.length){ const sc = Math.max(...hs) - Math.min(...hs) + even * .02; if(!best || sc < best.sc) best = {sc, cur: cur.slice()}; return; }
+        for(const sp of S[i]){ cur[i] = sp; go(i + 1, hs.map((h, c) => h + sp[c] * (H[ks[i]] + GAP)), even + Math.max(...sp) - Math.min(...sp)); } };
+      go(0, Array(n).fill(0), 0);
+      ks.forEach((k, i) => { let j = 0; best.cur[i].forEach((m, c) => { while(m--) cols[c].push(by[k][j++]); }); }); }
+    else { const hs = Array(n).fill(0); [...tiles].sort((a, b) => H[b.dataset.k] - H[a.dataset.k]).forEach(t => { const k = hs.indexOf(Math.min(...hs)); cols[k].push(t); hs[k] += H[t.dataset.k] + GAP; });
+      cols.forEach(c => c.sort((a, b) => H[a.dataset.k] - H[b.dataset.k] || a.dataset.i - b.dataset.i)); }
+    wall.replaceChildren(...cols.map(c => { const el = mk('wc', wall); c.forEach(t => el.appendChild(t)); return el; })); };
   lay(); addEventListener('resize', lay);
+  tiles.forEach(t => { const y = POS[t.dataset.id]; if(y != null) $$('img,video', t).forEach(m => m.style.objectPosition = `50% ${y}%`); });
   tiles.forEach(t => { const w = WIN[t.dataset.id], v = $('video', t); if(!w) return; v.loop = false;
     const back = () => { v.currentTime = w[0]; v.play().catch(() => {}); };
     v.addEventListener('loadedmetadata', () => { v.currentTime = w[0]; }); v.addEventListener('ended', back);
