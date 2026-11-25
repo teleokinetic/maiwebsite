@@ -61,6 +61,12 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .player:hover .chip{transform:translateY(-2px)}
 .ftitle{margin:18px 0 0}
 .ftitle .g a{color:inherit;text-decoration-color:var(--soft);text-underline-offset:3px}
+/* the line under the film: title and ↗ on one line, grey line under it; the whole caption is the link (after Molly's card captions) */
+.fcap{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 12px;margin:18px 0 0;text-decoration:none;color:inherit}
+.fcap b{font-weight:400}
+.fcap .g{grid-column:1}
+.fcap i{grid-row:1;grid-column:2;font-style:normal;color:var(--grey)}
+@media (hover:hover){.fcap:hover b{text-decoration:underline;text-decoration-color:var(--soft);text-underline-offset:3px}}
 .nums{position:relative;margin:18px 0 0;width:100%;max-width:360px;height:84px;transition:height .45s}
 .nc{display:block;width:100%;text-align:left;border:0;font:inherit;color:inherit;text-decoration:none;cursor:pointer}
 .n2{pointer-events:none}.nums.fan .n2{pointer-events:auto}
@@ -153,6 +159,8 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .vctl{position:absolute;right:0;top:0;z-index:3}
 .pill{border:1px solid var(--line);background:#fff;border-radius:999px;padding:6px 12px;font-size:13px;cursor:pointer}
 .steps{list-style:none;margin:0;padding:12vh 0 30vh}
+.how .steps{padding:6vh 0 18vh}
+.how .step{min-height:42vh}
 .step{min-height:78vh;display:flex;align-items:center}
 .step > div{max-width:24em}
 .step h3{margin:0 0 6px;font-size:21px;line-height:1.3;font-weight:400}
@@ -172,6 +180,22 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .acard .ai{width:96px;aspect-ratio:16/10;border-radius:14px;background:center/cover}
 .acard .at{display:grid}
 .acard .aa{color:var(--grey);font-size:18px}
+/* cover cards (after his Writing cards): the cover is the thing itself, moving; title inside over a fade; ↗ top right */
+.cv{position:relative;display:block;width:100%;aspect-ratio:16/10;margin:16px 0 0;padding:0;border:0;border-radius:20px;overflow:hidden;background:#eeeef0;text-align:left;cursor:pointer;color:#fff;isolation:isolate;transition:transform .3s cubic-bezier(.2,.9,.3,1.2)}
+.cv:active{transform:scale(.985)}
+.cv::after{content:"";position:absolute;inset:auto 0 0;height:55%;background:linear-gradient(rgba(20,20,22,0),rgba(20,20,22,.72));z-index:1;pointer-events:none}
+.cv .tt{position:absolute;left:18px;right:18px;bottom:15px;z-index:2;display:grid;gap:1px}
+.cv .tt b{font-weight:400;font-size:17px;line-height:1.3}
+.cv .tt span{color:rgba(255,255,255,.66);font-size:15px;line-height:1.3}
+.cv .ca{position:absolute;right:16px;top:13px;z-index:2;font-size:18px;color:rgba(0,0,0,.45)}
+.cv.dark .ca{color:rgba(255,255,255,.8)}
+.cv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
+.hb{position:absolute;left:18px;right:46px;top:20px;display:grid;gap:11px}
+.hb .hr{position:relative;height:9px}
+.hb .bg{position:absolute;inset:0;border-radius:2px;background:#dcdce0;transform-origin:0 50%}
+.hb .k{position:absolute;top:0;bottom:0;background:var(--ink)}
+.hb .gm{position:absolute;top:-5px;height:3px;border-radius:1px;background:var(--gfx)}
+.hb .hl{display:flex;justify-content:space-between;font:500 10px/1 "Geist Mono",monospace;color:#8b8b8f;margin-bottom:-6px}
 .sheetv{position:fixed;inset:0;z-index:60;visibility:hidden}
 .sheetv.open{visibility:visible}
 .sheetv .scrim{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .35s}
@@ -187,8 +211,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .art .date{margin:18px 0 26px;padding-bottom:26px;border-bottom:1px solid #eee}
 .art h3{margin:34px 0 10px}
 .art p{margin:0 0 1em}
-.art figure{margin:22px -6px;border-radius:12px;overflow:hidden;background:#f2f2f2}
-.art figure video,.art figure img{display:block;width:100%}
+/* figures as in his articles: a soft grey panel with 18px corners, the media inset and centred */
+.art figure{margin:26px 0;padding:18px;border-radius:18px;background:#f2f2f2;display:grid;place-items:center}
+.art figure video,.art figure img{display:block;width:100%;border-radius:10px}
+.art figure.tall video{width:auto;height:min(64svh,520px);max-width:100%;aspect-ratio:9/16;object-fit:cover}
 .art .tbdnote{font:13px/1.4 -apple-system,system-ui,sans-serif}
 body.sheet-open{overflow:hidden}
 @media (min-width:900px){.sheetv .panel{left:calc(50% - 380px);right:calc(50% - 380px);top:40px}}
@@ -204,11 +230,34 @@ body.sheet-open{overflow:hidden}
 .rv::after{content:"";position:absolute;inset:auto 0 0;height:46%;background:linear-gradient(transparent,rgba(0,0,0,.72));pointer-events:none}
 .rt{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;display:grid;gap:2px;transition:opacity .25s}
 .rt .mono{color:rgba(255,255,255,.7)}.rt b{font-weight:400;font-size:17px;line-height:1.3;color:#fff}
-dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}
-dialog::backdrop{background:rgba(0,0,0,.86)}
-.lb{position:relative;height:min(86svh,860px);aspect-ratio:9/16;max-width:94vw}
-.lb video{width:100%;height:100%;border-radius:14px;background:#000;object-fit:contain}
-.lbx{position:absolute;right:-6px;top:-46px;width:40px;height:40px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:20px;cursor:pointer}
+/* graphics wall (after his Experiments & Lab): two columns of short loops on the dark band */
+.wallh{margin-top:84px}
+.wall{columns:2;column-gap:10px;max-width:calc(var(--wide) + 2*var(--pad));margin:22px auto 0;padding:0 var(--pad)}
+.wt{display:block;width:100%;break-inside:avoid;margin:0 0 10px;padding:0;border:0;background:none;cursor:pointer}
+.wm{position:relative;display:block;border-radius:12px;overflow:hidden;background:#2c2c2c;transition:transform .25s cubic-bezier(.2,.9,.3,1.2)}
+.wm::after{content:"";position:absolute;inset:0;border-radius:inherit;box-shadow:inset 0 0 0 1px rgba(255,255,255,.07);pointer-events:none}
+.wm img,.wm video{display:block;width:100%;height:100%;object-fit:cover}
+.wm video{position:absolute;inset:0;opacity:0;transition:opacity .4s}.wm video.on{opacity:1}
+.wt:active .wm{transform:scale(.97)}
+@media (hover:hover){.wt:hover .wm{transform:scale(1.015)}}
+.wt.wd .wm{aspect-ratio:16/9}.wt.sq .wm{aspect-ratio:1}.wt.tl .wm{aspect-ratio:9/16}
+@media (min-width:900px){.wall{columns:3;column-gap:14px}.wt{margin-bottom:14px}}
+/* focus view (after his Lab detail): page blurs, the piece grows out of its tile, its name under it */
+.fv{position:fixed;inset:0;z-index:80;visibility:hidden}
+.fv.open{visibility:visible}
+.fv .fs{position:absolute;inset:0;background:rgba(5,5,5,.62);-webkit-backdrop-filter:blur(22px) saturate(1.1);backdrop-filter:blur(22px) saturate(1.1);opacity:0;transition:opacity .35s}
+.fv.open .fs{opacity:1}
+.fv .fb{position:absolute;inset:0;display:grid;grid-template-rows:minmax(0,1fr) auto;justify-items:center;align-items:center;gap:14px;padding:calc(64px + env(safe-area-inset-top)) 18px calc(28px + env(safe-area-inset-bottom))}
+.fv .fm{position:relative;max-width:100%;max-height:100%;border-radius:14px;overflow:hidden;background:#000;box-shadow:0 30px 80px rgba(0,0,0,.5);transform-origin:0 0}
+.fv .fm video{display:block;width:100%;height:100%;object-fit:contain;background:#000}
+.fv .fc{color:#f2f2f2;text-align:center;max-width:30em;margin:0;font-size:17px;line-height:1.35;opacity:0;transform:translateY(6px);transition:opacity .3s .15s,transform .3s .15s}
+.fv.open .fc{opacity:1;transform:none}
+.fv .fc span{display:block;color:#8e8e93;font-size:14px;margin-top:3px}
+.fv .fx,.fv .fp,.fv .fn{position:absolute;z-index:2;width:44px;height:44px;border-radius:50%;border:0;background:rgba(255,255,255,.14);color:#fff;font-size:18px;cursor:pointer;display:grid;place-items:center}
+.fv .fx{right:14px;top:calc(14px + env(safe-area-inset-top))}
+.fv .fp,.fv .fn{top:50%;margin-top:-22px}.fv .fp{left:10px}.fv .fn{right:10px}
+.fv .fct{position:absolute;left:0;right:0;top:calc(26px + env(safe-area-inset-top));text-align:center;font:500 12px "Geist Mono",monospace;color:#8e8e93}
+@media (max-width:600px){.fv .fp,.fv .fn{top:auto;bottom:calc(20px + env(safe-area-inset-bottom));margin:0}.fv .fb{padding-bottom:calc(84px + env(safe-area-inset-bottom))}}
 
 /* about */
 .about{padding-top:80px}
@@ -252,6 +301,9 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
   .vbox{height:100%}
   .steps{padding:4svh var(--pad) 26svh}
   .step{min-height:56svh;align-items:flex-start}
+  .how .viz{height:54svh}
+  .how .steps{padding:3svh var(--pad) 20svh}
+  .how .step{min-height:34svh}
   .step.part{min-height:44svh}
   .lanes{display:none}
   .dlist{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
@@ -320,7 +372,7 @@ body.preview #pv{display:block}
     <span class="chip"><i></i>Watch · 15:53</span>
    </button>
   </div>
-  <p class="ftitle ar" style="--d:.45s">Unfortunately, We Can't Just Unplug It<br><span class="g">Nate Soares answers the ten most common questions about AI risk. <a href="https://www.youtube.com/watch?v=9U-FdOWTxPw">YouTube</a></span></p>
+  <a class="fcap ar" style="--d:.45s" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener"><b>Unfortunately, We Can't Just Unplug It</b><i aria-hidden="true">↗</i><span class="g">Nate Soares answers the ten most common questions about AI risk.</span></a>
   <div class="nums ar dr" style="--d:.9s" id="nums">
    <a class="nc n2" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener" tabindex="-1"><b>Watch on YouTube <span class="arr">↗</span></b><span>Nate Soares · posted Nov 16, 2026</span></a>
    <button class="nc n1" id="numsb" aria-expanded="false" aria-label="130K views, 516 comments in the first 8 days. Tap for the link"><b>130K views · 516 comments</b><span>in the first 8d</span></button>
@@ -353,7 +405,7 @@ body.preview #pv{display:block}
      <li><span>Graphics by</span><span class="g">Tanner Holman</span></li>
     </ul></li>
   </ul>
-  <button class="acard" id="hcard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/hour-thumb.jpg);background-color:#fff"></span><span class="at"><span>An hour into 16 minutes</span><span class="g">How the raw footage became the film</span></span><span class="aa" aria-hidden="true">↗</span></button>
+  <button class="cv" id="hcard" aria-haspopup="dialog" aria-label="An hour into 16 minutes: how the raw footage became the film"><span class="hb" id="hb" aria-hidden="true"></span><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>An hour into 16 minutes</b><span>How the raw footage became the film</span></span></button>
  </section>
 
 </div>
@@ -365,8 +417,10 @@ body.preview #pv{display:block}
   <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
   <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 9</span><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
  </div>
+ <div class="wide wallh"><h2>Graphics and motion</h2><p class="g" style="margin:0">From the film and the reels. Tap one to see it larger.</p></div>
+ <div class="wall" id="wall"></div>
 </section>
-<dialog id="lb" aria-label="Reel"><div class="lb"><video id="lbv" controls playsinline></video><button class="lbx" id="lbx" aria-label="Close">✕</button></div></dialog>
+<div class="fv" id="fv" role="dialog" aria-modal="true" aria-label="Focus view"><div class="fs"></div><div class="fct"></div><div class="fb"><div class="fm"></div><p class="fc"></p></div><button class="fx" aria-label="Close">✕</button><button class="fp" aria-label="Previous">←</button><button class="fn" aria-label="Next">→</button></div>
 
 <div class="sheet two">
  <section class="how b" id="how" aria-label="20 seconds, layer by layer">
@@ -388,7 +442,7 @@ body.preview #pv{display:block}
     <li class="step" data-s="4"><div><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
    </ol>
   </div>
-  <div class="wrap"><button class="acard" id="acard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/l_film.jpg)"></span><span class="at"><span>The write-up</span><span class="g">How one stretch of the Question 9 reel was made</span></span><span class="aa" aria-hidden="true">↗</span></button></div>
+  <div class="wrap"><button class="cv dark" id="acard" aria-haspopup="dialog" aria-label="The write-up: how one stretch of the Question 9 reel was made"><video src="media/final.mp4" poster="media/l_film.jpg" muted loop playsinline preload="none" aria-hidden="true"></video><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>The write-up</b><span>How one stretch of the Question 9 reel was made</span></span></button></div>
  </section>
  <section class="about wrap" aria-label="About">
   <h2 style="margin-bottom:12px">About</h2>
@@ -451,7 +505,7 @@ body.preview #pv{display:block}
    <p>Every graphic needed a source. Kokotajlo's own footage came from The Diary Of A CEO's official upload, after the first copy I found was too poor in picture and sound. The $2 million comes from his TIME100 profile. When Elwyn questioned the host's line, I checked the exact words against the captions and the waveform.</p>
    <h3>Graphics, motion and sound</h3>
    <p>Then the layers went on: TIME's page full screen with two highlight strokes, his name beside his head, punch-ins that move closer as Nate gets to "go away", and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight.</p>
-   <figure><video src="media/final.mp4" poster="media/q9-poster.jpg" muted loop playsinline preload="none" data-auto style="max-width:340px;margin:0 auto"></video></figure>
+   <figure class="tall"><video src="media/final.mp4" poster="media/q9-poster.jpg" muted loop playsinline preload="none" data-auto></video></figure>
   </article>
  </div>
 </div>
@@ -631,11 +685,33 @@ const LY = {
   let cur = -1;
   function pick(){ const r = how.getBoundingClientRect(); const near = r.top < innerHeight && r.bottom > 0;
     if(!near){ if(inB){ inB = false; VS.forEach(v => v.pause()); cancelAnimationFrame(raf); } return; }
-    const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; });
+    const line = innerHeight * (phone.matches ? .74 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; });
     if(!inB){ inB = true; raf = requestAnimationFrame(tick); active().play().catch(() => {}); }
     if(s === cur) return; cur = s; window.HOW = {step: s}; setB(s); active().play().catch(() => {}); }
   addEventListener('scroll', () => requestAnimationFrame(pick), {passive: true}); addEventListener('resize', pick);
   pick();
+}
+
+/* ---------- cover cards: the hour builds on its cover, one row at a time; the write-up's cover loops the finished stretch ---------- */
+{
+  const hb = $('#hb'), labs = [['Raw footage', '1:09:45'], ['Kept', '15:19'], ['Condensed', '15:53'], ['The film', '81 graphics']];
+  const rows = labs.map(([a, b]) => { const l = mk('hl', hb, 'span'); mk('', l, 'span').textContent = a; mk('', l, 'span').textContent = b; const r = mk('hr', hb, 'span'); return {l, r}; });
+  const bg0 = mk('bg', rows[0].r, 'span'), bg1 = mk('bg', rows[1].r, 'span'); bg1.style.background = '#e9e9ec';
+  const pc = x => (x * 100).toFixed(3) + '%', R = HD.raw, F = HD.film;
+  const K = HD.segs.map(s => { const e = mk('k', rows[1].r, 'span'); e.style.left = pc(s[0] / R); e.style.width = `max(1px,${pc(s[2] / R)})`; return e; });
+  const C = HD.segs.map(s => { const e = mk('k', rows[2].r, 'span'); e.style.width = `max(1px,${pc(s[2] / R)})`; return e; });
+  const Fm = HD.segs.map(s => { const e = mk('k', rows[3].r, 'span'); e.style.left = pc(s[1] / F); e.style.width = `max(1px,${pc(s[2] / F)})`; e.style.background = s[4] ? (s[4] % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; return e; });
+  const GM = HD.gfx.map(g => { const e = mk('gm', rows[3].r, 'span'); e.style.left = pc(g[0] / F); e.style.width = `max(2px,${pc((g[1] - g[0]) / F)})`; return e; });
+  const D = 7600, ease = t => 1 - Math.pow(1 - clamp(t), 3); let t0 = null, on = false;
+  function draw(t){ hb.style.opacity = t > 6.8 ? 1 - (t - 6.8) / .8 : 1;
+    const show = (k, at) => { rows[k].l.style.opacity = rows[k].r.style.opacity = ease((t - at) / .35); };
+    show(0, 0); bg0.style.transform = `scaleX(${ease(t / .9)})`;
+    show(1, .9); K.forEach((k, i) => k.style.opacity = t > .9 + HD.segs[i][0] / R ? 1 : 0);
+    show(2, 2.1); const p = ease((t - 2.3) / 1.3); C.forEach((c, i) => { const s = HD.segs[i]; c.style.left = pc(s[0] / R + (s[1] - s[0]) / R * p); c.style.opacity = t > 2.1 ? 1 : 0; });
+    show(3, 3.8); Fm.forEach((f, i) => f.style.opacity = t > 3.8 + HD.segs[i][1] / F * .8 ? 1 : 0); GM.forEach((g, i) => g.style.opacity = t > 4.7 + HD.gfx[i][0] / F * .6 ? 1 : 0); }
+  function frame(now){ if(!on) return; if(t0 == null) t0 = now; draw(((now - t0) % D) / 1000); requestAnimationFrame(frame); }
+  if(RM) draw(6); else onView($('#hcard'), () => { if(!on){ on = true; t0 = null; requestAnimationFrame(frame); } }, () => on = false, .4);
+  const v = $('#acard video'); onView($('#acard'), () => { if(!RM){ v.preload = 'auto'; v.play().catch(() => {}); } }, () => v.pause(), .4);
 }
 
 /* ---------- the sheet lifts off the dark Reels band, once ---------- */
@@ -645,9 +721,38 @@ const LY = {
   addEventListener('scroll', () => requestAnimationFrame(upd), {passive: true}); upd();
 }
 
-/* ---------- reels: loops play while on screen, tap plays the full reel with sound ---------- */
+/* ---------- focus view: tap a reel or a wall tile; the page blurs, the piece grows out of its tile, its name sits under it ---------- */
+const Focus = (() => {
+  const fv = $('#fv'), fm = $('.fm', fv), fc = $('.fc', fv), fct = $('.fct', fv), fb = $('.fb', fv);
+  let list = [], i = 0, from = null, last = null;
+  const fit = ar => { const cs = getComputedStyle(fb); const W = fb.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight), H = fb.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - 70;
+    let w = W, h = w / ar; if(h > H){ h = H; w = h * ar; } fm.style.width = w + 'px'; fm.style.height = h + 'px'; };
+  const fly = (a, b, back) => { if(RM || !a) return; const r0 = a.getBoundingClientRect(), r1 = b.getBoundingClientRect(); const t = `translate(${r0.left - r1.left}px,${r0.top - r1.top}px) scale(${r0.width / r1.width},${r0.height / r1.height})`;
+    b.animate(back ? [{transform: 'none'}, {transform: t}] : [{transform: t, borderRadius: '24px'}, {transform: 'none', borderRadius: '14px'}], {duration: back ? 320 : 520, easing: back ? 'cubic-bezier(.4,0,.2,1)' : 'cubic-bezier(.2,.9,.25,1)'}); };
+  function show(k, tile){ i = (k + list.length) % list.length; const it = list[i];
+    fm.innerHTML = ''; const v = document.createElement('video'); v.src = it.src; v.poster = it.poster || ''; v.playsInline = true; v.setAttribute('playsinline', ''); v.loop = !it.sound; v.muted = !it.sound; v.controls = !!it.sound; fm.appendChild(v);
+    v.play().catch(() => { v.muted = true; v.play().catch(() => {}); });
+    fc.textContent = it.title; const sb = document.createElement('span'); sb.textContent = it.sub || ''; fc.appendChild(sb);
+    fct.textContent = (i + 1) + ' / ' + list.length; fit(it.ar);
+    if(tile) fly(tile, fm); else if(!RM) fm.animate([{opacity: 0, transform: 'scale(.97)'}, {opacity: 1, transform: 'none'}], {duration: 260, easing: 'ease-out'}); }
+  function open(items, k, tile){ list = items; last = document.activeElement; from = tile; $$('video').forEach(v => { if(!fm.contains(v)) v.pause(); });
+    fv.classList.add('open'); document.body.classList.add('sheet-open'); show(k, tile); setTimeout(() => $('.fx', fv).focus(), 60);
+    $('.fp', fv).hidden = $('.fn', fv).hidden = items.length < 2; }
+  function close(){ if(!fv.classList.contains('open')) return; const v = $('video', fm); if(v) v.pause(); fly(from, fm, true);
+    fv.classList.remove('open'); document.body.classList.remove('sheet-open'); setTimeout(() => { if(!fv.classList.contains('open')) fm.innerHTML = ''; }, 340); last && last.focus(); dispatchEvent(new Event('focusclosed')); }
+  const step = d => { from = null; show(i + d); };
+  $('.fx', fv).onclick = close; $('.fs', fv).onclick = close; fb.addEventListener('click', e => { if(e.target === fb) close(); });
+  $('.fp', fv).onclick = () => step(-1); $('.fn', fv).onclick = () => step(1);
+  addEventListener('keydown', e => { if(!fv.classList.contains('open')) return; if(e.key === 'Escape') close(); else if(e.key === 'ArrowRight') step(1); else if(e.key === 'ArrowLeft') step(-1); });
+  let sx = null; fm.addEventListener('touchstart', e => sx = e.touches[0].clientX, {passive: true});
+  fm.addEventListener('touchend', e => { if(sx == null) return; const dx = e.changedTouches[0].clientX - sx; sx = null; if(Math.abs(dx) > 50 && list.length > 1) step(dx < 0 ? 1 : -1); });
+  addEventListener('resize', () => { if(fv.classList.contains('open')) fit(list[i].ar); });
+  return {open, close};
+})();
+
+/* ---------- reels: loops play while on screen, tap opens the full reel with sound in the focus view ---------- */
 {
-  const cards = $$('.rc'), lb = $('#lb'), lbv = $('#lbv'), rail = $('#rail');
+  const cards = $$('.rc'), rail = $('#rail');
   /* like Marvin's carousel: the card at the start of the rail leads at full size and plays; the next ones sit smaller, dimmer and still,
      shrinking toward their outer edge; on a wide screen where all three fit, the hovered card leads */
   let hover = -1, seen = false;
@@ -655,13 +760,52 @@ const LY = {
     cards.forEach((el, i) => { const d = (el.offsetLeft - pad - rail.scrollLeft) / (el.offsetWidth + 12);
       const k = fits ? (hover < 0 ? 0 : (i === hover ? 0 : .7)) : Math.min(1, Math.abs(d));
       el.style.transformOrigin = d >= 0 ? '0% 50%' : '100% 50%'; el.style.transform = `scale(${1 - k * .14})`; el.style.opacity = 1 - k * .4; $('.rt', el).style.opacity = 1 - k * .8;
-      const vd = $('video', el); if(seen && !RM && k < .35){ if(!vd.src) vd.src = vd.dataset.src; vd.play().catch(() => {}); } else vd.pause(); }); };
+      const vd = $('video', el); if(seen && !RM && k < .35 && !$('#fv').classList.contains('open')){ if(!vd.src) vd.src = vd.dataset.src; vd.play().catch(() => {}); } else vd.pause(); }); };
   rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead);
   cards.forEach((c, i) => { c.onmouseenter = () => { hover = i; lead(); }; c.onmouseleave = () => { hover = -1; lead(); }; });
   const io = new IntersectionObserver(es => es.forEach(e => { seen = e.isIntersecting; lead(); }), {threshold: .3}); io.observe(rail);
-  cards.forEach(c => { c.onclick = () => { $$('.rc video').forEach(v => v.pause()); lbv.src = `media/q${c.dataset.q}-full.mp4`; lbv.muted = false; lb.showModal(); lbv.play().catch(() => {}); }; });
-  const close = () => { lbv.pause(); lbv.removeAttribute('src'); lbv.load(); lb.close(); };
-  $('#lbx').onclick = close; lb.addEventListener('click', e => { if(e.target === lb) close(); }); lb.addEventListener('cancel', () => { lbv.pause(); });
+  const REELS = cards.map(c => ({src: `media/q${c.dataset.q}-full.mp4`, poster: `media/q${c.dataset.q}-poster.jpg`, ar: 9 / 16, sound: true, title: $('.rt b', c).textContent, sub: 'Question ' + c.dataset.q + ' · reel for Nate\'s accounts'}));
+  cards.forEach((c, i) => c.onclick = () => Focus.open(REELS, i, $('.rv', c)));
+  addEventListener('focusclosed', lead);
+}
+
+/* ---------- graphics wall: short loops from the film and the reels; each plays only while on screen ---------- */
+{
+  const G = [
+    ['r4a', 'tl', 'Hide, pretend, wait', 'Question 4 reel'],
+    ['g00', 'wd', 'The ten questions, opening card', 'The film · 0:00'],
+    ['h1a', 'tl', 'Can a submarine really swim?', 'Reel · Do AIs need consciousness to be dangerous?'],
+    ['g15', 'sq', 'METR quote card', 'The film · Question 2 · 2:48'],
+    ['r1a', 'tl', 'The forecast against what happened', 'Question 1 reel'],
+    ['g05', 'wd', 'Semafor headline, full screen', 'The film · Question 1 · 0:37'],
+    ['oba', 'tl', 'Lab employees’ own odds, stacked', 'Reel · How likely are we to die from AI?'],
+    ['g79', 'sq', '“Stupid”: kinetic type', 'The film · Question 10 · 14:53'],
+    ['r9a', 'tl', 'The two most-cited AI scientists', 'Question 9 reel'],
+    ['g57', 'wd', 'Four lab heads', 'The film · Question 8 · 10:56'],
+    ['q5a', 'tl', 'Four ways into the physical world', 'Reel · How does an AI wind up affecting the physical world?'],
+    ['g30', 'sq', 'TechCrunch card with highlight', 'The film · Question 4 · 6:33'],
+    ['h1b', 'tl', 'Just put “artificial” in front', 'Reel · Do AIs need consciousness to be dangerous?'],
+    ['g06', 'wd', 'Hinton on CNN, highlighted', 'The film · Question 1 · 0:46'],
+    ['r4b', 'tl', 'rentahuman.ai card', 'Question 4 reel'],
+    ['g74', 'sq', '$89 billion', 'The film · Question 9 · 14:16'],
+    ['m2a', 'tl', 'Musk on Google, over the building', 'Reel · Why keep building it if it’s dangerous?'],
+    ['g64', 'wd', 'Three founders, three valuations', 'The film · Question 8 · 11:55'],
+    ['r1b', 'tl', 'A viewer’s comment, highlighted', 'Question 1 reel'],
+    ['g45', 'sq', 'Escape, kill, convince', 'The film · Question 6 · 8:27'],
+    ['obb', 'tl', '“Don’t panic hard enough to shut down my company”', 'Reel · How likely are we to die from AI?'],
+    ['g32', 'wd', 'Fedorov headline', 'The film · Question 4 · 6:36'],
+    ['r9b', 'tl', 'a16z essay, highlighted', 'Question 9 reel'],
+    ['g78', 'sq', 'Chip stocks on Sep 14', 'The film · Question 10 · 14:49']
+  ];
+  const wall = $('#wall');
+  wall.innerHTML = G.map(([id, k, t], i) => `<button class="wt ${k}" data-i="${i}" aria-label="${t}"><span class="wm"><img src="media/gfx/${id}.jpg" alt="" loading="lazy"><video data-src="media/gfx/${id}.mp4" muted loop playsinline preload="none"></video></span></button>`).join('');
+  const AR = {wd: 16 / 9, sq: 1, tl: 9 / 16};
+  const ITEMS = G.map(([id, k, t, sub]) => ({src: `media/gfx/${id}.mp4`, poster: `media/gfx/${id}.jpg`, ar: AR[k], title: t, sub}));
+  const tiles = $$('.wt', wall), vis = new Set();
+  const playIn = t => { const v = $('video', t); if(RM || $('#fv').classList.contains('open')) return; if(!v.src) v.src = v.dataset.src; v.play().then(() => v.classList.add('on')).catch(() => {}); };
+  const wio = new IntersectionObserver(es => es.forEach(e => { if(e.isIntersecting){ vis.add(e.target); playIn(e.target); } else { vis.delete(e.target); $('video', e.target).pause(); } }), {threshold: .5});
+  tiles.forEach(t => { wio.observe(t); t.onclick = () => Focus.open(ITEMS, +t.dataset.i, $('.wm', t)); });
+  addEventListener('focusclosed', () => vis.forEach(playIn));
 }
 
 /* ---------- about: ink emphasis (one phrase, or darkens as you scroll) ---------- */
