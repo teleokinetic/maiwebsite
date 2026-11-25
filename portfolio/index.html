@@ -98,8 +98,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
 .rco{margin-left:8px;vertical-align:2px}
 .rcap{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;margin:0;color:#fff;pointer-events:none}
-.rcl{display:block;font-size:17px;line-height:1.3;max-width:24em;text-wrap:pretty}
+.rcl{display:block;font-size:17px;line-height:1.3;max-width:27em;text-wrap:pretty}
 .rcl .rch{opacity:.7}
+.rcl.num{padding-left:1.25em;text-indent:-1.25em}
+.rcl .rcn{display:inline-block;width:1.25em;text-indent:0;opacity:.55;font-variant-numeric:tabular-nums}
 @keyframes rsay{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
 .rcl.in{animation:rsay .32s cubic-bezier(.215,.61,.355,1) both}
 @keyframes rland{from{opacity:0;transform:translateY(14%) scale(.92)}to{opacity:1;transform:none}}
@@ -123,7 +125,8 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 @media (prefers-reduced-motion:reduce){
   .role.go .pl .it{animation:none}
   .rcap{display:none}
-  .rlist{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal}
+  .rlist{position:static;width:auto;height:auto;overflow:visible;clip-path:none;white-space:normal;list-style:decimal;padding-left:1.3em}
+  .rlist li::marker{color:var(--grey)}
 }
 .crows{list-style:none;margin:40px 0 0;padding:0}
 .crows > li{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line);padding:11px 0}
@@ -561,13 +564,13 @@ body.preview #pv{display:block}
     </div></div>
     <p class="rcap" aria-hidden="true"><span class="rcl">Unfortunately, We Can’t Just Unplug It</span></p>
    </div>
-   <ul class="rlist">
+   <ol class="rlist">
     <li>Footage of Nate <span class="g">the team</span></li>
     <li>Editing and pacing on <span class="tbd">[two or three]</span> sections <span class="g">me</span></li>
     <li>Supporting research <span class="g">me</span></li>
     <li>All graphics <span class="g">me</span></li>
     <li>All motion <span class="g">me</span></li>
-   </ul>
+   </ol>
    <p class="g rpm">And project manager for parts of the production.</p>
   </div>
  </div>
@@ -759,7 +762,8 @@ sheet($('#sheetv'), $('#acard'));
   const bump = pls.map(() => ({x: 0, v: 0}));
   const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   function say(h){ const on = h >= 0 && h < END;
-    line.innerHTML = on ? LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
+    line.innerHTML = on ? `<span class="rcn">${h + 1}</span>` + LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
+    line.classList.toggle('num', on);
     if(!RM){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
   function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
     if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go'); } }
