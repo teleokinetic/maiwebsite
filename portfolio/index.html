@@ -36,7 +36,6 @@ button{font:inherit;color:inherit}
 
 /* sheets: the page is a white sheet that lifts off the dark Reels band */
 .sheet{position:relative;z-index:2;background:#fff}
-.sheet.one{border-radius:0 0 var(--r,0) var(--r,0)}
 .sheet.two{border-radius:14px 14px 0 0;margin-top:-14px}
 
 /* arrival: name and line fade up, the film rises, the numbers card drops in last */
@@ -221,6 +220,8 @@ body.sheet-open{overflow:hidden}
 /* reels: the dark band */
 .reels{background:var(--dark);color:#ececec;padding:86px 0 110px;position:relative;z-index:1;margin-top:-1px}
 .reels .g{color:#8e8e93}
+/* the dark reaches up behind the white sheet, so that when the sheet's sides draw in there is dark to show */
+.reels::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:100vh;background:var(--dark)}
 .rail{display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scroll-padding-left:max(var(--pad),calc(50% - 400px));scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
 .rc{flex:none;width:min(74vw,300px);scroll-snap-align:start;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;transform-origin:50% 40%;transition:transform .2s,opacity .2s}
@@ -853,10 +854,14 @@ const LY = {
   if(RM) draw(END); else { draw(0); addEventListener('rolefilled', play); onView($('#hcard'), () => { seen = true; play(); }, () => { seen = false; }, .25); }
 }
 
-/* ---------- the sheet lifts off the dark Reels band, once ---------- */
+/* ---------- the white gathers as you scroll off it: its sides draw in and its bottom corners round ---------- */
 {
-  const s = $('#sheet1'), reels = $('#reels');
-  const upd = () => { const top = reels.getBoundingClientRect().top; const p = clamp((innerHeight - top) / (innerHeight * .4)); s.style.setProperty('--r', (p * 14).toFixed(2) + 'px'); };
+  const s = $('#sheet1');
+  /* the curve measured on Marvin's page: the sides draw in to 8.1% of the width (5.4% on a phone) over the whole climb of the
+     bottom edge, slow at both ends; the corners reach 40px (24px) by two-fifths of it */
+  const sm = x => x * x * (3 - 2 * x);
+  const upd = () => { const ph = innerWidth < 700, p = clamp(1 - s.getBoundingClientRect().bottom / (innerHeight - 20)), x = innerWidth * (ph ? .054 : .081) * sm(p), r = (ph ? 24 : 40) * sm(Math.min(1, p / .4));
+    s.style.clipPath = p > 0 ? `inset(0 ${x.toFixed(1)}px round 0 0 ${r.toFixed(1)}px ${r.toFixed(1)}px)` : ''; };
   addEventListener('scroll', () => requestAnimationFrame(upd), {passive: true}); upd();
 }
 
