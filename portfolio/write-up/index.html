@@ -114,9 +114,13 @@ body:not(.pv) #cv .tbd{display:none!important}
 .src b{display:block;font-weight:600;font-size:14px;letter-spacing:-.01em}
 .src span{display:block;font-size:12.5px;line-height:1.3;color:#6b6a66;margin-top:3px}
 .src.dim{opacity:.46;filter:saturate(.5)}
-#chk{position:absolute;left:var(--pad);right:var(--pad);bottom:5svh;height:11svh;z-index:10;opacity:0}
-#chk canvas{position:absolute;inset:0 0 16px;width:100%;height:calc(100% - 16px)}
-#chk .mono{position:absolute;left:0;bottom:-4px;margin:0;color:#6b6a66;font-size:10px}
+#stripd{bottom:7svh;height:9svh;opacity:0}
+#stripd .clips{height:100%}
+#stripd .clip{box-shadow:0 0 0 1.5px var(--ink) inset}
+#stripd .held{border-color:var(--red);color:var(--red);background:#fff center/cover}
+#test{position:absolute;top:-8px;bottom:-8px;left:0;width:3px;border-radius:2px;background:var(--red);opacity:0;z-index:3}
+#test::before{content:"";position:absolute;left:-4px;top:-6px;border:5.5px solid transparent;border-top:7px solid var(--red);border-bottom:0}
+#capc{left:7vw;top:41svh;width:86vw;aspect-ratio:2408/1540;border:5px solid var(--cream);border-radius:10px;z-index:11;background:#fff}
 #bwsrc{top:62svh;font-family:var(--serif);font-style:italic;font-weight:400;font-size:50vw;letter-spacing:-.03em;color:rgba(229,50,45,.1);z-index:4}
 
 /* ---------- E: graphics, motion, sound ---------- */
@@ -186,12 +190,13 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
   :root{--pad:4vw;--ts:clamp(28px,2.75vw,46px);--top:15svh}
   .tx{right:auto;width:min(44vw,18em)}
   #hud{padding:18px 3vw}
-  #cv h1{font-size:10.5vw}
-  #cv{top:13svh}
-  #cv .mono{font-size:14px;margin-top:22px}
+  #cv{top:11svh;z-index:6}
+  #cv h1{font-size:17.2vw;line-height:.8;letter-spacing:-.06em}
+  #cv h1 em{font-size:.62em;margin-top:.06em}
+  #cv .mono{font-size:15px;line-height:1.6;margin-top:3.2svh}
   .mono{font-size:12.5px}
-  #nate{left:72%;height:66svh;margin-left:calc(66svh * -.55)}
-  #globe{left:40vw;height:26svh}
+  #nate{left:74%;height:70svh;margin-left:calc(70svh * -.55)}
+  #globe{left:30vw;height:27svh}
   #koko{right:6vw;top:16svh;width:auto;height:50svh}
   #bw2m{font-size:17vw;top:60svh}
   .num{font-size:min(44vw,74svh)}
@@ -209,7 +214,8 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
   #srcs{top:52svh;gap:2vw}
   .src{width:21.2vw}
   .src b{font-size:16px}.src span{font-size:14px}
-  #chk{left:54vw;top:17svh;bottom:auto;height:17svh}
+  #stripd{left:54vw;top:calc(var(--top) + 6px);bottom:auto;height:11svh}
+  #capc{left:52vw;top:24svh;width:40vw}
   #sd .tx{width:min(44vw,18em)}
   #bwsrc{font-size:30vw;top:48svh}
   .phone{left:72%;height:76svh;margin-left:calc(76svh * -.28125);bottom:8svh;border-radius:26px}
@@ -243,11 +249,11 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
 <div id="spacer"></div>
 <article class="sr" id="plain">
  <h1>Anatomy of a Reel</h1><p>20 seconds of the Question 9 reel, layer by layer. Tanner Holman, November 2026.</p>
- <h2>The stretch</h2><p>Nate tells the story of Daniel Kokotajlo, who left OpenAI and refused to sign a non-disparagement agreement that would have cost him about $2 million in equity. In the camera file the story takes 26 seconds. In the reel it takes 20.</p>
- <h2>Cuts</h2><p>First I took out the pauses, the ums and a restart. Twenty-six seconds became 16.9 seconds of Nate, with a three-second gap held open at the end for a clip I didn’t have yet.</p>
- <h2>Markup</h2><p>Before making anything, I marked the cut beat by beat: where a new person comes in, where a number needs to land, where Nate should carry it alone. Two of the five beats ended up with nothing on screen, on purpose.</p>
- <h2>Research</h2><p>Every graphic needed a source. Kokotajlo’s own footage came from The Diary Of A CEO’s official upload, after the first copy I found was too poor in picture and sound. The $2 million comes from his TIME100 profile. When Elwyn questioned the host’s line, I checked the exact words against the captions and the waveform.</p>
- <h2>Graphics, motion and sound</h2><p>Then the layers went on: TIME’s page full screen with two highlight strokes, his name beside his head, punch-ins that move closer as Nate gets to “go away”, and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight.</p>
+ <h2>The stretch</h2><p>Nate tells the story of Daniel Kokotajlo, who left OpenAI and refused to sign a non-disparagement agreement that would have cost him about $2 million in equity. In the raw footage, Nate takes 26 seconds to tell the story. In the reel, it takes 20.</p>
+ <h2>Cuts</h2><p>We start with what’s obvious: pauses, ums, and bloopers. 26 seconds of raw footage was cut down to 16.9 seconds of Nate on screen, with a 3-second gap for a clip I didn’t have yet.</p>
+ <h2>Markup</h2><p>Before making anything, I mark the cut beat by beat. Where does momentum lag? What would make this more visually interesting? What is the best way to make this argument visually digestible for the shorts format? Two of the five beats ended up with nothing on screen, on purpose.</p>
+ <h2>Research</h2><p>Graphics start from an idea. We need something here. Sometimes I know what’s available, like Daniel’s interview on The Diary Of A CEO. Other times, this means sifting through 5 to 10 interviews to find a suitable clip. Reputable news sources make for good visual support. But this also means sifting through up to 20 articles before you find one that does the job you need it to do. Then it’s about grabbing the clip, editing the clip, splicing it in. Testing it in context: is it too long? Does it add energy? Does it take it away?</p>
+ <h2>Graphics, motion and sound</h2><p>After we’ve found some possible sources, graphics need to be reworked for the reel format: TIME’s page full screen with two highlight strokes, his name beside his head, punch-ins that move closer as Nate gets to “go away”, and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight. There’s a testing and sampling phase too: playing a note on the piano to see if it’s the right one, listening over and over until something fits.</p>
  <p><a href="../">Back to the portfolio</a></p>
 </article>
 
@@ -260,10 +266,10 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
   <div class="fig" id="nate"><img src="media/nate_a.webp" alt="" class="on"><img src="media/nate_b.webp" alt=""><img src="media/nate_c.webp" alt=""><img src="media/nate_d.webp" alt=""></div>
   <div class="desk"></div>
   <img class="fig" id="globe" src="media/globe.webp" alt="">
-  <div id="cv"><h1>Anatomy<em>of a reel</em></h1><p class="mono"><span>20 seconds of the Question 9 reel, layer by layer</span><span>Tanner Holman · November 2026</span></p><span class="tbd" style="position:static;display:inline-block;margin-top:10px">draft words, yours to rewrite</span></div>
+  <div id="cv"><h1>Anatomy<em>of a reel</em></h1><p class="mono"><span>20 seconds of the Question 9 reel, layer by layer</span><span>Tanner Holman · November 2026</span></p></div>
     <div class="card" id="koko"><img src="media/koko.jpg" alt=""></div>
   <div class="bw" id="bw2m"><span>$2 million</span></div>
-  <div class="card" id="rawc"><img src="../media/raw-still.jpg" alt=""><span class="tbd" style="left:6px;bottom:6px;position:absolute">raw frame · needs clearance</span></div>
+  <div class="card" id="rawc"><img src="../media/raw-still.jpg" alt=""></div>
   <div class="card" id="reelc"><img src="media/nate_reel.jpg" alt=""></div>
   <div class="tx" data-out=".575">
    <p data-r=".15,.25">Nate tells the story of <em>Daniel Kokotajlo,</em></p>
@@ -271,8 +277,8 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
    <p data-r=".43,.53">that would have cost him about <b>$2 million</b> in equity.</p>
   </div>
   <div class="tx">
-   <p data-r=".62,.71">In the camera file the story takes <b>26 seconds.</b></p>
-   <p data-r=".81,.88">In the reel it takes <b>20.</b></p>
+   <p data-r=".62,.73">In the raw footage, Nate takes <b>26 seconds</b> to tell the story.</p>
+   <p data-r=".81,.88">In the reel, it takes <b>20.</b></p>
   </div>
  </section>
 
@@ -280,24 +286,26 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
  <section class="sc" id="sb">
   <div class="bw" id="bwum">um, uh,</div>
   <div class="tx" data-out=".56">
-   <p data-r=".03,.16">First I took out the pauses, <em>the ums</em> and a restart.</p>
+   <p data-r=".03,.16">We start with what’s obvious: <em>pauses, ums, and bloopers.</em></p>
   </div>
   <div class="tx">
-   <p data-r=".6,.72">Twenty-six seconds became <b>16.9 seconds</b> of Nate,</p>
-   <p data-r=".8,.93">with a three-second gap held open at the end for a clip I didn’t have yet.</p>
+   <p data-r=".6,.74">26 seconds of raw footage was cut down to <b>16.9 seconds</b> of Nate on screen,</p>
+   <p data-r=".8,.92">with a 3-second gap for a clip I didn’t have yet.</p>
   </div>
   <div id="tape"></div>
   <div id="count"><span id="cnum">26.0</span><small>seconds</small></div>
-  <div class="strip" id="stripb"><canvas></canvas><div class="clips"></div><span class="tbd" style="right:0;top:-20px">camera frames · need clearance</span></div>
+  <div class="strip" id="stripb"><canvas></canvas><div class="clips"></div></div>
  </section>
 
  <!-- C: markup -->
  <section class="sc" id="sc">
   <div class="bw" id="bwbare">bare</div>
   <div class="tx">
-   <p data-r=".03,.14">Before making anything, I marked the cut <em>beat by beat:</em></p>
-   <p data-r=".2,.5" data-out=".6">where a new person comes in, where a number needs to land, where Nate should carry it alone.</p>
-   <p data-r=".64,.8">Two of the five beats ended up with <b>nothing on screen,</b> on purpose.</p>
+   <p data-r=".03,.11" data-out=".14">Before making anything, I mark the cut <em>beat by beat.</em></p>
+   <p data-r=".18,.23" data-out=".6">Where does momentum lag?</p>
+   <p data-r=".27,.35" data-out=".6">What would make this more visually interesting?</p>
+   <p data-r=".39,.53" data-out=".6">What is the best way to make this argument visually digestible for the shorts format?</p>
+   <p data-r=".65,.8">Two of the five beats ended up with <b>nothing on screen,</b> on purpose.</p>
   </div>
   <div class="strip" id="stripc"><div class="clips"></div></div>
   <div id="notes"></div>
@@ -306,38 +314,47 @@ body.idx .ic{animation:deal .62s cubic-bezier(.2,1.25,.35,1) both;animation-dela
  <!-- D: research -->
  <section class="sc" id="sd">
   <div class="bw" id="bwsrc">source?</div>
-  <div class="tx" data-out=".4">
-   <p data-r=".03,.1">Every graphic needed <em>a source.</em></p>
-   <p data-r=".14,.36">Kokotajlo’s own footage came from The Diary Of A CEO’s official upload, after the first copy I found was too poor in picture and sound.</p>
+  <div class="tx" data-out=".30">
+   <p data-r=".02,.08" data-out=".10">Graphics start from an idea. <em>We need something here.</em></p>
+   <p data-r=".115,.19" data-out=".205">Sometimes I know what’s available, like Daniel’s interview on The Diary Of A CEO.</p>
+   <p data-r=".215,.29">Other times, this means sifting through <b>5 to 10 interviews</b> to find a suitable clip.</p>
+  </div>
+  <div class="tx" data-out=".57">
+   <p data-r=".33,.39">Reputable news sources make for good visual support.</p>
+   <p data-r=".42,.54">But this also means sifting through <b>up to 20 articles</b> before you find one that does the job you need it to do.</p>
   </div>
   <div class="tx">
-   <p data-r=".44,.54" data-out=".6">The <mark>$2 million</mark> comes from his TIME100 profile.</p>
-   <p data-r=".64,.86">When Elwyn questioned the host’s line, I checked the exact words against the captions <em>and the waveform.</em></p>
+   <p data-r=".6,.68" data-out=".72">Then it’s about grabbing the clip, editing the clip, <em>splicing it in.</em></p>
+   <p data-r=".74,.9">Testing it in context: is it too long? Does it add energy? Does it take it away?</p>
   </div>
   <div id="srcs">
-   <div class="src"><img src="../media/doac_daniel.jpg" alt=""><div><p class="mono">footage</p><b>Kokotajlo’s own footage</b><span>The Diary Of A CEO, official upload</span></div></div>
-   <div class="src"><img src="../media/film_time.jpg" alt=""><div><p class="mono">figure</p><b>TIME100 AI 2024</b><span>“approximately $2 million in equity”</span></div></div>
-   <div class="src"><img src="../media/dwarkesh.jpg" alt=""><div><p class="mono">second telling</p><b>Two tellings in the raw</b><span>Kept “go away”, as in the film</span></div></div>
-   <div class="src"><img src="../media/doac_host.jpg" alt=""><div><p class="mono">wording</p><b>The host’s line, checked</b><span>Captions against the waveform</span></div></div>
+   <div class="src"><img src="../media/doac_daniel.jpg" alt=""><div><p class="mono">interview</p><b>Daniel’s interview</b><span>The Diary Of A CEO</span></div></div>
+   <div class="src"><img src="../media/dwarkesh.jpg" alt=""><div><p class="mono">interview</p><b>Dwarkesh Podcast</b><span>Looked at, not used</span></div></div>
+   <div class="src"><img src="../media/film_time.jpg" alt=""><div><p class="mono">article</p><b>TIME100 AI 2024</b><span>“approximately $2 million in equity”</span></div></div>
+   <div class="src"><img src="../media/doac_host.jpg" alt=""><div><p class="mono">clip</p><b>The host’s line</b><span>For the 3-second gap</span></div></div>
   </div>
-  <div id="chk"><canvas></canvas><p class="mono">the host’s line · 3.1 s · sound of the finished cut</p></div>
+  <div class="strip" id="stripd"><div class="clips"></div><i id="test"></i></div>
  </section>
 
  <!-- E: graphics, motion, sound -->
  <section class="sc" id="se">
   <div class="bw" id="bwgo">Go</div>
   <div class="bw" id="bwaway">away.</div>
-  <div class="tx" data-out=".47">
-   <p data-r=".02,.07">Then the layers went on:</p>
-   <p data-r=".1,.26">TIME’s page full screen with <mark>two highlight strokes,</mark></p>
-   <p data-r=".36,.44">his name beside his head,</p>
+  <div class="tx" data-out=".375">
+   <p data-r=".02,.1" data-out=".135">After we’ve found some possible sources, graphics need to be reworked <em>for the reel format.</em></p>
+   <p data-r=".155,.25">TIME’s page full screen with <mark>two highlight strokes,</mark></p>
   </div>
-  <div class="tx" data-out=".8">
-   <p data-r=".5,.66">punch-ins that move closer as Nate gets to <em>“go away”,</em></p>
+  <div class="tx" data-out=".615">
+   <p data-r=".4,.46">his name beside his head,</p>
+  </div>
+  <div class="tx" data-out=".805">
+   <p data-r=".64,.72">punch-ins that move closer as Nate gets to <em>“go away”,</em></p>
   </div>
   <div class="tx">
-   <p data-r=".82,.97">and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight.</p>
+   <p data-r=".825,.895" data-out=".915">and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight.</p>
+   <p data-r=".925,.99">There’s a testing and sampling phase too: playing a note on the piano to see if it’s the right one, <em>listening over and over</em> until something fits.</p>
   </div>
+  <div class="card" id="capc"><img src="media/time_capture.jpg" alt=""></div>
   <div class="card phone" id="phe"><canvas width="540" height="960"></canvas></div>
   <div id="chips"></div>
  </section>
@@ -388,7 +405,7 @@ const rawKept = t => SEGS.some(([a, b, ra]) => t >= ra - .02 && t < ra + (b - a)
 
 /* ---------- scenes ---------- */
 const T = .55;                                   /* screens a wipe takes */
-const SC = [{id:'sa',len:8.2,ink:0},{id:'sb',len:6.2,ink:0},{id:'sc',len:5.6,ink:1},{id:'sd',len:6,ink:1},{id:'se',len:8.4,ink:0},{id:'sf',len:2.4,ink:0}];
+const SC = [{id:'sa',len:8.2,ink:0},{id:'sb',len:6.2,ink:0},{id:'sc',len:6.4,ink:1},{id:'sd',len:9,ink:1},{id:'se',len:11,ink:0},{id:'sf',len:2.4,ink:0}];
 { let s = 0; SC.forEach(c => { c.el = $('#' + c.id); c.s = s; s += c.len; c.e = s; c.last = -1; }); }
 const TOTAL = SC[SC.length - 1].e;
 const CH = [
@@ -481,7 +498,7 @@ function layoutStrips(){ if(strips.stripb){ SC[1].last = -1; SC[2].last = -1; } 
 /* B */
 const tape = $('#tape'); const TW = WORDS.map(([t, w]) => { const s = mk(rawKept(t + .03) ? '' : 'x', tape, 'span'); s.textContent = w + ' '; return {el: s, cut: !rawKept(t + .03), w0: 0}; });
 const CUTS = TW.filter(w => w.cut);
-buildStrip('stripb', true); buildStrip('stripc', false);
+buildStrip('stripb', true); buildStrip('stripc', false); buildStrip('stripd', false);
 function drawB(p){
   const S = strips.stripb; S.wv = eo(R(p, .0, .14));
   const m = R(p, .17, .36), c = eio(R(p, .38, .58)), held = eo(R(p, .82, .92));
@@ -504,12 +521,12 @@ function drawC(p){
   const w = S.box.clientWidth, px = w / FIND;
   S.root.style.opacity = eo(R(p, .0, .08)); S.root.style.transform = `translateY(${(1 - eo(R(p, 0, .1))) * 20}px)`;
   const nw = NT[0].offsetWidth, area = notes.clientWidth, ah = notes.clientHeight;
-  NT.forEach((n, i) => { const a = .13 + i * .085, d = back(R(p, a, a + .09)), vis = R(p, a, a + .02);
+  NT.forEach((n, i) => { const a = .16 + i * .08, d = back(R(p, a, a + .09)), vis = R(p, a, a + .02);
     let x, y, sc = 1, rot = [-4, 3, -2.5, 4, -3][i];
     const stamp = back(R(p, .7 + (i - 2) * .05, .78 + (i - 2) * .05));
     if(WIDE){ const step = (area - nw) / 4; x = i * step; y = [0, 54, 12, 70, 26][i]; }
     else { /* phone: each note is read in front, then tucks into a row under the strip; the two bare ones come back */
-      const tuck = eio(i < 4 ? R(p, a + .075, a + .12) : R(p, .585, .64)), backIn = MARKS[i].bare ? eio(R(p, .63, .7)) : 0, k = tuck * (1 - backIn);
+      const tuck = eio(i < 4 ? R(p, a + .07, a + .115) : R(p, .585, .64)), backIn = MARKS[i].bare ? eio(R(p, .63, .7)) : 0, k = tuck * (1 - backIn);
       const fx = backIn ? lerp((area - nw) / 2, i === 2 ? W * .03 : area - nw * .76 - W * .03, backIn) : (area - nw) / 2, fy = 96 + (backIn ? (i === 2 ? 0 : 34) : 0), fs = backIn ? lerp(1, .76, backIn) : 1;
       x = lerp(fx, lerp(W * .04, area - W * .04 - nw * .3, i / 4), k); y = lerp(fy, 2, k); sc = lerp(fs, .3, k); rot = lerp(rot * .6, rot * 1.6, k); n.style.zIndex = backIn > .1 ? 20 + i : 10 + i - Math.round(tuck * 9); }
     n.style.opacity = vis; n.style.transform = `translate3d(${x + (1 - d) * W * (WIDE ? .5 : 1)}px,${y + (1 - d) * 40}px,0) rotate(${rot + (1 - d) * 16}deg) scale(${sc})`; if(WIDE) n.style.zIndex = i + 1;
@@ -519,42 +536,47 @@ function drawC(p){
 }
 
 /* D */
-const srcs = $('#srcs'), SR = $$('.src'), chk = $('#chk');
+const srcs = $('#srcs'), SR = $$('.src'), test = $('#test');
 function drawD(p){
-  const tw = srcs.scrollWidth, enter = eo(R(p, .02, .14));
-  const focus = p < .12 ? -1 : p < .42 ? 0 : p < .6 ? 1 : p < .66 ? 2 : 3;
+  const enter = eo(R(p, .0, .09));
+  const focus = p < .105 ? -1 : p < .205 ? 0 : p < .32 ? 1 : p < .58 ? 2 : 3;
+  const fpos = p < .2 ? 0 : p < .23 ? eio(R(p, .2, .23)) : p < .3 ? 1 : p < .34 ? 1 + eio(R(p, .3, .34)) : p < .56 ? 2 : p < .6 ? 2 + eio(R(p, .56, .6)) : 3;
   let x;
-  if(WIDE){ x = (1 - enter) * W; }
-  else { const cw = SR[0].offsetWidth, gap = W * .045, cx = i => i * (cw + gap) + cw / 2 + 20; const fpos = p < .38 ? 0 : p < .44 ? lerp(0, 1, eio(R(p, .38, .44))) : p < .58 ? 1 : p < .66 ? lerp(1, 3, eio(R(p, .58, .66))) : 3; x = (1 - enter) * W + (W / 2 - (lerp(cx(0), cx(1), clamp(fpos)) + (fpos > 1 ? (cx(3) - cx(1)) * (fpos - 1) / 2 : 0))) * enter + (fpos === 0 ? (cx(0) - W / 2) * .0 : 0); }
+  if(WIDE) x = (1 - enter) * W;
+  else { const cw = SR[0].offsetWidth, step = cw + W * .045, c0 = parseFloat(getComputedStyle(srcs).paddingLeft) + cw / 2; x = (1 - enter) * W + (W / 2 - (c0 + fpos * step)) * enter; }
   srcs.style.transform = `translate3d(${x}px,0,0)`;
   SR.forEach((s, i) => { s.classList.toggle('dim', focus >= 0 && i !== focus); s.style.transform = `translateY(${i === focus ? -10 : 0}px) rotate(${[-2, 1.5, -1, 2][i] * (i === focus ? .3 : 1)}deg)`; s.style.transition = 'transform .5s cubic-bezier(.2,1.2,.4,1),opacity .35s,filter .35s'; });
-  const k = R(p, .66, .9); chk.style.opacity = eo(R(p, .64, .7));
-  if(k > 0){ const cvs = $('canvas', chk), [g, w, h] = fit(cvs), pk = WAVE.final, i0 = Math.round(16.89 * 40), n = pk.length - i0, bw = w / n;
-    for(let i = 0; i < n; i++){ const v = Math.max(.05, pk[i0 + i]) * h * .9, done = i / n < k; g.fillStyle = done ? '#1c1c1e' : 'rgba(28,28,30,.18)'; g.fillRect(i * bw, (h - v) / 2, Math.max(1, bw - 1), v); }
-    g.fillStyle = '#e5322d'; g.fillRect(k * w - 1, 0, 2.5, h); }
-  slide('bwsrc', R(p, .0, .4));
+  /* the cut again, and the clip going into the gap that was held for it */
+  const S = strips.stripd; setStrip(S, 1, 0, 1, FIND); S.root.style.opacity = eo(R(p, .56, .62));
+  const fill = back(R(p, .63, .7)); S.held.style.backgroundImage = fill > 0 ? 'url(../media/doac_host.jpg)' : ''; S.held.style.borderStyle = fill > .5 ? 'solid' : 'dashed'; S.held.firstChild.style.opacity = fill > .5 ? 0 : 1; S.held.style.transform = `scale(${fill > 0 ? lerp(1.9, 1, Math.min(1, fill)) + (fill > 1 ? (fill - 1) * .6 : 0) : 1})`; S.held.style.zIndex = 2;
+  const t = R(p, .74, .92); test.style.opacity = t > 0 && t < 1 ? 1 : 0; test.style.transform = `translateX(${t * S.box.clientWidth}px)`;
+  slide('bwsrc', R(p, .0, .3));
 }
 
 /* E: frames of the finished reel, scrubbed by the scroll */
 class Seq{ constructor(dir, pre, n){ this.n = n; this.im = []; this.src = i => `media/${dir}/${pre}_${String(i + 1).padStart(2, '0')}.jpg`; this.loaded = false; }
   load(){ if(this.loaded) return; this.loaded = true; for(let i = 0; i < this.n; i++){ const im = new Image(); im.decoding = 'async'; im.src = this.src(i); this.im.push(im); } }
   at(t){ let i = Math.round(clamp(t) * (this.n - 1)); while(i > 0 && !(this.im[i] && this.im[i].complete && this.im[i].naturalWidth)) i--; return this.im[i]; } }
-const sT = new Seq('t', 't', 31), sP = new Seq('p', 'p', 27), still = {}; ['nate_reel', 'koko', 'host'].forEach(n => { const im = new Image(); im.src = `media/${n}.jpg`; still[n] = im; });
-const phe = $('#phe'), pcv = $('canvas', phe), pg = pcv.getContext('2d'); let lastIm = null;
-const CHIPS = [['TIME page', .13, 0], ['highlight 1', .2, 0], ['highlight 2', .27, 0], ['name tag', .39, 0], ['punch-in', .56, 0], ['closer', .63, 0], ['closer still', .69, 0], ['flick', .86, 1], ['click', .9, 1], ['brush', .94, 1]];
-const chips = CHIPS.map(([t, at, snd], i) => { const c = mk('chip mono' + (snd ? ' s' : ''), $('#chips')); if(snd){ const w = mk('', c, 'i'); for(let k = 0; k < 7; k++){ const u = mk('', w, 'u'); u.style.height = [3, 8, 12, 6, 10, 4, 2][(k + i * 2) % 7] + 'px'; } } c.appendChild(document.createTextNode(t)); return c; });
+const sT = new Seq('t', 't', 31), sN = new Seq('n', 'n', 27), sP = new Seq('p', 'p', 27), still = {}; ['nate_reel', 'host'].forEach(n => { const im = new Image(); im.src = `media/${n}.jpg`; still[n] = im; });
+const phe = $('#phe'), pcv = $('canvas', phe), pg = pcv.getContext('2d'), capc = $('#capc'); let lastIm = null;
+/* label, in, out, sound?, row, on the left?, pinned to the capture card? */
+const CHIPS = [['original capture', .05, .125, 0, 0, 1, 1], ['reworked for 9:16', .11, .15, 0, 1, 0], ['TIME page', .16, .375, 0, 0, 0], ['highlight 1', .2, .375, 0, 1, 1], ['highlight 2', .26, .375, 0, 2, 0], ['no name yet', .395, .455, 0, 0, 1], ['name tag', .47, .615, 0, 0, 0], ['punch-in', .655, .805, 0, 0, 0], ['closer', .695, .805, 0, 1, 1], ['closer still', .735, .805, 0, 2, 0], ['flick', .84, 2, 1, 0, 1], ['click', .865, 2, 1, 1, 0], ['brush', .89, 2, 1, 2, 1]];
+const chips = CHIPS.map(([t, at, out, snd], i) => { const c = mk('chip mono' + (snd ? ' s' : ''), $('#chips')); if(snd){ const w = mk('', c, 'i'); for(let k = 0; k < 7; k++){ const u = mk('', w, 'u'); u.style.height = [3, 8, 12, 6, 10, 4, 2][(k + i * 2) % 7] + 'px'; } } c.appendChild(document.createTextNode(t)); return c; });
 function drawE(p){
-  sT.load(); sP.load();
-  let im = p < .1 ? still.nate_reel : p < .345 ? sT.at(R(p, .1, .33) * 28 / 30) : p < .47 ? still.koko : p < .8 ? sP.at(R(p, .5, .76)) : still.host;
+  sT.load(); sN.load(); sP.load();
+  const im = p < .145 ? sT.at(5 / 30) : p < .385 ? sT.at(lerp(5, 28, R(p, .155, .3)) / 30) : p < .63 ? sN.at(R(p, .4, .56)) : p < .815 ? sP.at(R(p, .64, .78)) : still.host;
   if(im && im.complete && im.naturalWidth && im !== lastIm){ pg.drawImage(im, 0, 0, 540, 960); lastIm = im; }
-  const rise = eo(R(p, 0, .08)), grow = eio(R(p, .52, .7)) * (1 - eio(R(p, .77, .84)));
-  phe.style.transform = `translate3d(0,${(1 - rise) * 70}svh,0) rotate(${(1 - rise) * 8 - 1.2 + grow * 1.2}deg) scale(${1 + grow * (WIDE ? .12 : .34)})`;
-  const r = phe.getBoundingClientRect(), base = {l: r.left, t: r.top, w: r.width, h: r.height};
-  chips.forEach((c, i) => { const [t, at, snd] = CHIPS[i], grp = i < 3 ? 0 : i < 4 ? 1 : i < 7 ? 2 : 3, gout = [.345, .47, .8, 2][grp];
-    const s = back(R(p, at, at + .035)) * (1 - R(p, gout, gout + .02)); c.style.setProperty('--s', Math.max(0, s).toFixed(3)); c.style.setProperty('--r', [-5, 4, -3, 5, -4, 3, -6, -4, 5, -3][i] + 'deg');
-    const k = i < 3 ? i : i < 4 ? 0 : i < 7 ? i - 4 : i - 7; const left = snd ? (k % 2 === 0) : (k % 2 === 1);
-    const cw = c.offsetWidth; let x = left ? base.l - cw * .62 : base.l + base.w - cw * .38; x = clamp(x, 8, W - cw - 8); c.style.left = x + 'px'; c.style.top = (base.t + base.h * (.2 + k * .2)) + 'px'; });
-  slide('bwgo', R(p, .58, .73), H * .16); slide('bwaway', R(p, .66, .81), H * .6);
+  /* the original capture, then the page rebuilt for the reel */
+  const ci = eo(R(p, .015, .07)), co = eio(R(p, .1, .15));
+  capc.style.transform = `translate3d(${(1 - ci) * 110 - co * 125}vw,${-co * 8}svh,0) rotate(${lerp(9, -3, ci) - co * 10}deg) scale(${1 - co * .25})`; capc.style.visibility = co >= 1 ? 'hidden' : 'visible';
+  const rise = eo(R(p, .075, .135)), grow = eio(R(p, .65, .76)) * (1 - eio(R(p, .78, .825)));
+  phe.style.transform = `translate3d(0,${(1 - rise) * 72}svh,0) rotate(${(1 - rise) * 8 - 1.2 + grow * 1.2}deg) scale(${1 + grow * (WIDE ? .12 : .34)})`;
+  const r = phe.getBoundingClientRect(), rc = capc.getBoundingClientRect();
+  chips.forEach((c, i) => { const [t, at, out, snd, row, left, cap] = CHIPS[i]; const b = cap ? rc : r;
+    let s = back(R(p, at, at + .03)) * (1 - R(p, out, out + .015)); if(snd && p > .925) s *= 1 + .16 * Math.max(0, Math.sin((p - .925) * 300 + row * 2.1));
+    c.style.setProperty('--s', Math.max(0, s).toFixed(3)); c.style.setProperty('--r', [-5, 4, -3, 5, -4, 3, -6, -4, 5, -3, 4, -5, 3][i] + 'deg');
+    const cw = c.offsetWidth; let x = left ? b.left - cw * .62 : b.left + b.width - cw * .38; x = clamp(x, 8, W - cw - 8); c.style.left = x + 'px'; c.style.top = (b.top + b.height * (cap ? .12 : .2 + row * .2)) + 'px'; });
+  slide('bwgo', R(p, .67, .77), H * .16); slide('bwaway', R(p, .715, .815), H * .6);
 }
 
 /* F */
@@ -569,7 +591,7 @@ CH.forEach((c, i) => { const s = mk('', pbar, 'i'); const len = (i < CH.length -
 let cur = 0, vh = 1, curCh = -1;
 function size(){ vh = innerHeight; spacer.style.height = (TOTAL - 1 + 1) * vh + 'px'; measure(); }
 const maxU = () => TOTAL - 1;
-const SPEED = .24;                               /* screens a second when it plays itself */
+const SPEED = .25;                               /* screens a second when it plays itself */
 let playing = false, playY = 0, playT = 0; const pb = $('#pb');
 function setPlay(on){ if(on && scrollY >= document.documentElement.scrollHeight - innerHeight - 4) go(0); playing = on; playY = scrollY; playT = performance.now(); document.body.classList.toggle('playing', on); pb.setAttribute('aria-pressed', on); pb.setAttribute('aria-label', on ? 'Pause' : 'Play the story'); }
 pb.onclick = () => setPlay(!playing);
