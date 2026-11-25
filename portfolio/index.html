@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="js">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -14,17 +14,16 @@
 <meta property="og:image" content="https://tannerholman.space/portfolio/media/film-poster.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <style>
 @font-face{font-family:Inter;src:url(fonts/inter.woff2) format('woff2');font-weight:100 900;font-display:swap}
 @font-face{font-family:"Geist Mono";src:url(fonts/geist-mono-500.woff2) format('woff2');font-weight:500;font-display:swap}
-:root{color-scheme:light;--ink:#1c1c1e;--grey:#8b8b8f;--soft:#b9b9bd;--line:#ececee;--wash:#f5f5f6;--dark:#0d0d0e;
+:root{color-scheme:light;--ink:#1c1c1e;--grey:#8b8b8f;--soft:#b9b9bd;--line:#ececee;--wash:#f5f5f6;--dark:#050505;
   --q0:#1f47e0;--qb:#6f8cf2;--gfx:#ff7a2f;--mot:#7b6cf6;--snd:#c8407a;--res:#2bb3a3;--mark:#e8c93a;--red:#e5322d;
   --col:640px;--wide:820px;--pad:22px}
 *{box-sizing:border-box}
 html{background:#fff;-webkit-text-size-adjust:100%;overflow-x:clip}
 body{overflow-x:clip}
-body{margin:0;font:400 17px/1.5 Inter,system-ui,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+body{margin:0;font:400 17px/1.5 -apple-system,BlinkMacSystemFont,"SF Pro Text",system-ui,Inter,sans-serif;color:var(--ink);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit}
 .g{color:var(--grey)}
 .mono{font:500 12px/1.3 "Geist Mono",ui-monospace,monospace;letter-spacing:.01em}
@@ -37,9 +36,15 @@ button{font:inherit;color:inherit}
 
 /* sheets: the page is a white sheet that lifts off the dark Reels band */
 .sheet{position:relative;z-index:2;background:#fff}
-.sheet.one{border-radius:0 0 var(--r,0) var(--r,0);box-shadow:0 calc(var(--r,0) * 1.4) calc(var(--r,0) * 3) rgba(0,0,0,calc(var(--r,0) / 30px * .5))}
+.sheet.one{border-radius:0 0 var(--r,0) var(--r,0)}
 .sheet.two{border-radius:14px 14px 0 0;margin-top:-14px}
 
+/* arrival: name and line fade up, the film rises, the numbers card drops in last */
+@keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes drop{from{opacity:0;transform:translateY(-16px) scale(.97)}to{opacity:1;transform:none}}
+html.js .ar{opacity:0}
+html.js body.in .ar{animation:up .8s cubic-bezier(.2,.8,.2,1) var(--d,0s) both}
+html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 /* first screen */
 .top{padding:max(56px,calc(env(safe-area-inset-top) + 40px)) 0 26px}
 .top h1{font-size:inherit;font-weight:500;margin:0}
@@ -48,7 +53,7 @@ button{font:inherit;color:inherit}
 /* the film */
 .film{position:relative}
 .halo{position:absolute;inset:6% 4% -2%;border-radius:30px;filter:blur(48px);opacity:.55;transform:scale(1.06);transition:background 1.2s linear;pointer-events:none}
-.player{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:14px;overflow:hidden;background:#111;cursor:pointer;box-shadow:0 1px 0 rgba(0,0,0,.04),0 16px 40px -18px rgba(0,0,0,.45)}
+.player{position:relative;display:block;width:100%;aspect-ratio:16/9;border:0;padding:0;border-radius:20px;overflow:hidden;background:#111;cursor:pointer}
 .player img,.player video,.player iframe{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .chip{position:absolute;left:14px;bottom:14px;display:flex;align-items:center;gap:10px;padding:7px 14px 7px 8px;border-radius:999px;background:rgba(255,255,255,.94);color:var(--ink);font-size:14px;font-weight:500;transition:transform .25s}
 .chip i{width:28px;height:28px;border-radius:50%;background:var(--ink);display:grid;place-items:center}
@@ -56,30 +61,42 @@ button{font:inherit;color:inherit}
 .player:hover .chip{transform:translateY(-2px)}
 .ftitle{margin:18px 0 0}
 .ftitle .g a{color:inherit;text-decoration-color:var(--soft);text-underline-offset:3px}
-.nums{position:relative;margin:16px 0 0;width:100%;max-width:340px;height:66px;border:0;padding:0;background:none;text-align:left;cursor:pointer;transition:height .45s}
-.nums.fan{height:128px}
-.nc{position:absolute;left:0;right:0;top:0;padding:10px 14px;border-radius:14px;background:#fff;border:1px solid var(--line);transition:transform .55s cubic-bezier(.2,.9,.3,1.1)}
+.nums{position:relative;margin:18px 0 0;width:100%;max-width:360px;height:84px;border:0;padding:0;background:none;text-align:left;cursor:pointer;transition:height .45s}
+.nums.fan{height:156px}
+.nc{position:absolute;left:0;right:0;top:0;padding:13px 20px;border-radius:28px;background:rgba(255,255,255,.94);box-shadow:0 22px 55px rgba(35,61,56,.14),0 8px 22px rgba(35,61,56,.10),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:transform .55s cubic-bezier(.2,.9,.3,1.1)}
 .nc b{display:block;font-weight:500}
-.nc span{font-size:14px;color:var(--grey)}
-.nc.n2{transform:translateY(8px) scale(.95);background:var(--wash)}
-.nums.fan .n2{transform:translateY(62px)}
+.nc span{font-size:14px;color:#b0b0b4}
+.nc.n2{transform:translateY(11px) scale(.94);background:rgba(250,250,250,.94);box-shadow:0 10px 30px rgba(35,61,56,.10)}
+.nums.fan .n2{transform:translateY(74px)}
 
 /* my role, exploded */
 .role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:56px 0 0}
-.stage3d{height:260px;perspective:1000px;display:grid;place-items:center}
-.planes{position:relative;width:min(100%,300px);aspect-ratio:16/9;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.6,0,.2,1)}
+.stage3d{height:280px;perspective:1000px;display:grid;place-items:center}
+.planes{position:relative;width:min(100%,330px);aspect-ratio:16/9;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.6,0,.2,1)}
 .pl{position:absolute;inset:0;border-radius:8px;transition:transform 1.1s cubic-bezier(.6,0,.2,1),outline-color .3s;outline:2px solid transparent;outline-offset:-1px}
 .pl.base{background:#222 center/cover}
 .pl svg{display:block;width:100%;height:100%}
 .role.exp .planes{transform:rotateX(55deg) rotateZ(-34deg)}
-.role.exp .pl:not(.base){background:rgba(255,255,255,.55);box-shadow:0 0 0 1px rgba(0,0,0,.12)}
+.pl:not(.base){background:center/cover no-repeat}
+.role.exp .pl:not(.base){background-color:rgba(255,255,255,.16);box-shadow:0 0 0 1px rgba(0,0,0,.14)}
 .pl.hl{outline-color:var(--ink)}
 .rlist{list-style:none;margin:0;padding:0}
 .rlist li{display:flex;gap:10px;align-items:baseline;padding:5px 8px;margin:0 -8px;border-radius:10px;transition:background .3s}
 .rlist li.hl{background:var(--wash)}
 .rlist i{flex:none;width:9px;height:9px;border-radius:3px;transform:translateY(-1px)}
-.credits{margin:28px 0 0;font-size:14px;color:var(--grey)}
-.credits b{font-weight:500;color:var(--ink)}
+.crows{list-style:none;margin:40px 0 0;padding:0}
+.crows > li{display:grid;grid-template-columns:minmax(0,1fr);border-top:1px solid var(--line);padding:11px 0}
+.crows > li:not(.srcrow){grid-template-columns:120px minmax(0,1fr);gap:10px}
+.crows .g{font-size:inherit}
+.srcrow button{all:unset;box-sizing:border-box;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:2px 10px;width:100%;cursor:pointer}
+.srcrow button > .g{grid-column:1;font-size:14px;color:#b0b0b4}
+.srcrow button i{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;font-size:20px;color:var(--grey);transition:transform .3s}
+.srcrow button[aria-expanded=true] i{transform:rotate(45deg)}
+.badge{display:inline-block;font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:#fff;border-radius:4px;padding:3px 5px;margin-right:8px;vertical-align:2px}
+.srcl{list-style:none;margin:8px 0 0;padding:0}
+.srcl a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:9px 0;border-top:1px solid #f2f2f3;text-decoration:none}
+.srcl a .g{grid-column:1;font-size:13px;color:#b0b0b4}
+.srcl a i{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;color:var(--grey)}
 
 /* how it's made: a sticky picture, steps scroll past it */
 .how{margin:88px 0 0}
@@ -135,18 +152,43 @@ button{font:inherit;color:inherit}
 .steps{list-style:none;margin:0;padding:12vh 0 30vh}
 .step{min-height:78vh;display:flex;align-items:center}
 .step > div{max-width:24em}
-.step h3{margin:0 0 4px}
-.step p{color:var(--grey);margin:0}
+.step h3{margin:0 0 6px;font-size:21px;line-height:1.3;font-weight:400}
+.step p{color:#9a9a9f;margin:0;font-size:17px}
 .step .k{display:block;color:var(--soft);margin-bottom:8px}
 .step.part{min-height:60vh}
 .step.part h3{font-size:22px;line-height:1.25;font-weight:500}
 
+/* the write-up: a card that opens as a sheet */
+.acard{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;margin:6px 0 0;padding:10px 16px 10px 10px;border:0;border-radius:22px;background:#f4f4f5;text-align:left;cursor:pointer}
+.acard .ai{width:96px;aspect-ratio:16/10;border-radius:14px;background:center/cover}
+.acard .at{display:grid}
+.acard .aa{color:var(--grey);font-size:18px}
+.sheetv{position:fixed;inset:0;z-index:60;visibility:hidden}
+.sheetv.open{visibility:visible}
+.sheetv .scrim{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .35s}
+.sheetv.open .scrim{opacity:1}
+.sheetv .panel{position:absolute;left:0;right:0;bottom:0;top:max(28px,env(safe-area-inset-top));background:#fff;border-radius:16px 16px 0 0;transform:translateY(102%);transition:transform .5s cubic-bezier(.2,.9,.2,1);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.sheetv.open .panel{transform:none}
+.sheetv .grab{position:sticky;top:0;display:flex;justify-content:flex-end;padding:12px 14px 0;background:linear-gradient(#fff 70%,transparent)}
+.sheetv .x{width:36px;height:36px;border-radius:50%;border:0;background:#f1f1f2;font-size:16px;cursor:pointer}
+.art{max-width:560px;margin:0 auto;padding:8px 26px calc(80px + env(safe-area-inset-bottom));font:400 18px/1.62 Georgia,"Times New Roman",serif;color:#707070}
+.art h3,.art .ttl{color:#333;font-weight:400;font-size:18px;margin:0}
+.art .ttl{margin-top:22px}
+.art .sub{margin:0 0 4px}
+.art .date{margin:18px 0 26px;padding-bottom:26px;border-bottom:1px solid #eee}
+.art h3{margin:34px 0 10px}
+.art p{margin:0 0 1em}
+.art figure{margin:22px -6px;border-radius:12px;overflow:hidden;background:#f2f2f2}
+.art figure video,.art figure img{display:block;width:100%}
+.art .tbdnote{font:13px/1.4 -apple-system,system-ui,sans-serif}
+body.sheet-open{overflow:hidden}
+@media (min-width:900px){.sheetv .panel{left:calc(50% - 380px);right:calc(50% - 380px);top:40px}}
 /* reels: the dark band */
 .reels{background:var(--dark);color:#ececec;padding:86px 0 110px;position:relative;z-index:1;margin-top:-1px}
 .reels .g{color:#8e8e93}
 .rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
-.rc{flex:none;width:min(62vw,250px);scroll-snap-align:center;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit}
+.rc{flex:none;width:min(62vw,250px);scroll-snap-align:center;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;transform-origin:50% 40%;transition:transform .2s,opacity .2s}
 .rv{display:block;position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#1a1a1c}
 .rv img,.rv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .rv .chip{left:10px;bottom:10px;font-size:13px;padding:5px 11px 5px 6px}.rv .chip i{width:22px;height:22px}
@@ -200,8 +242,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
   .steps{padding:4svh var(--pad) 26svh}
   .step{min-height:56svh;align-items:flex-start}
   .step.part{min-height:44svh}
-  .lanes{--lab:70px;gap:3px}
-  .lt{height:8px}.lf{height:2px}.lf.m{top:3px}.lf.s{top:6px}
+  .lanes{display:none}
   .dlist{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
 }
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
@@ -230,12 +271,12 @@ body.preview #pv{display:block}
 
 <div class="sheet one" id="sheet1">
  <header class="top wrap">
-  <h1>Tanner Holman</h1>
-  <p>Editing, motion graphics and research for AI-safety video. Helping with Nate Soares's videos since October 2026.</p>
+  <h1 class="ar">Tanner Holman</h1>
+  <p class="ar" style="--d:.12s">Editing, motion graphics and research for AI-safety video. Helping with Nate Soares's videos since October 2026.</p>
  </header>
 
  <section class="wrap" aria-label="The long-form film">
-  <div class="film">
+  <div class="film ar" style="--d:.3s">
    <div class="halo" id="halo"></div>
    <button class="player" id="player" aria-label="Play the film on YouTube">
     <img src="media/film-poster.jpg" alt="" width="1280" height="720">
@@ -243,32 +284,39 @@ body.preview #pv{display:block}
     <span class="chip"><i></i>Watch · 15:53</span>
    </button>
   </div>
-  <p class="ftitle">Unfortunately, We Can't Just Unplug It<br><span class="g">Nate Soares answers the ten most common questions about AI risk. <a href="https://www.youtube.com/watch?v=9U-FdOWTxPw">YouTube</a></span></p>
-  <button class="nums" id="nums" aria-expanded="false" aria-label="Views and comments; tap for where it was posted">
+  <p class="ftitle ar" style="--d:.45s">Unfortunately, We Can't Just Unplug It<br><span class="g">Nate Soares answers the ten most common questions about AI risk. <a href="https://www.youtube.com/watch?v=9U-FdOWTxPw">YouTube</a></span></p>
+  <button class="nums ar dr" style="--d:.9s" id="nums" aria-expanded="false" aria-label="Views and comments; tap for where it was posted">
    <span class="nc n2"><b>Nate Soares · YouTube</b><span>Posted Nov 16, 2026</span></span>
    <span class="nc n1"><b>130K views · 516 comments</b><span>First eight days · as of Nov 24, 2026</span></span>
   </button>
 
   <div class="role" id="role">
    <div class="stage3d"><div class="planes" id="planes">
-    <div class="pl base" style="background-image:url(media/raw-still.jpg)"></div>
-    <div class="pl"><svg viewBox="0 0 160 90"><g stroke="#1f47e0" stroke-width="1.6" stroke-dasharray="3 3"><line x1="44" y1="0" x2="44" y2="90"/><line x1="98" y1="0" x2="98" y2="90"/></g></svg></div>
-    <div class="pl"><svg viewBox="0 0 160 90"><rect x="96" y="12" width="52" height="30" rx="3" fill="#fff" stroke="#2bb3a3" stroke-width="1.4"/><rect x="101" y="18" width="30" height="3" rx="1.5" fill="#2bb3a3"/><rect x="101" y="25" width="40" height="2" rx="1" fill="#9ad9d0"/><rect x="101" y="30" width="34" height="2" rx="1" fill="#9ad9d0"/></svg></div>
-    <div class="pl"><svg viewBox="0 0 160 90"><rect x="96" y="12" width="52" height="30" rx="3" fill="#fff"/><rect x="100" y="27" width="34" height="5" fill="#ffe14a" opacity=".9"/><rect x="40" y="72" width="80" height="7" rx="2" fill="#fff"/></svg></div>
-    <div class="pl"><svg viewBox="0 0 160 90"><path d="M20 70 C50 40 80 58 120 26" fill="none" stroke="#ff7a2f" stroke-width="1.8" stroke-dasharray="1 4" stroke-linecap="round"/><path d="M114 24 l7 1 -2 7" fill="none" stroke="#ff7a2f" stroke-width="1.8"/></svg></div>
+    <div class="pl base" style="background-image:url(media/l_raw.jpg)"></div>
+    <div class="pl" style="background-image:url(media/l_cuts.png)"></div>
+    <div class="pl" style="background-image:url(media/l_research.png)"></div>
+    <div class="pl" style="background-image:url(media/l_graphics.png)"></div>
+    <div class="pl" style="background-image:url(media/l_highlight.png)"></div>
    </div></div>
    <div>
     <ul class="rlist" id="rlist">
      <li><i style="background:#555"></i><span>Footage of Nate <span class="g">· the team</span></span></li>
      <li><i style="background:var(--q0)"></i><span>Editing and pacing on <span class="tbd">[two or three]</span> sections</span></li>
      <li><i style="background:var(--res)"></i><span>Supporting research</span></li>
-     <li><i style="background:#ffc93a"></i><span>All graphics</span></li>
-     <li><i style="background:var(--gfx)"></i><span>All motion</span></li>
+     <li><i style="background:#e5322d"></i><span>All graphics <span class="g">· like this TIME card</span></span></li>
+     <li><i style="background:#ffd633"></i><span>All motion <span class="g">· like its highlight stroke</span></span></li>
     </ul>
     <p class="g" style="margin:12px 0 0;font-size:15px">And project manager for parts of the production.</p>
    </div>
   </div>
-  <p class="credits">From the video's credits: produced by Elwyn Foote · edited by Elwyn Foote and <b>Tanner Holman</b> · graphics by <b>Tanner Holman</b>.</p>
+  <ul class="crows">
+   <li><span>Produced by</span><span class="g">Elwyn Foote</span></li>
+   <li><span>Edited by</span><span class="g">Elwyn Foote and Tanner Holman</span></li>
+   <li><span>Graphics by</span><span class="g">Tanner Holman</span></li>
+   <li class="srcrow"><button id="srcb" aria-expanded="false" aria-controls="srcl"><span><span class="badge">14 links</span>Sources</span><span class="g">Everything the film shows, checked</span><i aria-hidden="true">+</i></button>
+    <ul class="srcl" id="srcl" hidden><li><a href="https://huggingface.wtf/" rel="noopener" target="_blank"><span>The Hugging Face incident, the full story</span><span class="g">huggingface.wtf</span><i aria-hidden="true">↗</i></a></li><li><a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/" rel="noopener" target="_blank"><span>METR & Redwood Research's investigation</span><span class="g">metr.org</span><i aria-hidden="true">↗</i></a></li><li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/" rel="noopener" target="_blank"><span>OpenAI's incident report</span><span class="g">openai.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.reuters.com/business/openai-report-says-its-network-was-hacked-by-its-own-rogue-ai-agents-2026-08-26/" rel="noopener" target="_blank"><span>Reuters on the swarm</span><span class="g">reuters.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://techcrunch.com/2025/07/21/openai-and-google-outdo-the-mathletes-but-not-each-other/" rel="noopener" target="_blank"><span>AI gets IMO gold, years ahead of forecasts</span><span class="g">techcrunch.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.metaculus.com/questions/6728/ai-wins-imo-gold-medal/" rel="noopener" target="_blank"><span>Metaculus forecast, asked Apr 2021</span><span class="g">metaculus.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.semafor.com/article/09/08/2026/openai-agents-find-proof-to-1-million-millennium-prize-problem" rel="noopener" target="_blank"><span>OpenAI's Millennium Prize claim</span><span class="g">semafor.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://techcrunch.com/2026/09/18/anthropic-is-operating-a-lab-that-conducts-biology-experiments/" rel="noopener" target="_blank"><span>Anthropic's biology lab</span><span class="g">techcrunch.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://kyivindependent.com/ex-defense-minister-fedorov-announces-new-army-of-robots-initiative-in-latest-move-since-leaving-office/" rel="noopener" target="_blank"><span>Ukraine's “Army of Robots”</span><span class="g">kyivindependent.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://rentahuman.ai/" rel="noopener" target="_blank"><span>RentAHuman</span><span class="g">rentahuman.ai</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.thewrap.com/industry-news/tech/ai-could-kill-humans-anthropic-employee-warns-danger/" rel="noopener" target="_blank"><span>Lab employees' odds of catastrophe</span><span class="g">thewrap.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.axios.com/2025/09/17/anthropic-dario-amodei-p-doom-25-percent" rel="noopener" target="_blank"><span>Amodei's 25%</span><span class="g">axios.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025" rel="noopener" target="_blank"><span>International AI Safety Report 2025</span><span class="g">internationalaisafetyreport.org</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.khaleejtimes.com/business/global-ai-stocks-fall-as-industry-chiefs-call-for-slowing-development" rel="noopener" target="_blank"><span>AI stocks fall after CEOs call for a slowdown</span><span class="g">khaleejtimes.com</span><i aria-hidden="true">↗</i></a></li></ul></li>
+  </ul>
+  <p class="g" style="font-size:13px;margin:8px 0 0">From the film's YouTube description.</p>
  </section>
 
  <section class="how" id="how" aria-label="How it's made">
@@ -294,13 +342,14 @@ body.preview #pv{display:block}
     <li class="step" data-s="2"><div><h3>Condense</h3><p>The kept shots slide together in film order, at the same scale as the raw, so you can see how much shorter it got.</p></div></li>
     <li class="step" data-s="3"><div><h3>Ten answers, 81 graphics</h3><p>The finished film at full width. Blue bands are Nate's ten answers; orange marks are the graphics, at their real lengths.</p></div></li>
     <li class="step part" data-s="4"><div><span class="k mono">20 seconds, layer by layer</span><h3>From raw footage to finished cut.</h3><p>One stretch of Question 9, as it became a reel.</p></div></li>
-    <li class="step" data-s="5"><div><span class="k mono">1</span><h3>Raw footage</h3><p>26 seconds of the camera file, as recorded.</p></div></li>
-    <li class="step" data-s="6"><div><span class="k mono">2</span><h3>Cuts</h3><p>Pauses, ums and a restart taken out: 26 seconds becomes 16.9 seconds of Nate, with a gap left for a clip.</p></div></li>
-    <li class="step" data-s="7"><div><span class="k mono">3</span><h3>Mark up for graphics</h3><p>The cut, marked beat by beat for possible graphics, with my notes.</p></div></li>
-    <li class="step" data-s="8"><div><span class="k mono">4</span><h3>Research</h3><p>Finding and checking what goes on screen: his own footage, TIME's figure, the host's exact words.</p></div></li>
-    <li class="step" data-s="9"><div><span class="k mono">5</span><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
+    <li class="step" data-s="5"><div><h3>Raw footage</h3><p>26 seconds of the camera file, as recorded.</p></div></li>
+    <li class="step" data-s="6"><div><h3>Cuts</h3><p>Pauses, ums and a restart taken out: 26 seconds becomes 16.9 seconds of Nate, with a gap left for a clip.</p></div></li>
+    <li class="step" data-s="7"><div><h3>Mark up for graphics</h3><p>The cut, marked beat by beat for possible graphics, with my notes.</p></div></li>
+    <li class="step" data-s="8"><div><h3>Research</h3><p>Finding and checking what goes on screen: his own footage, TIME's figure, the host's exact words.</p></div></li>
+    <li class="step" data-s="9"><div><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
    </ol>
   </div>
+  <div class="wrap"><button class="acard" id="acard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/l_film.jpg)"></span><span class="at"><span>Twenty seconds, layer by layer</span><span class="g">How one stretch of the Question 9 reel was made</span></span><span class="aa" aria-hidden="true">↗</span></button></div>
  </section>
 </div>
 
@@ -330,10 +379,32 @@ body.preview #pv{display:block}
  </section>
  <section class="contact wrap" aria-label="Contact">
   <blockquote><span class="tbd">“[Elwyn's quote]”</span><cite>Elwyn Foote, producer</cite></blockquote>
-  <p class="g" style="margin-bottom:6px">References on request.</p>
-  <p><a class="mail" href="mailto:tannerholman97@gmail.com">tannerholman97@gmail.com</a></p>
-  <p class="foot"><a href="/">← tannerholman.space</a></p>
+  <p>Reach me by <a class="mail" href="mailto:tannerholman97@gmail.com">email</a> or visit my <a class="mail" href="/">main site</a>. <span class="g">References on request.</span></p>
  </section>
+</div>
+
+<div class="sheetv" id="sheetv" role="dialog" aria-modal="true" aria-label="Twenty seconds, layer by layer">
+ <div class="scrim" id="scrim"></div>
+ <div class="panel" id="panel"><div class="grab"><button class="x" id="sx" aria-label="Close">✕</button></div>
+  <article class="art">
+   <p class="ttl">Twenty seconds, layer by layer</p>
+   <p class="sub">How one stretch of the Question 9 reel was made</p>
+   <p class="date">November 2026</p>
+   <p class="tbdnote tbd">Draft from your notes and the reel's records. Rewrite it in your voice.</p>
+   <h3>The stretch</h3>
+   <p>Nate tells the story of Daniel Kokotajlo, who left OpenAI and refused to sign a non-disparagement agreement that would have cost him about $2 million in equity. In the camera file the story takes 26 seconds. In the reel it takes 20.</p>
+   <figure><video src="media/raw.mp4" poster="media/raw-still.jpg" muted loop playsinline preload="none" data-auto></video></figure>
+   <h3>Cuts</h3>
+   <p>First I took out the pauses, the ums and a restart. Twenty-six seconds became 16.9 seconds of Nate, with a three-second gap held open at the end for a clip I didn't have yet.</p>
+   <h3>Markup</h3>
+   <p>Before making anything, I marked the cut beat by beat: where a new person comes in, where a number needs to land, where Nate should carry it alone. Two of the five beats ended up with nothing on screen, on purpose.</p>
+   <h3>Research</h3>
+   <p>Every graphic needed a source. Kokotajlo's own footage came from The Diary Of A CEO's official upload, after the first copy I found was too poor in picture and sound. The $2 million comes from his TIME100 profile. When Elwyn questioned the host's line, I checked the exact words against the captions and the waveform.</p>
+   <h3>Graphics, motion and sound</h3>
+   <p>Then the layers went on: TIME's page full screen with two highlight strokes, his name beside his head, punch-ins that move closer as Nate gets to "go away", and small sounds that land with each move: a flick on each new face, a click as the page arrives, a brush under each highlight.</p>
+   <figure><video src="media/final.mp4" poster="media/q9-poster.jpg" muted loop playsinline preload="none" data-auto style="max-width:340px;margin:0 auto"></video></figure>
+  </article>
+ </div>
 </div>
 
 <div id="pv">
@@ -355,6 +426,8 @@ const mk = (c, p, tag) => { const e = document.createElement(tag || 'div'); if(c
 const wait = ms => new Promise(r => setTimeout(r, ms));
 const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 function onView(el, on, off, th = .3){ new IntersectionObserver(es => es.forEach(e => e.isIntersecting ? on() : off && off()), {threshold: th}).observe(el); }
+requestAnimationFrame(() => document.body.classList.add('in'));
+if(RM) document.documentElement.classList.remove('js');
 const PREVIEW = location.hostname !== 'tannerholman.space' || /[?&]notes/.test(location.search);
 if(PREVIEW) document.body.classList.add('preview');
 
@@ -369,6 +442,19 @@ if(PREVIEW) document.body.classList.add('preview');
     const f = document.createElement('iframe'); f.src = 'https://www.youtube-nocookie.com/embed/9U-FdOWTxPw?autoplay=1&rel=0&playsinline=1';
     f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true; f.title = 'Unfortunately, We Can\'t Just Unplug It';
     p.innerHTML = ''; p.appendChild(f); p.style.cursor = 'default'; };
+}
+/* sources: a row that opens in place */
+{ const b = $('#srcb'), l = $('#srcl'); b.onclick = () => { const o = l.hidden; l.hidden = !o; b.setAttribute('aria-expanded', o); }; }
+/* the write-up opens as a sheet */
+{
+  const sv = $('#sheetv'), panel = $('#panel'); let last = null;
+  const vids = $$('video[data-auto]', sv);
+  const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if(e.isIntersecting && sv.classList.contains('open')){ if(v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); } else v.pause(); }), {root: panel, threshold: .3});
+  vids.forEach(v => vio.observe(v));
+  const open = () => { last = document.activeElement; sv.classList.add('open'); document.body.classList.add('sheet-open'); panel.scrollTop = 0; setTimeout(() => $('#sx').focus(), 50); };
+  const close = () => { sv.classList.remove('open'); document.body.classList.remove('sheet-open'); vids.forEach(v => v.pause()); last && last.focus(); };
+  $('#acard').onclick = open; $('#sx').onclick = close; $('#scrim').onclick = close;
+  addEventListener('keydown', e => { if(e.key === 'Escape' && sv.classList.contains('open')) close(); });
 }
 /* numbers card: tap shows where and when */
 { const n = $('#nums'); n.onclick = () => { const on = n.classList.toggle('fan'); n.setAttribute('aria-expanded', on); }; }
@@ -493,7 +579,9 @@ const LY = {
 
 /* ---------- reels: loops play while on screen, tap plays the full reel with sound ---------- */
 {
-  const cards = $$('.rc'), lb = $('#lb'), lbv = $('#lbv');
+  const cards = $$('.rc'), lb = $('#lb'), lbv = $('#lbv'), rail = $('#rail');
+  const lead = () => { const c = rail.scrollLeft + rail.clientWidth / 2; cards.forEach(el => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c), k = Math.min(1, d / 260); el.style.transform = `scale(${1 - k * .08})`; el.style.opacity = 1 - k * .35; }); };
+  rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead); lead();
   const io = new IntersectionObserver(es => es.forEach(e => { const v = $('video', e.target); if(e.isIntersecting && !RM){ if(!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause(); }), {threshold: .6});
   cards.forEach(c => { io.observe(c); c.onclick = () => { $$('.rc video').forEach(v => v.pause()); lbv.src = `media/q${c.dataset.q}-full.mp4`; lbv.muted = false; lb.showModal(); lbv.play().catch(() => {}); }; });
   const close = () => { lbv.pause(); lbv.removeAttribute('src'); lbv.load(); lb.close(); };
@@ -534,10 +622,12 @@ if(PREVIEW){
     {id: 'ink', t: 'Ink emphasis in About', pick: 'One phrase. It works for someone skimming.', seg: ['phrase:One phrase', 'scroll:Darkens as you scroll']},
     {id: 'poster', t: 'What the film poster shows', pick: 'Keep the forecast chart from Question 1 (1:37 in the film): it reads with the sound off and shows the graphics first. The other way is a frame of Nate.'},
     {id: 'ftitle', t: 'Film title: YouTube’s title or “Most Asked Questions”', pick: 'YouTube’s title, so it matches what a hirer sees when they tap.'},
+    {id: 'font', t: 'Type', pick: 'Apple’s system font, as you noted; Inter stands in on Windows and Android. Weights, greys and margins unchanged, since you picked Keep.'},
     {id: 'sections', t: 'Editing and pacing on how many sections', pick: '“two, and two more with Elwyn”. Your meeting notes showed two pace cuts of your own and two cut together on Oct 7.'},
     {id: 'raw', t: 'Raw footage on the page', pick: 'The 26-second camera clip in How it’s made is raw. You said you’d clear it with Elwyn and Nate before this goes live.'},
     {id: 'notes', t: 'Your beat-board notes, shown in Markup', pick: 'Keep them close to how you wrote them (I fixed one typo and shortened two). They show real thinking.'},
     {id: 'reels', t: 'Tapping a reel', pick: 'Plays the full reel here, with sound. Add links to Nate’s posts once you have them.'},
+    {id: 'article', t: 'The write-up that opens from How it’s made', pick: 'My draft, built from your beat-board notes and the reel’s records, in Marvin’s article style. Rewrite it in your voice.'},
     {id: 'taste', t: 'Taste paragraph', pick: 'Still my draft from your Dec 2024 notes. Paste your own words if you have better ones.'},
     {id: 'quote', t: 'Elwyn’s quote', pick: 'Still to come; the space is held at the bottom.'},
     {id: 'numbers', t: 'Numbers card', pick: 'Read from YouTube on Nov 24: 129,846 views, 516 comments. Refresh before going live.'}
