@@ -61,7 +61,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .player:hover .chip{transform:translateY(-2px)}
 .ftitle{margin:18px 0 0}
 .ftitle .g a{color:inherit;text-decoration-color:var(--soft);text-underline-offset:3px}
-.nums{position:relative;margin:18px 0 0;width:100%;max-width:360px;height:84px;border:0;padding:0;background:none;text-align:left;cursor:pointer;transition:height .45s}
+.nums{position:relative;margin:18px 0 0;width:100%;max-width:360px;height:84px;transition:height .45s}
+.nc{display:block;width:100%;text-align:left;border:0;font:inherit;color:inherit;text-decoration:none;cursor:pointer}
+.n2{pointer-events:none}.nums.fan .n2{pointer-events:auto}
+.arr{color:var(--grey);font-weight:400}
 .nums.fan{height:156px}
 .nc{position:absolute;left:0;right:0;top:0;padding:13px 20px;border-radius:28px;background:rgba(255,255,255,.94);box-shadow:0 22px 55px rgba(35,61,56,.14),0 8px 22px rgba(35,61,56,.10),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:transform .55s cubic-bezier(.2,.9,.3,1.1)}
 .nc b{display:block;font-weight:500}
@@ -70,13 +73,12 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .nums.fan .n2{transform:translateY(74px)}
 
 /* my role, exploded */
-.role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:56px 0 0}
+.role{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:28px;align-items:center;margin:96px 0 0}
 .stage3d{height:280px;perspective:1000px;display:grid;place-items:center}
-.planes{position:relative;width:min(100%,330px);aspect-ratio:16/9;transform-style:preserve-3d;transition:transform 1.1s cubic-bezier(.6,0,.2,1)}
-.pl{position:absolute;inset:0;border-radius:8px;transition:transform 1.1s cubic-bezier(.6,0,.2,1),outline-color .3s;outline:2px solid transparent;outline-offset:-1px}
+.planes{position:relative;width:min(100%,330px);aspect-ratio:16/9;transform-style:preserve-3d}
+.pl{position:absolute;inset:0;border-radius:8px;transition:outline-color .3s,background-color .3s;outline:2px solid transparent;outline-offset:-1px}
 .pl.base{background:#222 center/cover}
 .pl svg{display:block;width:100%;height:100%}
-.role.exp .planes{transform:rotateX(55deg) rotateZ(-34deg)}
 .pl:not(.base){background:center/cover no-repeat}
 .role.exp .pl:not(.base){background-color:rgba(255,255,255,.16);box-shadow:0 0 0 1px rgba(0,0,0,.14)}
 .pl.hl{outline-color:var(--ink)}
@@ -94,6 +96,7 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .srcrow button[aria-expanded=true] i{transform:rotate(45deg)}
 .badge{display:inline-block;font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;background:var(--ink);color:#fff;border-radius:4px;padding:3px 5px;margin-right:8px;vertical-align:2px}
 .srcl{list-style:none;margin:8px 0 0;padding:0}
+.srcl > li{display:grid;grid-template-columns:120px minmax(0,1fr);gap:10px;padding:10px 0;border-top:1px solid #f2f2f3}
 .srcl a{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:9px 0;border-top:1px solid #f2f2f3;text-decoration:none}
 .srcl a .g{grid-column:1;font-size:13px;color:#b0b0b4}
 .srcl a i{grid-row:1/span 2;grid-column:2;align-self:center;font-style:normal;color:var(--grey)}
@@ -158,8 +161,14 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .step.part{min-height:60vh}
 .step.part h3{font-size:22px;line-height:1.25;font-weight:500}
 
+/* the hour sheet */
+.hhead{max-width:1040px;margin:0 auto;padding:6px 26px 0}
+.hhead .ttl{margin:0}
+.hs .viz{top:56px;height:min(70vh,560px)}
+.hs.hgrid{padding-bottom:20vh}
+@media (max-width:760px){.hs .viz{top:48px;height:46svh;box-shadow:none;border-bottom:1px solid var(--line)}.hs .step{min-height:46svh}}
 /* the write-up: a card that opens as a sheet */
-.acard{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;margin:6px 0 0;padding:10px 16px 10px 10px;border:0;border-radius:22px;background:#f4f4f5;text-align:left;cursor:pointer}
+.acard{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;margin:14px 0 0;padding:10px 16px 10px 10px;border:0;border-radius:22px;background:#f4f4f5;text-align:left;cursor:pointer}
 .acard .ai{width:96px;aspect-ratio:16/10;border-radius:14px;background:center/cover}
 .acard .at{display:grid}
 .acard .aa{color:var(--grey);font-size:18px}
@@ -169,7 +178,7 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .sheetv.open .scrim{opacity:1}
 .sheetv .panel{position:absolute;left:0;right:0;bottom:0;top:max(28px,env(safe-area-inset-top));background:#fff;border-radius:16px 16px 0 0;transform:translateY(102%);transition:transform .5s cubic-bezier(.2,.9,.2,1);overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
 .sheetv.open .panel{transform:none}
-.sheetv .grab{position:sticky;top:0;display:flex;justify-content:flex-end;padding:12px 14px 0;background:linear-gradient(#fff 70%,transparent)}
+.sheetv .grab{position:sticky;top:0;z-index:5;display:flex;justify-content:flex-end;padding:12px 14px 6px;background:#fff}
 .sheetv .x{width:36px;height:36px;border-radius:50%;border:0;background:#f1f1f2;font-size:16px;cursor:pointer}
 .art{max-width:560px;margin:0 auto;padding:8px 26px calc(80px + env(safe-area-inset-bottom));font:400 18px/1.62 Georgia,"Times New Roman",serif;color:#707070}
 .art h3,.art .ttl{color:#333;font-weight:400;font-size:18px;margin:0}
@@ -186,14 +195,15 @@ body.sheet-open{overflow:hidden}
 /* reels: the dark band */
 .reels{background:var(--dark);color:#ececec;padding:86px 0 110px;position:relative;z-index:1;margin-top:-1px}
 .reels .g{color:#8e8e93}
-.rail{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scrollbar-width:none}
+.rail{display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scroll-padding-left:max(var(--pad),calc(50% - 400px));scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
-.rc{flex:none;width:min(62vw,250px);scroll-snap-align:center;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;transform-origin:50% 40%;transition:transform .2s,opacity .2s}
+.rc{flex:none;width:min(74vw,300px);scroll-snap-align:start;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;transform-origin:50% 40%;transition:transform .2s,opacity .2s}
 .rv{display:block;position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#1a1a1c}
 .rv img,.rv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.rv .chip{left:10px;bottom:10px;font-size:13px;padding:5px 11px 5px 6px}.rv .chip i{width:22px;height:22px}
-.rc .mono{display:block;margin:12px 0 2px;color:#8e8e93}
-.rc b{font-weight:500}
+.rv .chip{left:auto;right:12px;top:12px;bottom:auto;font-size:13px;padding:5px 11px 5px 6px}.rv .chip i{width:22px;height:22px}
+.rv::after{content:"";position:absolute;inset:auto 0 0;height:46%;background:linear-gradient(transparent,rgba(0,0,0,.72));pointer-events:none}
+.rt{position:absolute;left:16px;right:16px;bottom:14px;z-index:1;display:grid;gap:2px;transition:opacity .25s}
+.rt .mono{color:rgba(255,255,255,.7)}.rt b{font-weight:400;font-size:17px;line-height:1.3;color:#fff}
 dialog{border:0;padding:0;background:transparent;max-width:none;max-height:none}
 dialog::backdrop{background:rgba(0,0,0,.86)}
 .lb{position:relative;height:min(86svh,860px);aspect-ratio:9/16;max-width:94vw}
@@ -202,6 +212,7 @@ dialog::backdrop{background:rgba(0,0,0,.86)}
 
 /* about */
 .about{padding-top:80px}
+.sheet.two .how{margin-top:0;padding-top:72px}
 .story p{color:var(--grey)}
 .story .em{color:var(--ink)}
 .story.scrollink .em{color:inherit}
@@ -310,10 +321,10 @@ body.preview #pv{display:block}
    </button>
   </div>
   <p class="ftitle ar" style="--d:.45s">Unfortunately, We Can't Just Unplug It<br><span class="g">Nate Soares answers the ten most common questions about AI risk. <a href="https://www.youtube.com/watch?v=9U-FdOWTxPw">YouTube</a></span></p>
-  <button class="nums ar dr" style="--d:.9s" id="nums" aria-expanded="false" aria-label="Views and comments; tap for where it was posted">
-   <span class="nc n2"><b>Nate Soares · YouTube</b><span>Posted Nov 16, 2026</span></span>
-   <span class="nc n1"><b>130K views · 516 comments</b><span>First eight days · as of Nov 24, 2026</span></span>
-  </button>
+  <div class="nums ar dr" style="--d:.9s" id="nums">
+   <a class="nc n2" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener" tabindex="-1"><b>Watch on YouTube <span class="arr">↗</span></b><span>Nate Soares · posted Nov 16, 2026</span></a>
+   <button class="nc n1" id="numsb" aria-expanded="false" aria-label="130K views, 516 comments in the first 8 days. Tap for the link"><b>130K views · 516 comments</b><span>in the first 8d</span></button>
+  </div>
 
   <div class="role" id="role">
    <div class="stage3d"><div class="planes" id="planes">
@@ -335,25 +346,33 @@ body.preview #pv{display:block}
    </div>
   </div>
   <ul class="crows">
-   <li><span>Produced by</span><span class="g">Elwyn Foote</span></li>
-   <li><span>Edited by</span><span class="g">Elwyn Foote and Tanner Holman</span></li>
-   <li><span>Graphics by</span><span class="g">Tanner Holman</span></li>
-   <li class="srcrow"><button id="srcb" aria-expanded="false" aria-controls="srcl"><span><span class="badge">14 links</span>Sources</span><span class="g">Everything the film shows, checked</span><i aria-hidden="true">+</i></button>
-    <ul class="srcl" id="srcl" hidden><li><a href="https://huggingface.wtf/" rel="noopener" target="_blank"><span>The Hugging Face incident, the full story</span><span class="g">huggingface.wtf</span><i aria-hidden="true">↗</i></a></li><li><a href="https://metr.org/blog/2026-08-26-openai-hugging-face-incident-investigation/" rel="noopener" target="_blank"><span>METR & Redwood Research's investigation</span><span class="g">metr.org</span><i aria-hidden="true">↗</i></a></li><li><a href="https://openai.com/index/hugging-face-model-evaluation-security-incident/" rel="noopener" target="_blank"><span>OpenAI's incident report</span><span class="g">openai.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.reuters.com/business/openai-report-says-its-network-was-hacked-by-its-own-rogue-ai-agents-2026-08-26/" rel="noopener" target="_blank"><span>Reuters on the swarm</span><span class="g">reuters.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://techcrunch.com/2025/07/21/openai-and-google-outdo-the-mathletes-but-not-each-other/" rel="noopener" target="_blank"><span>AI gets IMO gold, years ahead of forecasts</span><span class="g">techcrunch.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.metaculus.com/questions/6728/ai-wins-imo-gold-medal/" rel="noopener" target="_blank"><span>Metaculus forecast, asked Apr 2021</span><span class="g">metaculus.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.semafor.com/article/09/08/2026/openai-agents-find-proof-to-1-million-millennium-prize-problem" rel="noopener" target="_blank"><span>OpenAI's Millennium Prize claim</span><span class="g">semafor.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://techcrunch.com/2026/09/18/anthropic-is-operating-a-lab-that-conducts-biology-experiments/" rel="noopener" target="_blank"><span>Anthropic's biology lab</span><span class="g">techcrunch.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://kyivindependent.com/ex-defense-minister-fedorov-announces-new-army-of-robots-initiative-in-latest-move-since-leaving-office/" rel="noopener" target="_blank"><span>Ukraine's “Army of Robots”</span><span class="g">kyivindependent.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://rentahuman.ai/" rel="noopener" target="_blank"><span>RentAHuman</span><span class="g">rentahuman.ai</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.thewrap.com/industry-news/tech/ai-could-kill-humans-anthropic-employee-warns-danger/" rel="noopener" target="_blank"><span>Lab employees' odds of catastrophe</span><span class="g">thewrap.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.axios.com/2025/09/17/anthropic-dario-amodei-p-doom-25-percent" rel="noopener" target="_blank"><span>Amodei's 25%</span><span class="g">axios.com</span><i aria-hidden="true">↗</i></a></li><li><a href="https://internationalaisafetyreport.org/publication/international-ai-safety-report-2025" rel="noopener" target="_blank"><span>International AI Safety Report 2025</span><span class="g">internationalaisafetyreport.org</span><i aria-hidden="true">↗</i></a></li><li><a href="https://www.khaleejtimes.com/business/global-ai-stocks-fall-as-industry-chiefs-call-for-slowing-development" rel="noopener" target="_blank"><span>AI stocks fall after CEOs call for a slowdown</span><span class="g">khaleejtimes.com</span><i aria-hidden="true">↗</i></a></li></ul></li>
+   <li class="srcrow"><button id="srcb" aria-expanded="false" aria-controls="srcl"><span><span class="badge">3 credits</span>Who made it</span><span class="g">From the film's YouTube description</span><i aria-hidden="true">+</i></button>
+    <ul class="srcl" id="srcl" hidden>
+     <li><span>Produced by</span><span class="g">Elwyn Foote</span></li>
+     <li><span>Edited by</span><span class="g">Elwyn Foote and Tanner Holman</span></li>
+     <li><span>Graphics by</span><span class="g">Tanner Holman</span></li>
+    </ul></li>
   </ul>
-  <p class="g" style="font-size:13px;margin:8px 0 0">From the film's YouTube description.</p>
+  <button class="acard" id="hcard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/hour-thumb.jpg);background-color:#fff"></span><span class="at"><span>An hour into 16 minutes</span><span class="g">How the raw footage became the film</span></span><span class="aa" aria-hidden="true">↗</span></button>
  </section>
 
- <section class="how" id="how" aria-label="How it's made">
-  <div class="wrap" style="margin-bottom:8px"><h2>How it's made</h2><p class="g">Helped turn an hour of raw footage into a 16-minute film.</p></div>
+</div>
+
+<section class="reels" id="reels" aria-label="Reels">
+ <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
+ <div class="rail" id="rail">
+  <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 1</span><b>How can something so error-prone be so dangerous?</b></span><span class="chip"><i></i>Watch</span></span></button>
+  <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
+  <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><span class="mono">Question 9</span><b>Who can we trust about AI?</b></span><span class="chip"><i></i>Watch</span></span></button>
+ </div>
+</section>
+<dialog id="lb" aria-label="Reel"><div class="lb"><video id="lbv" controls playsinline></video><button class="lbx" id="lbx" aria-label="Close">✕</button></div></dialog>
+
+<div class="sheet two">
+ <section class="how b" id="how" aria-label="20 seconds, layer by layer">
+  <div class="wrap" style="margin-bottom:8px"><h2>20 seconds, layer by layer</h2><p class="g">From raw footage to finished cut: one stretch of Question 9, as it became a reel.</p></div>
   <div class="hgrid">
    <div class="viz"><div class="vbox">
-    <div class="va" id="va">
-     <div class="arow"><div class="lab mono"><span>Raw footage</span><span>1:09:45</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>Kept</span><span>15:19 of it</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>The film, same scale</span><span>15:53</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>The film, full width</span><span>10 answers · 81 graphics</span></div><div class="atr" style="margin-bottom:22px"></div></div>
-    </div>
     <div class="vb" id="vb"><div class="vbin">
      <div class="bst" id="bst"><div class="bov" id="bov"></div></div>
      <div class="bcap mono" id="bcap"></div>
@@ -362,33 +381,15 @@ body.preview #pv{display:block}
     </div></div>
    </div></div>
    <ol class="steps" id="steps">
-    <li class="step" data-s="0"><div><span class="k mono">The whole film</span><h3>Raw footage: 1 hour 10 minutes</h3><p>Everything the camera recorded on Sep 28, across three files.</p></div></li>
-    <li class="step" data-s="1"><div><h3>Keep</h3><p>Each dark mark is a moment of Nate that made the film. The grey is what was cut.</p></div></li>
-    <li class="step" data-s="2"><div><h3>Condense</h3><p>The kept shots slide together in film order, at the same scale as the raw, so you can see how much shorter it got.</p></div></li>
-    <li class="step" data-s="3"><div><h3>Ten answers, 81 graphics</h3><p>The finished film at full width. Blue bands are Nate's ten answers; orange marks are the graphics, at their real lengths.</p></div></li>
-    <li class="step part" data-s="4"><div><span class="k mono">20 seconds, layer by layer</span><h3>From raw footage to finished cut.</h3><p>One stretch of Question 9, as it became a reel.</p></div></li>
-    <li class="step" data-s="5"><div><h3>Raw footage</h3><p>26 seconds of the camera file, as recorded.</p></div></li>
-    <li class="step" data-s="6"><div><h3>Cuts</h3><p>Pauses, ums and a restart taken out: 26 seconds becomes 16.9 seconds of Nate, with a gap left for a clip.</p></div></li>
-    <li class="step" data-s="7"><div><h3>Mark up for graphics</h3><p>The cut, marked beat by beat for possible graphics, with my notes.</p></div></li>
-    <li class="step" data-s="8"><div><h3>Research</h3><p>Finding and checking what goes on screen: his own footage, TIME's figure, the host's exact words.</p></div></li>
-    <li class="step" data-s="9"><div><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
+    <li class="step" data-s="0"><div><h3>Raw footage</h3><p>26 seconds of the camera file, as recorded.</p></div></li>
+    <li class="step" data-s="1"><div><h3>Cuts</h3><p>Pauses, ums and a restart taken out: 26 seconds becomes 16.9 seconds of Nate, with a gap left for a clip.</p></div></li>
+    <li class="step" data-s="2"><div><h3>Mark up for graphics</h3><p>The cut, marked beat by beat for possible graphics, with my notes.</p></div></li>
+    <li class="step" data-s="3"><div><h3>Research</h3><p>Finding and checking what goes on screen: his own footage, TIME's figure, the host's exact words.</p></div></li>
+    <li class="step" data-s="4"><div><h3>Graphics, motion and sound</h3><p>The finished reel: footage, the TIME page and its highlights, punch-ins, captions, flicks and brushes.</p></div></li>
    </ol>
   </div>
-  <div class="wrap"><button class="acard" id="acard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/l_film.jpg)"></span><span class="at"><span>Twenty seconds, layer by layer</span><span class="g">How one stretch of the Question 9 reel was made</span></span><span class="aa" aria-hidden="true">↗</span></button></div>
+  <div class="wrap"><button class="acard" id="acard" aria-haspopup="dialog"><span class="ai" style="background-image:url(media/l_film.jpg)"></span><span class="at"><span>The write-up</span><span class="g">How one stretch of the Question 9 reel was made</span></span><span class="aa" aria-hidden="true">↗</span></button></div>
  </section>
-</div>
-
-<section class="reels" id="reels" aria-label="Reels">
- <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
- <div class="rail" id="rail">
-  <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 1</span><b>How can something so error-prone be so dangerous?</b></button>
-  <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 4</span><b>How does AI kill us if it's an online thing?</b></button>
-  <button class="rc" data-q="9"><span class="rv"><img src="media/q9-poster.jpg" alt=""><video data-src="media/q9-loop.mp4" muted loop playsinline preload="none"></video><span class="chip"><i></i>Watch</span></span><span class="mono">Question 9</span><b>Who can we trust about AI?</b></button>
- </div>
-</section>
-<dialog id="lb" aria-label="Reel"><div class="lb"><video id="lbv" controls playsinline></video><button class="lbx" id="lbx" aria-label="Close">✕</button></div></dialog>
-
-<div class="sheet two">
  <section class="about wrap" aria-label="About">
   <h2 style="margin-bottom:12px">About</h2>
   <div class="story" id="story">
@@ -408,9 +409,32 @@ body.preview #pv{display:block}
  </section>
 </div>
 
+<div class="sheetv" id="sheeth" role="dialog" aria-modal="true" aria-label="An hour into 16 minutes">
+ <div class="scrim"></div>
+ <div class="panel" id="hpanel"><div class="grab"><button class="x" aria-label="Close">✕</button></div>
+  <div class="hhead"><p class="ttl">An hour into 16 minutes</p><p class="g">Helped turn an hour of raw footage into a 16-minute film. Scroll.</p></div>
+  <div class="hgrid hs">
+   <div class="viz"><div class="vbox">
+    <div class="va" id="va" style="opacity:1;pointer-events:auto">
+     <div class="arow"><div class="lab mono"><span>Raw footage</span><span>1:09:45</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>Kept</span><span>15:19 of it</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>The film, same scale</span><span>15:53</span></div><div class="atr"></div></div>
+     <div class="arow"><div class="lab mono"><span>The film, full width</span><span>10 answers · 81 graphics</span></div><div class="atr" style="margin-bottom:22px"></div></div>
+    </div>
+   </div></div>
+   <ol class="steps" id="hsteps">
+    <li class="step" data-s="0"><div><h3>Raw footage: 1 hour 10 minutes</h3><p>Everything the camera recorded on Sep 28, across three files.</p></div></li>
+    <li class="step" data-s="1"><div><h3>Keep</h3><p>Each dark mark is a moment of Nate that made the film. The grey is what was cut.</p></div></li>
+    <li class="step" data-s="2"><div><h3>Condense</h3><p>The kept shots slide together in film order, at the same scale as the raw, so you can see how much shorter it got.</p></div></li>
+    <li class="step" data-s="3"><div><h3>Ten answers, 81 graphics</h3><p>The finished film at full width. Blue bands are Nate's ten answers; orange marks are the graphics, at their real lengths.</p></div></li>
+   </ol>
+  </div>
+ </div>
+</div>
+
 <div class="sheetv" id="sheetv" role="dialog" aria-modal="true" aria-label="Twenty seconds, layer by layer">
- <div class="scrim" id="scrim"></div>
- <div class="panel" id="panel"><div class="grab"><button class="x" id="sx" aria-label="Close">✕</button></div>
+ <div class="scrim"></div>
+ <div class="panel" id="panel"><div class="grab"><button class="x" aria-label="Close">✕</button></div>
   <article class="art">
    <p class="ttl">Twenty seconds, layer by layer</p>
    <p class="sub">How one stretch of the Question 9 reel was made</p>
@@ -478,30 +502,36 @@ if(PREVIEW) document.body.classList.add('preview');
 }
 /* sources: a row that opens in place */
 { const b = $('#srcb'), l = $('#srcl'); b.onclick = () => { const o = l.hidden; l.hidden = !o; b.setAttribute('aria-expanded', o); }; }
-/* the write-up opens as a sheet */
-{
-  const sv = $('#sheetv'), panel = $('#panel'); let last = null;
+/* cards that open as sheets: the hour, and the write-up */
+function sheet(sv, btn, onOpen){
+  const panel = $('.panel', sv), x = $('.x', sv); let last = null;
   const vids = $$('video[data-auto]', sv);
   const vio = new IntersectionObserver(es => es.forEach(e => { const v = e.target; if(e.isIntersecting && sv.classList.contains('open')){ if(v.preload === 'none') v.preload = 'auto'; v.play().catch(() => {}); } else v.pause(); }), {root: panel, threshold: .3});
   vids.forEach(v => vio.observe(v));
-  const open = () => { last = document.activeElement; sv.classList.add('open'); document.body.classList.add('sheet-open'); panel.scrollTop = 0; setTimeout(() => $('#sx').focus(), 50); };
+  const open = () => { last = document.activeElement; sv.classList.add('open'); document.body.classList.add('sheet-open'); panel.scrollTop = 0; setTimeout(() => x.focus(), 50); onOpen && onOpen(); };
   const close = () => { sv.classList.remove('open'); document.body.classList.remove('sheet-open'); vids.forEach(v => v.pause()); last && last.focus(); };
-  $('#acard').onclick = open; $('#sx').onclick = close; $('#scrim').onclick = close;
+  btn.onclick = open; x.onclick = close; $('.scrim', sv).onclick = close;
   addEventListener('keydown', e => { if(e.key === 'Escape' && sv.classList.contains('open')) close(); });
+  return panel;
 }
+const HPANEL = sheet($('#sheeth'), $('#hcard'), () => window.hourPick && requestAnimationFrame(window.hourPick));
+sheet($('#sheetv'), $('#acard'));
 /* numbers card: tap shows where and when */
-{ const n = $('#nums'); n.onclick = () => { const on = n.classList.toggle('fan'); n.setAttribute('aria-expanded', on); }; }
+{ const n = $('#nums'), b = $('#numsb'), a = $('.n2', n); b.onclick = () => { const on = n.classList.toggle('fan'); b.setAttribute('aria-expanded', on); a.tabIndex = on ? 0 : -1; }; }
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
-  const box = $('#role'), pls = $$('#planes .pl'), lis = $$('#rlist li'); let alive = false;
-  const z = on => pls.forEach((p, i) => p.style.transform = `translateZ(${on ? i * 40 : 0}px)`);
-  async function loop(){ while(alive){ box.classList.remove('exp'); z(false); lis.forEach(l => l.classList.remove('hl')); pls.forEach(p => p.classList.remove('hl'));
-    await wait(1600); if(!alive) break; box.classList.add('exp'); z(true); await wait(1200);
-    for(let i = 0; i < pls.length && alive; i++){ lis.forEach((l, j) => l.classList.toggle('hl', j === i)); pls.forEach((p, j) => p.classList.toggle('hl', j === i)); await wait(1000); }
-    await wait(1400); } }
-  if(RM){ box.classList.add('exp'); z(true); }
-  onView(box, () => { if(RM || alive) return; alive = true; loop(); }, () => { alive = false; });
+  /* scroll sets a target; a heavy spring follows it, so the layers lag, swing and settle */
+  const box = $('#role'), planes = $('#planes'), pls = $$('#planes .pl'), lis = $$('#rlist li');
+  let x = 0, v = 0, target = 0, hi = -1, run = false;
+  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
+  function apply(e){ planes.style.transform = `rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`; pls.forEach((p, i) => p.style.transform = `translateZ(${i * 42 * e}px)`); box.classList.toggle('exp', e > .02); }
+  function aim(){ const r = box.getBoundingClientRect(), vh = innerHeight; const p = clamp((vh * .92 - r.top) / (vh * .75));
+    target = RM ? 1 : ease(clamp(p / .5)); const h = p < .5 ? -1 : Math.min(pls.length - 1, Math.floor((p - .5) / .5 * pls.length));
+    if(h !== hi){ hi = h; lis.forEach((l, j) => l.classList.toggle('hl', j === h)); pls.forEach((pl, j) => pl.classList.toggle('hl', j === h)); }
+    if(!run){ run = true; requestAnimationFrame(step); } }
+  function step(){ v += (target - x) * .045; v *= .80; x += v; apply(x); if(Math.abs(target - x) > .0005 || Math.abs(v) > .0005) requestAnimationFrame(step); else { x = target; apply(x); run = false; } }
+  addEventListener('scroll', aim, {passive: true}); addEventListener('resize', aim); aim();
   lis.forEach((l, i) => l.onmouseenter = () => { if(box.classList.contains('exp')) pls.forEach((p, j) => p.classList.toggle('hl', j === i)); });
 }
 
@@ -532,7 +562,7 @@ const LY = {
   ]
 };
 {
-  const how = $('#how'), steps = $$('.step', how), rows = $$('#va .arow'), tr = rows.map(r => $('.atr', r));
+  const how = $('#how'), steps = $$('.step', how), hsteps = $$('#hsteps .step'), rows = $$('#va .arow'), tr = rows.map(r => $('.atr', r));
   const RAW = HD.raw, FILM = HD.film, QS = HD.qs.filter(q => q[0] > 0);
   /* part A: the hour */
   mk('abar', tr[0]); mk('abar dim', tr[1]);
@@ -551,7 +581,7 @@ const LY = {
     fin.forEach(m => { m.e.style.left = (m.f / FILM * W) + 'px'; m.e.style.width = Math.max(1, m.l / FILM * W) + 'px'; m.e.style.background = m.q ? (m.q % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; });
     gm.forEach(g => { g.e.style.left = (g.a / FILM * W) + 'px'; g.e.style.width = Math.max(2, (g.b - g.a) / FILM * W) + 'px'; });
     let last = -99; ql.forEach(q => { const x = Math.min(q.t / FILM * W, W - 14); const show = x - last >= 16; q.e.style.left = x + 'px'; q.e.style.display = show ? '' : 'none'; if(show) last = x; });
-    zoom.style.left = (ZA / FILM * W - 4) + 'px'; zoom.style.width = ((ZB - ZA) / FILM * W + 8) + 'px'; zoom.classList.toggle('on', A >= 4); }
+    zoom.style.left = (ZA / FILM * W - 4) + 'px'; zoom.style.width = ((ZB - ZA) / FILM * W + 8) + 'px'; zoom.classList.toggle('on', A >= 3); }
   new ResizeObserver(drawA).observe(tr[0]);
 
   /* part B: the 20 seconds */
@@ -593,13 +623,18 @@ const LY = {
   { const b = $('#snd'); let on = false; b.onclick = () => { on = !on; VS.forEach(v => v.muted = !on); b.textContent = on ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', on); }; }
   /* which step is under the reading line */
   const phone = matchMedia('(max-width:760px)');
+  /* the hour, inside its sheet: the step under the reading line of the sheet */
+  window.hourPick = () => { const pr = HPANEL.getBoundingClientRect(); const line = pr.top + pr.height * (phone.matches ? .78 : .55); let s = 0; hsteps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s !== A){ A = s; drawA(); } };
+  HPANEL.addEventListener('scroll', () => requestAnimationFrame(window.hourPick), {passive: true});
+  drawA();
+  /* the 20 seconds, on the page */
   let cur = -1;
-  function pick(){ const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s === cur) return; cur = s; window.HOW = {step: s};
-    const b = s >= 5; how.classList.toggle('b', b);
-    if(!b){ A = Math.min(s, 4); drawA(); if(inB){ inB = false; VS.forEach(v => v.pause()); cancelAnimationFrame(raf); } }
-    else { if(!inB){ inB = true; raf = requestAnimationFrame(tick); } setB(s - 5); active().play().catch(() => {}); } }
+  function pick(){ const r = how.getBoundingClientRect(); const near = r.top < innerHeight && r.bottom > 0;
+    if(!near){ if(inB){ inB = false; VS.forEach(v => v.pause()); cancelAnimationFrame(raf); } return; }
+    const line = innerHeight * (phone.matches ? .8 : .55); let s = 0; steps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; });
+    if(!inB){ inB = true; raf = requestAnimationFrame(tick); active().play().catch(() => {}); }
+    if(s === cur) return; cur = s; window.HOW = {step: s}; setB(s); active().play().catch(() => {}); }
   addEventListener('scroll', () => requestAnimationFrame(pick), {passive: true}); addEventListener('resize', pick);
-  onView(how, () => {}, () => { VS.forEach(v => v.pause()); }, 0);
   pick();
 }
 
@@ -613,10 +648,18 @@ const LY = {
 /* ---------- reels: loops play while on screen, tap plays the full reel with sound ---------- */
 {
   const cards = $$('.rc'), lb = $('#lb'), lbv = $('#lbv'), rail = $('#rail');
-  const lead = () => { const c = rail.scrollLeft + rail.clientWidth / 2; cards.forEach(el => { const d = Math.abs(el.offsetLeft + el.offsetWidth / 2 - c), k = Math.min(1, d / 260); el.style.transform = `scale(${1 - k * .08})`; el.style.opacity = 1 - k * .35; }); };
-  rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead); lead();
-  const io = new IntersectionObserver(es => es.forEach(e => { const v = $('video', e.target); if(e.isIntersecting && !RM){ if(!v.src) v.src = v.dataset.src; v.play().catch(() => {}); } else v.pause(); }), {threshold: .6});
-  cards.forEach(c => { io.observe(c); c.onclick = () => { $$('.rc video').forEach(v => v.pause()); lbv.src = `media/q${c.dataset.q}-full.mp4`; lbv.muted = false; lb.showModal(); lbv.play().catch(() => {}); }; });
+  /* like Marvin's carousel: the card at the start of the rail leads at full size and plays; the next ones sit smaller, dimmer and still,
+     shrinking toward their outer edge; on a wide screen where all three fit, the hovered card leads */
+  let hover = -1, seen = false;
+  const lead = () => { const pad = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0, fits = rail.scrollWidth <= rail.clientWidth + 2;
+    cards.forEach((el, i) => { const d = (el.offsetLeft - pad - rail.scrollLeft) / (el.offsetWidth + 12);
+      const k = fits ? (hover < 0 ? 0 : (i === hover ? 0 : .7)) : Math.min(1, Math.abs(d));
+      el.style.transformOrigin = d >= 0 ? '0% 50%' : '100% 50%'; el.style.transform = `scale(${1 - k * .14})`; el.style.opacity = 1 - k * .4; $('.rt', el).style.opacity = 1 - k * .8;
+      const vd = $('video', el); if(seen && !RM && k < .35){ if(!vd.src) vd.src = vd.dataset.src; vd.play().catch(() => {}); } else vd.pause(); }); };
+  rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead);
+  cards.forEach((c, i) => { c.onmouseenter = () => { hover = i; lead(); }; c.onmouseleave = () => { hover = -1; lead(); }; });
+  const io = new IntersectionObserver(es => es.forEach(e => { seen = e.isIntersecting; lead(); }), {threshold: .3}); io.observe(rail);
+  cards.forEach(c => { c.onclick = () => { $$('.rc video').forEach(v => v.pause()); lbv.src = `media/q${c.dataset.q}-full.mp4`; lbv.muted = false; lb.showModal(); lbv.play().catch(() => {}); }; });
   const close = () => { lbv.pause(); lbv.removeAttribute('src'); lbv.load(); lb.close(); };
   $('#lbx').onclick = close; lb.addEventListener('click', e => { if(e.target === lb) close(); }); lb.addEventListener('cancel', () => { lbv.pause(); });
 }
@@ -697,7 +740,8 @@ if(PREVIEW){
   const textEl = el => { let e = el; while(e && e !== document.body){ if(e.matches && e.matches(TEXT) && e.innerText && e.innerText.trim() && !e.querySelector('video,img,svg,canvas,button') && e.children.length <= 3 && e.innerText.length < 700) return e; e = e.parentElement; } return null; };
   const where = el => { const sec = el.closest('header,section,.sheetv'); const name = !sec ? '' : sec.tagName === 'HEADER' ? 'First screen' : (sec.getAttribute('aria-label') || sec.id || '');
     const ctx = {section: name, scrollY: Math.round(scrollY), width: innerWidth};
-    if(el.closest('#how')){ ctx.howStep = (window.HOW || {}).step; if(window.HOW && window.HOW.t != null) ctx.videoTime = +window.HOW.t.toFixed(2); const st = $$('.step')[ctx.howStep]; if(st) ctx.stepTitle = $('h3', st).textContent; }
+    if(el.closest('#sheeth')) ctx.inHourSheet = true;
+    if(el.closest('#how')){ ctx.howStep = (window.HOW || {}).step; if(window.HOW && window.HOW.t != null) ctx.videoTime = +window.HOW.t.toFixed(2); const st = $$('#steps .step')[ctx.howStep]; if(st) ctx.stepTitle = $('h3', st).textContent; }
     if(el.closest('#player')) ctx.loopTime = +($('#floop').currentTime || 0).toFixed(2);
     const rc = el.closest('.rc'); if(rc){ ctx.reel = 'Question ' + rc.dataset.q; const v = $('video', rc); ctx.loopTime = +(v.currentTime || 0).toFixed(2); }
     if(el.closest('#sheetv')) ctx.inWriteup = true;
