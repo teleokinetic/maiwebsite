@@ -70,7 +70,7 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .nc{display:block;width:100%;text-align:left;border:0;font:inherit;color:inherit;text-decoration:none;cursor:pointer}
 .n2{pointer-events:none}.nums.fan .n2{pointer-events:auto}
 .arr{color:var(--grey);font-weight:400}
-.nums.fan{height:156px}
+.nums.fan{height:160px}
 .nc{position:absolute;left:0;right:0;top:0;padding:13px 20px;border-radius:28px;background:rgba(255,255,255,.94);box-shadow:0 22px 55px rgba(35,61,56,.14),0 8px 22px rgba(35,61,56,.10),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);transition:transform .55s cubic-bezier(.2,.9,.3,1.1)}
 .nc b{display:block;font-weight:500}
 .nc span{font-size:14px;color:#b0b0b4}
@@ -152,18 +152,6 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .va{display:grid;align-content:center;gap:16px}
 .vb{opacity:0;pointer-events:none}
 .how.b .va{opacity:0;pointer-events:none}.how.b .vb{opacity:1;pointer-events:auto}
-.arow{opacity:.12;transition:opacity .45s}
-.arow.on{opacity:1}
-.arow .lab{display:flex;justify-content:space-between;gap:10px;color:var(--grey);margin-bottom:6px}
-.atr{position:relative;height:16px}
-.abar{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:#e3e3e6;width:100%}
-.abar.dim{background:#f0f0f2}
-.am{position:absolute;top:0;bottom:0;background:var(--ink);transition:transform 1s cubic-bezier(.6,0,.2,1),left .5s,width .5s}
-.agm{position:absolute;top:-6px;height:4px;border-radius:1px;background:var(--gfx)}
-.aql{position:absolute;top:22px;color:var(--grey)}
-.zoom{position:absolute;top:-10px;bottom:-10px;border:1.5px solid var(--red);border-radius:4px;opacity:0;transition:opacity .4s}
-.zoom.on{opacity:1}
-.zoom span{position:absolute;right:0;top:-20px;color:var(--red);white-space:nowrap}
 .vbin{position:absolute;inset:0;display:grid;grid-template-rows:minmax(0,1fr) auto auto;gap:10px;justify-items:center}
 .bst{position:relative;height:100%;aspect-ratio:9/16;max-width:100%;border-radius:12px;overflow:hidden;background:#000;transition:aspect-ratio .6s}
 .bst.wide{aspect-ratio:16/9;height:auto;width:100%;align-self:center}
@@ -205,12 +193,6 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .step.part{min-height:60vh}
 .step.part h3{font-size:22px;line-height:1.25;font-weight:500}
 
-/* the hour sheet */
-.hhead{max-width:1040px;margin:0 auto;padding:6px 26px 0}
-.hhead .ttl{margin:0}
-.hs .viz{top:56px;height:min(70vh,560px)}
-.hs.hgrid{padding-bottom:20vh}
-@media (max-width:760px){.hs .viz{top:48px;height:46svh;box-shadow:none;border-bottom:1px solid var(--line)}.hs .step{min-height:46svh}}
 /* the write-up: a card that opens as a sheet */
 .acard{display:grid;grid-template-columns:96px minmax(0,1fr) auto;gap:14px;align-items:center;width:100%;margin:14px 0 0;padding:10px 16px 10px 10px;border:0;border-radius:22px;background:#f4f4f5;text-align:left;cursor:pointer}
 .acard .ai{width:96px;aspect-ratio:16/10;border-radius:14px;background:center/cover}
@@ -226,12 +208,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .cv .ca{position:absolute;right:16px;top:13px;z-index:2;font-size:18px;color:rgba(0,0,0,.45)}
 .cv.dark .ca{color:rgba(255,255,255,.8)}
 .cv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 22%}
-.hb{position:absolute;left:18px;right:46px;top:20px;display:grid;gap:11px}
-.hb .hr{position:relative;height:9px}
-.hb .bg{position:absolute;inset:0;border-radius:2px;background:#dcdce0;transform-origin:0 50%}
-.hb .k{position:absolute;top:0;bottom:0;background:var(--ink)}
-.hb .gm{position:absolute;top:-5px;height:3px;border-radius:1px;background:var(--gfx)}
-.hb .hl{display:flex;justify-content:space-between;font:500 10px/1 "Geist Mono",monospace;color:#8b8b8f;margin-bottom:-6px}
+/* the hour, on the card behind the views button: one canvas, the size of the card it replaced */
+.hfc{padding:0;overflow:hidden;cursor:default}
+.hfc .hb{display:block}
+.hfc canvas{display:block;width:100%;height:76px}
 .sheetv{position:fixed;inset:0;z-index:60;visibility:hidden}
 .sheetv.open{visibility:visible}
 .sheetv .scrim{position:absolute;inset:0;background:rgba(0,0,0,.35);opacity:0;transition:opacity .35s}
@@ -350,7 +330,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 
 /* ===== pass 4 ===== */
-#player,#role,#hcard,#reels,#ana,#gfx,#about,#contact{scroll-margin-top:72px}
+#player,#role,#nums,#reels,#ana,#gfx,#about,#contact{scroll-margin-top:72px}
 
 /* the hour card gets room before the dark band */
 .sheet.one{padding-bottom:64px}
@@ -366,14 +346,8 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
   .player{border-radius:24px}
   .player .chip{left:20px;bottom:20px}
   .crows{margin-top:56px}
-  /* the hour cover: the four bars grow to fill the card instead of sitting in its top corner */
-  .hb{left:28px;right:72px;top:30px;bottom:104px;gap:0;grid-template-rows:repeat(4,auto minmax(0,1fr));align-content:stretch}
-  .hb .hl{font-size:12px;margin-bottom:13px;align-self:end}
-  .hb .hr{height:18px;align-self:start}
-  .hb .gm{top:-8px;height:5px}
   .cv .tt{left:28px;right:28px;bottom:24px}
   .cv .ca{right:24px;top:20px}
-  #hcard::after{height:40%}
   .top{padding-top:44px}
   .rc{width:260px}
 }
@@ -537,8 +511,8 @@ body.preview #pv{display:block}
   </div>
   <a class="fcap ar" style="--d:.45s" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener"><b>Unfortunately, We Can't Just Unplug It</b><i aria-hidden="true">↗</i><span class="g">Nate Soares answers the ten most common questions about AI risk.</span></a>
   <div class="nums ar dr" style="--d:.9s" id="nums">
-   <a class="nc n2" href="https://www.youtube.com/watch?v=9U-FdOWTxPw" target="_blank" rel="noopener" tabindex="-1"><b>Watch on YouTube <span class="arr">↗</span></b><span>Nate Soares · posted Nov 16, 2026</span></a>
-   <button class="nc n1" id="numsb" aria-expanded="false" aria-label="135K views, 523 comments in the first 8 days. Tap for the link"><b>135K views · 523 comments</b><span>in the first 8d</span></button>
+   <div class="nc n2 hfc" role="img" aria-label="An hour into 16 minutes: 1 hour 9 minutes 45 seconds of raw footage was edited down to a final video of 15 minutes 53 seconds, with 81 graphics"><span class="hb" id="hb" aria-hidden="true"></span></div>
+   <button class="nc n1" id="numsb" aria-expanded="false" aria-label="135K views, 523 comments in the first 8 days. Tap to see how an hour of raw footage became the film"><b>135K views · 523 comments</b><span>in the first 8d</span></button>
   </div>
 
   <ul class="crows">
@@ -549,7 +523,6 @@ body.preview #pv{display:block}
      <li><span>Graphics by</span><span class="g">Tanner Holman</span></li>
     </ul></li>
   </ul>
-  <button class="cv" id="hcard" aria-haspopup="dialog" aria-label="An hour into 16 minutes: how the raw footage became the film"><span class="hb" id="hb" aria-hidden="true"></span><span class="ca" aria-hidden="true">↗</span><span class="tt"><b>An hour into 16 minutes</b><span>How the raw footage became the film</span></span></button>
  </section>
 
 </div>
@@ -638,29 +611,6 @@ body.preview #pv{display:block}
  </section>
 </div>
 
-<div class="sheetv" id="sheeth" role="dialog" aria-modal="true" aria-label="An hour into 16 minutes">
- <div class="scrim"></div>
- <div class="panel" id="hpanel"><div class="grab"><button class="x" aria-label="Close">✕</button></div>
-  <div class="hhead"><p class="ttl">An hour into 16 minutes</p><p class="g">Helped turn an hour of raw footage into a 16-minute film. Scroll.</p></div>
-  <div class="hgrid hs">
-   <div class="viz"><div class="vbox">
-    <div class="va" id="va" style="opacity:1;pointer-events:auto">
-     <div class="arow"><div class="lab mono"><span>Raw footage</span><span>1:09:45</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>Kept</span><span>15:19 of it</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>The film, same scale</span><span>15:53</span></div><div class="atr"></div></div>
-     <div class="arow"><div class="lab mono"><span>The film, full width</span><span>10 answers · 81 graphics</span></div><div class="atr" style="margin-bottom:22px"></div></div>
-    </div>
-   </div></div>
-   <ol class="steps" id="hsteps">
-    <li class="step" data-s="0"><div><h3>Raw footage: 1 hour 10 minutes</h3><p>Everything the camera recorded on Sep 28, across three files.</p></div></li>
-    <li class="step" data-s="1"><div><h3>Keep</h3><p>Each dark mark is a moment of Nate that made the film. The grey is what was cut.</p></div></li>
-    <li class="step" data-s="2"><div><h3>Condense</h3><p>The kept shots slide together in film order, at the same scale as the raw, so you can see how much shorter it got.</p></div></li>
-    <li class="step" data-s="3"><div><h3>Ten answers, 81 graphics</h3><p>The finished film at full width. Blue bands are Nate's ten answers; orange marks are the graphics, at their real lengths.</p></div></li>
-   </ol>
-  </div>
- </div>
-</div>
-
 <div class="sheetv" id="sheetv" role="dialog" aria-modal="true" aria-label="Twenty seconds, layer by layer">
  <div class="scrim"></div>
  <div class="panel" id="panel"><div class="grab"><button class="x" aria-label="Close">✕</button></div>
@@ -746,10 +696,10 @@ function sheet(sv, btn, onOpen){
   addEventListener('keydown', e => { if(e.key === 'Escape' && sv.classList.contains('open')) close(); });
   return panel;
 }
-const HPANEL = sheet($('#sheeth'), $('#hcard'), () => window.hourPick && requestAnimationFrame(window.hourPick));
 sheet($('#sheetv'), $('#acard'));
-/* numbers card: tap shows where and when */
-{ const n = $('#nums'), b = $('#numsb'), a = $('.n2', n); b.onclick = () => { const on = n.classList.toggle('fan'); b.setAttribute('aria-expanded', on); a.tabIndex = on ? 0 : -1; }; }
+/* numbers card: tap fans the stack, and the card behind plays how the hour became the film (HOUR, below) */
+{ const n = $('#nums'), b = $('#numsb'); let tm = 0; b.onclick = () => { const on = n.classList.toggle('fan'); b.setAttribute('aria-expanded', on); clearTimeout(tm);
+    if(on){ HOUR.reset(); tm = setTimeout(HOUR.replay, 420); } else tm = setTimeout(HOUR.reset, 550); }; }
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
@@ -848,28 +798,7 @@ const LY = {
   ]
 };
 {
-  const how = $('#how'), steps = $$('.step', how), hsteps = $$('#hsteps .step'), rows = $$('#va .arow'), tr = rows.map(r => $('.atr', r));
-  const RAW = HD.raw, FILM = HD.film, QS = HD.qs.filter(q => q[0] > 0);
-  /* part A: the hour */
-  mk('abar', tr[0]); mk('abar dim', tr[1]);
-  const keep = HD.segs.map(s => ({e: mk('am', tr[1]), r: s[0], l: s[2]}));
-  const fly = HD.segs.map(s => ({e: mk('am', tr[2]), r: s[0], f: s[1], l: s[2]}));
-  const fin = HD.segs.map(s => ({e: mk('am', tr[3]), f: s[1], l: s[2], q: s[4]}));
-  const gm = HD.gfx.map(g => ({e: mk('agm', tr[3]), a: g[0], b: g[1]}));
-  const ql = QS.map(q => { const e = mk('aql mono', tr[3]); e.textContent = q[0]; return {e, t: q[2]}; });
-  const zoom = mk('zoom', tr[3]); const zl = mk('mono', zoom, 'span'); zl.textContent = '20 seconds of Question 9';
-  const ZA = 792.1, ZB = 812.1;
-  let A = 0;
-  function drawA(){ const W = tr[0].clientWidth;
-    rows.forEach((r, i) => r.classList.toggle('on', i <= A));
-    keep.forEach(m => { m.e.style.left = (m.r / RAW * W) + 'px'; m.e.style.width = Math.max(1, m.l / RAW * W) + 'px'; });
-    fly.forEach(m => { const x = A >= 2 ? m.f / RAW * W : m.r / RAW * W; m.e.style.transform = `translateX(${x}px)`; m.e.style.width = Math.max(1, m.l / RAW * W) + 'px'; m.e.style.transitionDelay = A >= 2 ? (m.f / FILM * 600) + 'ms' : '0ms'; });
-    fin.forEach(m => { m.e.style.left = (m.f / FILM * W) + 'px'; m.e.style.width = Math.max(1, m.l / FILM * W) + 'px'; m.e.style.background = m.q ? (m.q % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; });
-    gm.forEach(g => { g.e.style.left = (g.a / FILM * W) + 'px'; g.e.style.width = Math.max(2, (g.b - g.a) / FILM * W) + 'px'; });
-    let last = -99; ql.forEach(q => { const x = Math.min(q.t / FILM * W, W - 14); const show = x - last >= 16; q.e.style.left = x + 'px'; q.e.style.display = show ? '' : 'none'; if(show) last = x; });
-    zoom.style.left = (ZA / FILM * W - 4) + 'px'; zoom.style.width = ((ZB - ZA) / FILM * W + 8) + 'px'; zoom.classList.toggle('on', A >= 3); }
-  new ResizeObserver(drawA).observe(tr[0]);
-
+  const how = $('#how'), steps = $$('.step', how);
   /* part B: the 20 seconds */
   const rawToS = r => { for(const [a, b, ra] of LY.segs) if(r >= ra && r < ra + (b - a)) return a + (r - ra); return null; };
   const sToRaw = t => { for(const [a, b, ra] of LY.segs) if(t >= a && t < b) return ra + (t - a); return null; };
@@ -909,10 +838,6 @@ const LY = {
   { const b = $('#snd'); let on = false; b.onclick = () => { on = !on; VS.forEach(v => v.muted = !on); b.textContent = on ? 'Sound on' : 'Sound off'; b.setAttribute('aria-pressed', on); }; }
   /* which step is under the reading line */
   const phone = matchMedia('(max-width:760px)');
-  /* the hour, inside its sheet: the step under the reading line of the sheet */
-  window.hourPick = () => { const pr = HPANEL.getBoundingClientRect(); const line = pr.top + pr.height * (phone.matches ? .78 : .55); let s = 0; hsteps.forEach((el, i) => { if(el.getBoundingClientRect().top < line) s = i; }); if(s !== A){ A = s; drawA(); } };
-  HPANEL.addEventListener('scroll', () => requestAnimationFrame(window.hourPick), {passive: true});
-  drawA();
   /* the 20 seconds, on the page */
   let cur = -1;
   function pick(){ const r = how.getBoundingClientRect(); const near = r.top < innerHeight && r.bottom > 0;
@@ -924,28 +849,69 @@ const LY = {
   pick();
 }
 
-/* ---------- cover cards: the hour builds on its cover, one row at a time; the write-up's cover loops the finished stretch ---------- */
-{
-  const hb = $('#hb'), labs = [['Raw footage', '1:09:45'], ['Kept', '15:19'], ['Condensed', '15:53'], ['The film', '81 graphics']];
-  const rows = labs.map(([a, b]) => { const l = mk('hl', hb, 'span'); mk('', l, 'span').textContent = a; mk('', l, 'span').textContent = b; const r = mk('hr', hb, 'span'); return {l, r}; });
-  const bg0 = mk('bg', rows[0].r, 'span'), bg1 = mk('bg', rows[1].r, 'span'); bg1.style.background = '#e9e9ec';
-  const pc = x => (x * 100).toFixed(3) + '%', R = HD.raw, F = HD.film;
-  const K = HD.segs.map(s => { const e = mk('k', rows[1].r, 'span'); e.style.left = pc(s[0] / R); e.style.width = `max(1px,${pc(s[2] / R)})`; return e; });
-  const C = HD.segs.map(s => { const e = mk('k', rows[2].r, 'span'); e.style.width = `max(1px,${pc(s[2] / R)})`; return e; });
-  const Fm = HD.segs.map(s => { const e = mk('k', rows[3].r, 'span'); e.style.left = pc(s[1] / F); e.style.width = `max(1px,${pc(s[2] / F)})`; e.style.background = s[4] ? (s[4] % 2 ? 'var(--q0)' : 'var(--qb)') : 'var(--soft)'; return e; });
-  const GM = HD.gfx.map(g => { const e = mk('gm', rows[3].r, 'span'); e.style.left = pc(g[0] / F); e.style.width = `max(2px,${pc((g[1] - g[0]) / F)})`; return e; });
-  const END = 6, ease = t => 1 - Math.pow(1 - clamp(t), 3); let t0 = null, seen = false, played = false;
-  function draw(t){
-    const show = (k, at) => { rows[k].l.style.opacity = rows[k].r.style.opacity = ease((t - at) / .35); };
-    show(0, 0); bg0.style.transform = `scaleX(${ease(t / .9)})`;
-    show(1, .9); K.forEach((k, i) => k.style.opacity = t > .9 + HD.segs[i][0] / R ? 1 : 0);
-    show(2, 2.1); const p = ease((t - 2.3) / 1.3); C.forEach((c, i) => { const s = HD.segs[i]; c.style.left = pc(s[0] / R + (s[1] - s[0]) / R * p); c.style.opacity = t > 2.1 ? 1 : 0; });
-    show(3, 3.8); Fm.forEach((f, i) => f.style.opacity = t > 3.8 + HD.segs[i][1] / F * .8 ? 1 : 0); GM.forEach((g, i) => g.style.opacity = t > 4.7 + HD.gfx[i][0] / F * .6 ? 1 : 0); }
-  /* it plays once: when the role list above has finished filling in and the card is on screen. Then it stays as drawn */
-  function frame(now){ if(t0 == null) t0 = now; const t = (now - t0) / 1000; draw(Math.min(t, END)); if(t < END) requestAnimationFrame(frame); }
-  const play = () => { if(played || !seen || !$('#role').dataset.filled) return; played = true; requestAnimationFrame(frame); };
-  if(RM) draw(END); else { draw(0); addEventListener('rolefilled', play); onView($('#hcard'), () => { seen = true; play(); }, () => { seen = false; }, .25); }
-}
+/* ---------- the hour, on the card behind the views button: an hour of raw footage becomes the film, on one row.
+   One canvas, and every frame is a pure function of time. It plays each time the button fans the cards, then rests on
+   its last picture: the final video beside the hour it was cut from, at one scale. After Marvin: small things arrive on
+   a spring that runs a fifth over at .3 s; big moves use a calmer one ---------- */
+const HOUR = (() => {
+  const hb = $('#hb'), cv = mk('', hb, 'canvas'), g = cv.getContext('2d');
+  const R = HD.raw, F = HD.film, S = HD.segs, GX = HD.gfx;
+  const cs = getComputedStyle(document.documentElement), cvar = n => cs.getPropertyValue(n).trim();
+  const INK = cvar('--ink'), GREY = cvar('--grey'), DARK = '#3f3f44', TRACK = '#dcdce0', ORANGE = cvar('--gfx');
+  const QC = [cvar('--soft'), cvar('--q0'), cvar('--qb')], QI = S.map(s => s[4] ? (s[4] % 2 ? 1 : 2) : 0);   /* Nate's ten answers alternate two blues; the rest of the film is grey */
+  const ORD = GX.map((_, i) => (i * 37 % 81) / 81);                                                          /* the graphics arrive in a fixed scrambled order */
+  const FS = 11, BH = 12, GAP = 10, GH = 3, GG = 2, PX = 20, BY = FS + GAP;                                  /* label size, bar height, the gap between them, the graphics marks, side margin */
+  /* the times, in seconds: kept shots ink in; they slide together; the block holds, then opens; graphics; the last picture */
+  const KEPT = .7, SL0 = 2.05, SL1 = 3.25, OPEN = 4.2, GFX = 5.85, LAST = 7.9, END = 9.5;
+  let W = 0, PY = 0, dpr = 1, cur = 0, t0 = null, raf = 0;
+
+  const L = (a, b, u) => a + (b - a) * u, cl = (t, a, b) => clamp((t - a) / (b - a));
+  const eo = u => 1 - Math.pow(1 - clamp(u), 3), eio = u => { u = clamp(u); return u < .5 ? 4 * u * u * u : 1 - Math.pow(-2 * u + 2, 3) / 2; };
+  const spr = (tau, z, tp) => { if(tau <= 0) return 0; if(tau > 2.4) return 1; const wd = Math.PI / tp, w = wd / Math.sqrt(1 - z * z); return 1 - Math.exp(-z * w * tau) * (Math.cos(wd * tau) + z * w / wd * Math.sin(wd * tau)); };
+  const pop = tau => spr(tau, .456, .3), glide = tau => spr(tau, .72, .46);
+
+  function size(){ dpr = Math.min(3, window.devicePixelRatio || 1); const w = hb.clientWidth, h = cv.clientHeight;   /* clientWidth: the card's own width, whatever its transform */
+    W = w - 2 * PX; PY = Math.round((h - BY - BH) / 2) + 1; cv.width = Math.round(w * dpr); cv.height = Math.round(h * dpr); }
+  const snap = x => Math.round(x * dpr) / dpr, tw = x => g.measureText(x).width;
+  const rr = (x, y, w, h, r) => { if(w <= 0 || h <= 0) return; g.beginPath(); if(g.roundRect) g.roundRect(x, y, w, h, Math.min(r, w / 2, h / 2)); else g.rect(x, y, w, h); g.fill(); };
+  const bar = (x, w, a) => { if(a <= .004) return; g.globalAlpha = Math.min(1, a); g.fillStyle = TRACK; rr(x, BY, w, BH, 2); g.globalAlpha = 1; };
+  const txt = (s, x, dy, a, al, col) => { if(a <= .004) return; g.globalAlpha = Math.min(1, a); g.fillStyle = col || GREY; g.textAlign = al || 'left'; g.fillText(s, x, dy + Math.round(FS * .84)); g.globalAlpha = 1; };
+  /* the 387 kept shots. p: 0 = where each sits in the raw, 1 = where it sits in the film. k: px per second of film.
+     c: 0 = ink, 1 = coloured by answer. upto: how far along the raw they have inked in */
+  function marks(k, p, c, a, upto){ if(a <= .004) return; const kr = W / R;
+    const pass = (col, alpha, pick) => { g.globalAlpha = Math.min(1, alpha); g.fillStyle = col; g.beginPath();
+      for(let i = 0; i < S.length; i++){ const s = S[i]; if(pick >= 0 && QI[i] !== pick) continue; if(upto < 1 && s[0] / R > upto) continue;
+        const x = s[0] * kr * (1 - p) + s[1] * k * p, l = snap(x), w = Math.max(1, snap(x + s[2] * k) - l); g.rect(l, BY, w, BH); }
+      g.fill(); };
+    if(c < 1){ if(p >= .999){ g.globalAlpha = Math.min(1, a) * (1 - c); g.fillStyle = INK; g.fillRect(0, BY, snap(F * k), BH); } pass(INK, a, -1); }   /* once together, one solid block: the film's own small gaps show only when it turns into the film */
+    if(c > 0) for(let q = 0; q < 3; q++) pass(QC[q], a * c, q);
+    g.globalAlpha = 1; }
+  /* the 81 graphics, as marks just above the film */
+  function gfx(k, since){ if(since <= 0) return; g.fillStyle = ORANGE;
+    for(let i = 0; i < GX.length; i++){ const tau = since - ORD[i] * 1.05; if(tau <= 0) continue; const h = GH * pop(tau); rr(snap(GX[i][0] * k), BY - GG - h, Math.max(k > .2 ? 2 : 1, (GX[i][1] - GX[i][0]) * k), h, 1); } }
+
+  const NM = [['Raw footage', 0, '1:09:45'], ['Kept', KEPT + .1, '15:19'], ['Edited down', SL0, '15:53'], ['Final video', OPEN + .45, '15:53']];
+  function draw(t){ cur = t; g.setTransform(dpr, 0, 0, dpr, 0, 0); g.clearRect(0, 0, cv.width, cv.height); g.translate(PX, PY); g.font = `500 ${FS}px "Geist Mono",ui-monospace,monospace`; g.textBaseline = 'alphabetic';
+    const back = t - LAST, e = glide(back), gapx = 6, ks = (W - gapx) / (R + F);                                   /* ks: the scale at which the film and the hour share the line */
+    const q = back <= 0 ? glide((t - OPEN) / 1.3) : 1 - e, k = back <= 0 ? L(W / R, W / F, q) : L(ks, W / F, q), c = back <= 0 ? eo(cl(t, OPEN + .45, OPEN + 1.25)) : 1;
+    /* one name after another, each with its time beside it in darker ink, each fading as the next arrives */
+    const out = 1 - cl(back, 0, .2), inn = cl(back, .55, .85), gin = cl(t, GFX, GFX + .35) * out;
+    NM.forEach(([n, at, v], i) => { const nx = i < 3 ? NM[i + 1][1] : LAST, a = cl(t, at + (i ? .12 : 0), at + (i ? .37 : .25)) * (1 - cl(t, nx, nx + .2)), dy = i ? 3 * (1 - eo(cl(t, at, at + .4))) : 0;
+      txt(n, 0, dy, a); txt(v, tw(n) + 9, dy, a, 'left', DARK); });
+    txt(' · 81 graphics', tw('Final video') + 9 + tw('15:53'), 3 * (1 - eo(gin)), gin, 'left', DARK);
+    txt('Final video · 15:53', 0, 3 * (1 - eo(inn)), inn); txt('Raw footage · 1:09:45', W, 3 * (1 - eo(inn)), inn, 'right');
+    bar(0, W * eo(t / .8), eo(t / .25) * (1 - cl(t, SL0 + .1, SL0 + .7)));                                        /* the raw hour: it goes as the kept shots slide together */
+    if(back > 0){ const fx = F * k + gapx; bar(fx, Math.max(0, Math.min(glide(back - .12) * R * ks, W - fx + 6)), eo(back / .2)); }   /* and comes back at the end, beside the film */
+    marks(k, eio(cl(t, SL0, SL1)), c, eo((t - KEPT) / .25), cl(t, KEPT + .15, KEPT + 1.15) * 1.001); gfx(k, t - GFX); }
+
+  function frame(now){ if(t0 == null) t0 = now; const t = (now - t0) / 1000; draw(Math.min(t, END)); raf = t < END ? requestAnimationFrame(frame) : 0; }
+  const stop = () => { cancelAnimationFrame(raf); raf = 0; t0 = null; };
+  size(); new ResizeObserver(() => { size(); draw(cur); }).observe(hb);
+  if(document.fonts && document.fonts.load) document.fonts.load(`500 ${FS}px "Geist Mono"`).then(() => { if(!raf) draw(cur); });
+  draw(RM ? END : 0);
+  /* with reduced motion it simply shows its last picture */
+  return {replay: () => { stop(); if(RM) draw(END); else raf = requestAnimationFrame(frame); }, reset: () => { stop(); draw(RM ? END : 0); }};
+})();
 
 /* ---------- the white gathers as you scroll off it: its sides draw in and its bottom corners round ---------- */
 {
@@ -1106,7 +1072,7 @@ setInk(INK);
   const C = [
     ['The film', '#player', im('film-poster.jpg')],
     ['My role, layer by layer', '#role', `<span class="im" style="background-image:url(media/l_graphics.png),url(media/l_raw.jpg);background-size:215%,cover;background-position:97% 8%,center"></span>`],
-    ['An hour into 16 minutes', '#hcard', `<span class="im" style="background-image:url(media/hour-thumb.jpg);background-size:150%;background-position:0 100%;background-color:#fff"></span>`],
+    ['An hour into 16 minutes', '#nums', `<span class="im" style="background-image:url(media/hour-thumb.jpg);background-size:150%;background-position:0 100%;background-color:#fff"></span>`],
     ['Reels', '#reels', sp(['q1-poster.jpg', 'q4-poster.jpg', 'q9-poster.jpg'])],
     ['Anatomy of a Reel', '#ana', `<span class="im" style="background:#cf6a32 url(write-up/media/nate_a.webp) 130% 100%/72% no-repeat"></span>`],
     ['Graphics and motion', '#gfx', sp(['gfx/g79.jpg', 'gfx/g06.jpg', 'gfx/g30.jpg', 'gfx/g78.jpg'], 1)],
@@ -1122,6 +1088,8 @@ setInk(INK);
     if(to){ to.scrollIntoView({behavior: RM ? 'auto' : 'smooth', block: 'start'}); } else b.focus({preventScroll: true}); };
   b.onclick = () => ix.classList.contains('open') ? close() : open();
   cards.forEach((c, i) => c.onclick = () => close(tg[i]));
+  /* the hour lives behind the views button: arriving from the index opens it */
+  cards[C.findIndex(c => c[1] === '#nums')].addEventListener('click', () => setTimeout(() => { if(!$('#nums').classList.contains('fan')) $('#numsb').click(); }, RM ? 0 : 700));
   ix.addEventListener('click', e => { if(e.target === ix || e.target === g) close(); });
   addEventListener('keydown', e => { if(e.key === 'Escape' && ix.classList.contains('open')) close(); });
   /* on a phone the pill steps aside while you read down the page, and returns the moment you scroll back up */
