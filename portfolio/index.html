@@ -342,7 +342,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 @media (prefers-reduced-motion:reduce){*{transition-duration:.01s!important;animation:none!important}}
 
 /* ===== pass 4 ===== */
-#player,#role,#nums,#reels,#ana,#gfx,#about,#contact{scroll-margin-top:72px}
+#player,#role,#nums,#reels,#reelsh,#ana,#gfx,#about,#contact{scroll-margin-top:72px}
 
 /* the hour card gets room before the dark band */
 .sheet.one{padding-bottom:64px}
@@ -565,7 +565,7 @@ body.preview #pv{display:block}
    <p class="g rpm">And project manager for parts of the production.</p>
   </div>
  </div>
- <div class="wide"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
+ <div class="wide" id="reelsh"><h2>Reels</h2><p class="g" style="margin:0">Three reels for Nate's accounts.</p></div>
  <div class="rail" id="rail">
   <button class="rc" data-q="1"><span class="rv"><img src="media/q1-poster.jpg" alt=""><video data-src="media/q1-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>How can something so error-prone be so dangerous?</b></span><span class="chip"><i></i>Watch</span></span></button>
   <button class="rc" data-q="4"><span class="rv"><img src="media/q4-poster.jpg" alt=""><video data-src="media/q4-loop.mp4" muted loop playsinline preload="none"></video><span class="rt"><b>How does AI kill us if it's an online thing?</b></span><span class="chip"><i></i>Watch</span></span></button>
@@ -1108,9 +1108,9 @@ setInk(INK);
   const sp = (us, q) => `<span class="im sp${q ? ' q' : ''}">${us.map(u => `<span style="background-image:url(media/${u})"></span>`).join('')}</span>`;
   const C = [
     ['The film', '#player', im('film-poster.jpg')],
-    ['My role, layer by layer', '#role', `<span class="im" style="background-image:url(media/l_graphics.png),url(media/l_raw.jpg);background-size:215%,cover;background-position:97% 8%,center"></span>`],
-    ['An hour into 16 minutes', '#nums', `<span class="im" style="background-image:url(media/hour-thumb.jpg);background-size:150%;background-position:0 100%;background-color:#fff"></span>`],
-    ['Reels', '#reels', sp(['q1-poster.jpg', 'q4-poster.jpg', 'q9-poster.jpg'])],
+    ['An hour into 16 minutes', '#nums', im('ix-hour.jpg')],
+    ['My role, layer by layer', '#role', im('ix-role.jpg')],
+    ['Reels', '#reelsh', sp(['q1-poster.jpg', 'q4-poster.jpg', 'q9-poster.jpg'])],
     ['Anatomy of a Reel', '#ana', `<span class="im" style="background:#cf6a32 url(write-up/media/nate_a.webp) 130% 100%/72% no-repeat"></span>`],
     ['Graphics and motion', '#gfx', sp(['gfx/g79.jpg', 'gfx/g06.jpg', 'gfx/g30.jpg', 'gfx/g78.jpg'], 1)],
     ['About', '#about', `<span class="im tx"><span>Day 1 → Day 84<span class="dbar"><u style="flex:38;background:#cfcfd3"></u><u style="flex:17;background:var(--qb)"></u><u style="flex:28;background:var(--q0)"></u></span></span></span>`],
