@@ -85,23 +85,24 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .rstage::after{content:"";position:absolute;inset:auto 0 0;height:44%;background:linear-gradient(transparent,rgba(0,0,0,.66));pointer-events:none}
 .stage3d{height:400px;perspective:1000px;display:grid;place-items:center}
 .planes{position:relative;width:min(66%,360px);aspect-ratio:16/9;margin-top:-52px;transform-style:preserve-3d}
-.pl{position:absolute;inset:0;border-radius:5px;outline:1px solid transparent;outline-offset:-1px;transition:outline-color .35s,background-color .35s,opacity .35s}
+.pl{position:absolute;inset:0;border-radius:5px;outline:1px solid transparent;outline-offset:-1px;transition:outline-color .35s,opacity .35s}
 .pl.base{background:#222}
 .pl img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
 .pl .it{position:absolute;display:block;height:auto;transition:opacity .3s}
 .pl.base img.b0{opacity:0;transition:opacity .4s}
 .role.p0 .pl.base img.b0{opacity:1}
-.role.exp .pl:not(.base){background-color:rgba(255,255,255,.05);box-shadow:0 0 0 1px rgba(255,255,255,.2)}
+/* --g: how much glass shows, 1 when open, 0 by the time the stack is nearly shut (set with the spring), so no grey panes sit on the landed picture */
+.role.exp .pl:not(.base){background-color:rgba(255,255,255,calc(.05*var(--g,1)));box-shadow:0 0 0 1px rgba(255,255,255,calc(.2*var(--g,1)))}
 .role.lit .pl:not(.hl){opacity:.34}
 .role.lit .pl.base:not(.hl){opacity:.6}
 .pl.hl{outline-color:rgba(255,255,255,.95)}
-.role.exp .pl.hl:not(.base){background-color:rgba(255,255,255,.1)}
+.role.exp .pl.hl:not(.base){background-color:rgba(255,255,255,calc(.1*var(--g,1)))}
 /* the finish: as it folds, the title and cards go back into the picture (the name tag stays: it is on screen when the film starts);
    the footage sheet has quietly become the film's first frame (.p0), so the film starts from the very picture that landed */
 .role.shut .pl .it:not(.keep){opacity:0}
 .role.fold .pl.x{opacity:0!important}   /* the cuts and the sources leave as soon as it starts to fold */
 .rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;opacity:0;pointer-events:none;transform:translateZ(1px);transition:opacity .18s}
-.role.fin .rvid{opacity:1;transition:none}
+.role.fin .rvid{opacity:1;transition:opacity .25s}
 .rpill,.rco{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;font-style:normal;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:3px 5px;white-space:nowrap}
 .rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
 .rco{margin-left:8px;vertical-align:2px}
@@ -739,15 +740,15 @@ sheet($('#sheetv'), $('#acard'));
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
-  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_AT = 800, LIFT = 450, LANDED = 2.7, REST = 1400, TICK = 1000 / 60;
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_AT = {film5: 420, after: 800}, BLUR = 2.5, LANDED = 2.7, REST = 1400, TICK = 1000 / 60;
   /* [damping, speed] of the spring. Damping 1 stops dead on the mark; .7 goes about 5% past, .75 about 3% */
   const SPR = {open: {both: [.7, 5.2], open: [.7, 5.2], none: [1, 6.5]}, shut: {both: [.75, 7.5], open: [1, 9], none: [1, 9]}};
   const BUMP = {none: [.05, .553], open: [.08, .74], both: [.08, .74]};   /* the lit sheet's lift: [pull, drag]; 'none' stops dead */
-  const set = {timing: 'loop', settle: 'none', finish: 'film5'};
-  const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), vid = $('.rvid', box), n = pls.length, END = LINES.length;
+  const set = {timing: 'loop', settle: 'none', finish: 'film5', blur: 'on'};
+  const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), vid = $('.rvid', box), s3d = $('.stage3d', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
   let x = 0, run = false, cur = -1, phase = 'idle', ph = 0, shown = 0, prev = 0, acc = 0, seen = false, gone = true, ended = false, up = 0, rewound = false;
-  let s0 = 0, s1 = 0, sT = 0, sZ = 1, sW = 6.5, live = false;          /* the spring: from, to, start time, damping, speed */
+  let s0 = 0, s1 = 0, sT = 0, sZ = 1, sW = 6.5, live = false, kind = '', lastX = 0;          /* the spring: from, to, start time, damping, speed */
   const bump = pls.map(() => ({x: 0, v: 0}));
   function say(h){ const on = h >= 0 && h < END;
     line.innerHTML = on ? `<span class="rcn">${h + 1}</span>` + LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
@@ -759,14 +760,15 @@ sheet($('#sheetv'), $('#acard'));
     planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - e)}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
     pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * f + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
       if(p.classList.contains('x')) p.style.opacity = f < .34 ? clamp(f * 3) : ''; });   /* the cuts and the sources are not part of the picture: they fade as it closes */
+    box.style.setProperty('--g', clamp((f - .12) / .4).toFixed(3));
     box.classList.toggle('exp', e > .02); }
-  function go(to, kind){ [sZ, sW] = SPR[kind][set.settle]; s0 = x; s1 = to; sT = performance.now(); live = true; }
+  function go(to, k){ kind = k; [sZ, sW] = SPR[k][set.settle]; s0 = x; s1 = to; sT = performance.now(); live = true; }
   function spring(now){ const t = (now - sT) / 1000, wd = sW * Math.sqrt(Math.max(1 - sZ * sZ, 0));
     const env = sZ >= 1 ? Math.exp(-sW * t) * (1 + sW * t) : Math.exp(-sZ * sW * t) * (Math.cos(wd * t) + sZ * sW / wd * Math.sin(wd * t));
     x = s1 - (s1 - s0) * env; if(t > 2){ x = s1; live = false; } }
   function hideClip(){ box.classList.remove('fin', 'shut', 'fold', 'p0'); }
   function dim(){ box.classList.remove('lit'); pls.forEach(p => p.classList.remove('hl')); }
-  function rest(){ phase = 'idle'; cur = -1; x = 0; live = false; bump.forEach(b => b.x = b.v = 0); vid.pause(); hideClip(); box.classList.remove('go'); light(-1); apply(); }
+  function rest(){ phase = 'idle'; cur = -1; x = lastX = 0; live = false; s3d.style.filter = ''; bump.forEach(b => b.x = b.v = 0); vid.pause(); hideClip(); box.classList.remove('go'); light(-1); apply(); }
   function open(){ phase = 'open'; ph = 0; cur = -1; rewound = false; go(1, 'open'); if(vid.readyState < 2) vid.load(); }
   function fold(){ phase = 'shut'; ph = 0; box.classList.remove('go'); box.classList.add('shut', 'fold'); go(0, 'shut'); }
   /* The film is only shown once a frame from its start is really on its way to the screen. (A phone that is asked to rewind a
@@ -792,18 +794,20 @@ sheet($('#sheetv'), $('#acard'));
     return m; }
   function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t; ph += dt;
     const was = live; if(live) spring(performance.now());
+    /* the fold is smeared a little while it is moving fast (up to BLUR px), so it runs into the film without a hard frame between */
+    const sm = was && kind === 'shut' && set.blur === 'on' ? Math.min(BLUR, Math.abs(x - lastX) / dt * 900) : 0; s3d.style.filter = sm > .15 ? `blur(${sm.toFixed(2)}px)` : ''; lastX = x;
     let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
     if(phase === 'open'){ if(ph >= OPEN){ phase = 'lines'; cur = 0; shown = 0; light(0); }
       if(!rewound && ph > 400){ rewound = true; try { vid.currentTime = 0; } catch(e){} } }
     else if(phase === 'lines'){ if((shown += dt) >= HOLD[cur]){ cur++; shown = 0;
-      if(cur === 4 && set.finish === 'film5'){ light(4, false); box.classList.add('shut', 'p0'); phase = 'lift'; ph = 0; }   /* "All motion" is the film itself: the title and cards lift off the sheets... */
-      else { light(cur); if(cur >= END) fold(); } } }
-    else if(phase === 'lift'){ if(ph >= LIFT){ dim(); fold(); } }                                   /* ...the sheets fold onto the footage... */
-    else if(phase === 'shut'){ if(ph >= CLIP_AT) clip(); }
-    else if(phase === 'clip'){ if(up && performance.now() - up > 350) box.classList.remove('shut', 'fold', 'p0');   /* under the film: the graphics come back and the footage sheet returns to the last frame */
+      if(cur === 4 && set.finish === 'film5'){ dim(); say(4); fold(); }   /* "All motion" is the film itself: in one move the title and cards leave the sheets and the stack folds onto the footage... */
+      else { light(cur); if(cur === 3 && set.finish === 'film5') box.classList.add('p0'); if(cur >= END) fold(); } } }
+    else if(phase === 'shut'){ if(ph >= CLIP_AT[set.finish]) clip(); }                                   /* ...the film is already running as it comes to rest... */
+    else if(phase === 'clip'){ if(up && performance.now() - up > 450) box.classList.remove('shut', 'fold', 'p0');   /* under the film: the graphics come back and the footage sheet returns to the last frame */
       if(set.finish === 'film5' && cur === 4 && vid.currentTime >= LANDED){ cur = END; say(END); }    /* ...and land for real, on their beats */
       if(ended || ph > 6000) finish(); else if(!up && ph > 1500) stall(); }
     else if(phase === 'rest'){ if(ph >= REST) finish(); }
+    if(!live && s3d.style.filter) s3d.style.filter = '';
     if(was || moving) apply();
     if(live || moving || (phase !== 'idle' && phase !== 'done' && !gone)) requestAnimationFrame(step); else run = false; }
   if(RM){ x = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
@@ -811,7 +815,7 @@ sheet($('#sheetv'), $('#acard'));
     addEventListener('scroll', aim, {passive: true});
     addEventListener('resize', () => { apply(); aim(); }); apply();
     if(PREVIEW){   /* switches for trying the timings on a real phone */
-      const rows = [['timing', 'roleTiming', [['once', 'Plays once'], ['loop', 'Loops']]], ['settle', 'roleSettle', [['none', 'No recoil'], ['open', 'On opening'], ['both', 'Both']]], ['finish', 'roleFinish', [['after', 'Replay, then film'], ['film5', 'Film is line 5']]]];
+      const rows = [['timing', 'roleTiming', [['once', 'Plays once'], ['loop', 'Loops']]], ['settle', 'roleSettle', [['none', 'No recoil'], ['open', 'On opening'], ['both', 'Both']]], ['finish', 'roleFinish', [['after', 'Replay, then film'], ['film5', 'Film is line 5']]], ['blur', 'roleBlur', [['off', 'No blur'], ['on', 'Blur on the fold']]]];
       const sw = document.createElement('div'); sw.className = 'rsw';
       sw.innerHTML = rows.map(([k, key, opts]) => { try { const s = localStorage.getItem(key); if(opts.some(o => o[0] === s)) set[k] = s; } catch(e){}
         return `<p>Preview only · ${k} ` + opts.map(o => `<button type="button" data-k="${k}" data-key="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</p>'; }).join('');
