@@ -88,16 +88,19 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .pl{position:absolute;inset:0;border-radius:5px;outline:1px solid transparent;outline-offset:-1px;transition:outline-color .35s,background-color .35s,opacity .35s}
 .pl.base{background:#222}
 .pl img.bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;display:block}
-.pl .it{position:absolute;display:block;height:auto}
+.pl .it{position:absolute;display:block;height:auto;transition:opacity .3s}
+.pl.base img.b0{opacity:0;transition:opacity .4s}
+.role.p0 .pl.base img.b0{opacity:1}
 .role.exp .pl:not(.base){background-color:rgba(255,255,255,.05);box-shadow:0 0 0 1px rgba(255,255,255,.2)}
 .role.lit .pl:not(.hl){opacity:.34}
 .role.lit .pl.base:not(.hl){opacity:.6}
 .pl.hl{outline-color:rgba(255,255,255,.95)}
 .role.exp .pl.hl:not(.base){background-color:rgba(255,255,255,.1)}
-/* the finish: the graphics go back into the picture as it folds, then the film itself plays on top of the folded sheets */
-.role.shut .pl:not(.base){opacity:0}
-.rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;opacity:0;pointer-events:none;transform:translateZ(1px)}
-.role.fin .rvid{opacity:1;transition:opacity .25s}
+/* the finish: as it folds, the title and cards go back into the picture (the name tag stays: it is on screen when the film starts);
+   the footage sheet has quietly become the film's first frame (.p0), so the film starts from the very picture that landed */
+.role.shut .pl .it:not(.keep){opacity:0}
+.rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;opacity:0;pointer-events:none;transform:translateZ(1px);transition:opacity .18s}
+.role.fin .rvid{opacity:1}
 .rpill,.rco{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;font-style:normal;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:3px 5px;white-space:nowrap}
 .rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
 .rco{margin-left:8px;vertical-align:2px}
@@ -541,14 +544,14 @@ body.preview #pv{display:block}
   <div class="role" id="role">
    <div class="rstage"><span class="rpill">My role</span>
     <div class="stage3d"><div class="planes" id="planes">
-    <div class="pl base" data-g="0"><img class="bg" src="media/role/plate.jpg" alt="The first frame of the film: Nate Soares at his desk, the title and the ten questions around him"></div>
+    <div class="pl base" data-g="0"><img class="bg" src="media/role/plate.jpg" alt="The opening of the film: Nate Soares at his desk, the title and the ten questions around him"><img class="bg b0" src="media/role/plate0.jpg" alt=""></div>
     <div class="pl x" data-g="1"><img class="bg" src="media/role/cuts.png" alt=""></div>
     <div class="pl x" data-g="2"><img class="bg" src="media/role/research.png" alt=""></div>
-    <div class="pl" data-g="3 4"><img class="it" src="media/role/name.png" alt="" style="left:2.917%;top:7.037%;width:11.146%;--d:0.000s"><img class="it" src="media/role/t_most.png" alt="" style="left:25.312%;top:5.926%;width:11.458%;--d:0.000s"><img class="it" src="media/role/t_asked.png" alt="" style="left:36.979%;top:5.741%;width:14.479%;--d:0.417s"><img class="it" src="media/role/t_questions.png" alt="" style="left:51.667%;top:5.741%;width:23.125%;--d:0.709s"><img class="it" src="media/role/t_about.png" alt="" style="left:52.812%;top:13.519%;width:9.062%;--d:0.709s"><img class="it" src="media/role/t_ai.png" alt="" style="left:61.771%;top:13.519%;width:3.854%;--d:0.709s"><img class="it" src="media/role/t_doom.png" alt="" style="left:65.521%;top:13.333%;width:9.375%;--d:0.709s"></div>
+    <div class="pl" data-g="3 4"><img class="it keep" src="media/role/name.png" alt="" style="left:2.917%;top:7.037%;width:11.146%;--d:0.000s"><img class="it" src="media/role/t_most.png" alt="" style="left:25.312%;top:5.926%;width:11.458%;--d:0.000s"><img class="it" src="media/role/t_asked.png" alt="" style="left:36.979%;top:5.741%;width:14.479%;--d:0.417s"><img class="it" src="media/role/t_questions.png" alt="" style="left:51.667%;top:5.741%;width:23.125%;--d:0.709s"><img class="it" src="media/role/t_about.png" alt="" style="left:52.812%;top:13.519%;width:9.062%;--d:0.709s"><img class="it" src="media/role/t_ai.png" alt="" style="left:61.771%;top:13.519%;width:3.854%;--d:0.709s"><img class="it" src="media/role/t_doom.png" alt="" style="left:65.521%;top:13.333%;width:9.375%;--d:0.709s"></div>
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q03.png" alt="" style="left:1.979%;top:17.222%;width:20.729%;--d:0.959s"><img class="it" src="media/role/q01.png" alt="" style="left:81.667%;top:21.296%;width:15.208%;--d:1.084s"><img class="it" src="media/role/q02.png" alt="" style="left:3.125%;top:32.778%;width:19.896%;--d:1.168s"></div>
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q09.png" alt="" style="left:77.604%;top:36.481%;width:20.417%;--d:1.251s"><img class="it" src="media/role/q07.png" alt="" style="left:1.979%;top:48.148%;width:25.417%;--d:1.376s"><img class="it" src="media/role/q10.png" alt="" style="left:81.146%;top:51.852%;width:15.729%;--d:1.418s"></div>
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q04.png" alt="" style="left:3.125%;top:63.148%;width:30.938%;--d:1.460s"><img class="it" src="media/role/q08.png" alt="" style="left:71.667%;top:67.222%;width:26.354%;--d:1.543s"><img class="it" src="media/role/q06.png" alt="" style="left:1.979%;top:78.889%;width:23.229%;--d:1.585s"><img class="it" src="media/role/q05.png" alt="" style="left:78.646%;top:82.593%;width:18.229%;--d:1.627s"></div>
-    <video class="rvid" src="media/role/final.mp4" muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"></video>
+    <video class="rvid" src="media/role/finish.mp4" muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"></video>
     </div></div>
     <p class="rcap" aria-hidden="true"><span class="rcl">Unfortunately, We Can’t Just Unplug It</span></p>
    </div>
@@ -719,22 +722,26 @@ sheet($('#sheetv'), $('#acard'));
        and staying long enough to read (HOLD);
      - on "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
        project file);
-     - then the sheets fold back, the graphics going back into the picture, and the folded frame plays three seconds of
-       the final video itself (media/role/final.mp4: its title and cards landing, ending on the very frame the sheets
-       are made from), so the hand back to the sheets cannot be seen;
+     - then the sheets fold back, the title and cards going back into the picture, and the folded frame plays three
+       seconds of the final video itself (media/role/finish.mp4: its title and cards landing). Neither join shows:
+       the footage sheet has two stills, the film's first frame (plate0.jpg, swapped in under the glass during
+       "All motion") and its last (plate.jpg, the frame the sheets are made from), so the film starts from the
+       picture that landed and ends on the picture that comes apart. The film is brought in paused while the fold
+       is still moving, and only plays once it has come to rest;
      - LOOP: it then comes apart again, for as long as it is on screen.
      It starts over from the top once the card has left the screen.
-     The move is a spring worked out from the clock (the same on every screen). SETTLE says whether it goes a little past
-     and comes back: on the way open (about 5%), and on landing (about 3%), or not at all.
+     The move is a spring worked out from the clock (the same on every screen). It stops on its mark with no recoil
+     (set.settle 'none', Tanner's lean, and how Marvin lands anything big); 'open' and 'both' let it go a little past.
      On the preview only, switches under the card flip these (PREVIEW; never on the live site).
      The hour figure above used to wait for this block to finish. It comes first on the page now, so it is told straight away. */
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
-  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_AT = 550, REST = 1400, TICK = 1000 / 60;
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_SHOW = 450, CLIP_AT = 800, REST = 1400, TICK = 1000 / 60;
   /* [damping, speed] of the spring. Damping 1 stops dead on the mark; .7 goes about 5% past, .75 about 3% */
-  const SPR = {open: {both: [.7, 5.2], open: [.7, 5.2], none: [1, 6.5]}, shut: {both: [.75, 7.5], open: [1, 7.5], none: [1, 7.5]}};
-  const set = {timing: 'loop', settle: 'both'};
+  const SPR = {open: {both: [.7, 5.2], open: [.7, 5.2], none: [1, 6.5]}, shut: {both: [.75, 7.5], open: [1, 9], none: [1, 9]}};
+  const BUMP = {none: [.05, .553], open: [.08, .74], both: [.08, .74]};   /* the lit sheet's lift: [pull, drag]; 'none' stops dead */
+  const set = {timing: 'loop', settle: 'none'};
   const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), vid = $('.rvid', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
   let x = 0, run = false, cur = -1, phase = 'idle', ph = 0, shown = 0, prev = 0, acc = 0, seen = false, gone = true, ended = false;
@@ -745,7 +752,7 @@ sheet($('#sheetv'), $('#acard'));
     line.classList.toggle('num', on);
     if(!RM && h >= 0){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
   function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
-    if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go'); } }
+    if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go', 'p0'); } }
   function apply(){ const e = x, f = Math.max(e, 0), sp = planes.offsetWidth * .56, gap = sp / (n - 1);   /* e may run a little past 0 or 1; the sheets never cross */
     planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - e)}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
     pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * f + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
@@ -755,12 +762,12 @@ sheet($('#sheetv'), $('#acard'));
   function spring(now){ const t = (now - sT) / 1000, wd = sW * Math.sqrt(Math.max(1 - sZ * sZ, 0));
     const env = sZ >= 1 ? Math.exp(-sW * t) * (1 + sW * t) : Math.exp(-sZ * sW * t) * (Math.cos(wd * t) + sZ * sW / wd * Math.sin(wd * t));
     x = s1 - (s1 - s0) * env; if(t > 2){ x = s1; live = false; } }
-  function hideClip(){ box.classList.remove('fin', 'shut'); }
+  function hideClip(){ box.classList.remove('fin', 'shut', 'p0'); }
   function rest(){ phase = 'idle'; cur = -1; x = 0; live = false; bump.forEach(b => b.x = b.v = 0); vid.pause(); hideClip(); box.classList.remove('go'); light(-1); apply(); }
   function open(){ phase = 'open'; ph = 0; cur = -1; go(1, 'open'); if(vid.readyState < 2) vid.load(); }
-  function clip(){ phase = 'clip'; ph = 0; ended = false; try { vid.currentTime = 0; } catch(e){}
+  function clip(){ phase = 'clip'; ph = 0; ended = false;
     box.classList.add('fin'); const p = vid.play(); if(p && p.catch) p.catch(() => { if(phase === 'clip'){ hideClip(); phase = 'rest'; ph = 0; } }); }   /* a phone saving power will not play it: rest on the still frame instead */
-  function finish(){ hideClip(); if(set.timing === 'loop') open(); else phase = 'done'; }
+  function finish(){ hideClip(); if(set.timing === 'loop') open(); else phase = 'done'; }   /* the film fades off the sheets as they start to move */
   vid.addEventListener('ended', () => ended = true);
   /* where the card is: has it left the screen, and is the still picture (it sits in the upper part of the card) wholly on it */
   function look(){ const r = stage.getBoundingClientRect(), vh = innerHeight, H = r.height;
@@ -771,16 +778,16 @@ sheet($('#sheetv'), $('#acard'));
     if(phase === 'idle' && seen) open();
     if(!run){ run = true; prev = 0; requestAnimationFrame(step); } }
   function tick(){ let m = false;
-    pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) m = true; });
+    pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0, [k, d] = BUMP[set.settle]; b.v += (to - b.x) * k; b.v *= d; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) m = true; });
     return m; }
   function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t; ph += dt;
     const was = live; if(live) spring(performance.now());
     let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
     if(phase === 'open'){ if(ph >= OPEN){ phase = 'lines'; cur = 0; shown = 0; light(0); } }
     else if(phase === 'lines'){ if((shown += dt) >= HOLD[cur]){ cur++; shown = 0; light(cur);
-      if(cur >= END){ phase = 'shut'; ph = 0; box.classList.add('shut'); go(0, 'shut'); } } }
-    else if(phase === 'shut'){ if(ph >= CLIP_AT) clip(); }
-    else if(phase === 'clip'){ if(ph > 350) box.classList.remove('shut');   /* the graphics are back under the film by the time it ends */
+      if(cur >= END){ phase = 'shut'; ph = 0; box.classList.remove('go'); box.classList.add('shut'); go(0, 'shut'); try { vid.currentTime = 0; } catch(e){} } } }
+    else if(phase === 'shut'){ if(ph >= CLIP_SHOW) box.classList.add('fin'); if(ph >= CLIP_AT) clip(); }
+    else if(phase === 'clip'){ if(ph > 350) box.classList.remove('shut', 'p0');   /* under the film: the graphics come back and the footage sheet returns to the last frame */
       if(ended || ph > 6000) finish(); }
     else if(phase === 'rest'){ if(ph >= SHUT - CLIP_AT + REST) finish(); }
     if(was || moving) apply();
