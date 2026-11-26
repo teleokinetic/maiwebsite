@@ -259,9 +259,9 @@ body.sheet-open{overflow:hidden}
 .reels .g{color:#8e8e93}
 /* the dark reaches up behind the white sheet, so that when the sheet's sides draw in there is dark to show */
 .reels::before{content:"";position:absolute;left:0;right:0;bottom:100%;height:100vh;background:var(--dark)}
-.rail{display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scroll-padding-left:max(var(--pad),calc(50% - 400px));scrollbar-width:none}
+.rail{display:flex;align-items:center;gap:12px;overflow-x:auto;scroll-snap-type:x mandatory;padding:26px max(var(--pad),calc(50% - 400px)) 8px;scrollbar-width:none}
 .rail::-webkit-scrollbar{display:none}
-.rc{flex:none;width:min(74vw,300px);scroll-snap-align:start;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit;transform-origin:50% 40%;transition:transform .2s,opacity .2s}
+.rc{flex:none;width:min(74vw,300px);scroll-snap-align:center;border:0;padding:0;background:none;text-align:left;cursor:pointer;color:inherit}
 .rv{display:block;position:relative;aspect-ratio:9/16;border-radius:16px;overflow:hidden;background:#1a1a1c}
 .rv img,.rv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .rv .chip{left:auto;right:12px;top:12px;bottom:auto;font-size:13px;padding:5px 11px 5px 6px}.rv .chip i{width:22px;height:22px}
@@ -356,7 +356,7 @@ blockquote cite{display:block;margin-top:8px;font-size:15px;font-style:normal;co
 .sheet.one{padding-bottom:64px}
 @media (max-width:760px){.sheet.one{padding-bottom:44px}}
 /* the reels line up with their heading on wide screens */
-@media (min-width:1000px){.rail{padding-left:max(var(--pad),calc(50% - 410px));padding-right:max(var(--pad),calc(50% - 410px));scroll-padding-left:max(var(--pad),calc(50% - 410px))}}
+@media (min-width:1000px){.rail{padding-left:max(var(--pad),calc(50% - 410px));padding-right:max(var(--pad),calc(50% - 410px))}}
 
 /* desktop: three widths, as on Marvin's and Molly's desktop pages. Text keeps its narrow column,
    pictures step outside it, and the wall runs wider still */
@@ -990,14 +990,16 @@ const Focus = (() => {
 /* ---------- reels: loops play while on screen, tap opens the full reel with sound in the focus view ---------- */
 {
   const cards = $$('.rc'), rail = $('#rail');
-  /* like Marvin's carousel: the card at the start of the rail leads at full size and plays; the next ones sit smaller, dimmer and still,
-     shrinking toward their outer edge; on a wide screen where all three fit, the hovered card leads */
+  /* after Marvin's project row (measured Nov 25): whatever is on screen keeps playing, and a reel stops only once it is wholly off
+     screen. The focus is size alone, by how far a reel's centre is from the middle of the screen: full size there, 88% from 42% of
+     the screen's width away. Nothing dims. The picture inside is what changes size; the card keeps its place, so where the row
+     catches does not shift. Where all three fit they are all full size until one is pointed at */
   let hover = -1, seen = false;
-  const lead = () => { const pad = parseFloat(getComputedStyle(rail).scrollPaddingLeft) || 0, fits = rail.scrollWidth <= rail.clientWidth + 2;
-    cards.forEach((el, i) => { const d = (el.offsetLeft - pad - rail.scrollLeft) / (el.offsetWidth + 12);
-      const k = fits ? (hover < 0 ? 0 : (i === hover ? 0 : .7)) : Math.min(1, Math.abs(d));
-      el.style.transformOrigin = d >= 0 ? '0% 50%' : '100% 50%'; el.style.transform = `scale(${1 - k * .14})`; el.style.opacity = 1 - k * .4; $('.rt', el).style.opacity = 1 - k * .8;
-      const vd = $('video', el); if(seen && !RM && k < .35 && !$('#fv').classList.contains('open')){ if(!vd.src) vd.src = vd.dataset.src; vd.play().catch(() => {}); } else vd.pause(); }); };
+  const lead = () => { const W = rail.clientWidth, fits = rail.scrollWidth <= W + 2, open = $('#fv').classList.contains('open');
+    cards.forEach((el, i) => { const cx = el.offsetLeft - rail.scrollLeft + el.offsetWidth / 2, on = cx + el.offsetWidth / 2 > 4 && cx - el.offsetWidth / 2 < W - 4;
+      const k = fits ? (hover < 0 || i === hover ? 0 : .7) : Math.min(1, Math.abs(cx - W / 2) / (W * .42));
+      const pic = $('.rv', el); pic.style.transition = fits ? 'transform .2s' : 'none'; pic.style.transform = `scale(${(1 - k * .12).toFixed(4)})`;
+      const vd = $('video', el); if(seen && !RM && on && !open){ if(!vd.src) vd.src = vd.dataset.src; if(vd.paused) vd.play().catch(() => {}); } else vd.pause(); }); };
   rail.addEventListener('scroll', () => requestAnimationFrame(lead), {passive: true}); addEventListener('resize', lead);
   cards.forEach((c, i) => { c.onmouseenter = () => { hover = i; lead(); }; c.onmouseleave = () => { hover = -1; lead(); }; });
   const io = new IntersectionObserver(es => es.forEach(e => { seen = e.isIntersecting; lead(); }), {threshold: .3}); io.observe(rail);
