@@ -435,6 +435,11 @@ html.js .ec{opacity:0}
 html.js .ec.sn{animation:drop .7s cubic-bezier(.2,.8,.2,1) both}
 .endl{margin:30px 0 0}
 .upd{margin:56px 0 0;color:var(--soft)}
+/* the alligator: a quiet text button under the contact lines, and the small canvas that travels with the animal */
+.gbtn{display:inline-block;margin:14px 0 0;padding:6px 0;min-height:44px;border:0;background:none;font:inherit;font-size:15px;color:var(--grey);text-decoration:underline;text-decoration-color:var(--soft);text-underline-offset:4px;cursor:pointer}
+.gbtn[hidden]{display:none}
+#gator{position:absolute;left:0;top:0;z-index:55;pointer-events:none;display:none;will-change:transform}
+#gator.on{display:block}
 
 
 /* "Anatomy of a Reel" sits on the dark band between the reels and the graphics, in the story's own colours,
@@ -1193,6 +1198,425 @@ if(PREVIEW){
     d.style.display = vis && r.bottom > -20 && r.top < innerHeight + 20 && getComputedStyle(el).visibility !== 'hidden' ? '' : 'none'; d.style.left = (r.left + r.width * p.fx) + 'px'; d.style.top = (r.top + r.height * p.fy) + 'px'; }); }
   const loopPlace = () => { place(); requestAnimationFrame(loopPlace); }; requestAnimationFrame(loopPlace);
   renderPins();
+}
+
+/* ---------- the alligator. Seen from above, drawn in flat shapes. It moves the way the spider on Marvin's page was
+   found to move: in bursts whose length and speed depend on how far away the pointer is; it stops short, turns to face
+   you and watches; after a while it loses interest and wanders. Its body is a chain that follows its head, and its
+   feet stay planted until the body has moved on, then step. On a phone it goes to where you last tapped ---------- */
+{
+  const QUICK = true;   /* the brisker chase (Tanner's pick); false is the slower, more lifelike one */
+  const btn = document.createElement('button'); btn.type = 'button'; btn.className = 'gbtn'; btn.textContent = 'Unleash the alligator'; btn.hidden = RM; $('.upd').before(btn);
+  const cv = document.createElement('canvas'); cv.id = 'gator'; cv.setAttribute('aria-hidden', 'true'); document.body.appendChild(cv); const g = cv.getContext('2d');
+  const R = (a, b) => a + Math.random() * (b - a), wrap = a => Math.atan2(Math.sin(a), Math.cos(a)), PI2 = Math.PI * 2;
+  /* ---- how it is drawn: from above (swap in a new drawing by replacing what is between the markers) ---- */
+/*DRAW-BEGIN*/
+// Top-down alligator drawn with Canvas 2D (version 2). Spine: 17 points, snout tip (0) to tail tip (16).
+const GATOR_SHAPE = {
+  // half-width at each spine point: bulb snout (cap is built in), eyes, skull, neck, belly, tapering tail
+  WID: [0, 3.0, 3.9, 4.9, 5.1, 6.2, 6.9, 7.2, 7.2, 7.0, 6.3, 5.4, 4.5, 3.6, 2.7, 1.8, 0.5],
+  HIPS: [5, 10],
+  REACH: 9.5
+};
+
+function drawGator(g, pose) {
+  const sp = pose.sp, W = GATOR_SHAPE.WID, R = GATOR_SHAPE.REACH, N = 16;
+  const C = { // colours sampled from the reference (olive bronze), lifted a little so it reads on black
+    rim: 'rgba(235,225,185,0.17)', edge: '#13110a', flank: '#2c2817', base: '#3d3820', back: '#4b4428',
+    sc0: '#625934', sc1: '#4e4729', sc2: '#38331d', scLit: 'rgba(160,148,92,0.4)', seam: '#16140b',
+    keel: '#c8b46a', keel2: '#8e8050', pebble: 'rgba(140,128,86,0.55)',
+    head: '#4f4730', headHi: '#857756', headLo: '#2f2a1b', leg: '#433d26', legHi: 'rgba(130,120,80,0.45)',
+    claw: '#d4cab2', eye: '#d8962e', pupil: '#120a03', shadow: 'rgba(0,0,0,0.11)'
+  };
+  const lift = pose.lift === undefined ? 0.5 : pose.lift;
+
+  // Smooth position + forward direction at any u in [0,16] (Catmull-Rom through the spine).
+  function frame(u) {
+    u = Math.max(0, Math.min(N, u));
+    const i = Math.min(N - 1, Math.floor(u)), t = u - i, t2 = t * t, t3 = t2 * t;
+    const p0 = sp[Math.max(0, i - 1)], p1 = sp[i], p2 = sp[i + 1], p3 = sp[Math.min(N, i + 2)];
+    const cr = (a, b, c, d) => 0.5 * (2 * b + (c - a) * t + (2 * a - 5 * b + 4 * c - d) * t2 + (3 * b - a - 3 * c + d) * t3);
+    const dr = (a, b, c, d) => 0.5 * ((c - a) + 2 * (2 * a - 5 * b + 4 * c - d) * t + 3 * (3 * b - a - 3 * c + d) * t2);
+    const fx = -dr(p0.x, p1.x, p2.x, p3.x), fy = -dr(p0.y, p1.y, p2.y, p3.y), l = Math.hypot(fx, fy) || 1;
+    return { x: cr(p0.x, p1.x, p2.x, p3.x), y: cr(p0.y, p1.y, p2.y, p3.y), fx: fx / l, fy: fy / l };
+  }
+  const P = (f, v) => [f.x - f.fy * v, f.y + f.fx * v];   // frame + sideways offset -> canvas point
+  const at = (u, v) => P(frame(u), v);
+  const sstep = (a, b, x) => { const t = Math.max(0, Math.min(1, (x - a) / (b - a))); return t * t * (3 - 2 * t); };
+  // Half-width at any u: round bulb at the nostrils, slight pinch behind it, then the WID table.
+  function hw(u) {
+    if (u < 0.6) return 3.3 * Math.sqrt(Math.max(0, 1 - ((0.6 - u) / 0.6) ** 2));
+    if (u < 1) return 3.3 + (W[1] - 3.3) * sstep(0.6, 1, u);
+    const i = Math.min(N - 1, Math.floor(u));
+    return W[i] + (W[i + 1] - W[i]) * sstep(0, 1, u - i);
+  }
+  // Spine samples, dense at the snout, computed once per frame.
+  const S = [];
+  for (const u of [0, 0.1, 0.27, 0.5, 0.8, 1.2, 1.75, 2.35, 2.95, 3.5]) S.push(u);
+  for (let u = 4; u <= 16.001; u += 1) S.push(u);
+  const SF = S.map(frame), SW = S.map(hw);
+  // Closed smooth curve through a point list (corners rounded via midpoint quadratics).
+  function smooth(pts, T = g) {
+    const n = pts.length, a = pts[n - 1], b = pts[0];
+    T.moveTo((a[0] + b[0]) / 2, (a[1] + b[1]) / 2);
+    for (let i = 0; i < n; i++) {
+      const p = pts[i], q = pts[(i + 1) % n];
+      T.quadraticCurveTo(p[0], p[1], (p[0] + q[0]) / 2, (p[1] + q[1]) / 2);
+    }
+    T.closePath();
+  }
+  // Body outline between u0 and u1 at fraction k of the half-width (adds to the current path).
+  function band(u0, u1, k, add, tEnd, T) { // add: taper the front end; tEnd: taper to a point after this u
+    const L = [], Rt = [];
+    for (let j = 0; j < S.length; j++) if (S[j] >= u0 - 1e-6 && S[j] <= u1 + 1e-6) {
+      const w = SW[j] * k * (add ? sstep(u0, u0 + 1, S[j]) * 0.6 + 0.4 : 1) * (tEnd ? 1 - 0.75 * sstep(tEnd, u1, S[j]) : 1);
+      L.push(P(SF[j], w)); Rt.unshift(P(SF[j], -w));
+    }
+    smooth(L.concat(Rt), T);
+  }
+  const fill = (c, a) => { g.fillStyle = c; g.globalAlpha = a || 1; g.fill(); g.globalAlpha = 1; };
+  const stroke = (c, w, a) => { g.strokeStyle = c; g.lineWidth = w; g.globalAlpha = a || 1; g.stroke(); g.globalAlpha = 1; };
+  g.save();
+  g.lineJoin = g.lineCap = 'round';
+
+  // ---- Soft contact shadow: two offset translucent copies, further away when the body is carried high ----
+  const sx = 0.5 + lift * 1.1, sy = 0.8 + lift * 1.5;
+  const sil = new Path2D(); band(0, N, 1, 0, 0, sil); // the outline, built once and reused below
+  g.fillStyle = C.shadow;
+  for (const m of [1.25, 0.6]) { g.translate(sx * m, sy * m); g.fill(sil); g.translate(-sx * m, -sy * m); }
+
+  // ---- Legs: two chunky bones with a round elbow/knee, then a splayed foot with clawed toes ----
+  function cap(a, ra, b, rb) { // tapered capsule from a (radius ra) to b (radius rb)
+    const t = Math.atan2(b[1] - a[1], b[0] - a[0]);
+    g.moveTo(a[0] + Math.cos(t + 1.5708) * ra, a[1] + Math.sin(t + 1.5708) * ra);
+    g.arc(a[0], a[1], ra, t + 1.5708, t + 4.7124);
+    g.arc(b[0], b[1], rb, t - 1.5708, t + 1.5708);
+    g.closePath();
+  }
+  for (const ft of pose.feet) {
+    const front = ft.i === GATOR_SHAPE.HIPS[0], up = ft.lift || 0, k = 1 + up * 0.14;
+    const H = [ft.hx, ft.hy], dx = ft.x - ft.hx, dy = ft.y - ft.hy;
+    const d = Math.max(0.3 * R, Math.min(Math.hypot(dx, dy), R * 0.995)), dl = Math.hypot(dx, dy) || 1;
+    const ux = dx / dl, uy = dy / dl, L = R * 0.54, h = Math.sqrt(Math.max(0, L * L - d * d / 4));
+    const tx = sp[ft.i + 1].x - sp[ft.i].x, ty = sp[ft.i + 1].y - sp[ft.i].y, tl = Math.hypot(tx, ty) || 1;
+    let px = -uy, py = ux; // front elbows bend toward the tail, rear knees toward the head
+    if ((px * tx + py * ty > 0) !== front) { px = -px; py = -py; }
+    const E = [ft.hx + ux * d / 2 + px * h, ft.hy + uy * d / 2 + py * h], F = [ft.hx + ux * d, ft.hy + uy * d];
+    // toes fan outward; front feet reach forward, hind feet point back
+    let ox = ft.hx - sp[ft.i].x, oy = ft.hy - sp[ft.i].y; const ol = Math.hypot(ox, oy) || 1;
+    const fw = front ? 0.75 : -0.45, a0 = Math.atan2(oy / ol - ty / tl * fw, ox / ol - tx / tl * fw);
+    const nt = front ? 5 : 4, spread = front ? 2.3 : 1.7, toes = [];
+    const Pm = [F[0] + Math.cos(a0) * 0.6 * k, F[1] + Math.sin(a0) * 0.6 * k]; // palm sits just past the wrist
+    for (let j = 0; j < nt; j++) {
+      const a = a0 + (j / (nt - 1) - 0.5) * spread, mid = 1 - Math.abs(j / (nt - 1) - 0.5) * 0.6;
+      const ln = (front ? 3.4 : 3.9) * mid * k, c = Math.cos(a), s = Math.sin(a);
+      toes.push([[Pm[0] + c * 0.5, Pm[1] + s * 0.5], [Pm[0] + c * ln, Pm[1] + s * ln], c, s, ln]);
+    }
+    // shadow under the foot, pushed further out when the foot is lifted
+    g.beginPath(); g.ellipse(Pm[0] + sx * (0.7 + up * 0.7), Pm[1] + sy * (0.7 + up * 0.7), 2.5 * (1 - up * 0.25), 2.1 * (1 - up * 0.25), 0, 0, 7); fill(C.shadow);
+    const body = (grow, col) => { // limb + palm as filled shapes, toes as round-capped strokes
+      g.beginPath();
+      cap(H, 2.6 + grow, E, 1.95 + grow); cap(E, 1.85 + grow, F, 1.3 * k + grow);
+      g.moveTo(Pm[0] + 1.1 * k + grow, Pm[1]); g.arc(Pm[0], Pm[1], 1.1 * k + grow, 0, 7);
+      fill(col);
+      g.beginPath(); for (const t of toes) { g.moveTo(t[0][0], t[0][1]); g.lineTo(t[1][0], t[1][1]); }
+      stroke(col, (0.78 + grow * 2) * k);
+    };
+    body(0.4, C.edge); // dark outline
+    body(0, C.leg);
+    if (up) { fill('#bfb184', up * 0.18); } // lifted foot catches more light
+    g.beginPath(); // light along the top of each bone, and a knob on the joint
+    cap(H, 1.1, E, 0.85); cap(E, 0.8, F, 0.55);
+    g.moveTo(E[0] + 1, E[1]); g.arc(E[0], E[1], 1, 0, 7);
+    fill(C.legHi);
+    g.beginPath(); // scaly bands across the bones
+    for (const [A, B, r] of [[H, E, 2.2], [E, F, 1.6]]) {
+      const bx = B[0] - A[0], by = B[1] - A[1], bl = Math.hypot(bx, by) || 1, nx = -by / bl, ny = bx / bl;
+      for (let q = 0.22; q < 0.86; q += 0.21) {
+        const cx = A[0] + bx * q, cy = A[1] + by * q, rr = r * (1 - q * 0.3);
+        g.moveTo(cx + nx * rr, cy + ny * rr);
+        g.quadraticCurveTo(cx + bx / bl * 0.6, cy + by / bl * 0.6, cx - nx * rr, cy - ny * rr);
+      }
+    }
+    stroke(C.edge, 0.22, 0.75);
+    g.beginPath(); // pale pointed claws
+    for (const t of toes) {
+      const [x, y] = t[1], c = t[2], s = t[3], cl = 1.15 * k;
+      g.moveTo(x - s * 0.3, y + c * 0.3); g.lineTo(x + c * cl, y + s * cl); g.lineTo(x + s * 0.3, y - c * 0.3);
+    }
+    fill(C.claw);
+  }
+
+  // ---- Body: pale rim, dark edge, darker flanks with lighter bands toward the back ----
+  g.fillStyle = C.flank; g.fill(sil); g.strokeStyle = C.rim; g.lineWidth = 1.1; g.stroke(sil);
+  g.beginPath(); // small scales on the neck: little arcs opening toward the tail
+  for (let u = 3.95; u < 5.1; u += 0.38) for (const s of [-1, 1]) for (const kk of [0.5, 0.72, 0.92]) {
+    const f = frame(u), v = s * hw(u) * (kk + (Math.round(u / 0.36) % 2) * 0.03), a = P(f, v - 0.36), c = P(frame(u - 0.09), v), b = P(f, v + 0.36);
+    g.moveTo(a[0], a[1]); g.quadraticCurveTo(c[0], c[1], b[0], b[1]);
+  }
+  stroke(C.headHi, 0.22, 0.5);
+
+  // ---- Head: lighter skull, bright snout bridge, jaw line, pebbled skin ----
+  g.beginPath(); band(0, 4.5, 0.86, 0, 3.5); fill(C.head);
+  g.beginPath(); band(0.35, 2.9, 0.42); fill(C.headHi, 0.4);
+  g.beginPath(); // jaw line just inside the edge, both sides
+  for (const s of [-1, 1]) for (let u = 0.75; u < 3.7; u += 0.35) { const p = at(u, s * (hw(u) - 0.5)); u < 0.8 ? g.moveTo(p[0], p[1]) : g.lineTo(p[0], p[1]); }
+  stroke(C.headLo, 0.35, 0.9);
+  g.beginPath(); // pebbled skin
+  for (let j = 0; j < 22; j++) {
+    const h1 = Math.sin(j * 12.99) * 43758 % 1, h2 = Math.sin(j * 78.23) * 24634 % 1;
+    const u = 0.7 + Math.abs(h1) * 3.0, p = at(u, h2 * hw(u) * 0.72);
+    g.moveTo(p[0] + 0.2, p[1]); g.arc(p[0], p[1], 0.2, 0, 7);
+  }
+  fill(C.pebble);
+  g.beginPath(); // back edge of the skull and the crease between the eyes
+  for (let v = -3.4; v <= 3.41; v += 0.85) { const p = at(3.95 + 0.04 * Math.abs(v), v); v < -3.3 ? g.moveTo(p[0], p[1]) : g.lineTo(p[0], p[1]); }
+  for (const s of [-1, 1]) { const a = at(2.5, 1.3 * s), b = at(3.9, 1.5 * s); g.moveTo(a[0], a[1]); g.lineTo(b[0], b[1]); }
+  stroke(C.headLo, 0.3, 0.8);
+  // ---- Scutes: rounded raised plates in rows; lighter in the middle columns, each with a bright keel ----
+  const tiers = [[], [], []], lit = [], shade = [], keels = [[], []];
+  const row = (u, edges, du) => { // edges: column borders from the midline outward, mirrored on both sides
+    const fa = frame(u - du), fm = frame(u), fb = frame(u + du), n = edges.length - 1;
+    for (let c = 0; c < 2 * n; c++) {
+      const j = c < n ? c : c - n, sg = c < n ? 1 : -1, cw = edges[j + 1] - edges[j];
+      const v0 = sg * (edges[j] + cw * 0.05), v1 = sg * (edges[j + 1] - cw * 0.05), vm = (v0 + v1) / 2;
+      const tier = n > 2 ? Math.min(2, j > 2 ? 2 : j > 1 ? 1 : 0) : Math.min(2, j);
+      tiers[tier].push([P(fa, v0), P(fm, v0), P(fb, v0), P(fb, vm), P(fb, v1), P(fm, v1), P(fa, v1), P(fa, vm)]);
+      const fl = frame(u + du * 0.1), fs = frame(u + du * 0.45), i0 = v0 + sg * cw * 0.14, i1 = v1 - sg * cw * 0.14;
+      lit.push([P(fa, i0), P(fa, i1), P(fl, i1), P(fl, i0)]);           // domed front catches light
+      shade.push([P(fs, v0 + sg * cw * 0.08), P(fs, v1 - sg * cw * 0.08), P(fb, v1 - sg * cw * 0.1), P(fb, v0 + sg * cw * 0.1)]); // back edge in shadow
+      const ka = frame(u - du * 0.55), km = frame(u + du * 0.1), kb = frame(u + du * 0.8), kw = cw * 0.13;
+      keels[tier > 1 || u > 10.8 ? 1 : 0].push([P(ka, vm), P(km, vm + kw), P(kb, vm), P(km, vm - kw), P(km, vm + sg * kw * 1.4), P(km, vm)]);
+    }
+  };
+  row(4.2, [0, 1.35, 2.7], 0.17); row(4.6, [0, 1.7, 3.4], 0.17); // nuchal plates on the neck
+  for (let u = 5.05; u < 10.7; u += 0.46) { const w = hw(u); row(u, [0, w * 0.25, w * 0.5, w * 0.74, w * 0.94], 0.2); } // 6 big + 2 small flank rows
+  for (let u = 10.95; u < 15.6; u += 0.42) { const w = hw(u) * 0.92; row(u, u < 13.2 ? [0, w * 0.5, w] : [0, w], 0.18); }
+  tiers.forEach((list, j) => { g.beginPath(); for (const p of list) smooth(p); fill([C.sc0, C.sc1, C.sc2][j]); stroke(C.seam, 0.3); });
+  g.beginPath(); for (const p of lit) smooth(p); fill(C.scLit);
+  g.beginPath(); for (const p of shade) smooth(p); fill('rgba(10,8,2,0.35)');
+  const lens = (k, o) => { // pointed lens along the scute's crest; o shifts it (for the shadowed side)
+    const ox = o ? k[4][0] - k[5][0] : 0, oy = o ? k[4][1] - k[5][1] : 0;
+    g.moveTo(k[0][0] + ox, k[0][1] + oy); g.quadraticCurveTo(k[1][0] + ox, k[1][1] + oy, k[2][0] + ox, k[2][1] + oy);
+    g.quadraticCurveTo(k[3][0] + ox, k[3][1] + oy, k[0][0] + ox, k[0][1] + oy);
+  };
+  g.beginPath(); for (const list of keels) for (const k of list) lens(k, 1); fill('#0e0c06', 0.55);
+  keels.forEach((list, j) => { g.beginPath(); for (const k of list) lens(k, 0); fill(j ? C.keel2 : C.keel); });
+
+  // ---- Volume over the plates: a soft light band down the back, darker flanks (both follow the spine) ----
+  g.beginPath(); band(4.6, 15.2, 0.3, 1); fill("#f0e2a8", 0.12);
+  g.save(); g.clip(sil); g.strokeStyle = 'rgba(8,6,0,0.3)'; g.lineWidth = 3.4; g.stroke(sil); g.restore(); // flanks turn away
+  g.strokeStyle = C.edge; g.lineWidth = 0.55; g.stroke(sil);
+
+  // ---- Tail crests: two rows of tall pointed scutes (kites, lit inner face, dark outer face) merging into one ----
+  const litK = [], darkK = [], castK = [], ridge = [];
+  for (let u = 11.0; u < 15.9; u += 0.42) {
+    const m = sstep(12.7, 13.6, u), sides = m > 0.6 ? [0] : [-1, 1], wd = Math.min(1.25, hw(u) * 0.24 + 0.3);
+    for (const s of sides) {
+      const v = s * hw(u) * 0.33 * (1 - m), o = s || 1;
+      const F = at(u - 0.2, v), T = at(u + 0.17, v), I = at(u - 0.13, v - o * wd), O = at(u - 0.13, v + o * wd);
+      litK.push([F, I, T]); darkK.push([F, O, T]); ridge.push([at(u - 0.08, v), T]);
+      castK.push([O, T, at(u + 0.12, v + o * wd * 1.5)]); // tip throws a short shadow outward
+    }
+  }
+  const tri = (list) => { for (const t of list) { g.moveTo(t[0][0], t[0][1]); g.lineTo(t[1][0], t[1][1]); g.lineTo(t[2][0], t[2][1]); g.closePath(); } };
+  g.beginPath(); tri(castK); fill('#0b0904', 0.45);
+  g.beginPath(); tri(litK); tri(darkK); stroke(C.edge, 0.45);
+  g.beginPath(); tri(darkK); fill('#2e2a17');
+  g.beginPath(); tri(litK); fill('#8a7c4a');
+  g.beginPath(); for (const r of ridge) { g.moveTo(r[0][0], r[0][1]); g.lineTo(r[1][0], r[1][1]); } stroke(C.keel, 0.24, 0.8);
+
+  // ---- Eyes and nostrils on top of everything ----
+  const ang = (u) => { const f = frame(u); return Math.atan2(f.fy, f.fx); };
+  const blink = (pose.t % 5.3) < 0.15, ea = ang(2.8);
+  for (const s of [-1, 1]) {
+    // raised eye socket with a bony ridge running back and outward
+    const e = at(2.8, 2.35 * s), br = [at(2.85, 1.75 * s), at(3.15, 3.3 * s), at(3.8, 4.05 * s), at(3.45, 2.6 * s)];
+    g.beginPath(); g.ellipse(e[0] , e[1], 1.6, 1.25, ea, 0, 7); fill(C.headLo);
+    g.beginPath(); g.translate(0.3 * Math.cos(ea + 3.14), 0.3 * Math.sin(ea + 3.14)); smooth(br); g.translate(-0.3 * Math.cos(ea + 3.14), -0.3 * Math.sin(ea + 3.14)); fill(C.headLo);
+    g.beginPath(); g.ellipse(e[0], e[1], 1.3, 0.98, ea, 0, 7); fill(C.headHi);
+    g.beginPath(); smooth(br); fill(C.headHi, 0.75);
+    const hl = at(2.55, 2.2 * s); g.beginPath(); g.ellipse(hl[0], hl[1], 0.6, 0.38, ea, 0, 7); fill('#b3a476', 0.8);
+    // amber eye on the outer side, slit pupil, specular dot
+    const ey = at(2.72, 2.8 * s);
+    g.beginPath(); g.ellipse(ey[0], ey[1], 0.72, blink ? 0.12 : 0.48, ea, 0, 7); fill(blink ? C.headLo : C.eye); stroke(C.pupil, 0.22);
+    if (!blink) {
+      g.beginPath(); g.ellipse(ey[0], ey[1], 0.13, 0.44, ea, 0, 7); fill(C.pupil);
+      const sd = at(2.6, 2.68 * s); g.beginPath(); g.arc(sd[0], sd[1], 0.13, 0, 7); fill('#fff4d6');
+    }
+    // nostril bump with a dark opening
+    const n = at(0.42, 0.98 * s);
+    g.beginPath(); g.arc(n[0], n[1], 0.72, 0, 7); fill(C.headHi);
+    g.beginPath(); g.ellipse(n[0], n[1], 0.38, 0.28, ea, 0, 7); fill(C.edge);
+  }
+  g.restore();
+}
+/*DRAW-END*/
+  /* ---- how it moves: the legs carry the body ----
+     A "track" is the path the snout has travelled; the body lies along it (so it turns by curving, not pivoting).
+     A gait clock drives the feet; the body only advances as fast as the planted feet push it, so it pulses.
+     The trunk bends in a standing wave with the steps, the head stays steadier, the tail sweeps behind. */
+  const N = 17, GAP = 4.25, WID = GATOR_SHAPE.WID, REACH = GATOR_SHAPE.REACH, STAND = 30, ACC = 260, DEC = 110;
+  // per gait: speed (px/s), stride (px per full cycle), duty factor, limb phase (hind-to-same-side-fore lag),
+  // how far out the foot is set from the hip (share of REACH), body lift, trunk bend (rad), tail sweep (rad), 4-beat and 2-beat surge
+  const GAITS = {
+    plod: {v: 10,  S: 11, duty: .88, lp: .25, out: .68, lift: .15, bend: .24, tail: .22, p4: 1, p2: 0},
+    walk: {v: 36,  S: 19, duty: .68, lp: .40, out: .5, lift: .85, bend: .21, tail: .30, p4: 0, p2: .3},
+    run:  {v: 150, S: 25, duty: .50, lp: .50, out: .52, lift: .55, bend: .24, tail: .55, p4: 0, p2: .22}
+  };
+  const gp = {...GAITS.plod}; let gait = 'plod';
+  const pt = {x: 0, y: 0, moved: 0, has: false};
+  let yaw = 0, sp = [], feet = [], track = [], hd = {x: 0, y: 0}, sHead = 0, th = 0, clk = 0, vBase = 0, vDes = 0, spd = 0, lift = 0, act = 0, look = 0;
+  let st = 'off', until = 0, plan = null, interest = 0, arrived = 0, still = 0, stepCool = 0, raf = 0, last = 0, home = false;
+  const BOX = 150; let DPR = 1;   /* the canvas is a small square that travels with the animal */
+  const size = () => { DPR = Math.min(devicePixelRatio || 1, 3); cv.width = cv.height = BOX * DPR; cv.style.width = cv.style.height = BOX + 'px'; g.setTransform(DPR, 0, 0, DPR, 0, 0); };
+  /* the pointer, in page coordinates so the alligator lives on the page and scrolls with it */
+  let cy = 0; const seen = e => { if(e.target === btn) return; pt.x = e.clientX; cy = e.clientY; pt.y = cy + scrollY; pt.moved = performance.now() / 1000; pt.has = true; };
+  let scrolled = 0, away = false; addEventListener('scroll', () => { scrolled = performance.now() / 1000; if(pt.has) pt.y = cy + scrollY; }, {passive: true});
+  /* left behind by a scroll: keep it just past the edge of the screen, unseen (everything it stands on moves with it, so no foot slides),
+     and once the scrolling has stopped, walk it back in: to the pointer if it still cares, otherwise a little way in from that edge */
+  function carry(now){ if(st === 'off' || st === 'gone' || home || !sp.length) return; const c = sp[8], M = 90, top = scrollY - M, bot = scrollY + innerHeight + M, dy = c.y < top ? top - c.y : c.y > bot ? bot - c.y : 0;
+    if(dy){ sp.forEach(p => p.y += dy); track.forEach(p => p.y += dy); hd.y += dy; feet.forEach(f => { f.y += dy; f.hy += dy; if(f.y0 != null) f.y0 += dy; }); if(plan) plan.y += dy; away = true; }
+    if(away && now - scrolled > .35){ away = false; if(c.y > scrollY + 20 && c.y < scrollY + innerHeight - 20) return;
+      if(keen(now)){ arrived = 0; think(now); } else go(c.x + R(-40, 40), c.y < scrollY ? scrollY + R(70, 150) : scrollY + innerHeight - R(70, 150), R(46, 56)); } }
+  addEventListener('pointermove', e => { if(e.pointerType === 'mouse') seen(e); }, {passive: true}); /* a mouse press counts at once; a touch counts only as a tap (short and still), so starting a scroll does not call it over */
+  let td = null; addEventListener('pointerdown', e => { if(e.pointerType === 'mouse') seen(e); else td = {x: e.clientX, y: e.clientY, t: performance.now(), id: e.pointerId}; }, {passive: true});
+  addEventListener('pointerup', e => { if(td && e.pointerId === td.id && performance.now() - td.t < 450 && Math.hypot(e.clientX - td.x, e.clientY - td.y) < 12) seen(e); td = null; }, {passive: true});
+  addEventListener('pointercancel', () => { td = null; }, {passive: true});
+  const inView = (x, y) => ({x: clamp(x, 40, innerWidth - 40), y: clamp(y, scrollY + 40, scrollY + innerHeight - 40)});
+
+  /* ---- deciding what to do ---- */
+  function go(x, y, v, o = {}){ const p = home ? {x, y} : inView(x, y); plan = {x: p.x, y: p.y, v, t0: last, run: v > 95, runEnd: 0, walked: 0, pauseAt: R(140, 300), ...o}; plan.runEnd = last + R(1.3, 2.3); st = 'go'; }
+  const keen = now => pt.has && now < interest && now - pt.moved < 30;  // paying attention to the pointer?
+  function think(now){ const h = sp[0], dx = pt.x - h.x, dy = pt.y - h.y, d = Math.hypot(dx, dy);
+    if(home){ const r = btn.getBoundingClientRect(), x = r.left - 60, y = r.top + scrollY + r.height / 2, far = Math.hypot(x - h.x, y - h.y);
+      go(x, y, far > 300 ? R(150, 175) : far > 50 ? R(48, 58) : 10, {home: true}); return; }
+    const curious = keen(now);
+    if(!curious){ /* its own life: long rests, short wanders; a pointer that keeps moving wins it back */
+      if(pt.has && pt.moved > interest + R(5, 9)) interest = Infinity;
+      if(Math.random() < .4){ st = 'rest'; until = now + R(3, 8); return; }
+      const a = th + R(-1.1, 1.1), l = R(30, 130); go(h.x + Math.cos(a) * l, h.y + Math.sin(a) * l, l < 55 ? 10 : R(26, 34)); return; }
+    if(d <= STAND + 8){ if(!arrived) arrived = now; if(interest === Infinity) interest = now + R(14, 20); // attention runs out while it watches
+      st = 'watch'; until = now + (now - arrived < 3 ? R(1.2, 2.2) : R(5, 9)); return; }
+    arrived = 0; go(pt.x, pt.y, d > (QUICK ? 240 : 380) ? R(140, 175) : d > 80 ? (QUICK ? R(46, 56) : R(30, 40)) : 10, {chase: true}); }
+  // stop where it can: a point ahead at braking distance, then rest
+  const halt = (rest, why) => { const b = vBase * vBase / (2 * DEC) + 2; plan = {x: hd.x + Math.cos(th) * b, y: hd.y + Math.sin(th) * b, v: vBase, after: rest, why}; st = 'go'; };
+  function arrive(now){ const p = plan; plan = null; vDes = 0;
+    if(p.home){ st = 'gone'; return; }
+    if(p.after){ st = 'rest'; until = now + p.after; return; }
+    think(now); if(st === 'go') { st = 'pause'; until = now + R(.3, .8); } }
+
+  /* ---- each frame: behaviour sets a wanted speed and heading ---- */
+  function steer(dt, now){ const h = sp[0];
+    if(st === 'gone'){ vDes = 0; if(vBase < .5) stop(); return; }
+    if(st === 'go'){
+      if(!plan.chase && !plan.home && !plan.why && pt.moved > plan.t0 + .4 && keen(now)){ think(now); if(st !== 'go') return; } // a fresh pointer wins over a stroll
+      if(plan.chase && pt.has){ const dx = pt.x - h.x, dy = pt.y - h.y, d = Math.hypot(dx, dy) || 1; const p = inView(pt.x - dx / d * STAND, pt.y - dy / d * STAND); plan.x = p.x; plan.y = p.y; }
+      const dx = plan.x - hd.x, dy = plan.y - hd.y, d = Math.hypot(dx, dy), off = wrap(Math.atan2(dy, dx) - th);
+      plan.walked += vBase * dt;
+      if(d < 3 || (Math.abs(off) > 2 && d < 25) || (plan.chase && Math.hypot(pt.x - h.x, pt.y - h.y) < STAND + 3)){ arrive(now); return; }
+      if(plan.run && now > plan.runEnd){ halt(plan.home ? R(.5, .9) : QUICK ? R(.7, 1.3) : R(1.8, 3.4), 'tired'); return; } // a burst cannot last: stop, rest, go again
+      if(!plan.why && plan.walked > plan.pauseAt && d > 70 && !plan.home && Math.random() < dt){ halt(R(.6, 1.8), 'pause'); return; } // stop-and-go
+      turnTo(off, dt);
+      vDes = Math.min(plan.v, Math.sqrt(2 * DEC * d) + 3) * clamp(1.4 - .6 * Math.abs(off), .3, 1);
+      return; }
+    vDes = 0;
+    const off = pt.has ? wrap(Math.atan2(pt.y - h.y, pt.x - h.x) - th) : 0;
+    look += (clamp(st === 'watch' || st === 'turn' ? off : 0, -.5, .5) - look) * Math.min(1, dt * 3);  // swing the head toward it
+    if(st === 'turn'){ vDes = 9; turnTo(off, dt); if(Math.abs(off) < .3){ st = 'watch'; } return; }
+    if(st === 'watch' && pt.has){
+      if(Math.abs(off) > .8 && vBase < .5 && still > .6){ st = 'turn'; return; }            // turn by stepping round
+      if(Math.hypot(pt.x - h.x, pt.y - h.y) > STAND + 40) until = Math.min(until, now + .25); }
+    if(now >= until && vBase < .5) think(now); }
+  // real animals turn by stepping: the faster it goes, the wider the curve
+  const turnTo = (off, dt) => { const w = spd / (20 + .25 * spd), a = clamp(off, -w * dt, w * dt); th += a; yaw = a / dt; };
+
+  /* the track: where the snout has been; the body lies along it */
+  function trackAt(s){ let k = track.length - 1;
+    if(s >= track[k].s){ const a = track[k], u = (s - a.s) / Math.max(1e-6, sHead - a.s); return {x: a.x + (hd.x - a.x) * u, y: a.y + (hd.y - a.y) * u}; }
+    while(k > 0 && track[k].s > s) k--;
+    const a = track[k], b = track[k + 1] || hd, bs = track[k + 1] ? b.s : sHead, u = (s - a.s) / Math.max(1e-6, bs - a.s);
+    return {x: a.x + (b.x - a.x) * u, y: a.y + (b.y - a.y) * u}; }
+
+  function move(dt, now){
+    steer(dt, now); if(st === 'off') return;
+    /* gait: chosen from the wanted speed when speeding up, from the actual speed when slowing */
+    const v = vDes >= vBase ? vDes : vBase;
+    gait = v > (gait === 'run' ? 80 : 95) ? 'run' : v > (gait === 'plod' ? 22 : 16) ? 'walk' : 'plod';
+    const G = GAITS[gait], k = Math.min(1, dt * 3); for(const key in G) gp[key] += (G[key] - gp[key]) * k;
+    /* lift first, then go; settle onto the belly once it has been still a while */
+    still = vBase < .5 ? still + dt : 0;
+    const liftTo = vDes > 0 ? gp.lift : still > .6 ? 0 : lift; lift += clamp(liftTo - lift, -dt * 1.1, dt * 2.6);
+    const ready = vDes === 0 || lift >= gp.lift * .8 || vBase > 1;
+    vBase += clamp((ready ? vDes : 0) - vBase, -DEC * 1.6 * dt, ACC * dt); vBase = Math.max(0, vBase);
+    /* the body moves only as the planted feet push: a surge after each footfall */
+    // stride grows with speed, but a whole stance must fit inside the leg's reach
+    const out = gp.out * REACH, S = Math.min(gp.S * clamp(Math.sqrt(vBase / gp.v), .75, 1.15), 2 * Math.sqrt((.86 * REACH) ** 2 - out * out) / gp.duty), ph = clk % 1;
+    const p4 = (1 + Math.cos(PI2 * 4 * (ph - .07))) ** 2 / 1.5, p2 = 1 + gp.p2 * Math.cos(PI2 * 2 * (ph - (gp.duty + 1) / 2));
+    spd = vBase * (gp.p4 * p4 + (1 - gp.p4) * p2);
+    hd.x += Math.cos(th) * spd * dt; hd.y += Math.sin(th) * spd * dt; sHead += spd * dt;
+    if(sHead - track[track.length - 1].s >= 1){ track.push({x: hd.x, y: hd.y, s: sHead}); if(track[1].s < sHead - 110) track.shift(); }
+    // the legs step for the ground the hips cover: forward travel plus the sideways swing of a turn
+    const vLeg = vBase + Math.abs(yaw) * 2.5 * GAP; yaw = 0; const old = clk; clk += dt * vLeg / S;
+    act += (clamp(vBase / 8) - act) * Math.min(1, dt * 4);
+    body();
+    stepFeet(dt, old, S, out, vLeg); }
+
+  /* the spine: along the track, plus a standing wave in the trunk, a steadier head and a travelling wave in the tail */
+  const [H0, H1] = GATOR_SHAPE.HIPS, base = [...Array(N)].map(() => ({x: 0, y: 0})), turn = new Float32Array(N - 1);
+  function body(){
+    for(let j = 0; j < N; j++){ const p = trackAt(sHead - j * GAP); base[j].x = p.x; base[j].y = p.y; }
+    const psi = PI2 * clk, B = gp.bend * act, Bt = B * Math.cos(psi), T = gp.tail * act;
+    for(let j = 0; j < N - 1; j++){ const u = j + .5;
+      // at left-front touchdown the shoulders turn right and the hips left: the trunk bows out on the left
+      const d = u < H0 ? Bt * (-.35 + 1.35 * u / H0) + look * Math.max(0, 1 - u / (H0 - .5)) / 2.2
+              : u < H1 ? Bt * (1 - 2 * (u - H0) / (H1 - H0))
+              : -(B + T * (u - H1) / (N - 1 - H1)) * Math.cos(psi - 1.7 * (u - H1) / (N - 1 - H1));
+      turn[j] = Math.atan2(base[j].y - base[j + 1].y, base[j].x - base[j + 1].x) + d; }
+    const A = Math.round((H0 + H1) / 2); sp[A].x = base[A].x; sp[A].y = base[A].y;           // chain out from mid-trunk, exactly 4.25 apart
+    for(let j = A - 1; j >= 0; j--){ sp[j].x = sp[j + 1].x + Math.cos(turn[j]) * GAP; sp[j].y = sp[j + 1].y + Math.sin(turn[j]) * GAP; }
+    for(let j = A + 1; j < N; j++){ sp[j].x = sp[j - 1].x - Math.cos(turn[j - 1]) * GAP; sp[j].y = sp[j - 1].y - Math.sin(turn[j - 1]) * GAP; }
+    let mx = 0, my = 0; for(let j = 2; j <= H1 + 2; j++){ mx += base[j].x - sp[j].x; my += base[j].y - sp[j].y; }
+    for(const p of sp){ p.x += mx / (H1 + 1); p.y += my / (H1 + 1); } }      // keep the body centred on its path
+
+  /* feet: a planted foot never moves; a swinging foot arcs forward faster than the body */
+  // lateral sequence: each fore foot lands lp of a cycle after the hind foot on its own side (LH, LF, RH, RF)
+  const OFF = [() => .5, () => gp.lp, () => 0, () => .5 + gp.lp];  // RF, LH, LF, RH (left-front is the clock)
+  function stepFeet(dt, old, S, out, vLeg){ stepCool -= dt; let swinging = feet.some(f => f.sw);
+    feet.forEach((f, k) => { const a = sp[f.i - 1], b = sp[f.i], ang = Math.atan2(a.y - b.y, a.x - b.x), nx = -Math.sin(ang) * f.s, ny = Math.cos(ang) * f.s;
+      f.hx = b.x + nx * WID[f.i] * .8; f.hy = b.y + ny * WID[f.i] * .8;
+      const ba = Math.atan2(base[f.i - 1].y - base[f.i].y, base[f.i - 1].x - base[f.i].x), cx = Math.cos(ba), cy2 = Math.sin(ba);
+      // where it lands: out to the side, and ahead of the hip by half the ground the hip covers in stance
+      const lead = .5 * gp.duty * S * clamp(vBase / 5), front = f.i === GATOR_SHAPE.HIPS[0] ? .5 : -.3;
+      const tx = f.hx - cy2 * f.s * out + cx * (lead + front), ty = f.hy + cx * f.s * out + cy2 * (lead + front);
+      const dist = Math.hypot(f.x - f.hx, f.y - f.hy);
+      if(!f.sw){ const p0 = (old + OFF[k]()) % 1, p1 = (clk + OFF[k]()) % 1, d = gp.duty;
+        const due = vLeg > .5 && (p0 < d ? p1 >= d || p1 < p0 : p1 >= d && p1 < p0);
+        const far = dist > REACH * .97, fidget = vBase < .5 && !swinging && stepCool <= 0 && Math.hypot(f.x - tx, f.y - ty) > (still > 1 ? 4.5 : 3.2);
+        if(due || far || fidget){ f.sw = true; f.u = 0; f.x0 = f.x; f.y0 = f.y; swinging = true;
+          f.dur = due ? clamp((1 - d) * S / Math.max(vLeg, 1), .07, .3) : far ? .12 : .3; if(fidget) stepCool = .45; const c = gait + (due ? ' due' : far ? ' far' : ' fidget'); steps[c] = (steps[c] || 0) + 1; } }
+      if(f.sw){ f.u = Math.min(1, f.u + dt / f.dur); const e = f.u * f.u * (3 - 2 * f.u);
+        f.x = f.x0 + (tx - f.x0) * e; f.y = f.y0 + (ty - f.y0) * e; f.lift = Math.max(.02, Math.sin(Math.PI * f.u));
+        const lx = f.x - f.hx, ly = f.y - f.hy, ll = Math.hypot(lx, ly); if(ll > REACH * .99){ f.x = f.hx + lx / ll * REACH * .99; f.y = f.hy + ly / ll * REACH * .99; }
+        if(f.u >= 1){ f.sw = false; f.lift = 0; } } }); }
+
+  let pose = null; const steps = {};
+  function paint(){ const c = sp[8], ox = Math.round(Math.min(c.x - BOX / 2, document.documentElement.clientWidth - BOX) * DPR) / DPR, oy = Math.round(Math.min(c.y - BOX / 2, document.body.offsetHeight - BOX) * DPR) / DPR;
+    cv.style.transform = `translate3d(${ox}px, ${oy}px, 0)`; if(oy + BOX < scrollY - 40 || oy > scrollY + innerHeight + 40) return;   /* off screen: nothing to draw */
+    g.clearRect(0, 0, BOX, BOX); g.save(); g.translate(-ox, -oy);
+    pose = {sp, feet, t: last, spd, lift, gait: GATOR.gait}; drawGator(g, pose); g.restore(); }
+  function frame(t){ const now = t / 1000, dt = Math.min(.05, now - last || .016); last = now; carry(now); move(dt, now); if(st !== 'off'){ paint(); raf = requestAnimationFrame(frame); } }
+  function stop(){ st = 'off'; home = false; cancelAnimationFrame(raf); cv.classList.remove('on'); btn.textContent = 'Unleash the alligator'; }
+  function start(){ size(); const r = btn.getBoundingClientRect(), y = r.top + scrollY + r.height / 2; th = 0; vBase = vDes = spd = lift = act = look = clk = 0; home = false; arrived = 0;
+    hd = {x: -30, y}; sHead = 120; track = [{x: -150, y, s: 0}, {x: -31, y, s: 119}];
+    sp = [...Array(N)].map((_, i) => ({x: -30 - i * GAP, y})); Object.assign(gp, GAITS.walk); gait = 'walk'; body();
+    feet = [[GATOR_SHAPE.HIPS[0], 1], [GATOR_SHAPE.HIPS[1], -1], [GATOR_SHAPE.HIPS[0], -1], [GATOR_SHAPE.HIPS[1], 1]].map(([i, s]) => ({i, s, x: sp[i].x, y: y + s * 11, hx: 0, hy: 0, lift: 0, sw: false, u: 1, dur: .2, x0: 0, y0: 0}));
+    pt.has = false; last = performance.now() / 1000; interest = Infinity; cv.classList.add('on'); btn.textContent = 'Put your alligator away';
+    go(Math.min(innerWidth * .5, r.right + 70), y - 40, 45); raf = requestAnimationFrame(frame); }
+  btn.onclick = () => { if(st === 'off') start(); else { home = true; think(last); } };
+  addEventListener('resize', () => { if(st !== 'off') size(); });
+  window.GATOR = {get st(){ return st; }, get head(){ return sp[0]; }, get th(){ return th; }, get spd(){ return spd; },
+    get gait(){ return vBase < .5 && !feet.some(f => f.sw) ? 'rest' : gait; }, get pose(){ return pose; }, steps};
 }
 </script>
 <script src="write-up/open.js" defer></script>
