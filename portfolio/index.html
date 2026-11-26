@@ -753,23 +753,33 @@ sheet($('#sheetv'), $('#acard'));
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
-  /* The final video's first frame (0:05), in its real layers. As you scroll past, the frame tilts and comes apart on a heavy
-     spring. The lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up.
-     On "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
-     project file). After that the sheets fold back into the finished frame as you scroll on.
+  /* The final video's first frame (0:05), in its real layers. It plays on its own clock, and only where it can be seen:
+     - it opens once the whole card is on screen and the scroll has slowed (a flick is still a blur), tilting and coming
+       apart over about a second, on a heavy spring;
+     - the lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up. A line
+       stays long enough to read (HOLD). Its clock only runs while the words are on screen. Scrolling on moves to the
+       next line sooner (one line per PUSH of scroll, never faster than RUSH), so someone who keeps moving still gets all five;
+     - on "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
+       project file), and then the sheets fold back into the finished frame.
+     It starts over once the card has left the screen. The spring runs in fixed 1/60 s steps, so it is the same weight on a
+     120 Hz screen as on a phone.
      The hour figure above used to wait for this block to finish. It comes first on the page now, so it is told straight away. */
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 900, SHUT = 750, RUSH = 420, CALM = .5 /* px per ms */, TICK = 1000 / 60;
   const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
-  let x = 0, v = 0, target = 0, run = false, cur = -1, want = -1, last = 0;
+  let x = 0, v = 0, target = 0, run = false, cur = -1, open = false, done = false;
+  let r0 = 0, r1 = 0, rT = 0, rD = 0;                      /* the ramp the spring follows: from, to, start time, length */
+  let shown = 0, moved = 0, prev = 0, acc = 0;             /* ms the line has been readable, px scrolled since it came up */
+  let vel = 0, lastY = scrollY, lastS = 0, calm = 0, whole = false, capIn = false, gone = true, push = 70;
   const bump = pls.map(() => ({x: 0, v: 0}));
   const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   function say(h){ const on = h >= 0 && h < END;
     line.innerHTML = on ? `<span class="rcn">${h + 1}</span>` + LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
     line.classList.toggle('num', on);
-    if(!RM){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
+    if(!RM && h >= 0){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
   function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
     if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go'); } }
   function apply(){ const e = x, sp = planes.offsetWidth * .56, gap = sp / (n - 1);
@@ -777,18 +787,38 @@ sheet($('#sheetv'), $('#acard'));
     pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * e + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
       if(p.classList.contains('x')) p.style.opacity = e < .34 ? clamp(e * 3) : ''; });   /* the cuts and the sources are not part of the picture: they fade as it closes */
     box.classList.toggle('exp', e > .02); }
-  /* progress: the card's centre, from the bottom edge of the screen (0) to a third of the way down (1) */
-  function aim(){ const r = stage.getBoundingClientRect(), vh = innerHeight, p = clamp((vh - (r.top + r.height / 2)) / (vh * .66));
-    want = RM ? END : p < .34 ? -1 : p >= .76 ? END : Math.floor((p - .34) / .42 * END);
-    target = RM ? 1 : p > .78 && cur >= END ? 1 - ease(clamp((p - .78) / .2)) : ease(clamp(p / .3));
-    if(!run){ run = true; requestAnimationFrame(step); } }
-  function step(t){ v += (target - x) * .045; v *= .80; x += v;
-    const dwell = cur === 4 && want > 4 ? 2300 : 420;   /* one line at a time, however fast the scroll; the landing on "All motion" plays out before the fold */
-    if(want !== cur && (t - last > dwell || RM)){ cur += Math.sign(want - cur); last = t; light(cur); if(cur >= END) aim(); }
-    let moving = Math.abs(target - x) > .0005 || Math.abs(v) > .0005 || want !== cur;
-    pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) moving = true; });
-    apply(); if(moving) requestAnimationFrame(step); else run = false; }
-  addEventListener('scroll', aim, {passive: true}); addEventListener('resize', aim); aim();
+  function ramp(to, ms){ r0 = target; r1 = to; rT = performance.now(); rD = ms; }
+  function rest(){ open = done = false; cur = -1; x = v = target = rD = 0; bump.forEach(b => b.x = b.v = 0); box.classList.remove('go'); light(-1); apply(); }
+  /* where the card is: is all of it on screen, are the words on screen, has it left */
+  function look(){ const r = stage.getBoundingClientRect(), vh = innerHeight, H = r.height;
+    gone = r.bottom <= 0 || r.top >= vh;
+    capIn = r.bottom <= vh + 10 && r.bottom > 60;                                 /* the words sit along the bottom edge */
+    whole = capIn && (r.top >= -H * .1 || vh < H);                                 /* all of it, give or take a sliver */
+    push = clamp((vh - H * .6) / 6, 45, 90); }
+  function aim(){ look();
+    if(gone){ if(open || done || cur !== -1 || x) rest(); return; }
+    if(!open && !done && whole && Math.abs(vel) < CALM){ open = true; ramp(1, OPEN); }
+    if(!run){ run = true; prev = 0; requestAnimationFrame(step); } }
+  function tick(){ v += (target - x) * .045; v *= .80; x += v; let m = Math.abs(target - x) > .0005 || Math.abs(v) > .0005;
+    pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) m = true; });
+    return m; }
+  function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t;
+    if(rD){ const k = clamp((performance.now() - rT) / rD); target = r0 + (r1 - r0) * ease(k); if(k >= 1) rD = 0; }
+    let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
+    if(open){
+      if(cur < 0){ if(!rD && x > .96 && capIn){ cur = 0; shown = moved = 0; light(0); } }
+      else { if(capIn) shown += dt;
+        if(shown >= HOLD[cur] || (cur < 4 && shown >= RUSH && moved >= push)){ cur++; shown = moved = 0; light(cur);
+          if(cur >= END){ open = false; done = true; ramp(0, SHUT); } } } }
+    if(moving || rD) apply();
+    if(moving || rD || (open && !gone)) requestAnimationFrame(step); else run = false; }
+  if(RM){ x = target = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
+  else {
+    addEventListener('scroll', () => { const now = performance.now(), dy = scrollY - lastY, dt = now - lastS;
+      vel = dt > 0 && dt < 200 ? vel * .5 + dy / dt * .5 : 0; moved += Math.abs(dy); lastY = scrollY; lastS = now;
+      clearTimeout(calm); calm = setTimeout(() => { vel = 0; aim(); }, 140); aim(); }, {passive: true});
+    addEventListener('resize', () => { apply(); aim(); }); apply(); aim();
+  }
 }
 
 /* ---------- how it's made ---------- */
