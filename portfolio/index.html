@@ -94,6 +94,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 .role.lit .pl.base:not(.hl){opacity:.6}
 .pl.hl{outline-color:rgba(255,255,255,.95)}
 .role.exp .pl.hl:not(.base){background-color:rgba(255,255,255,.1)}
+/* the finish: the graphics go back into the picture as it folds, then the film itself plays on top of the folded sheets */
+.role.shut .pl:not(.base){opacity:0}
+.rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;opacity:0;pointer-events:none;transform:translateZ(1px)}
+.role.fin .rvid{opacity:1;transition:opacity .25s}
 .rpill,.rco{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;font-style:normal;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:3px 5px;white-space:nowrap}
 .rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
 .rco{margin-left:8px;vertical-align:2px}
@@ -107,8 +111,9 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 @keyframes rland{from{opacity:0;transform:translateY(14%) scale(.92)}to{opacity:1;transform:none}}
 .role.go .pl .it{animation:rland .5s cubic-bezier(.2,1.5,.4,1) both;animation-delay:var(--d,0s)}
 .rpm{margin:0;font-size:15px}
-/* preview only: the switch between the two timings */
-.rsw{margin:6px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55)}
+/* preview only: the switches for trying timings */
+.rsw{margin:6px 0 0;font-size:12px;color:rgba(255,255,255,.55)}
+.rsw p{margin:0 0 8px;display:flex;flex-wrap:wrap;align-items:center;gap:8px}
 .rsw button{font:inherit;color:#fff;background:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:8px 13px;cursor:pointer}
 .rsw button.on{background:#fff;color:#111;border-color:#fff;font-weight:600}
 /* the lines as a list: for screen readers always, and on screen when motion is turned off (nothing plays then) */
@@ -543,6 +548,7 @@ body.preview #pv{display:block}
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q03.png" alt="" style="left:1.979%;top:17.222%;width:20.729%;--d:0.959s"><img class="it" src="media/role/q01.png" alt="" style="left:81.667%;top:21.296%;width:15.208%;--d:1.084s"><img class="it" src="media/role/q02.png" alt="" style="left:3.125%;top:32.778%;width:19.896%;--d:1.168s"></div>
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q09.png" alt="" style="left:77.604%;top:36.481%;width:20.417%;--d:1.251s"><img class="it" src="media/role/q07.png" alt="" style="left:1.979%;top:48.148%;width:25.417%;--d:1.376s"><img class="it" src="media/role/q10.png" alt="" style="left:81.146%;top:51.852%;width:15.729%;--d:1.418s"></div>
     <div class="pl" data-g="3 4"><img class="it" src="media/role/q04.png" alt="" style="left:3.125%;top:63.148%;width:30.938%;--d:1.460s"><img class="it" src="media/role/q08.png" alt="" style="left:71.667%;top:67.222%;width:26.354%;--d:1.543s"><img class="it" src="media/role/q06.png" alt="" style="left:1.979%;top:78.889%;width:23.229%;--d:1.585s"><img class="it" src="media/role/q05.png" alt="" style="left:78.646%;top:82.593%;width:18.229%;--d:1.627s"></div>
+    <video class="rvid" src="media/role/final.mp4" muted playsinline preload="metadata" tabindex="-1" aria-hidden="true"></video>
     </div></div>
     <p class="rcap" aria-hidden="true"><span class="rcl">Unfortunately, We Can’t Just Unplug It</span></p>
    </div>
@@ -707,74 +713,89 @@ sheet($('#sheetv'), $('#acard'));
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
-  /* The final video's first frame (0:05), in its real layers. It plays on its own clock, however the page is scrolled:
-     - it starts as soon as the still picture is wholly on screen, at any scroll speed, tilting and coming apart over
-       about a second on a heavy spring;
+  /* A frame from the final video's opening (0:04), in its real layers. It plays on its own clock, however the page is scrolled:
+     - it starts as soon as the still picture is wholly on screen, at any scroll speed, tilting and coming apart;
      - the lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up
        and staying long enough to read (HOLD);
      - on "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
-       project file), and then the sheets fold back into the finished frame;
-     - LOOP: after a short rest on the finished frame it comes apart again, for as long as it is on screen.
-     It starts over from the top once the card has left the screen. The spring runs in fixed 1/60 s steps, so it is the
-     same weight on a 120 Hz screen as on a phone.
-     On the preview only, a switch under the card flips between playing once and looping (PREVIEW; never on the live site).
+       project file);
+     - then the sheets fold back, the graphics going back into the picture, and the folded frame plays three seconds of
+       the final video itself (media/role/final.mp4: its title and cards landing, ending on the very frame the sheets
+       are made from), so the hand back to the sheets cannot be seen;
+     - LOOP: it then comes apart again, for as long as it is on screen.
+     It starts over from the top once the card has left the screen.
+     The move is a spring worked out from the clock (the same on every screen). SETTLE says whether it goes a little past
+     and comes back: on the way open (about 5%), and on landing (about 3%), or not at all.
+     On the preview only, switches under the card flip these (PREVIEW; never on the live site).
      The hour figure above used to wait for this block to finish. It comes first on the page now, so it is told straight away. */
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
-  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 900, SHUT = 750, REST = 1400, TICK = 1000 / 60;
-  let LOOP = true;
-  const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), n = pls.length, END = LINES.length;
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_AT = 550, REST = 1400, TICK = 1000 / 60;
+  /* [damping, speed] of the spring. Damping 1 stops dead on the mark; .7 goes about 5% past, .75 about 3% */
+  const SPR = {open: {both: [.7, 5.2], open: [.7, 5.2], none: [1, 6.5]}, shut: {both: [.75, 7.5], open: [1, 7.5], none: [1, 7.5]}};
+  const set = {timing: 'loop', settle: 'both'};
+  const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), vid = $('.rvid', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
-  let x = 0, v = 0, target = 0, run = false, cur = -1, open = false, done = false;
-  let r0 = 0, r1 = 0, rT = 0, rD = 0;                      /* the ramp the spring follows: from, to, start time, length */
-  let shown = 0, idle = 0, prev = 0, acc = 0, seen = false, gone = true;
+  let x = 0, run = false, cur = -1, phase = 'idle', ph = 0, shown = 0, prev = 0, acc = 0, seen = false, gone = true, ended = false;
+  let s0 = 0, s1 = 0, sT = 0, sZ = 1, sW = 6.5, live = false;          /* the spring: from, to, start time, damping, speed */
   const bump = pls.map(() => ({x: 0, v: 0}));
-  const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   function say(h){ const on = h >= 0 && h < END;
     line.innerHTML = on ? `<span class="rcn">${h + 1}</span>` + LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
     line.classList.toggle('num', on);
     if(!RM && h >= 0){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
   function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
     if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go'); } }
-  function apply(){ const e = x, sp = planes.offsetWidth * .56, gap = sp / (n - 1);
-    planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - clamp(e))}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
-    pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * e + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
-      if(p.classList.contains('x')) p.style.opacity = e < .34 ? clamp(e * 3) : ''; });   /* the cuts and the sources are not part of the picture: they fade as it closes */
+  function apply(){ const e = x, f = Math.max(e, 0), sp = planes.offsetWidth * .56, gap = sp / (n - 1);   /* e may run a little past 0 or 1; the sheets never cross */
+    planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - e)}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
+    pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * f + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
+      if(p.classList.contains('x')) p.style.opacity = f < .34 ? clamp(f * 3) : ''; });   /* the cuts and the sources are not part of the picture: they fade as it closes */
     box.classList.toggle('exp', e > .02); }
-  function ramp(to, ms){ r0 = target; r1 = to; rT = performance.now(); rD = ms; }
-  function rest(){ open = done = false; cur = -1; x = v = target = rD = 0; bump.forEach(b => b.x = b.v = 0); box.classList.remove('go'); light(-1); apply(); }
+  function go(to, kind){ [sZ, sW] = SPR[kind][set.settle]; s0 = x; s1 = to; sT = performance.now(); live = true; }
+  function spring(now){ const t = (now - sT) / 1000, wd = sW * Math.sqrt(Math.max(1 - sZ * sZ, 0));
+    const env = sZ >= 1 ? Math.exp(-sW * t) * (1 + sW * t) : Math.exp(-sZ * sW * t) * (Math.cos(wd * t) + sZ * sW / wd * Math.sin(wd * t));
+    x = s1 - (s1 - s0) * env; if(t > 2){ x = s1; live = false; } }
+  function hideClip(){ box.classList.remove('fin', 'shut'); }
+  function rest(){ phase = 'idle'; cur = -1; x = 0; live = false; bump.forEach(b => b.x = b.v = 0); vid.pause(); hideClip(); box.classList.remove('go'); light(-1); apply(); }
+  function open(){ phase = 'open'; ph = 0; cur = -1; go(1, 'open'); if(vid.readyState < 2) vid.load(); }
+  function clip(){ phase = 'clip'; ph = 0; ended = false; try { vid.currentTime = 0; } catch(e){}
+    box.classList.add('fin'); const p = vid.play(); if(p && p.catch) p.catch(() => { if(phase === 'clip'){ hideClip(); phase = 'rest'; ph = 0; } }); }   /* a phone saving power will not play it: rest on the still frame instead */
+  function finish(){ hideClip(); if(set.timing === 'loop') open(); else phase = 'done'; }
+  vid.addEventListener('ended', () => ended = true);
   /* where the card is: has it left the screen, and is the still picture (it sits in the upper part of the card) wholly on it */
   function look(){ const r = stage.getBoundingClientRect(), vh = innerHeight, H = r.height;
     gone = r.bottom <= 0 || r.top >= vh;
     seen = vh < H * .55 ? !gone : r.top + H * .12 >= 0 && r.top + H * .62 <= vh; }
   function aim(){ look();
-    if(gone){ if(open || done || cur !== -1 || x) rest(); return; }
-    if(!open && !done && seen){ open = true; ramp(1, OPEN); }
+    if(gone){ if(phase !== 'idle' || x) rest(); return; }
+    if(phase === 'idle' && seen) open();
     if(!run){ run = true; prev = 0; requestAnimationFrame(step); } }
-  function tick(){ v += (target - x) * .045; v *= .80; x += v; let m = Math.abs(target - x) > .0005 || Math.abs(v) > .0005;
+  function tick(){ let m = false;
     pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) m = true; });
     return m; }
-  function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t;
-    if(rD){ const k = clamp((performance.now() - rT) / rD); target = r0 + (r1 - r0) * ease(k); if(k >= 1) rD = 0; }
+  function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t; ph += dt;
+    const was = live; if(live) spring(performance.now());
     let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
-    if(open){
-      if(cur < 0){ if(!rD && x > .96){ cur = 0; shown = 0; light(0); } }
-      else if((shown += dt) >= HOLD[cur]){ cur++; shown = 0; light(cur);
-        if(cur >= END){ open = false; done = true; idle = 0; ramp(0, SHUT); } } }
-    else if(done && LOOP && !rD && x < .02 && (idle += dt) >= REST){ done = false; open = true; cur = -1; ramp(1, OPEN); }   /* again, from the finished frame */
-    if(moving || rD) apply();
-    if(moving || rD || ((open || (done && LOOP)) && !gone)) requestAnimationFrame(step); else run = false; }
-  if(RM){ x = target = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
+    if(phase === 'open'){ if(ph >= OPEN){ phase = 'lines'; cur = 0; shown = 0; light(0); } }
+    else if(phase === 'lines'){ if((shown += dt) >= HOLD[cur]){ cur++; shown = 0; light(cur);
+      if(cur >= END){ phase = 'shut'; ph = 0; box.classList.add('shut'); go(0, 'shut'); } } }
+    else if(phase === 'shut'){ if(ph >= CLIP_AT) clip(); }
+    else if(phase === 'clip'){ if(ph > 350) box.classList.remove('shut');   /* the graphics are back under the film by the time it ends */
+      if(ended || ph > 6000) finish(); }
+    else if(phase === 'rest'){ if(ph >= SHUT - CLIP_AT + REST) finish(); }
+    if(was || moving) apply();
+    if(live || moving || (phase !== 'idle' && phase !== 'done' && !gone)) requestAnimationFrame(step); else run = false; }
+  if(RM){ x = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
   else {
     addEventListener('scroll', aim, {passive: true});
     addEventListener('resize', () => { apply(); aim(); }); apply();
-    if(PREVIEW){   /* a switch for trying the two timings on a real phone */
-      const KEY = 'roleTiming', sw = document.createElement('p'); sw.className = 'rsw';
-      try { LOOP = localStorage.getItem(KEY) !== 'once'; } catch(e){}
-      sw.innerHTML = 'Preview only · timing <button type="button" data-m="once">Plays once</button><button type="button" data-m="loop">Loops</button>';
-      const mark = () => $$('button', sw).forEach(b => { const on = (b.dataset.m === 'loop') === LOOP; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
-      sw.onclick = e => { const b = e.target.closest('button'); if(!b) return; LOOP = b.dataset.m === 'loop'; try { localStorage.setItem(KEY, b.dataset.m); } catch(e){} mark(); rest(); aim(); };
+    if(PREVIEW){   /* switches for trying the timings on a real phone */
+      const rows = [['timing', 'roleTiming', [['once', 'Plays once'], ['loop', 'Loops']]], ['settle', 'roleSettle', [['none', 'No recoil'], ['open', 'On opening'], ['both', 'Both']]]];
+      const sw = document.createElement('div'); sw.className = 'rsw';
+      sw.innerHTML = rows.map(([k, key, opts]) => { try { const s = localStorage.getItem(key); if(opts.some(o => o[0] === s)) set[k] = s; } catch(e){}
+        return `<p>Preview only · ${k} ` + opts.map(o => `<button type="button" data-k="${k}" data-key="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</p>'; }).join('');
+      const mark = () => $$('button', sw).forEach(b => { const on = set[b.dataset.k] === b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+      sw.onclick = e => { const b = e.target.closest('button'); if(!b) return; set[b.dataset.k] = b.dataset.v; try { localStorage.setItem(b.dataset.key, b.dataset.v); } catch(e){} mark(); rest(); aim(); };
       mark(); box.appendChild(sw); }
     aim();
   }
