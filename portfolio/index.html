@@ -99,8 +99,9 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 /* the finish: as it folds, the title and cards go back into the picture (the name tag stays: it is on screen when the film starts);
    the footage sheet has quietly become the film's first frame (.p0), so the film starts from the very picture that landed */
 .role.shut .pl .it:not(.keep){opacity:0}
+.role.fold .pl.x{opacity:0!important}   /* the cuts and the sources leave as soon as it starts to fold */
 .rvid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:5px;opacity:0;pointer-events:none;transform:translateZ(1px);transition:opacity .18s}
-.role.fin .rvid{opacity:1}
+.role.fin .rvid{opacity:1;transition:none}
 .rpill,.rco{font:600 10px/1 -apple-system,system-ui,sans-serif;letter-spacing:.04em;text-transform:uppercase;font-style:normal;color:#fff;background:rgba(255,255,255,.18);border-radius:4px;padding:3px 5px;white-space:nowrap}
 .rpill{position:absolute;left:14px;top:14px;z-index:1;border-radius:999px;padding:5px 9px;font-size:11px;background:rgba(255,255,255,.14)}
 .rco{margin-left:8px;vertical-align:2px}
@@ -726,8 +727,9 @@ sheet($('#sheetv'), $('#acard'));
        seconds of the final video itself (media/role/finish.mp4: its title and cards landing). Neither join shows:
        the footage sheet has two stills, the film's first frame (plate0.jpg, swapped in under the glass during
        "All motion") and its last (plate.jpg, the frame the sheets are made from), so the film starts from the
-       picture that landed and ends on the picture that comes apart. The film is brought in paused while the fold
-       is still moving, and only plays once it has come to rest;
+       picture that landed and ends on the picture that comes apart. The film plays once the fold has come to rest.
+       set.finish 'film5' (the default): "All motion" is not replayed in the open stack; the title and cards lift off the
+       sheets, the stack folds, and the film's own landing is line 5. 'after': the replay first, then the fold and the film;
      - LOOP: it then comes apart again, for as long as it is on screen.
      It starts over from the top once the card has left the screen.
      The move is a spring worked out from the clock (the same on every screen). It stops on its mark with no recoil
@@ -737,22 +739,22 @@ sheet($('#sheetv'), $('#acard'));
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
-  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_SHOW = 450, CLIP_AT = 800, REST = 1400, TICK = 1000 / 60;
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 1000, SHUT = 850, CLIP_AT = 800, LIFT = 450, LANDED = 2.7, REST = 1400, TICK = 1000 / 60;
   /* [damping, speed] of the spring. Damping 1 stops dead on the mark; .7 goes about 5% past, .75 about 3% */
   const SPR = {open: {both: [.7, 5.2], open: [.7, 5.2], none: [1, 6.5]}, shut: {both: [.75, 7.5], open: [1, 9], none: [1, 9]}};
   const BUMP = {none: [.05, .553], open: [.08, .74], both: [.08, .74]};   /* the lit sheet's lift: [pull, drag]; 'none' stops dead */
-  const set = {timing: 'loop', settle: 'none'};
+  const set = {timing: 'loop', settle: 'none', finish: 'film5'};
   const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), vid = $('.rvid', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
-  let x = 0, run = false, cur = -1, phase = 'idle', ph = 0, shown = 0, prev = 0, acc = 0, seen = false, gone = true, ended = false;
+  let x = 0, run = false, cur = -1, phase = 'idle', ph = 0, shown = 0, prev = 0, acc = 0, seen = false, gone = true, ended = false, up = 0, rewound = false;
   let s0 = 0, s1 = 0, sT = 0, sZ = 1, sW = 6.5, live = false;          /* the spring: from, to, start time, damping, speed */
   const bump = pls.map(() => ({x: 0, v: 0}));
   function say(h){ const on = h >= 0 && h < END;
     line.innerHTML = on ? `<span class="rcn">${h + 1}</span>` + LINES[h][0] + (LINES[h][1] ? ` <span class="rch">· ${LINES[h][1]}</span>` : '') + `<i class="rco">${LINES[h][2]}</i>` : h >= END ? 'The final video' : 'Unfortunately, We Can’t Just Unplug It';
     line.classList.toggle('num', on);
     if(!RM && h >= 0){ line.classList.remove('in'); void line.offsetWidth; line.classList.add('in'); } }
-  function light(h){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
-    if(h === 4 && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go', 'p0'); } }
+  function light(h, replay = true){ const on = h >= 0 && h < END; box.classList.toggle('lit', on); pls.forEach(p => p.classList.toggle('hl', on && inG(p, h))); say(h);
+    if(h === 4 && replay && !RM){ box.classList.remove('go'); void box.offsetWidth; box.classList.add('go', 'p0'); } }
   function apply(){ const e = x, f = Math.max(e, 0), sp = planes.offsetWidth * .56, gap = sp / (n - 1);   /* e may run a little past 0 or 1; the sheets never cross */
     planes.style.transform = `translateY(${sp * .37 * e}px) scale(${1 + .3 * (1 - e)}) rotateX(${55 * e}deg) rotateZ(${-34 * e}deg)`;
     pls.forEach((p, i) => { p.style.transform = `translateZ(${(i * gap + bump[i].x * gap * .45) * f + i * .05}px)`;   /* the 0.05px keeps the sheets in order when they lie flat */
@@ -762,12 +764,20 @@ sheet($('#sheetv'), $('#acard'));
   function spring(now){ const t = (now - sT) / 1000, wd = sW * Math.sqrt(Math.max(1 - sZ * sZ, 0));
     const env = sZ >= 1 ? Math.exp(-sW * t) * (1 + sW * t) : Math.exp(-sZ * sW * t) * (Math.cos(wd * t) + sZ * sW / wd * Math.sin(wd * t));
     x = s1 - (s1 - s0) * env; if(t > 2){ x = s1; live = false; } }
-  function hideClip(){ box.classList.remove('fin', 'shut', 'p0'); }
+  function hideClip(){ box.classList.remove('fin', 'shut', 'fold', 'p0'); }
+  function dim(){ box.classList.remove('lit'); pls.forEach(p => p.classList.remove('hl')); }
   function rest(){ phase = 'idle'; cur = -1; x = 0; live = false; bump.forEach(b => b.x = b.v = 0); vid.pause(); hideClip(); box.classList.remove('go'); light(-1); apply(); }
-  function open(){ phase = 'open'; ph = 0; cur = -1; go(1, 'open'); if(vid.readyState < 2) vid.load(); }
-  function clip(){ phase = 'clip'; ph = 0; ended = false;
-    box.classList.add('fin'); const p = vid.play(); if(p && p.catch) p.catch(() => { if(phase === 'clip'){ hideClip(); phase = 'rest'; ph = 0; } }); }   /* a phone saving power will not play it: rest on the still frame instead */
-  function finish(){ hideClip(); if(set.timing === 'loop') open(); else phase = 'done'; }   /* the film fades off the sheets as they start to move */
+  function open(){ phase = 'open'; ph = 0; cur = -1; rewound = false; go(1, 'open'); if(vid.readyState < 2) vid.load(); }
+  function fold(){ phase = 'shut'; ph = 0; box.classList.remove('go'); box.classList.add('shut', 'fold'); go(0, 'shut'); }
+  /* The film is only shown once a frame from its start is really on its way to the screen. (A phone that is asked to rewind a
+     finished film goes on showing its last frame until it plays: shown early, the title and cards flashed back.) */
+  function clip(){ phase = 'clip'; ph = 0; ended = false; up = 0; try { vid.currentTime = 0; } catch(e){}
+    const show = () => { if(phase === 'clip' && !up){ box.classList.add('fin'); up = performance.now(); } };
+    if(vid.requestVideoFrameCallback){ const cb = (now, m) => { if(phase !== 'clip') return; if(m.mediaTime < .3) show(); else vid.requestVideoFrameCallback(cb); }; vid.requestVideoFrameCallback(cb); }
+    else { const tu = () => { if(!vid.paused && vid.currentTime > 0 && vid.currentTime < .5){ show(); vid.removeEventListener('timeupdate', tu); } }; vid.addEventListener('timeupdate', tu); }
+    const p = vid.play(); if(p && p.catch) p.catch(() => { if(phase === 'clip') stall(); }); }
+  function stall(){ hideClip(); phase = 'rest'; ph = 0; }   /* a phone saving power will not play it: rest on the finished frame instead */
+  function finish(){ if(set.finish === 'film5') say(END); hideClip(); if(set.timing === 'loop') open(); else phase = 'done'; }   /* the film fades off the sheets as they start to move */
   vid.addEventListener('ended', () => ended = true);
   /* where the card is: has it left the screen, and is the still picture (it sits in the upper part of the card) wholly on it */
   function look(){ const r = stage.getBoundingClientRect(), vh = innerHeight, H = r.height;
@@ -783,13 +793,17 @@ sheet($('#sheetv'), $('#acard'));
   function step(t){ const dt = prev ? Math.min(t - prev, 50) : TICK; prev = t; ph += dt;
     const was = live; if(live) spring(performance.now());
     let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
-    if(phase === 'open'){ if(ph >= OPEN){ phase = 'lines'; cur = 0; shown = 0; light(0); } }
-    else if(phase === 'lines'){ if((shown += dt) >= HOLD[cur]){ cur++; shown = 0; light(cur);
-      if(cur >= END){ phase = 'shut'; ph = 0; box.classList.remove('go'); box.classList.add('shut'); go(0, 'shut'); try { vid.currentTime = 0; } catch(e){} } } }
-    else if(phase === 'shut'){ if(ph >= CLIP_SHOW) box.classList.add('fin'); if(ph >= CLIP_AT) clip(); }
-    else if(phase === 'clip'){ if(ph > 350) box.classList.remove('shut', 'p0');   /* under the film: the graphics come back and the footage sheet returns to the last frame */
-      if(ended || ph > 6000) finish(); }
-    else if(phase === 'rest'){ if(ph >= SHUT - CLIP_AT + REST) finish(); }
+    if(phase === 'open'){ if(ph >= OPEN){ phase = 'lines'; cur = 0; shown = 0; light(0); }
+      if(!rewound && ph > 400){ rewound = true; try { vid.currentTime = 0; } catch(e){} } }
+    else if(phase === 'lines'){ if((shown += dt) >= HOLD[cur]){ cur++; shown = 0;
+      if(cur === 4 && set.finish === 'film5'){ light(4, false); box.classList.add('shut', 'p0'); phase = 'lift'; ph = 0; }   /* "All motion" is the film itself: the title and cards lift off the sheets... */
+      else { light(cur); if(cur >= END) fold(); } } }
+    else if(phase === 'lift'){ if(ph >= LIFT){ dim(); fold(); } }                                   /* ...the sheets fold onto the footage... */
+    else if(phase === 'shut'){ if(ph >= CLIP_AT) clip(); }
+    else if(phase === 'clip'){ if(up && performance.now() - up > 350) box.classList.remove('shut', 'fold', 'p0');   /* under the film: the graphics come back and the footage sheet returns to the last frame */
+      if(set.finish === 'film5' && cur === 4 && vid.currentTime >= LANDED){ cur = END; say(END); }    /* ...and land for real, on their beats */
+      if(ended || ph > 6000) finish(); else if(!up && ph > 1500) stall(); }
+    else if(phase === 'rest'){ if(ph >= REST) finish(); }
     if(was || moving) apply();
     if(live || moving || (phase !== 'idle' && phase !== 'done' && !gone)) requestAnimationFrame(step); else run = false; }
   if(RM){ x = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
@@ -797,7 +811,7 @@ sheet($('#sheetv'), $('#acard'));
     addEventListener('scroll', aim, {passive: true});
     addEventListener('resize', () => { apply(); aim(); }); apply();
     if(PREVIEW){   /* switches for trying the timings on a real phone */
-      const rows = [['timing', 'roleTiming', [['once', 'Plays once'], ['loop', 'Loops']]], ['settle', 'roleSettle', [['none', 'No recoil'], ['open', 'On opening'], ['both', 'Both']]]];
+      const rows = [['timing', 'roleTiming', [['once', 'Plays once'], ['loop', 'Loops']]], ['settle', 'roleSettle', [['none', 'No recoil'], ['open', 'On opening'], ['both', 'Both']]], ['finish', 'roleFinish', [['after', 'Replay, then film'], ['film5', 'Film is line 5']]]];
       const sw = document.createElement('div'); sw.className = 'rsw';
       sw.innerHTML = rows.map(([k, key, opts]) => { try { const s = localStorage.getItem(key); if(opts.some(o => o[0] === s)) set[k] = s; } catch(e){}
         return `<p>Preview only · ${k} ` + opts.map(o => `<button type="button" data-k="${k}" data-key="${key}" data-v="${o[0]}">${o[1]}</button>`).join('') + '</p>'; }).join('');
