@@ -107,6 +107,10 @@ html.js body.in .ar.dr{animation-name:drop;animation-duration:.7s}
 @keyframes rland{from{opacity:0;transform:translateY(14%) scale(.92)}to{opacity:1;transform:none}}
 .role.go .pl .it{animation:rland .5s cubic-bezier(.2,1.5,.4,1) both;animation-delay:var(--d,0s)}
 .rpm{margin:0;font-size:15px}
+/* preview only: the switch between the two timings */
+.rsw{margin:6px 0 0;display:flex;flex-wrap:wrap;align-items:center;gap:8px;font-size:12px;color:rgba(255,255,255,.55)}
+.rsw button{font:inherit;color:#fff;background:none;border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:8px 13px;cursor:pointer}
+.rsw button.on{background:#fff;color:#111;border-color:#fff;font-weight:600}
 /* the lines as a list: for screen readers always, and on screen when motion is turned off (nothing plays then) */
 .rlist{list-style:none;margin:0;padding:0;position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 .rlist li{padding:3px 0}
@@ -703,27 +707,28 @@ sheet($('#sheetv'), $('#acard'));
 
 /* ---------- my role: the frame comes apart into its layers ---------- */
 {
-  /* The final video's first frame (0:05), in its real layers. It plays on its own clock, and only where it can be seen:
-     - it opens once the whole card is on screen and the scroll has slowed (a flick is still a blur), tilting and coming
-       apart over about a second, on a heavy spring;
-     - the lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up. A line
-       stays long enough to read (HOLD). Its clock only runs while the words are on screen. Scrolling on moves to the
-       next line sooner (one line per PUSH of scroll, never faster than RUSH), so someone who keeps moving still gets all five;
+  /* The final video's first frame (0:05), in its real layers. It plays on its own clock, however the page is scrolled:
+     - it starts as soon as the still picture is wholly on screen, at any scroll speed, tilting and coming apart over
+       about a second on a heavy spring;
+     - the lines of the role are then said one at a time inside the card, each lighting its sheets from the bottom up
+       and staying long enough to read (HOLD);
      - on "All motion" the title and the ten cards land again, in the film's own order and timing (start frames from the
-       project file), and then the sheets fold back into the finished frame.
-     It starts over once the card has left the screen. The spring runs in fixed 1/60 s steps, so it is the same weight on a
-     120 Hz screen as on a phone.
+       project file), and then the sheets fold back into the finished frame;
+     - LOOP: after a short rest on the finished frame it comes apart again, for as long as it is on screen.
+     It starts over from the top once the card has left the screen. The spring runs in fixed 1/60 s steps, so it is the
+     same weight on a 120 Hz screen as on a phone.
+     On the preview only, a switch under the card flips between playing once and looping (PREVIEW; never on the live site).
      The hour figure above used to wait for this block to finish. It comes first on the page now, so it is told straight away. */
   const box = $('#role'); box.dataset.filled = 1; dispatchEvent(new Event('rolefilled'));
   const LINES = [['Footage of Nate', '', 'the team'], ['Editing and pacing on <span class="tbd">[two or three]</span> sections', '', 'me'], ['Supporting research', 'sources for the cards', 'me'],
     ['All graphics', 'the title, ten cards', 'me'], ['All motion', 'each lands on its beat', 'me']];
-  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 900, SHUT = 750, RUSH = 420, CALM = .5 /* px per ms */, TICK = 1000 / 60;
+  const HOLD = [1000, 1400, 1400, 1300, 2300], OPEN = 900, SHUT = 750, REST = 1400, TICK = 1000 / 60;
+  let LOOP = true;
   const stage = $('.rstage', box), planes = $('#planes'), pls = $$('.pl', planes), line = $('.rcl', box), n = pls.length, END = LINES.length;
   const inG = (p, h) => p.dataset.g.split(' ').includes(String(h));
   let x = 0, v = 0, target = 0, run = false, cur = -1, open = false, done = false;
   let r0 = 0, r1 = 0, rT = 0, rD = 0;                      /* the ramp the spring follows: from, to, start time, length */
-  let shown = 0, moved = 0, prev = 0, acc = 0;             /* ms the line has been readable, px scrolled since it came up */
-  let vel = 0, lastY = scrollY, lastS = 0, calm = 0, whole = false, capIn = false, gone = true, push = 70;
+  let shown = 0, idle = 0, prev = 0, acc = 0, seen = false, gone = true;
   const bump = pls.map(() => ({x: 0, v: 0}));
   const ease = t => t < .5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2;
   function say(h){ const on = h >= 0 && h < END;
@@ -739,15 +744,13 @@ sheet($('#sheetv'), $('#acard'));
     box.classList.toggle('exp', e > .02); }
   function ramp(to, ms){ r0 = target; r1 = to; rT = performance.now(); rD = ms; }
   function rest(){ open = done = false; cur = -1; x = v = target = rD = 0; bump.forEach(b => b.x = b.v = 0); box.classList.remove('go'); light(-1); apply(); }
-  /* where the card is: is all of it on screen, are the words on screen, has it left */
+  /* where the card is: has it left the screen, and is the still picture (it sits in the upper part of the card) wholly on it */
   function look(){ const r = stage.getBoundingClientRect(), vh = innerHeight, H = r.height;
     gone = r.bottom <= 0 || r.top >= vh;
-    capIn = r.bottom <= vh + 10 && r.bottom > 60;                                 /* the words sit along the bottom edge */
-    whole = capIn && (r.top >= -H * .1 || vh < H);                                 /* all of it, give or take a sliver */
-    push = clamp((vh - H * .6) / 6, 45, 90); }
+    seen = vh < H * .55 ? !gone : r.top + H * .12 >= 0 && r.top + H * .62 <= vh; }
   function aim(){ look();
     if(gone){ if(open || done || cur !== -1 || x) rest(); return; }
-    if(!open && !done && whole && Math.abs(vel) < CALM){ open = true; ramp(1, OPEN); }
+    if(!open && !done && seen){ open = true; ramp(1, OPEN); }
     if(!run){ run = true; prev = 0; requestAnimationFrame(step); } }
   function tick(){ v += (target - x) * .045; v *= .80; x += v; let m = Math.abs(target - x) > .0005 || Math.abs(v) > .0005;
     pls.forEach((p, i) => { const b = bump[i], to = p.classList.contains('hl') ? 1 : 0; b.v += (to - b.x) * .08; b.v *= .74; b.x += b.v; if(Math.abs(to - b.x) > .002 || Math.abs(b.v) > .002) m = true; });
@@ -756,18 +759,24 @@ sheet($('#sheetv'), $('#acard'));
     if(rD){ const k = clamp((performance.now() - rT) / rD); target = r0 + (r1 - r0) * ease(k); if(k >= 1) rD = 0; }
     let moving = false; acc = Math.min(acc + dt, TICK * 4); while(acc >= TICK){ moving = tick(); acc -= TICK; }
     if(open){
-      if(cur < 0){ if(!rD && x > .96 && capIn){ cur = 0; shown = moved = 0; light(0); } }
-      else { if(capIn) shown += dt;
-        if(shown >= HOLD[cur] || (cur < 4 && shown >= RUSH && moved >= push)){ cur++; shown = moved = 0; light(cur);
-          if(cur >= END){ open = false; done = true; ramp(0, SHUT); } } } }
+      if(cur < 0){ if(!rD && x > .96){ cur = 0; shown = 0; light(0); } }
+      else if((shown += dt) >= HOLD[cur]){ cur++; shown = 0; light(cur);
+        if(cur >= END){ open = false; done = true; idle = 0; ramp(0, SHUT); } } }
+    else if(done && LOOP && !rD && x < .02 && (idle += dt) >= REST){ done = false; open = true; cur = -1; ramp(1, OPEN); }   /* again, from the finished frame */
     if(moving || rD) apply();
-    if(moving || rD || (open && !gone)) requestAnimationFrame(step); else run = false; }
+    if(moving || rD || ((open || (done && LOOP)) && !gone)) requestAnimationFrame(step); else run = false; }
   if(RM){ x = target = 1; apply(); addEventListener('resize', apply); }   /* nothing plays: the sheets sit apart and the list below says the lines */
   else {
-    addEventListener('scroll', () => { const now = performance.now(), dy = scrollY - lastY, dt = now - lastS;
-      vel = dt > 0 && dt < 200 ? vel * .5 + dy / dt * .5 : 0; moved += Math.abs(dy); lastY = scrollY; lastS = now;
-      clearTimeout(calm); calm = setTimeout(() => { vel = 0; aim(); }, 140); aim(); }, {passive: true});
-    addEventListener('resize', () => { apply(); aim(); }); apply(); aim();
+    addEventListener('scroll', aim, {passive: true});
+    addEventListener('resize', () => { apply(); aim(); }); apply();
+    if(PREVIEW){   /* a switch for trying the two timings on a real phone */
+      const KEY = 'roleTiming', sw = document.createElement('p'); sw.className = 'rsw';
+      try { LOOP = localStorage.getItem(KEY) !== 'once'; } catch(e){}
+      sw.innerHTML = 'Preview only · timing <button type="button" data-m="once">Plays once</button><button type="button" data-m="loop">Loops</button>';
+      const mark = () => $$('button', sw).forEach(b => { const on = (b.dataset.m === 'loop') === LOOP; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+      sw.onclick = e => { const b = e.target.closest('button'); if(!b) return; LOOP = b.dataset.m === 'loop'; try { localStorage.setItem(KEY, b.dataset.m); } catch(e){} mark(); rest(); aim(); };
+      mark(); box.appendChild(sw); }
+    aim();
   }
 }
 
